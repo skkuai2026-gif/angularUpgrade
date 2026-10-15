@@ -1,0 +1,32 @@
+.table thead tr:last-child th {
+  padding: 0.2rem 1.15rem;
+}
+.InitialPayment-name {
+  display: none;
+}
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+  .InitialPayment-name {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .payOrText {
+    padding: 1px !important;
+    position: relative;
+    top: 14px;
+  }
+}
+a#spajId.btn.disabled {
+  color: #fff !important;
+  margin-left: 10px !important;
+  pointer-events: none !important;
+  opacity: 0.5 !important;
+}
+
+a#payNow.btn.disabled {
+  color: #fff !important;
+  margin-left: 10px !important;
+  pointer-events: none !important;
+  opacity: 0.5 !important;
+}

@@ -1,0 +1,24 @@
+<li [class.hasSubMenu]="menu.childList && menu.childList != undefined">
+  @if (menu.childList && menu.childList != undefined) {
+  <a (click)="onMenuSelected(menu, parentMenu)" [class.selected]="menu.isChildSelected">
+    <i [class]="menu.imageSrc"></i>
+    <span>{{ menu.description }}</span>
+  </a>
+  } @else {
+  <a
+    [routerLink]="menu.action"
+    [routerLinkActive]="menu.isChildSelected ? 'active' : 'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    (click)="onMenuSelected(menu, parentMenu)"
+  >
+    <i [class]="menu.imageSrc"></i>
+    <span>{{ menu.description }}</span>
+  </a>
+  } @if (menu.childList && menu.childList != undefined) { @if (menu.isChildSelected) {
+  <ul>
+    @for (child of menu.childList; track child) {
+    <sym-menu-item [menu]="child" [parentMenu]="menu"> </sym-menu-item>
+    }
+  </ul>
+  } }
+</li>

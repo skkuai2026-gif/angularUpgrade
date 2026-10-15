@@ -1,0 +1,7 @@
+@if (csaService.responseIO && csaService.responseIO.data && csaService.responseIO.data.length != 0) {
+<sym-csa-preview
+  [showSign]="true"
+  [policyId]="this.service.responseIO.data.Entity.proposalNum"
+  (csaIllustrationLoaded)="csaIllustrationLoaded($event)"
+></sym-csa-preview>
+}

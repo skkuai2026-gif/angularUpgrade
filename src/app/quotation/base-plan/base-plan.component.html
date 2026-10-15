@@ -1,0 +1,100 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else { @if ( service.productFacets != undefined && service.productFacets.data.BASEPLANCONFIGUIFORMAT !=
+undefined) { @if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 &&
+service.responseIO.data.BasePlan.productFamilyCd === 'VUL' ) {
+<div>
+  <h6>{{ service.getMultilingualLabel('planInfo') }}</h6>
+</div>
+}
+<xml-generic-config-ui
+  [service]="service"
+  [xml]="service.productFacets.data.BASEPLANCONFIGUIFORMAT"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</xml-generic-config-ui>
+} @else { @if (service.productFacets != undefined && service.productFacets.data.BASEPLANCONFIGUIFORMAT ==
+undefined) { @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div>
+  <sym-panel
+    [id]="'basic_plan_Body'"
+    [name]="'Base Plan - '"
+    [additionalInfo]="service.responseIO.data.BasePlan.productLongName"
+  >
+    <!--productFamilyCd,productId,productPlanOptionCd,-->
+    <!--   <sym-field-group
+            [fieldIds]="'productFamilyCd,productId,productPlanOptionCd'"
+            (notifyChange)="onInputChanged($event)"
+            (notifyFocus)="onInputFocused($event)"
+            [responseIO]="service.responseIO"
+            [modelPath]="'BasePlan'"
+          ></sym-field-group>
+          -->
+    <sym-field-group
+      [fieldIds]="
+        this.service.responseIO.data['BasePlan'] != undefined &&
+        this.service.responseIO.data['BasePlan'].paymentTypeCd === 'SINGLE'
+          ? 'productPlanOptionCd,paymentTypeCd,productTerm,premiumPayingTerm'
+          : 'productPlanOptionCd,paymentTypeCd,paymentFrequencyCd,productTerm,premiumPayingTerm'
+      "
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.BasePlan"
+    ></sym-field-group>
+    <sym-field-group
+      [fieldIds]="'currencyCd,capturedPremiumAmt,coi,multiplier'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.BasePlan"
+      [gridColumns]="[3, 3, 3, 3]"
+    ></sym-field-group>
+    <sym-field-group
+      [fieldIds]="'baseSumAssured,baseAnnualPremium,modalPremium'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.BasePlan"
+    ></sym-field-group>
+    <sym-field-group
+      [fieldIds]="
+        'minTargetPremium,maxTargetPremium,recommendedPremium,unapliedPremium,monthlyIncome,annualIncome'
+      "
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.BasePlan"
+    ></sym-field-group>
+  </sym-panel>
+  <sym-panel [id]="'basic_plan_addnl_Body'" [name]="'additionalDetails'">
+    <sym-field-group
+      [fieldIds]="'addtnField1,addtnField2,addtnField3,addtnField4'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.BasePlan"
+      [gridColumns]="[12]"
+    ></sym-field-group>
+    <sym-field-group
+      [fieldIds]="'addtnField5,addtnField6'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.BasePlan"
+    >
+    </sym-field-group>
+  </sym-panel>
+</div>
+} } } }

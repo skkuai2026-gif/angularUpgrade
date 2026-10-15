@@ -1,0 +1,52 @@
+.toastPosition {
+  z-index: 11 !important;
+  right: 0;
+  top: 45px;
+  width: 5rem;
+  height: 28px;
+}
+.hide {
+  display: none;
+}
+
+.leadToastPosition {
+  z-index: 11 !important;
+  right: 0;
+  top: 75%;
+}
+
+.toast-close {
+  position: absolute;
+  right: 10px;
+}
+
+.toast-body {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 900px) and (min-width: 600px) {
+  .leadToastPosition {
+    top: 82%;
+  }
+}
+
+@media only screen and (max-width: 1025px) and (min-width: 800px) {
+  .leadToastPosition {
+    top: 88%;
+  }
+}
+@media only screen and (max-width: 500px) and (min-width: 341px) {
+  .leadToastPosition {
+    top: 78%;
+  }
+}
+@media only screen and (max-width: 340px) and (min-width: 300px) {
+  .leadToastPosition {
+    top: 65%;
+  }
+}
+@media only screen and (max-width: 300px) {
+  .leadToastPosition {
+    top: 45%;
+  }
+}

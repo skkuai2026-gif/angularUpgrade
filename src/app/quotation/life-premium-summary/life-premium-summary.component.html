@@ -1,0 +1,1281 @@
+<div class="col-sm-12">
+  <div class="box" *ngIf="displayBenefitSummary">
+    <div class="section">
+      <div class="sectionHeader nav nav-tabs pb">
+        <h4>
+          {{ settingService.getLabelValue('step_quoteSummary') }}
+
+          <span
+            *ngIf="
+              service.responseIO &&
+              service.responseIO.data &&
+              service.responseIO.data.BasePlan.currencyCd != undefined &&
+              service.responseIO.data.BasePlan.currencyCd != null
+            "
+            class="small font-italic pr-2"
+          >
+            ({{ settingService.getLabelValue('allAmount') }}
+            {{ service.responseIO.data.BasePlan.currencyCd }})</span
+          >
+        </h4>
+      </div>
+      <div class="sectionContent">
+        <div class="tableContent scrollDiv scrollX">
+          <table class="symresponsive-table table noBorder tableBlocks m0" id="benefitSummary">
+            <thead>
+              <tr>
+                <th></th>
+                <th
+                  class="text-right"
+                  *ngIf="service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') != undefined"
+                >
+                  {{ service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') }}
+                </th>
+                <th
+                  class="text-right"
+                  *ngIf="service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured') != undefined"
+                >
+                  {{ service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured') }}
+                </th>
+                <th
+                  class="text-right"
+                  *ngIf="service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium') != undefined"
+                >
+                  {{ service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium') }}
+                </th>
+                <th
+                  class="text-right"
+                  *ngIf="
+                    service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax') != undefined &&
+                    service.responseIO.data.BasePlan['serviceTax'] != null &&
+                    service.responseIO.data.BasePlan['serviceTax'] != undefined
+                  "
+                >
+                  {{ service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax') }}
+                </th>
+                <th
+                  class="text-right"
+                  *ngIf="
+                    service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') != undefined &&
+                    service.responseIO.data.BasePlan['totDiscount'] != null &&
+                    service.responseIO.data.BasePlan['totDiscount'] != undefined
+                  "
+                >
+                  {{ settingService.getLabelValue('totDiscount') }}
+                </th>
+                <th
+                  class="text-right"
+                  *ngIf="
+                    service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') != undefined &&
+                    service.responseIO.data.BasePlan['totDiscount'] != null &&
+                    service.responseIO.data.BasePlan['totDiscount'] != undefined
+                  "
+                >
+                  {{ settingService.getLabelValue('netPremium') }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="selected">
+                <td
+                  class="mob_td"
+                  colspan="6"
+                  *ngIf="
+                    service.responseIO &&
+                    service.responseIO.data &&
+                    service.responseIO.data.PrimaryInsured != null &&
+                    service.responseIO.data.PrimaryInsured != undefined
+                  "
+                >
+                  <span>
+                    <ng-container
+                      *ngIf="
+                        service.responseIO.metadata[service.responseIO.data['PrimaryInsured']['guid']]['title'] !=
+                        undefined
+                      "
+                    >
+                      <span class="roleCd font-italic pr-2">
+                        ({{ service.getMultilingualLabel(service.responseIO.data.PrimaryInsured['roleCd']) }})
+                      </span>
+
+                      {{ service.getFieldLookupDesc(service.responseIO.data['PrimaryInsured'], 'title') }}
+                    </ng-container>
+
+                    {{ service.responseIO.data.PrimaryInsured['firstname'] }}
+                    {{ service.responseIO.data.PrimaryInsured['lastname'] }},
+                    {{
+                      service.getMultilingualLabel('age') + '-' + service.responseIO.data.PrimaryInsured['age']
+                    }},
+                    {{ service.getFieldLookupDesc(service.responseIO.data['PrimaryInsured'], 'genderCd') }}
+                  </span>
+                </td>
+              </tr>
+              <tr class="trProduct">
+                <td class="mob_td">
+                  <ng-container
+                    *ngIf="
+                      service.responseIO.data.BasePlan['productId'] != null &&
+                      service.responseIO.data.BasePlan['productId'] != undefined
+                    "
+                    >{{ service.getFieldLookupDesc(service.responseIO.data['BasePlan'], 'productId') }}
+                    <ng-container
+                      *ngIf="service.responseIO.data['BasePlan']['productPlanOptionDesc'] != undefined"
+                    >
+                      (
+                      {{ service.responseIO.data['BasePlan']['productPlanOptionDesc'] }}
+                      )
+                    </ng-container>
+                  </ng-container>
+                </td>
+                <td
+                  class="text-right"
+                  [attr.data-label]="service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm')"
+                  *ngIf="service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') != undefined"
+                >
+                  <ng-container
+                    *ngIf="
+                      service.responseIO.data.BasePlan['productTerm'] != null &&
+                      service.responseIO.data.BasePlan['productTerm'] != undefined &&
+                      service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') != undefined
+                    "
+                    >{{ service.responseIO.data.BasePlan['productTerm'] }}
+                    {{ settingService.getLabelValue('Years') }}</ng-container
+                  >
+                  <ng-container
+                    *ngIf="
+                      service.responseIO.data.BasePlan['productTerm'] == null &&
+                      service.responseIO.data.BasePlan['productTerm'] == undefined
+                    "
+                    >-</ng-container
+                  >
+                </td>
+
+                <td
+                  class="text-right"
+                  [attr.data-label]="service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured')"
+                  *ngIf="service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured') != undefined"
+                >
+                  <ng-container
+                    *ngIf="
+                      service.responseIO.data.BasePlan['baseSumAssured'] != null &&
+                      service.responseIO.data.BasePlan['baseSumAssured'] != undefined
+                    "
+                  >
+                    {{
+                      service.responseIO.data.BasePlan['baseSumAssured']
+                        | customFormat
+                          : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseSumAssured')
+                    }}</ng-container
+                  >
+                  <ng-container
+                    *ngIf="
+                      service.responseIO.data.BasePlan['baseSumAssured'] == null &&
+                      service.responseIO.data.BasePlan['baseSumAssured'] == undefined
+                    "
+                    >-</ng-container
+                  >
+                </td>
+                <td
+                  class="text-right"
+                  [attr.data-label]="service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium')"
+                  *ngIf="service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium') != undefined"
+                >
+                  <ng-container
+                    *ngIf="
+                      service.responseIO.data.BasePlan['modalPremium'] != null &&
+                      service.responseIO.data.BasePlan['modalPremium'] != undefined
+                    "
+                  >
+                    {{
+                      service.responseIO.data.BasePlan['modalPremium']
+                        | customFormat
+                          : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                    }}</ng-container
+                  >
+                  <ng-container
+                    *ngIf="
+                      service.responseIO.data.BasePlan['modalPremium'] == null &&
+                      service.responseIO.data.BasePlan['modalPremium'] == undefined
+                    "
+                    >-</ng-container
+                  >
+                </td>
+                <td
+                  class="text-right"
+                  [attr.data-label]="service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax')"
+                  *ngIf="
+                    service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax') != undefined &&
+                    service.responseIO.data.BasePlan['serviceTax'] != null &&
+                    service.responseIO.data.BasePlan['serviceTax'] != undefined
+                  "
+                >
+                  <ng-container
+                    *ngIf="
+                      service.responseIO.data.BasePlan['serviceTax'] != null &&
+                      service.responseIO.data.BasePlan['serviceTax'] != undefined
+                    "
+                  >
+                    {{
+                      service.responseIO.data.BasePlan['serviceTax']
+                        | customFormat
+                          : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                    }}</ng-container
+                  >
+                  <ng-container
+                    *ngIf="
+                      service.responseIO.data.BasePlan['serviceTax'] == null &&
+                      service.responseIO.data.BasePlan['serviceTax'] == undefined
+                    "
+                    >-</ng-container
+                  >
+                </td>
+                <td
+                  class="text-right"
+                  [attr.data-label]="service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount')"
+                  *ngIf="
+                    service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') != undefined &&
+                    service.responseIO.data.BasePlan['totDiscount'] != null &&
+                    service.responseIO.data.BasePlan['totDiscount'] != undefined
+                  "
+                >
+                  <ng-container
+                    *ngIf="
+                      service.responseIO.data.BasePlan['totDiscount'] != null &&
+                      service.responseIO.data.BasePlan['totDiscount'] != undefined
+                    "
+                  >
+                    {{
+                      service.responseIO.data.BasePlan['totDiscount']
+                        | customFormat
+                          : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                    }}</ng-container
+                  >
+                  <ng-container
+                    *ngIf="
+                      service.responseIO.data.BasePlan['totDiscount'] == null &&
+                      service.responseIO.data.BasePlan['totDiscount'] == undefined
+                    "
+                    >-</ng-container
+                  >
+                </td>
+                <td
+                  class="text-right"
+                  [attr.data-label]="settingService.getLabelValue('netPremium')"
+                  *ngIf="
+                    service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') != undefined &&
+                    service.responseIO.data.BasePlan['totDiscount'] != null &&
+                    service.responseIO.data.BasePlan['totDiscount'] != undefined
+                  "
+                >
+                  <ng-container
+                    *ngIf="
+                      getNetPremium(
+                        service.responseIO.data.BasePlan['modalPremium'],
+                        service.responseIO.data.BasePlan['totDiscount']
+                      ) != 0;
+                      else totDiscountEmptyTemplate
+                    "
+                  >
+                    {{
+                      getNetPremium(
+                        service.responseIO.data.BasePlan['modalPremium'],
+                        service.responseIO.data.BasePlan['totDiscount']
+                      )
+                        | customFormat
+                          : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                    }}
+                  </ng-container>
+                  <ng-template #totDiscountEmptyTemplate> - </ng-template>
+                </td>
+              </tr>
+              <ng-container
+                *ngIf="
+                  service.responseIO.data.RiderList &&
+                  service.responseIO.data.RiderList != null &&
+                  service.responseIO.data.RiderList != undefined &&
+                  service.responseIO.data.RiderList.length > 0
+                "
+              >
+                <ng-container *ngFor="let rider of service.responseIO.data.RiderList">
+                  <ng-container
+                    *ngIf="
+                      rider.insuredPartyRefGuid === service.responseIO.data.PrimaryInsured.guid &&
+                      rider.selected == 'YES'
+                    "
+                  >
+                    <tr>
+                      <td>
+                        <ng-container *ngIf="rider.productLongName != null && rider.productLongName != undefined">
+                          {{ rider.productLongName }}
+                          <ng-container *ngIf="rider.productPlanOptionDesc != undefined">
+                            (
+                            {{ rider.productPlanOptionDesc }}
+                            )
+                          </ng-container>
+                        </ng-container>
+                      </td>
+                      <td
+                        class="text-right"
+                        [attr.data-label]="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm')
+                        "
+                        *ngIf="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') != undefined
+                        "
+                      >
+                        <ng-container *ngIf="rider.productTerm != null && rider.productTerm != undefined"
+                          >{{ rider.productTerm }} {{ settingService.getLabelValue('Years') }}</ng-container
+                        >
+
+                        <ng-container *ngIf="rider.productTerm == null && rider.productTerm == undefined"
+                          >-</ng-container
+                        >
+                      </td>
+
+                      <td
+                        class="text-right"
+                        [attr.data-label]="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured')
+                        "
+                        *ngIf="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured') != undefined
+                        "
+                      >
+                        <ng-container *ngIf="rider.baseSumAssured != null && rider.baseSumAssured != undefined">
+                          {{
+                            rider.baseSumAssured | customFormat: service.getFieldMetadata(rider, 'baseSumAssured')
+                          }}</ng-container
+                        >
+
+                        <ng-container *ngIf="rider.baseSumAssured == null && rider.baseSumAssured == undefined"
+                          >-</ng-container
+                        >
+                      </td>
+                      <td
+                        class="text-right"
+                        [attr.data-label]="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium')
+                        "
+                        *ngIf="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium') != undefined
+                        "
+                      >
+                        <ng-container *ngIf="rider.modalPremium != null && rider.modalPremium != undefined">
+                          {{
+                            rider.modalPremium | customFormat: service.getFieldMetadata(rider, 'modalPremium')
+                          }}</ng-container
+                        >
+
+                        <ng-container *ngIf="rider.modalPremium == null && rider.modalPremium == undefined"
+                          >-</ng-container
+                        >
+                      </td>
+
+                      <td
+                        class="text-right"
+                        [attr.data-label]="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax')
+                        "
+                        *ngIf="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax') != undefined &&
+                          service.responseIO.data.BasePlan['serviceTax'] != null &&
+                          service.responseIO.data.BasePlan['serviceTax'] != undefined
+                        "
+                      >
+                        <ng-container *ngIf="rider.serviceTax != null && rider.serviceTax != undefined">
+                          {{
+                            rider.serviceTax | customFormat: service.getFieldMetadata(rider, 'modalPremium')
+                          }}</ng-container
+                        >
+
+                        <ng-container *ngIf="rider.serviceTax == null && rider.serviceTax == undefined"
+                          >-</ng-container
+                        >
+                      </td>
+
+                      <td
+                        class="text-right"
+                        [attr.data-label]="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount')
+                        "
+                        *ngIf="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') != undefined &&
+                          service.responseIO.data.BasePlan['totDiscount'] != null &&
+                          service.responseIO.data.BasePlan['totDiscount'] != undefined
+                        "
+                      >
+                        <ng-container *ngIf="rider.totDiscount != null && rider.totDiscount != undefined">
+                          {{
+                            rider.totDiscount | customFormat: service.getFieldMetadata(rider, 'modalPremium')
+                          }}</ng-container
+                        >
+
+                        <ng-container *ngIf="rider.totDiscount == null && rider.totDiscount == undefined"
+                          >-</ng-container
+                        >
+                      </td>
+
+                      <td
+                        class="text-right"
+                        [attr.data-label]="settingService.getLabelValue('netPremium')"
+                        *ngIf="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') != undefined &&
+                          service.responseIO.data.BasePlan['totDiscount'] != null &&
+                          service.responseIO.data.BasePlan['totDiscount'] != undefined
+                        "
+                      >
+                        <ng-container
+                          *ngIf="
+                            getNetPremium(rider.modalPremium, rider.totDiscount) != 0;
+                            else totDiscountEmptyTemplate
+                          "
+                        >
+                          {{
+                            getNetPremium(rider.modalPremium, rider.totDiscount)
+                              | customFormat: service.getFieldMetadata(rider, 'modalPremium')
+                          }}
+                        </ng-container>
+                        <ng-template #totDiscountEmptyTemplate> - </ng-template>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+
+              <!-- Proposer Details -->
+              <ng-container
+                *ngIf="
+                  service.responseIO &&
+                  service.responseIO.data &&
+                  service.responseIO.data.Proposer != null &&
+                  service.responseIO.data.Proposer != undefined
+                "
+              >
+                <tr class="selected" *ngIf="service.responseIO.data.Entity['proposerLASame'] != 'YES'">
+                  <td colspan="4" class="mob_td proposerRole">
+                    <span>
+                      <ng-container
+                        *ngIf="
+                          service.responseIO.metadata[service.responseIO.data['Proposer']['guid']]['title'] !=
+                          undefined
+                        "
+                      >
+                        <span class="roleCd font-italic pr-2">
+                          ( {{ service.getMultilingualLabel(service.responseIO.data.Proposer['roleCd']) }})
+                        </span>
+
+                        {{ service.getFieldLookupDesc(service.responseIO.data['Proposer'], 'title') }}
+                      </ng-container>
+
+                      {{ service.responseIO.data.Proposer['firstname'] }}
+                      {{ service.responseIO.data.Proposer['lastname'] }},
+                      {{ service.getMultilingualLabel('age') + '-' + service.responseIO.data.Proposer['age'] }},
+                      {{ service.getFieldLookupDesc(service.responseIO.data['Proposer'], 'genderCd') }}
+                    </span>
+                  </td>
+                </tr>
+                <ng-container
+                  *ngIf="
+                    service.responseIO.data.RiderList &&
+                    service.responseIO.data.RiderList != null &&
+                    service.responseIO.data.RiderList != undefined
+                  "
+                >
+                  <ng-container *ngFor="let rider of service.responseIO.data.RiderList; index as i">
+                    <ng-container
+                      *ngIf="
+                        rider.insuredPartyRefGuid === service.responseIO.data.Proposer['guid'] &&
+                        rider.selected == 'YES'
+                      "
+                    >
+                      <tr>
+                        <td class="mob_td">
+                          <ng-container
+                            *ngIf="rider.productLongName != null && rider.productLongName != undefined"
+                          >
+                            {{ rider.productLongName }}
+                            <ng-container *ngIf="rider.productPlanOptionDesc != undefined">
+                              (
+                              {{ rider.productPlanOptionDesc }}
+                              )
+                            </ng-container>
+                          </ng-container>
+                        </td>
+                        <td
+                          class="text-right"
+                          [attr.data-label]="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm')
+                          "
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') != undefined
+                          "
+                        >
+                          <ng-container *ngIf="rider.productTerm != null && rider.productTerm != undefined"
+                            >{{ rider.productTerm }} {{ settingService.getLabelValue('Years') }}</ng-container
+                          >
+
+                          <ng-container *ngIf="rider.productTerm == null && rider.productTerm == undefined"
+                            >-</ng-container
+                          >
+                        </td>
+
+                        <td
+                          class="text-right"
+                          [attr.data-label]="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured')
+                          "
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured') !=
+                            undefined
+                          "
+                        >
+                          <ng-container *ngIf="rider.baseSumAssured != null && rider.baseSumAssured != undefined">
+                            {{
+                              rider.baseSumAssured
+                                | customFormat: service.getFieldMetadata(rider, 'baseSumAssured')
+                            }}</ng-container
+                          >
+
+                          <ng-container *ngIf="rider.baseSumAssured == null && rider.baseSumAssured == undefined"
+                            >-</ng-container
+                          >
+                        </td>
+                        <td
+                          class="text-right"
+                          [attr.data-label]="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium')
+                          "
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium') != undefined
+                          "
+                        >
+                          <ng-container *ngIf="rider.modalPremium != null && rider.modalPremium != undefined">
+                            {{
+                              rider.modalPremium | customFormat: service.getFieldMetadata(rider, 'modalPremium')
+                            }}</ng-container
+                          >
+
+                          <ng-container *ngIf="rider.modalPremium == null && rider.modalPremium == undefined"
+                            >-</ng-container
+                          >
+                        </td>
+                        <td
+                          class="text-right"
+                          [attr.data-label]="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax')
+                          "
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax') !=
+                              undefined &&
+                            service.responseIO.data.BasePlan['serviceTax'] != null &&
+                            service.responseIO.data.BasePlan['serviceTax'] != undefined
+                          "
+                        >
+                          <ng-container *ngIf="rider.serviceTax != null && rider.serviceTax != undefined">
+                            {{
+                              rider.serviceTax | customFormat: service.getFieldMetadata(rider, 'serviceTax')
+                            }}</ng-container
+                          >
+
+                          <ng-container *ngIf="rider.serviceTax == null && rider.serviceTax == undefined"
+                            >-</ng-container
+                          >
+                        </td>
+                        <td
+                          class="text-right"
+                          [attr.data-label]="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount')
+                          "
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') !=
+                              undefined &&
+                            service.responseIO.data.BasePlan['totDiscount'] != null &&
+                            service.responseIO.data.BasePlan['totDiscount'] != undefined
+                          "
+                        >
+                          <ng-container *ngIf="rider.totDiscount != null && rider.totDiscount != undefined">
+                            {{
+                              rider.totDiscount | customFormat: service.getFieldMetadata(rider, 'modalPremium')
+                            }}</ng-container
+                          >
+
+                          <ng-container *ngIf="rider.totDiscount == null && rider.totDiscount == undefined"
+                            >-</ng-container
+                          >
+                        </td>
+
+                        <td
+                          class="text-right"
+                          [attr.data-label]="settingService.getLabelValue('netPremium')"
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') !=
+                              undefined &&
+                            service.responseIO.data.BasePlan['totDiscount'] != null &&
+                            service.responseIO.data.BasePlan['totDiscount'] != undefined
+                          "
+                        >
+                          <ng-container
+                            *ngIf="
+                              getNetPremium(rider.modalPremium, rider.totDiscount) != 0;
+                              else totDiscountEmptyTemplate
+                            "
+                          >
+                            {{
+                              getNetPremium(rider.modalPremium, rider.totDiscount)
+                                | customFormat: service.getFieldMetadata(rider, 'modalPremium')
+                            }}
+                          </ng-container>
+                          <ng-template #totDiscountEmptyTemplate> - </ng-template>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+
+              <!-- JointLife Details -->
+              <ng-container
+                *ngIf="
+                  service.responseIO &&
+                  service.responseIO.data &&
+                  service.responseIO.data.JointLife != null &&
+                  service.responseIO.data.JointLife != undefined &&
+                  service.responseIO.data.Entity['jointLife'] == 'YES'
+                "
+              >
+                <tr class="selected">
+                  <td colspan="4" class="mob_td jointLife">
+                    <span>
+                      <ng-container
+                        *ngIf="
+                          service.responseIO.metadata[service.responseIO.data['JointLife']['guid']]['title'] !=
+                          undefined
+                        "
+                      >
+                        <span class="roleCd font-italic pr-2">
+                          ( {{ service.getMultilingualLabel(service.responseIO.data.JointLife['roleCd']) }})
+                        </span>
+
+                        {{ service.getFieldLookupDesc(service.responseIO.data['JointLife'], 'title') }}
+                      </ng-container>
+
+                      {{ service.responseIO.data.JointLife['firstname'] }}
+                      {{ service.responseIO.data.JointLife['lastname'] }},
+                      {{ service.getMultilingualLabel('age') + '-' + service.responseIO.data.JointLife['age'] }},
+                      {{ service.getFieldLookupDesc(service.responseIO.data['JointLife'], 'genderCd') }}
+                    </span>
+                  </td>
+                </tr>
+                <ng-container
+                  *ngIf="
+                    service.responseIO.data.RiderList &&
+                    service.responseIO.data.RiderList != null &&
+                    service.responseIO.data.RiderList != undefined
+                  "
+                >
+                  <ng-container *ngFor="let rider of service.responseIO.data.RiderList; index as i">
+                    <ng-container
+                      *ngIf="
+                        rider.insuredPartyRefGuid === service.responseIO.data.JointLife['guid'] &&
+                        rider.selected == 'YES'
+                      "
+                    >
+                      <tr>
+                        <td class="mob_td">
+                          <ng-container
+                            *ngIf="rider.productLongName != null && rider.productLongName != undefined"
+                          >
+                            {{ rider.productLongName }}
+                            <ng-container *ngIf="rider.productPlanOptionDesc != undefined">
+                              (
+                              {{ rider.productPlanOptionDesc }}
+                              )</ng-container
+                            >
+                          </ng-container>
+                        </td>
+                        <td
+                          class="text-right"
+                          [attr.data-label]="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm')
+                          "
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') != undefined
+                          "
+                        >
+                          <ng-container *ngIf="rider.productTerm != null && rider.productTerm != undefined"
+                            >{{ rider.productTerm }} {{ settingService.getLabelValue('Years') }}</ng-container
+                          >
+
+                          <ng-container *ngIf="rider.productTerm == null && rider.productTerm == undefined"
+                            >-</ng-container
+                          >
+                        </td>
+
+                        <td
+                          class="text-right"
+                          [attr.data-label]="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured')
+                          "
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured') !=
+                            undefined
+                          "
+                        >
+                          <ng-container *ngIf="rider.baseSumAssured != null && rider.baseSumAssured != undefined">
+                            {{
+                              rider.baseSumAssured
+                                | customFormat: service.getFieldMetadata(rider, 'baseSumAssured')
+                            }}</ng-container
+                          >
+
+                          <ng-container *ngIf="rider.baseSumAssured == null && rider.baseSumAssured == undefined"
+                            >-</ng-container
+                          >
+                        </td>
+                        <td
+                          class="text-right"
+                          [attr.data-label]="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium')
+                          "
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium') != undefined
+                          "
+                        >
+                          <ng-container *ngIf="rider.modalPremium != null && rider.modalPremium != undefined">
+                            {{
+                              rider.modalPremium | customFormat: service.getFieldMetadata(rider, 'modalPremium')
+                            }}</ng-container
+                          >
+
+                          <ng-container *ngIf="rider.modalPremium == null && rider.modalPremium == undefined"
+                            >-</ng-container
+                          >
+                        </td>
+                        <!-- <td
+                              class="text-right"
+                              [attr.data-label]="
+                                service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax')
+                              "
+                            >
+                              <ng-container *ngIf="rider.serviceTax != null && rider.serviceTax != undefined">
+                                {{
+                                  rider.serviceTax | customFormat: service.getFieldMetadata(rider, 'serviceTax')
+                                }}</ng-container
+                              >
+
+                              <ng-container *ngIf="rider.serviceTax == null && rider.serviceTax == undefined"
+                                >-</ng-container
+                              >
+                            </td> -->
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+
+              <!-- SupplementaryList Details -->
+              <ng-container
+                *ngIf="
+                  service.responseIO &&
+                  service.responseIO.data &&
+                  service.responseIO.data.SupplementaryList != null &&
+                  service.responseIO.data.SupplementaryList != undefined
+                "
+              >
+                <ng-container *ngFor="let supplementary of service.responseIO.data.SupplementaryList">
+                  <tr class="selected">
+                    <td colspan="4" class="mob_td supplementaryTitle">
+                      <span>
+                        <ng-container
+                          *ngIf="service.responseIO.metadata[supplementary.guid]['title'] != undefined"
+                        >
+                          <span class="roleCd font-italic pr-2">
+                            ({{ service.getMultilingualLabel(supplementary['roleCd']) }})
+                          </span>
+                          {{ service.getFieldLookupDesc(supplementary, 'title') }}
+                        </ng-container>
+
+                        {{ supplementary.firstname }}
+                        {{ supplementary.lastname }},
+                        {{ service.getMultilingualLabel('age') + '-' + supplementary.age }},
+                        {{ service.getFieldLookupDesc(supplementary, 'genderCd') }}
+                      </span>
+                    </td>
+                  </tr>
+                  <ng-container
+                    *ngIf="
+                      service.productFacets &&
+                      service.productFacets.data &&
+                      service.productFacets.data['MULTILIFEAPPLICABLE'] &&
+                      service.productFacets.data['MULTILIFEAPPLICABLE'].length > 0 &&
+                      service.productFacets.data['MULTILIFEAPPLICABLE'] == 'YES'
+                    "
+                  >
+                    <tr class="trProduct">
+                      <td class="mob_td">
+                        <ng-container
+                          *ngIf="
+                            service.responseIO.data.BasePlan['productId'] != null &&
+                            service.responseIO.data.BasePlan['productId'] != undefined
+                          "
+                          >{{ service.getFieldLookupDesc(service.responseIO.data['BasePlan'], 'productId') }}
+                          <ng-container
+                            *ngIf="service.responseIO.data['BasePlan']['productPlanOptionDesc'] != undefined"
+                          >
+                            (
+                            {{ service.responseIO.data['BasePlan']['productPlanOptionDesc'] }}
+                            )
+                          </ng-container>
+                        </ng-container>
+                      </td>
+                      <td
+                        class="text-right"
+                        [attr.data-label]="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm')
+                        "
+                        *ngIf="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') != undefined
+                        "
+                      >
+                        <ng-container
+                          *ngIf="
+                            service.responseIO.data.BasePlan['productTerm'] != null &&
+                            service.responseIO.data.BasePlan['productTerm'] != undefined &&
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') != undefined
+                          "
+                          >{{ service.responseIO.data.BasePlan['productTerm'] }}
+                          {{ settingService.getLabelValue('Years') }}</ng-container
+                        >
+                        <ng-container
+                          *ngIf="
+                            service.responseIO.data.BasePlan['productTerm'] == null &&
+                            service.responseIO.data.BasePlan['productTerm'] == undefined
+                          "
+                          >-</ng-container
+                        >
+                      </td>
+
+                      <td
+                        class="text-right"
+                        [attr.data-label]="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured')
+                        "
+                        *ngIf="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured') != undefined
+                        "
+                      >
+                        <ng-container
+                          *ngIf="supplementary.baseSumAssured != null && supplementary.baseSumAssured != undefined"
+                        >
+                          {{
+                            supplementary.baseSumAssured
+                              | customFormat
+                                : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseSumAssured')
+                          }}</ng-container
+                        >
+                        <ng-container
+                          *ngIf="supplementary.baseSumAssured == null && supplementary.baseSumAssured == undefined"
+                          >-</ng-container
+                        >
+                      </td>
+                      <td
+                        class="text-right"
+                        [attr.data-label]="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium')
+                        "
+                        *ngIf="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium') != undefined
+                        "
+                      >
+                        <ng-container
+                          *ngIf="supplementary.modalPremium != null && supplementary.modalPremium != undefined"
+                        >
+                          {{
+                            supplementary.modalPremium
+                              | customFormat
+                                : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                          }}</ng-container
+                        >
+                        <ng-container
+                          *ngIf="supplementary.modalPremium == null && supplementary.modalPremium == undefined"
+                          >-</ng-container
+                        >
+                      </td>
+                      <td
+                        class="text-right"
+                        [attr.data-label]="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax')
+                        "
+                        *ngIf="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax') != undefined &&
+                          service.responseIO.data.BasePlan['serviceTax'] != null &&
+                          service.responseIO.data.BasePlan['serviceTax'] != undefined
+                        "
+                      >
+                        <ng-container
+                          *ngIf="
+                            service.responseIO.data.BasePlan['serviceTax'] != null &&
+                            service.responseIO.data.BasePlan['serviceTax'] != undefined
+                          "
+                        >
+                          {{
+                            service.responseIO.data.BasePlan['serviceTax']
+                              | customFormat
+                                : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                          }}</ng-container
+                        >
+                        <ng-container
+                          *ngIf="
+                            service.responseIO.data.BasePlan['serviceTax'] == null &&
+                            service.responseIO.data.BasePlan['serviceTax'] == undefined
+                          "
+                          >-</ng-container
+                        >
+                      </td>
+                      <td
+                        class="text-right"
+                        [attr.data-label]="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount')
+                        "
+                        *ngIf="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') != undefined &&
+                          service.responseIO.data.BasePlan['totDiscount'] != null &&
+                          service.responseIO.data.BasePlan['totDiscount'] != undefined
+                        "
+                      >
+                        <ng-container
+                          *ngIf="
+                            service.responseIO.data.BasePlan['totDiscount'] != null &&
+                            service.responseIO.data.BasePlan['totDiscount'] != undefined
+                          "
+                        >
+                          {{
+                            service.responseIO.data.BasePlan['totDiscount']
+                              | customFormat
+                                : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                          }}</ng-container
+                        >
+                        <ng-container
+                          *ngIf="
+                            service.responseIO.data.BasePlan['totDiscount'] == null &&
+                            service.responseIO.data.BasePlan['totDiscount'] == undefined
+                          "
+                          >-</ng-container
+                        >
+                      </td>
+                      <td
+                        class="text-right"
+                        [attr.data-label]="settingService.getLabelValue('netPremium')"
+                        *ngIf="
+                          service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') != undefined &&
+                          service.responseIO.data.BasePlan['totDiscount'] != null &&
+                          service.responseIO.data.BasePlan['totDiscount'] != undefined
+                        "
+                      >
+                        <ng-container
+                          *ngIf="
+                            getNetPremium(
+                              service.responseIO.data.BasePlan['modalPremium'],
+                              service.responseIO.data.BasePlan['totDiscount']
+                            ) != 0;
+                            else totDiscountEmptyTemplate
+                          "
+                        >
+                          {{
+                            getNetPremium(
+                              service.responseIO.data.BasePlan['modalPremium'],
+                              service.responseIO.data.BasePlan['totDiscount']
+                            )
+                              | customFormat
+                                : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                          }}
+                        </ng-container>
+                        <ng-template #totDiscountEmptyTemplate> - </ng-template>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngFor="let rider of service.responseIO.data.RiderList">
+                    <ng-container
+                      *ngIf="supplementary.guid === rider.insuredPartyRefGuid && rider.selected == 'YES'"
+                    >
+                      <tr>
+                        <td class="mob_td">
+                          <ng-container
+                            *ngIf="rider.productLongName != null && rider.productLongName != undefined"
+                          >
+                            {{ rider.productLongName }}
+                            <ng-container *ngIf="rider.productPlanOptionDesc != undefined">
+                              (
+                              {{ rider.productPlanOptionDesc }}
+                              )</ng-container
+                            >
+                          </ng-container>
+                        </td>
+                        <td
+                          class="text-right"
+                          [attr.data-label]="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm')
+                          "
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') != undefined
+                          "
+                        >
+                          <ng-container *ngIf="rider.productTerm != null && rider.productTerm != undefined"
+                            >{{ rider.productTerm }} {{ settingService.getLabelValue('Years') }}</ng-container
+                          >
+
+                          <ng-container *ngIf="rider.productTerm == null && rider.productTerm == undefined"
+                            >-</ng-container
+                          >
+                        </td>
+
+                        <td
+                          class="text-right"
+                          [attr.data-label]="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured')
+                          "
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured') !=
+                            undefined
+                          "
+                        >
+                          <ng-container *ngIf="rider.baseSumAssured != null && rider.baseSumAssured != undefined">
+                            {{
+                              rider.baseSumAssured
+                                | customFormat: service.getFieldMetadata(rider, 'baseSumAssured')
+                            }}</ng-container
+                          >
+
+                          <ng-container *ngIf="rider.baseSumAssured == null && rider.baseSumAssured == undefined"
+                            >-</ng-container
+                          >
+                        </td>
+                        <td
+                          class="text-right"
+                          [attr.data-label]="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium')
+                          "
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium') != undefined
+                          "
+                        >
+                          <ng-container *ngIf="rider.modalPremium != null && rider.modalPremium != undefined">
+                            {{
+                              rider.modalPremium | customFormat: service.getFieldMetadata(rider, 'modalPremium')
+                            }}</ng-container
+                          >
+
+                          <ng-container *ngIf="rider.modalPremium == null && rider.modalPremium == undefined"
+                            >-</ng-container
+                          >
+                        </td>
+                        <td
+                          class="text-right"
+                          [attr.data-label]="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax')
+                          "
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax') !=
+                              undefined &&
+                            service.responseIO.data.BasePlan['serviceTax'] != null &&
+                            service.responseIO.data.BasePlan['serviceTax'] != undefined
+                          "
+                        >
+                          <ng-container *ngIf="rider.serviceTax != null && rider.serviceTax != undefined">
+                            {{
+                              rider.serviceTax | customFormat: service.getFieldMetadata(rider, 'serviceTax')
+                            }}</ng-container
+                          >
+
+                          <ng-container *ngIf="rider.serviceTax == null && rider.serviceTax == undefined"
+                            >-</ng-container
+                          >
+                        </td>
+                        <td
+                          class="text-right"
+                          [attr.data-label]="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount')
+                          "
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') !=
+                              undefined &&
+                            service.responseIO.data.BasePlan['totDiscount'] != null &&
+                            service.responseIO.data.BasePlan['totDiscount'] != undefined
+                          "
+                        >
+                          <ng-container *ngIf="rider.totDiscount != null && rider.totDiscount != undefined">
+                            {{
+                              rider.totDiscount | customFormat: service.getFieldMetadata(rider, 'modalPremium')
+                            }}</ng-container
+                          >
+
+                          <ng-container *ngIf="rider.totDiscount == null && rider.totDiscount == undefined"
+                            >-</ng-container
+                          >
+                        </td>
+                        <td
+                          class="text-right"
+                          [attr.data-label]="settingService.getLabelValue('netPremium')"
+                          *ngIf="
+                            service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') !=
+                              undefined &&
+                            service.responseIO.data.BasePlan['totDiscount'] != null &&
+                            service.responseIO.data.BasePlan['totDiscount'] != undefined
+                          "
+                        >
+                          <ng-container
+                            *ngIf="
+                              getNetPremium(rider.modalPremium, rider.totDiscount) != 0;
+                              else totDiscountEmptyTemplate
+                            "
+                          >
+                            {{
+                              getNetPremium(rider.modalPremium, rider.totDiscount)
+                                | customFormat: service.getFieldMetadata(rider, 'modalPremium')
+                            }}
+                          </ng-container>
+                          <ng-template #totDiscountEmptyTemplate> - </ng-template>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th
+                  [attr.colspan]="
+                    service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured') != undefined
+                      ? 3
+                      : service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') != undefined
+                      ? 2
+                      : 1
+                  "
+                >
+                  {{ settingService.getLabelValue('total') }}
+                </th>
+                <th class="text-right pd-f">
+                  <!-- &#x20B9; -->
+                  {{
+                    totalModalPremium
+                      | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                  }}
+                </th>
+                <th
+                  class="text-right pd-f"
+                  *ngIf="
+                    service.responseIO.data.BasePlan['serviceTax'] != null &&
+                    service.responseIO.data.BasePlan['serviceTax'] != undefined
+                  "
+                >
+                  {{
+                    totalServiceTax
+                      | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                  }}
+                </th>
+                <th
+                  class="text-right pd-f"
+                  *ngIf="
+                    service.responseIO.data.BasePlan['totDiscount'] != null &&
+                    service.responseIO.data.BasePlan['totDiscount'] != undefined
+                  "
+                >
+                  {{
+                    totalDiscount
+                      | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                  }}
+                </th>
+                <th
+                  class="text-right pd-f"
+                  *ngIf="
+                    service.responseIO.data.BasePlan['totDiscount'] != null &&
+                    service.responseIO.data.BasePlan['totDiscount'] != undefined
+                  "
+                >
+                  {{
+                    totalNetPremium
+                      | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                  }}
+                </th>
+              </tr>
+              <tr
+                *ngIf="
+                  service.responseIO.data.BasePlan['totDiscount'] != null &&
+                  service.responseIO.data.BasePlan['totDiscount'] != undefined
+                "
+              >
+                <th colspan="3">
+                  {{ settingService.getLabelValue('Premium to be Paid') }}
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th class="text-right pd-f">
+                  <!-- &#x20B9; -->
+                  {{
+                    totalModalPremium - totalDiscount
+                      | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                  }}
+                </th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="displayLastBenefitChartValues && illustrationResult != undefined">
+        <div class="box">
+          <div>
+            <ng-container
+              *ngIf="illustrationResult.ratesElements[illustrationResult.elementLabel.length - 1] == 'NORATE'"
+            >
+              <div class="grid-layout" *ngFor="let elementLabel of illustrationResult.elementLabel; index as j">
+                <span class="text-left"> {{ elementLabel }} </span>
+                <span class="text-right">
+                  {{
+                    illustrationResult.calculatedData.NORATE.data[j][
+                      illustrationResult.yearsToPrint[illustrationResult.yearsToPrint.length - 1] - 1
+                    ]
+                      | customFormat
+                        : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseSumAssured')
+                  }}</span
+                >
+              </div>
+            </ng-container>
+
+            <ng-container>
+              <ng-container
+                *ngIf="illustrationResult.ratesElements[illustrationResult.elementLabel.length - 1] != 'NORATE'"
+              >
+                <ng-container *ngFor="let rate of illustrationResult.rateOrder">
+                  <div class="grid-layout">
+                    <ng-container *ngFor="let elementLabel of illustrationResult.elementLabel">
+                      <span class="text-left">
+                        {{ elementLabel }} &#64;
+                        {{
+                          illustrationResult.rates[rate] > 1 || illustrationResult.rates[rate] < -1
+                            ? illustrationResult.rates[rate]
+                            : illustrationResult.rates[rate] * 100
+                        }}
+                        %
+                      </span>
+                      <span class="text-right">
+                        {{
+                          illustrationResult.calculatedData[rate].data[illustrationResult.elementLabel.length - 1][
+                            illustrationResult.yearsToPrint[illustrationResult.yearsToPrint.length - 1] - 1
+                          ]
+                            | customFormat
+                              : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseSumAssured')
+                        }}
+                      </span>
+                    </ng-container>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+@if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 &&
+service.responseIO.data.AgentList && service.responseIO.data.AgentList.length > 0 ) {
+<!-- else noDataAvailable-->
+@if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div class="m-1 pb-5">
+  @if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 &&
+  service.responseIO.data ) { @for (item of service.responseIO.data.AgentList; track item; let i = $index) {
+  <div class="m-2 p-2">
+    <!-- <button class="btn float-right" *ngIf="item.closeTab && item.closeTab === true">
+            <i class="fa fa-trash"></i>
+          </button> -->
+    @if (item['status'] != 'D') { @if (item['primaryAgentFl'] != 'YES') {
+    <div>
+      <button class="btn float-right" (click)="onDeleteSelected(item)">
+        <i class="fa fa-trash"></i>
+      </button>
+    </div>
+    }
+    <div class="float-none"></div>
+    <sym-field-group
+      [fieldIds]="'primaryAgentFl'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [modelPath]="'AgentList[' + i + ']'"
+    ></sym-field-group>
+    <sym-field-group
+      [fieldIds]="'agentId,agentName,commPercent,channelId,prodnPercent,yearFrom,yearTo'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [modelPath]="'AgentList[' + i + ']'"
+    ></sym-field-group>
+    } @if (service.responseIO.data.AgentList.length > 1 && item['status'] != 'D') {
+    <hr />
+    }
+  </div>
+  } } @if ( service.companyFacets && service.companyFacets.data &&
+  service.companyFacets.data['AGENTSHARING'].length > 0 && service.companyFacets.data['AGENTSHARING'] == 'YES' ) {
+  <sym-button
+    [class]="'btn btn_outline_primary btnAddTab mr-5'"
+    [id]="'btn_Add'"
+    [text]="'Add'"
+    (onClick)="onAddPolicyAgent($event)"
+    [isLoaderRequired]="false"
+  ></sym-button>
+  }
+</div>
+} }

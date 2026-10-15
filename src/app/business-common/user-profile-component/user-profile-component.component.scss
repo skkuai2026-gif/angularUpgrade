@@ -1,0 +1,25 @@
+h2 {
+  text-align: center;
+  padding: 0.6em 0.6rem;
+}
+
+th {
+  background: #36f;
+  color: #fff;
+  border: 1px solid black;
+  // text-align: center;
+  padding: 0.6em 0.6rem;
+  vertical-align: middle;
+  white-space: normal;
+}
+
+tbody,
+tr,
+td {
+  position: relative;
+  border: 1px solid black;
+  vertical-align: middle;
+  white-space: normal;
+  // text-align: center;
+  padding: 0.6em 0.6rem;
+}

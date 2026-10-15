@@ -1,0 +1,61 @@
+<sym-page-container
+  [breadCrumbList]="breadCrumbList"
+  [stepList]="stepList"
+  [responseIO]="service.responseIO"
+  (selectedStep)="onStepChanged($event)"
+>
+  @if ( service.responseIO != undefined && selectedStep != undefined && selectedStep.id != undefined &&
+  selectedStep.selectedTab != undefined && selectedStep.selectedTab.id != undefined ) { @if (selectedStep.id ==
+  'step_leadDataEntry') {
+  <sym-step
+    [stepItem]="stepList[selectedStep.index]"
+    (actionClick)="onActionClicked($event)"
+    (tabChange)="onTabChanged($event)"
+    [contentExcludRightTab]="selectedStep.selectedTab.id == 'tab_activity' ? false : true"
+  >
+    @if (selectedStep.selectedTab.id == 'tab_leadbasic') {
+    <div class="tab-pane">
+      <sym-lead-basic></sym-lead-basic>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_activity') {
+    <div class="tab-pane">
+      <sym-lead-activity></sym-lead-activity>
+    </div>
+    }
+  </sym-step>
+  } }
+</sym-page-container>
+<!-- <sym-pop-up [popupID]="'selectInsuranceType'" [popupSize]="'medium'" [width]="95" [height]="90">
+<sym-insurance-type-selection
+  (notifyInsuranceTypeSelect)="onInsuranceTypeSelect($event)"
+></sym-insurance-type-selection>
+</sym-pop-up> -->
+<!--modal for Acceptance message start -->
+<!-- <div
+class="modal fade modalSuccess"
+id="submitPolicyModal"
+tabindex="-1"
+role="dialog"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-body">
+      <button
+        type="button"
+        class="close pull-right"
+        aria-label="Close"
+        (click)="closeSubmitPolicyModal()"
+        >
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="successModalHeader">
+        <span class="iconSuccess"></span>
+        <h2>Your Policy has been sucessfully Submitted</h2>
+      </div>
+    </div>
+  </div>
+</div>
+</div> -->
+<!--modal for congratulation message ends -->

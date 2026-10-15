@@ -1,0 +1,64 @@
+.card-body {
+  padding: 0.365rem !important;
+}
+
+.mb-6 {
+  margin-bottom: 5rem !important;
+}
+
+.LeafHeader {
+  text-decoration: underline;
+}
+.table-wrapper {
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.column {
+  width: 100%;
+  padding: 0;
+  border-left: 1px solid #ccc;
+}
+
+.column:first-child {
+  border-left: none;
+}
+
+.column h4 {
+  margin: 0;
+  padding: 12px 20px;
+  background-color: #e0e0e0; /* light gray */
+  color: #333;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+}
+
+.column ul {
+  list-style-type: disc; /* bullet points */
+  padding: 5px 40px;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+a {
+  color: #3366cc;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  color: #444;
+}
+#specialPaymentArrangementPopup p {
+  margin-left: 10px;
+}

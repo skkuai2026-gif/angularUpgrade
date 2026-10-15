@@ -1,0 +1,32 @@
+<div class="pgContainer scrollDiv">
+  <div class="headerBanner hbProductSuite"></div>
+  <div class="pgContent">
+    <div class="pageHeader">
+      <sym-breadcrum-collateral [breadCrumbList]="breadCrumbList"></sym-breadcrum-collateral>
+      <!-- breadcrum ends-->
+    </div>
+    <div class="pageData">
+      <div class="collateralScreen" data-screen-no="1">
+        <div class="collateralScreenContent">
+          @if (arrType) {
+          <div class="row" id="row_module_list">
+            @for (cModule of arrType; track cModule) {
+            <div class="col-sm-3">
+              <div class="box text-center">
+                <a [routerLink]="'/collateral/' + cModule.link + '/' + selectedId + '/' + cModule.id">
+                  <span class="boxIcon">
+                    <img [src]="'app/collateral/assets/images/' + cModule.icon" alt=" " />
+                  </span>
+                  <h4 class="headline">{{ cModule.name }}</h4>
+                </a>
+              </div>
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    <!-- step data container ends-->
+  </div>
+</div>

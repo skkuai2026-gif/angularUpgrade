@@ -1,0 +1,88 @@
+@if (responseReceived) {
+<ng-container ; else showValidationMeassage>
+  @if (isSubmissionSuccessful) { @if (company === 'SLGFI') {
+  <h4 class="text-center">APPLICATION STATUS</h4>
+  <div class="ui-grid-d">
+    <div class="row">
+      <span class="record">Application Status</span>
+    </div>
+    <br />
+    <div>
+      <ul class="customList">
+        <li>{{ submissionMessage }}</li>
+        @if (submissionADAMessage) {
+        <li>Reminder:&nbsp;{{ submissionADAMessage }}</li>
+        }
+        <br /><br />
+      </ul>
+    </div>
+  </div>
+  } @if (company === 'SLOCPI' && service.responseIO.data.Proposer.partyTypeCd === 'ORGANIZATION') {
+  <h4 class="text-center">APPLICATION STATUS</h4>
+  <div class="ui-grid-d">
+    <div class="row">
+      <span class="record">Application Status</span>
+    </div>
+    <br />
+    <div>
+      <ul class="customList">
+        <li>{{ submissionMessage }}</li>
+        <br /><br />
+      </ul>
+    </div>
+  </div>
+  } @if (company === 'SLOCPI' && service.responseIO.data.Proposer.partyTypeCd === 'INDIVIDUAL') {
+  <div id="submissionMessageForIndividualSlocpi">
+    <span class="congratulationsText">Congratulations!</span>
+  </div>
+  <br />
+  <div>
+    <div [innerHTML]="submissionMessage"></div>
+    <br />
+  </div>
+  } }
+</ng-container>
+}
+<ng-template #showValidationMeassage>
+  @if (validationMessages && !isSubmissionSuccessful) {
+  <div class="container">
+    <!-- <h4 class="text-danger mt-3 py-2">{{ settingService.getLabelValue('systemError') }}</h4> -->
+    <div class="row" style="background-color: rgba(255, 254, 254, 0.973)">
+      @for (tab of validationMessages | keyvalue; track tab) {
+      <div class="col-12">
+        <ul style="list-style-type: disc; padding-left: 20px">
+          @for (inner of tab.value | keyvalue; track inner) {
+          <li>
+            @for (msg of inner.value | keyvalue; track msg) {
+            <div class="text-wrap text-danger">
+              {{ msg.value }}
+            </div>
+            }
+          </li>
+          }
+        </ul>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</ng-template>
+
+<!-- Add this to actually display it -->
+@if (validationMessages) {
+<ng-container *ngTemplateOutlet="showValidationMeassage"></ng-container>
+} @if (service.isPolicySubmitSuccess === false && service.isPolicySubmitSuccess != undefined) {
+<h4 class="text-center">APPLICATION STATUS</h4>
+<div class="ui-grid-d">
+  <div class="row">
+    <span class="record">Application Status</span>
+  </div>
+  <br />
+  <div>
+    <ul class="customList">
+      <li [innerHTML]="settingService.getLabelValue('policyNotSubmitMessage')"></li>
+      <br /><br />
+    </ul>
+  </div>
+</div>
+}

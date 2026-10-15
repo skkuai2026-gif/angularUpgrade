@@ -1,0 +1,215 @@
+@if (service.responseIO?.data?.InitialPayment != undefined) {
+<div class="blockContainer">
+  <div
+    class="block marginAuto payemntPage"
+    [ngClass]="{
+      pending:
+        service.responseIO.data.InitialPayment?.InitialPaymentDetailsList[0]['instrumentStatusCd'] == 'PENDING',
+      completed:
+        service.responseIO.data.InitialPayment?.InitialPaymentDetailsList[0]['instrumentStatusCd'] == 'SUCCESS',
+      error: service.responseIO.data.InitialPayment?.InitialPaymentDetailsList[0]['instrumentStatusCd'] == 'FAIL'
+    }"
+  >
+    @if ( service.responseIO && service.responseIO.data && service.responseIO.data.InitialPayment != undefined &&
+    partyRoleList != undefined ) {
+    <div class="card payment-card mb-2">
+      <div class="header-block">
+        <h4 class="left">
+          {{ settingService.getLabelValue('Proposal Summary') }}
+        </h4>
+        <label class="right"> # {{ service.responseIO.data.Entity.proposalNum }} </label>
+      </div>
+      <div class="card-body payment-body">
+        @if (service.responseIO.data && service.responseIO.data['BasePlan'] != undefined) {
+        <div class="grid-layout">
+          <label>{{ settingService.getLabelValue('family') }}</label>
+          <label class="text-right">
+            {{ service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productFamilyCd') }}
+          </label>
+        </div>
+        }
+        <div class="grid-layout">
+          <label>{{ settingService.getLabelValue('name') }}</label>
+          <label class="text-right">
+            {{ service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productId') }}
+          </label>
+        </div>
+        @if (service.responseIO.data.BasePlan['productPlanOptionCd'] != undefined) {
+        <div class="grid-layout">
+          <label> {{ service.getLabelValue(service.responseIO.data.BasePlan, 'productPlanOptionCd') }}</label>
+          <label class="text-right">
+            {{ settingService.getLabelValue(service.responseIO.data['BasePlan']['productPlanOptionDesc']) }}
+          </label>
+        </div>
+        }
+        <div class="grid-layout">
+          <label>{{ service.getLabelValue(service.responseIO.data.BasePlan, 'baseSumAssured') }}</label>
+          <label class="text-right">
+            {{
+              service.responseIO.data.BasePlan.baseSumAssured
+                | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseSumAssured')
+            }}
+          </label>
+        </div>
+      </div>
+    </div>
+    } @if ( service.responseIO && service.responseIO.data && service.responseIO.data.InitialPayment != undefined &&
+    partyRoleList != undefined ) {
+    <div class="card payment-card mb-2">
+      <h4>
+        {{ settingService.getLabelValue('Term') }}
+      </h4>
+      <div class="card-body payment-body">
+        <!-- <div class="grid-layout">
+            <label>{{ service.getLabelValue(service.responseIO.data.BasePlan, 'paymentTypeCd') }}</label>
+            <label class="text-right">
+              {{ service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'paymentTypeCd') }}
+            </label>
+          </div> -->
+        <!-- <div class="grid-layout">
+          <label>{{ service.getLabelValue(service.responseIO.data.BasePlan, 'productTerm') }}</label>
+          <label class="text-right"> {{ service.responseIO.data.BasePlan.productTerm }}</label>
+        </div> -->
+        <div class="grid-layout">
+          <label>{{ settingService.getLabelValue('Policy') }}</label>
+          <label class="text-right"> {{ service.responseIO.data['BasePlan']['productTerm'] }}</label>
+        </div>
+        <div class="grid-layout">
+          <label>{{ settingService.getLabelValue('payment') }}</label>
+          <label class="text-right">{{ service.responseIO.data['BasePlan']['premiumPayingTerm'] }} </label>
+        </div>
+      </div>
+    </div>
+    } @if ( service.responseIO && service.responseIO.data && service.responseIO.data.InitialPayment != undefined &&
+    partyRoleList != undefined ) {
+    <div class="card payment-card mb-2">
+      <h4>
+        {{ settingService.getLabelValue('Premium') }}
+      </h4>
+      <div class="card-body payment-body">
+        <div class="grid-layout">
+          <label>{{ settingService.getLabelValue('planPremium') }}</label>
+          <label class="text-right"
+            >{{
+              service.responseIO.data['BasePlan']['modalPremium']
+                | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+            }}
+          </label>
+        </div>
+        <div class="grid-layout">
+          <label>{{ settingService.getLabelValue('riderPremium') }}</label>
+          <label class="text-right">{{
+            getRiderTotalPremium()
+              | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+          }}</label>
+        </div>
+        <div class="grid-layout">
+          <label>{{ settingService.getLabelValue('totalPremium') }}</label>
+          <label class="text-right"
+            >{{
+              service.responseIO.data['BasePlan']['modalPremium'] + getRiderTotalPremium()
+                | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+            }}
+          </label>
+        </div>
+      </div>
+    </div>
+    } @if ( service.responseIO && service.responseIO.data && service.responseIO.data.InitialPayment != undefined &&
+    partyRoleList != undefined ) {
+    <div class="card payment-card">
+      <h4 class="m-0">
+        {{ service.getMultilingualLabel('paymentSummary') }}
+        @if ( service.responseIO && service.responseIO.data && service.responseIO.data.InitialPayment.currencyCd !=
+        undefined && service.responseIO.data.InitialPayment.currencyCd != null ) {
+        <span class="small font-italic"
+          >( {{ settingService.getLabelValue('allAmount')
+          }}{{ service.responseIO.data.InitialPayment.currencyCd }})</span
+        >
+        }
+      </h4>
+      @if ( service.responseIO && service.responseIO.data && service.responseIO.data.InitialPayment != undefined &&
+      partyRoleList != undefined ) {
+      <div class="card payment-card p-0">
+        <div class="card-body payment-body">
+          <!-- <div class="grid-layout">
+              <label>{{ service.getLabelValue(service.responseIO.data.BasePlan, 'modalPremium') }}</label>
+              <label class="text-right">
+                {{
+                service.responseIO.data.BasePlan.modalPremium
+                | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                }}
+              </label>
+            </div>
+            <div class="grid-layout">
+              <label>{{ service.getLabelValue(service.responseIO.data.BasePlan, 'baseAnnualPremium') }}</label>
+              <label class="text-right">
+                {{
+                service.responseIO.data.BasePlan.baseAnnualPremium
+                | customFormat
+                : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseAnnualPremium')
+                }}
+              </label>
+            </div> -->
+          <div class="grid-layout">
+            <label class="highlight"> {{ service.getMultilingualLabel('PAYER') }} </label>
+            <label class="highlight text-right">
+              {{ partyRoleList.data['values'][service.responseIO.data['InitialPayment']['payerTypeCd']][0].name }}
+              <span class="small font-italic"
+                >({{ service.getFieldLookupDesc(service.responseIO.data['InitialPayment'], 'payerTypeCd') }})</span
+              >
+            </label>
+          </div>
+          @if ( service.responseIO.data.InitialPayment.InitialPaymentDetailsList[0]['instrumentStatusCd'] !=
+          undefined && service.responseIO.data.InitialPayment.InitialPaymentDetailsList[0]['instrumentStatusCd'] !=
+          null ) {
+          <div class="grid-layout">
+            <label class="highlight">
+              {{ service.getMultilingualLabel('Payment Status') }}
+            </label>
+            <label class="text-right pl-1 highlight">
+              {{
+                service.getFieldLookupDesc(
+                  service.responseIO.data.InitialPayment.InitialPaymentDetailsList[0],
+                  'instrumentStatusCd'
+                )
+              }}
+            </label>
+          </div>
+          }
+          <div class="grid-layout">
+            @if ( service.responseIO.data.InitialPayment.InitialPaymentDetailsList[0]['instrumentStatusCd'] !=
+            'SUCCESS' ) {
+            <label class="highlight">
+              {{ service.getMultilingualLabel('Payable Amount') }}
+            </label>
+            } @if ( service.responseIO.data.InitialPayment.InitialPaymentDetailsList[0]['instrumentStatusCd'] ==
+            'SUCCESS' ) {
+            <label class="highlight">
+              {{ service.getMultilingualLabel('Paid Amount') }}
+            </label>
+            } @if ( service.responseIO.data.InitialPayment.InitialPaymentDetailsList[0]['inwardAmount'] !=
+            undefined && service.responseIO.data.InitialPayment.InitialPaymentDetailsList[0]['inwardAmount'] !=
+            null ) {
+            <label class="text-right highlight">
+              {{
+                service.responseIO.data.InitialPayment.InitialPaymentDetailsList[0]['inwardAmount']
+                  | customFormat
+                    : service.getFieldMetadata(
+                        service.responseIO.data.InitialPayment.InitialPaymentDetailsList[0],
+                        'inwardAmount'
+                      )
+              }}
+            </label>
+            }
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>
+}
+<form name="paymentGatewayForm" [action]="settingService.getURLValue('PAYMENTGATEWAY')" method="post">
+  <input type="hidden" name="inwardId" id="inwardId" [value]="service.responseIO.data.InitialPayment.id" />
+</form>

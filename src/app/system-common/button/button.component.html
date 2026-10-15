@@ -1,0 +1,28 @@
+<button
+  type="button"
+  [class]="class != undefined ? class : 'btn btn_primary ml-2 '"
+  [id]="id != undefined ? id : 'btn_Demo'"
+  (click)="onButtonClick()"
+  [attr.data-toggle]="tooltip !== undefined ? 'tooltip' : ''"
+  data-placement="right"
+  [attr.title]="tooltip !== undefined ? settingService.getLabelValue(tooltip) : ''"
+  [disabled]="
+    (isDisabled != undefined && isDisabled) || (settingService.buttonid == id && isLoaderRequired) == true
+      ? true
+      : false
+  "
+  [autofocus]="autoFocus ? true : false"
+>
+  @if ( iconClass && iconClass != '' && iconClass != undefined && iconPosition != undefined && iconPosition ===
+  'left' ) {
+  <i [class]="iconClass != undefined ? iconClass + ' mr-1' : ''" aria-hidden="true"></i>
+  } @if (text && text != '' && text != undefined) { @if ( settingService.isMobileViewRendered() && !showTextAlways
+  && iconClass && iconClass != '' && iconClass != undefined && iconClass != null) { } @else {
+  {{ settingService.getLabelValue(text) }}
+  } } @if ( iconClass && iconClass != '' && iconClass != undefined && (iconPosition == undefined || iconPosition
+  === 'right') ) {
+  <i [class]="iconClass != undefined ? iconClass + ' ml-1' : ''" aria-hidden="true"></i>
+  } @if (settingService.buttonid == id && isLoaderRequired) {
+  <i class="fa fa-spinner fa-spin ml-2"></i>
+  }
+</button>

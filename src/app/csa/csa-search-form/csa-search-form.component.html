@@ -1,0 +1,10 @@
+<sym-page-container [breadCrumbList]="breadCrumbList">
+  <div id="csaSearch">
+    <sym-search
+      [moreOptionList]="moreOptionList"
+      [isDeleteRequired]="true"
+      [service]="service"
+      (moreOptionClick)="onMoreOptionClicked($event)"
+    ></sym-search>
+  </div>
+</sym-page-container>

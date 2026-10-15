@@ -1,0 +1,10 @@
+.card-body {
+  background-color: lightgoldenrodyellow;
+  color: white;
+}
+
+.card {
+  border: 0 !important;
+  background-color: lightgoldenrodyellow;
+  color: black !important;
+}

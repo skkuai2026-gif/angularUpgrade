@@ -1,0 +1,91 @@
+// .product-container .product-image {
+//   height: 100%;
+//   position: absolute;
+// }
+
+// .product-container .product-summary {
+//   position: relative;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   right: 0px;
+//   z-index: 8;
+//   padding: 10px 15px;
+// }
+// .product-container .product-summary h4 {
+//   font-size: 1.1rem;
+//   margin: 10px 0 5px 0;
+//   padding-bottom: 5px;
+//   position: relative;
+// }
+// .product-container .product-summary h4:after {
+//   content: '';
+//   position: absolute;
+//   bottom: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 1px;
+//   background-color: #8f9bb3;
+//   display: block;
+// }
+// .product-container .product-summary p {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   margin-bottom: 5px;
+//   font-size: 0.9rem;
+// }
+
+// .product-container .product-summary p label {
+//   margin: 0 10px 0 0;
+//   color: #1c58ff;
+// }
+// .product-container .product-summary p span {
+//   font-size: 0.95rem;
+//   text-align: right;
+// }
+
+// .product-step-container {
+//   padding: 10px;
+// }
+
+// .outline-container {
+//   border: 1px solid #000000;
+// }
+
+// .owner {
+//   display: flex;
+//   align-items: flex-start;
+//   line-height: 1;
+//   padding: 0px;
+//   margin: 0;
+// }
+
+// .owner h4 > .fgInline.form-group:first {
+//   margin-bottom: 10px !important;
+// }
+
+.help-product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.help-product span,
+.help-product a {
+  font-family: 'montserratlight';
+  font-size: 1.39rem;
+  text-align: center;
+}
+
+.help-product a {
+  color: #018acd;
+  text-decoration: underline;
+  font-size: 1.79rem;
+  cursor: pointer;
+}
+
+.product-analysis .header {
+  color: #018acd;
+  font-size: 1.32rem;
+}

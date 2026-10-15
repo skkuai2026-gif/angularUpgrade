@@ -1,0 +1,8 @@
+<sym-data-entry-grid
+  [fieldIds]="'title,description,activityDt,closureDate,'"
+  [modelList]="service.responseIO.data.LeadActivityList"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (onRowAdded)="onAddLeadActivity($event)"
+  [columWidthPerc]="[30, 70, 0, 0]"
+></sym-data-entry-grid>

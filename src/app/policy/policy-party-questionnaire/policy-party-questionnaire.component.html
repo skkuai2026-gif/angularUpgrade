@@ -1,0 +1,32 @@
+@if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 &&
+service.responseIO.data['PartyQuestionnaireResponseList'] &&
+service.responseIO.data['PartyQuestionnaireResponseList'].length != 0 ) {
+<div>
+  <sym-sub-tab [tabList]="partyQuestionnaireTabList" (selectedTab)="setSelectedTab($event)">
+    @if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 &&
+    service.responseIO.data['PartyQuestionnaireResponseList'] &&
+    service.responseIO.data['PartyQuestionnaireResponseList'].length != 0) {
+    <div>
+      <ng-container>
+        <div>
+          @for (questionnaire of service.responseIO.data['PartyQuestionnaireResponseList']; track questionnaire;
+          let row = $index) { @if ( questionnaire.partyGuid == [selectedPartyQuestionnaireTab.id] &&
+          selectedPartyQuestionnaireTab.visible ) { @if ( questionnaire.questionSets != undefined &&
+          questionnaire.questionSets.length != 0 && questionnaire.questionSets.length >= 1 ) { @for (questionSet of
+          questionnaire.questionSets; track questionSet; let i = $index) {
+          <sym-policy-question-set
+            [questionSet]="questionSet"
+            [partyGuid]="questionnaire.partyGuid"
+            [isParentPanel]="true"
+            [policyService]="policyService"
+          ></sym-policy-question-set>
+          } } } }
+        </div>
+      </ng-container>
+    </div>
+    } @else { No Data to display! }
+  </sym-sub-tab>
+</div>
+} @if (this.service.responseIO['isMetadataHelpReqd'] != true && this.isNavigationLinkReq) {
+<sym-navigation-links [navigationLinkList]="navigationLinkList"></sym-navigation-links>
+}

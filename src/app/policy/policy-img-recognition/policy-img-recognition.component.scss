@@ -1,0 +1,99 @@
+.aiml_img {
+  border: 1px solid #008000;
+  padding: 10px;
+  height: 300px;
+  margin: 0 20px;
+}
+
+.error {
+  color: #ff3d71;
+}
+
+#video {
+  background-color: #000000;
+}
+#canvas {
+  display: none;
+}
+
+.video_container {
+  width: 285px;
+  height: 200px;
+  border-radius: 14px;
+}
+
+.displayed_img {
+  height: 180px;
+}
+
+.option_container {
+  display: grid;
+  grid-column-gap: 12px;
+  grid-template-columns: 120px 230px 260px;
+  max-width: 550px;
+}
+
+.option_container > .uploadPic {
+  border: 0;
+  padding-top: 20px;
+}
+
+.image_comparison_container {
+  display: flex;
+  justify-content: center;
+}
+
+.view_container {
+  display: grid;
+  grid-column-gap: 10px;
+  grid-template-columns: 55% 55% 60%;
+  max-width: 550px;
+  margin-bottom: 10px;
+}
+
+.mob_option_container,
+.mob_view_container {
+  display: inline-block;
+}
+
+.mob_view_container .video_container {
+  margin: 10px auto;
+  padding: 20px;
+}
+
+.mt-10 {
+  margin: 10px;
+}
+
+@media only screen and (min-width: 320px) {
+  .mt-10 {
+    margin-left: 0px;
+    padding-left: 3px;
+  }
+}
+
+/* for portrait mode and landscape mode */
+@media only screen and (min-width: 768px) and (max-width: 1366px) {
+  .footer {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+  .mob_option_container {
+    width: 50%;
+  }
+  .mt-10 {
+    margin-left: 0px;
+    padding-left: 3px;
+  }
+  .mob_view_container {
+    display: flex;
+    gap: 50px;
+  }
+  .mob_view_container .video_container {
+    margin: 0px;
+    padding: 0px;
+  }
+  .video_container {
+    height: auto;
+  }
+}

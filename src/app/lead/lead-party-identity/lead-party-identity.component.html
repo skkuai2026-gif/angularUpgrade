@@ -1,0 +1,23 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else { @if (partyModel.IdentityList != undefined) {
+<sym-data-entry-grid
+  [fieldIds]="
+    'identityTypeCd,idStatus,identityField1,identityField2,identityField3,identityField4,identityField5,identityNum,issueDt,expiryDt,issuingAuthority,primaryFl'
+  "
+  [modelList]="partyModel.IdentityList"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (onRowAdded)="onAddPartyIdentity($event)"
+  [isFormFormatRequired]="true"
+  [formColumnWidth]="'6,6,6,6,6,6,6,6,6,6,6,6'"
+></sym-data-entry-grid>
+} }

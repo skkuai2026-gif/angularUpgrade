@@ -1,0 +1,71 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else { @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div>
+  <sym-panel [id]="'policy_Proposer_Details_Body'" [name]="'policyProposerDetails'">
+    @if (isProposerLASameDisplay) {
+    <sym-field-group
+      [fieldIds]="'proposerLASame'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.Entity"
+    ></sym-field-group>
+    } @if (service.responseIO.data['Entity'].proposerLASame == 'YES' && isProposerLASameDisplay ? false : true) {
+    <div>
+      <sym-field-group
+        [fieldIds]="'partyTypeCd'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.Proposer"
+        [gridColumns]="[6]"
+      ></sym-field-group>
+      @if ( (service.responseIO.data.Proposer && service.responseIO.data.Proposer.partyTypeCd === undefined) ||
+      service.responseIO.data.Proposer.partyTypeCd === null || service.responseIO.data.Proposer.partyTypeCd ===
+      'INDIVIDUAL' ) {
+      <div id="proposer_individual">
+        <sym-quotation-party
+          [model]="service.responseIO.data.Proposer"
+          [contactReqd]="false"
+        ></sym-quotation-party>
+      </div>
+      } @if ( service.responseIO.data.Proposer && service.responseIO.data.Proposer.partyTypeCd === 'ORGANIZATION' )
+      {
+      <div id="proposer_corporate">
+        <sym-field-group
+          [fieldIds]="'corporateName,corporateName2'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="service.responseIO.data.Proposer"
+        ></sym-field-group>
+      </div>
+      }
+      <sym-field-group
+        [fieldIds]="'contactNum,emailAddress'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.Proposer"
+        [gridColumns]="[3, 6]"
+      ></sym-field-group>
+      <sym-panel [id]="'address_Details_Body'" [name]="'offAddress'">
+        <sym-field-group
+          [fieldIds]="'coverageCountryCd,addressLine4,coverageCityCd'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="service.responseIO.data.Proposer"
+          (onFieldsCreated)="onAddressFieldsCreated($event)"
+          [gridColumns]="[8, 8, 8]"
+        ></sym-field-group>
+      </sym-panel>
+    </div>
+    }
+  </sym-panel>
+</div>
+} }

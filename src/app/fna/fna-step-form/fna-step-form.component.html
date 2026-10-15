@@ -1,0 +1,53 @@
+<!-- <div class="pgContent pgContentFNA" *ngIf="service.fnaModel != undefined"> -->
+@if (service.responseIO != undefined) {
+<sym-page-container
+  [breadCrumbList]="breadCrumbList"
+  [stepList]="stepList"
+  [responseIO]="service.responseIO"
+  [breakErrorListInPopUp]="false"
+  [currentStepSelected]="selectedStep"
+  (selectedStep)="onStepChanged($event)"
+>
+  @if (service.responseIO && service.responseIO.data && selectedStep != undefined) {
+  <sym-step [stepItem]="selectedStep" (actionClick)="onActionClicked($event)" (tabChange)="onTabChanged($event)">
+    <div class="pageData">
+      <div class="box b0 fnaContainer">
+        <div class="fnaScreen {{ 'fnaScreenContent_' + selectedStep.index }}">
+          @if (selectedStep.selectedTab != undefined) {
+          <div class="fnaScreenContent">
+            @if (selectedStep.selectedTab.id == 'tab_dream') {
+            <!-- <sym-fna-dream [selectedTab]="selectedStep.id"></sym-fna-dream> -->
+            <sym-fna-dream></sym-fna-dream>
+            } @if (selectedStep.selectedTab.id == 'tab_buyProduct') {
+            <!-- <sym-fna-buy-product [selectedTab]="selectedStep.id"></sym-fna-buy-product> -->
+            <sym-fna-buy-product></sym-fna-buy-product>
+            } @if (selectedStep.selectedTab.id == 'tab_premium') {
+            <!-- <sym-fna-premium [selectedTab]="selectedStep.id"></sym-fna-premium> -->
+            <sym-fna-premium></sym-fna-premium>
+            } @if (selectedStep.selectedTab.id == 'tab_timeline') {
+            <!-- <sym-fna-timeline [selectedTab]="selectedStep.id"></sym-fna-timeline> -->
+            <sym-fna-timeline></sym-fna-timeline>
+            } @if (selectedStep.selectedTab.id == 'tab_recommendation') {
+            <!-- <sym-fna-recommendation [selectedTab]="selectedStep.id"></sym-fna-recommendation> -->
+            <sym-fna-recommendation></sym-fna-recommendation>
+            } @if (selectedStep.selectedTab.id == 'tab_productSummary') {
+            <!-- <sym-fna-product-summary [selectedTab]="selectedStep.id"></sym-fna-product-summary> -->
+            <sym-fna-product-summary></sym-fna-product-summary>
+            } @if (selectedStep.selectedTab.id == 'tab_riskProfile') {
+            <!-- <sym-fna-risk-profile [selectedTab]="selectedStep.id"></sym-fna-risk-profile> -->
+            <sym-fna-risk-profile></sym-fna-risk-profile>
+            } @if (selectedStep.selectedTab.id == 'tab_signature') {
+            <!-- <sym-fna-signature [selectedTab]="selectedStep.id"></sym-fna-signature> -->
+            <sym-fna-signature></sym-fna-signature>
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </sym-step>
+  }
+</sym-page-container>
+}
+<label id="applicationMode">{{ settingService.getApplicationMode() }}</label>
+<!-- </div> -->

@@ -1,0 +1,36 @@
+@if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div class="email-container">
+  <div class="emailPage">
+    <div class="emailPagediv">
+      <sym-field-group
+        [fieldIds]="'toEmail'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.EmailRequest"
+        [gridColumns]="[12]"
+      ></sym-field-group>
+      <sym-field-group
+        [fieldIds]="'ccEmail,bccEmail'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.EmailRequest"
+        [gridColumns]="[12]"
+      ></sym-field-group>
+      <sym-field-group
+        [fieldIds]="'message'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.EmailRequest"
+        [gridColumns]="[12]"
+      ></sym-field-group>
+    </div>
+    <!-- <div class="emailPagediv">
+      <P class="defaultmsg">Email Message !!!!....</P>
+    </div> -->
+  </div>
+  <br />
+  @if (isOutputPreferenceReq) {
+  <sym-output-preferences id="emailContainerOp" [prefix]="'email'"></sym-output-preferences>
+  }
+</div>
+}

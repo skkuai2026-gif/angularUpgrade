@@ -1,0 +1,342 @@
+@if (xmlDom != undefined && xmlDom.children != undefined && responseIO != undefined && renderXML) { @for (element
+of xmlDom.children; track element) { @switch (element.nodeName) { @case ('panel') {
+<ng-template [ngTemplateOutlet]="panel" [ngTemplateOutletContext]="{ panel: element }"></ng-template>
+} @case ('component') {
+<ng-template [ngTemplateOutlet]="component" [ngTemplateOutletContext]="{ component: element }"></ng-template>
+} @case ('row') {
+<ng-template [ngTemplateOutlet]="row" [ngTemplateOutletContext]="{ row: element }"></ng-template>
+} @case ('col') {
+<ng-template [ngTemplateOutlet]="col" [ngTemplateOutletContext]="{ col: element }"></ng-template>
+} @case ('grid') {
+<ng-template [ngTemplateOutlet]="grid" [ngTemplateOutletContext]="{ grid: element }"></ng-template>
+} @case ('field') {
+<ng-template [ngTemplateOutlet]="field" [ngTemplateOutletContext]="{ field: element }"></ng-template>
+} @case ('html') {
+<ng-template [ngTemplateOutlet]="html" [ngTemplateOutletContext]="{ html: element }"></ng-template>
+} @case ('xmlcomponent') {
+<ng-template [ngTemplateOutlet]="component" [ngTemplateOutletContext]="{ component: element }"></ng-template>
+} @case ('subTabs') {
+<ng-template [ngTemplateOutlet]="subTabs" [ngTemplateOutletContext]="{ subTabs: element }"></ng-template>
+} @case ('navigationLinks') {
+<ng-template
+  [ngTemplateOutlet]="navigationLinks"
+  [ngTemplateOutletContext]="{ navigationLinks: element }"
+></ng-template>
+} @case ('symLabel') {
+<ng-template [ngTemplateOutlet]="symLabel" [ngTemplateOutletContext]="{ symLabel: element }"></ng-template>
+} @case ('container') {
+<ng-template [ngTemplateOutlet]="container" [ngTemplateOutletContext]="{ container: element }"></ng-template>
+} } } }
+<ng-template let-panel="panel" #panel>
+  @if (panel.getAttribute('symIfVal') === 'true') {
+  <sym-panel
+    [id]="panel.getAttribute('id')"
+    [name]="panel.getAttribute('label')"
+    [isHidden]="panel.getAttribute('label') == '#none' || panel.getAttribute('label') == undefined ? true : false"
+    [additionalInfo]="
+      panel.getAttribute('additionalInfo') != undefined
+        ? panel.getAttribute('additionalInfo').replaceAll('symIndex', currIndex + 1)
+        : undefined
+    "
+  >
+    <sym-xml-config-ui
+      [xmlDom]="panel"
+      [service]="service"
+      [responseIO]="responseIO"
+      [model]="model != undefined ? model : undefined"
+      [productFacets]="productFacets"
+      [companyFacets]="companyFacets"
+      [currIndex]="currIndex"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      (onRowAdded)="onRowAddedClicked($event)"
+      (searchIconClicked)="onSearchIconClick($event)"
+      (onElementClicked)="onHTMLElementClick($event)"
+      (notifyKeyDown)="onKeyDown($event)"
+      [responseUpdated]="responseUpdated"
+    >
+    </sym-xml-config-ui>
+  </sym-panel>
+  }
+</ng-template>
+<ng-template let-row="row" #row>
+  @if (row.getAttribute('symIfVal') === 'true') {
+  <div
+    [class]="
+      'xmlRow col-sm-12 col-md-12 co-lg-12 col-xl-12' +
+      ' ' +
+      (row.getAttribute('className') != undefined ? row.getAttribute('className') : '')
+    "
+  >
+    <sym-xml-config-ui
+      [xmlDom]="row"
+      [service]="service"
+      [responseIO]="responseIO"
+      [model]="model != undefined ? model : service.getModel(row.getAttribute('model'))"
+      [productFacets]="productFacets"
+      [companyFacets]="companyFacets"
+      [currIndex]="currIndex"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      (onRowAdded)="onRowAddedClicked($event)"
+      (searchIconClicked)="onSearchIconClick($event)"
+      (onElementClicked)="onHTMLElementClick($event)"
+      (notifyKeyDown)="onKeyDown($event)"
+      class="row"
+      [responseUpdated]="responseUpdated"
+    >
+    </sym-xml-config-ui>
+  </div>
+  }
+</ng-template>
+<ng-template let-col="col" #col>
+  <div
+    [class]="
+      'xmlCol col-sm-' +
+      (col.getAttribute('width') != undefined ? col.getAttribute('width') : 6) +
+      ' col-md-' +
+      (col.getAttribute('width') != undefined ? col.getAttribute('width') : 6) +
+      ' col-lg-' +
+      (col.getAttribute('width') != undefined ? col.getAttribute('width') : 6) +
+      ' col-xl-' +
+      (col.getAttribute('width') != undefined ? col.getAttribute('width') : 6) +
+      ' p-0 pr-3' +
+      '  ' +
+      (col.getAttribute('className') != undefined ? col.getAttribute('className') : '')
+    "
+  >
+    @if (col.getAttribute('symIfVal') === 'true') {
+    <sym-xml-config-ui
+      [xmlDom]="col"
+      [service]="service"
+      [responseIO]="responseIO"
+      [model]="model != undefined ? model : service.getModel(col.getAttribute('model'))"
+      [productFacets]="productFacets"
+      [companyFacets]="companyFacets"
+      [currIndex]="currIndex"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      (onRowAdded)="onRowAddedClicked($event)"
+      (searchIconClicked)="onSearchIconClick($event)"
+      (onElementClicked)="onHTMLElementClick($event)"
+      (notifyKeyDown)="onKeyDown($event)"
+      [responseUpdated]="responseUpdated"
+    >
+    </sym-xml-config-ui>
+    }
+  </div>
+</ng-template>
+<ng-template let-grid="grid" #grid>
+  @if (grid.getAttribute('symIfVal') === 'true') {
+  <sym-data-entry-grid
+    [itemTpl]="itemTpl"
+    [fieldIds]="grid.getAttribute('fieldIds')"
+    [responseIO]="responseIO"
+    [modelList]="service.getModel(grid.getAttribute('model'))"
+    [columWidthPerc]="getColumnWidth(grid.getAttribute('columWidthPerc'))"
+    [isMoreRequired]="grid.getAttribute('isMoreRequired')"
+    [isDeleteRequired]="grid.getAttribute('isDeleteRequired')"
+    [isAddRequired]="grid.getAttribute('isAddRequired')"
+    [isFormFormatRequired]="grid.getAttribute('isFormFormatRequired')"
+    [isCustomLayout]="grid.getAttribute('isCustomLayout')"
+    [formColumnWidth]="grid.getAttribute('formColumnWidth')"
+    [modelList]="model"
+    [modelPath]="grid.getAttribute('model')"
+    [isXMLCodeRendered]="true"
+    [addLabelText]="grid.getAttribute('addLabelText')"
+    [deleteLabelText]="grid.getAttribute('deleteLabelText')"
+    (notifyChange)="onInputChanged($event)"
+    (onRowAdded)="onRowAddedClicked($event)"
+    (notifyFocus)="onInputFocused($event)"
+    (onMoreSelected)="onMoreSelectedClicked($event)"
+  >
+    <ng-template let-item #itemTpl let-index="index">
+      <sym-xml-config-ui
+        [xmlDom]="grid"
+        [currIndex]="index"
+        [model]="item"
+        [service]="service"
+        [responseIO]="responseIO"
+        [productFacets]="productFacets"
+        [companyFacets]="companyFacets"
+        (notifyChange)="onInputChanged($event)"
+        (notifyFocus)="onInputFocused($event)"
+        (onRowAdded)="onRowAddedClicked($event)"
+        (searchIconClicked)="onSearchIconClick($event)"
+        (onElementClicked)="onHTMLElementClick($event)"
+        [responseUpdated]="responseUpdated"
+      >
+      </sym-xml-config-ui>
+    </ng-template>
+  </sym-data-entry-grid>
+  }</ng-template
+>
+<ng-template let-html="html" #html>
+  <!-- <ng-container *ngFor="let child of html.children">
+      <span
+      *ngIf="
+        html.getAttribute('symIf') != undefined
+          ? service.isApplicable(html.getAttribute('symIf'), service.responseIO)
+          : true
+      "
+        [innerHTML]="service.getExpressionValue(child.outerHTML, service.responseIO) | safeHtml"
+      ></span>
+    </ng-container> -->
+
+  @if (html.getAttribute('symIfVal') === 'true') {
+  <sym-xml-html-ui
+    [html]="html"
+    [service]="service"
+    [responseIO]="responseIO"
+    [productFacets]="productFacets"
+    [companyFacets]="companyFacets"
+    [symIndex]="currIndex"
+    (onElementClicked)="onHTMLElementClick($event)"
+  ></sym-xml-html-ui>
+  }
+</ng-template>
+<ng-template let-field="field" #field>
+  @if (field.getAttribute('symIfVal') === 'true') {
+  <sym-field-group
+    [fieldIds]="field.getAttribute('fieldIds')"
+    [isRowRequired]="
+      service.responseIO['isMetadataHelpReqd'] !== true
+        ? true
+        : field.getAttribute('isRowRequired') === 'true'
+        ? true
+        : false
+    "
+    [responseIO]="responseIO"
+    [hideLabel]="field.getAttribute('hideLabel')"
+    [hideLabelList]="field.getAttribute('hideLabelList')"
+    [modelPath]="$safeNavigationMigration(field.getAttribute('model')?.replaceAll('symIndex', currIndex))"
+    [model]="model"
+    [gridColumnsStr]="field.getAttribute('width')"
+    [isXMLCodeRendered]="true"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    (searchIconClicked)="onSearchIconClick($event)"
+    (onElementClicked)="onHTMLElementClick($event)"
+    (notifyKeyDown)="onKeyDown($event)"
+  ></sym-field-group>
+  }
+  <!--  [model]="model != undefined ? model : service.getModel(field.getAttribute('model'))" -->
+</ng-template>
+<ng-template let-component="component" #component>
+  @if (component.getAttribute('symIfVal') === 'true') {
+  <sym-dynamic-component
+    [componentToRender]="service.componentListToDisplay[component.getAttribute('name')]"
+    [inputOptions]="component.attributes"
+    [service]="service"
+    [xmlDOM]="component"
+    [responseIO]="responseIO"
+    [responseUpdated]="responseUpdated"
+    (notifyReloadStepOutput)="onReloadStepTriggered($event)"
+  ></sym-dynamic-component>
+  }
+</ng-template>
+
+<ng-template let-subTabs="subTabs" #subTabs>
+  @if (subTabs.getAttribute('symIfVal') === 'true') {
+  <sym-xml-sub-tab-ui
+    [xmlDom]="subTabs"
+    (selectedTab)="onSubTabSelected($event)"
+    [service]="service"
+    [modelList]="getModelForSubTab(subTabs)"
+    [responseIO]="responseIO"
+    [itemSubTabTpl]="itemSubTabTpl"
+    [productFacets]="productFacets"
+    [companyFacets]="companyFacets"
+    (onTabAdded)="onTabAdd($event)"
+    (onTabDeleted)="onTabDelete($event)"
+  >
+    <ng-template let-item #itemSubTabTpl let-index="index">
+      @if (selectedSubTab != undefined && selectedSubTab.index == index) {
+      <sym-xml-config-ui
+        [xmlDom]="selectedSubTab.xmlDom"
+        [currIndex]="index"
+        [service]="service"
+        [responseIO]="responseIO"
+        [model]="
+          model != undefined
+            ? model
+            : subTabs.getAttribute('model') != undefined
+            ? service.getModel(subTabs.getAttribute('model'))[selectedSubTab.index]
+            : null
+        "
+        [productFacets]="productFacets"
+        [companyFacets]="companyFacets"
+        (notifyChange)="onInputChanged($event)"
+        (notifyFocus)="onInputFocused($event)"
+        (onRowAdded)="onRowAddedClicked($event)"
+        (searchIconClicked)="onSearchIconClick($event)"
+        (onElementClicked)="onHTMLElementClick($event)"
+      >
+      </sym-xml-config-ui>
+      }
+    </ng-template>
+  </sym-xml-sub-tab-ui>
+  }
+</ng-template>
+<ng-template let-symLabel="symLabel" #symLabel>
+  @if (symLabel.getAttribute('symIfVal') === 'true') {
+  <span class="symLabel-wrapper">
+    <label
+      [class]="symLabel.getAttribute('class') || 'label'"
+      [id]="symLabel.getAttribute('id') || ''"
+      [innerHTML]="service.getMultilingualLabel(symLabel.getAttribute('text')) | safeHtml"
+      [attr.title]="
+        symLabel.getAttribute('title') != undefined
+          ? service.getMultilingualLabel(symLabel.getAttribute('title'))
+          : null
+      "
+    >
+    </label>
+    @if (symLabel.getAttribute('help') != undefined) {
+    <i class="tooltip-label-info customtooltip pl-2" aria-hidden="true">
+      <sym-tooltip [placement]="'right'">
+        <div
+          class="tooltip-label-info-container"
+          [innerHTML]="service.getMultilingualLabel(symLabel.getAttribute('help')) | safeHtml: 'html'"
+        ></div>
+      </sym-tooltip>
+    </i>
+    }
+  </span>
+  }
+</ng-template>
+<ng-template let-navigationLinks="navigationLinks" #navigationLinks>
+  <div class="rightSideContent scrollDiv quickNavContent">
+    @if (navigationLinks.getAttribute('symIfVal') === 'true') {
+    <sym-navigation-links
+      [xmlNavigationLinkList]="navigationLinks"
+      [service]="service"
+      [responseIO]="responseIO"
+      [productFacets]="productFacets"
+      [companyFacets]="companyFacets"
+      [symIndex]="currIndex"
+    ></sym-navigation-links>
+    }
+  </div>
+</ng-template>
+<ng-template let-container="container" #container>
+  @if (container.getAttribute('symIfVal') === 'true') {
+  <sym-xml-config-ui
+    [xmlDom]="container"
+    [service]="service"
+    [responseIO]="responseIO"
+    [model]="model != undefined ? model : undefined"
+    [productFacets]="productFacets"
+    [companyFacets]="companyFacets"
+    [currIndex]="currIndex"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    (onRowAdded)="onRowAddedClicked($event)"
+    (searchIconClicked)="onSearchIconClick($event)"
+    (onElementClicked)="onHTMLElementClick($event)"
+    (notifyKeyDown)="onKeyDown($event)"
+    [responseUpdated]="responseUpdated"
+  >
+  </sym-xml-config-ui>
+  }
+</ng-template>

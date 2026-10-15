@@ -1,0 +1,140 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+  (notifyKeyDown)="onKeyDown($event)"
+  (onElementClicked)="onHTMLElementClick($event)"
+>
+</sym-xml-config-ui>
+} @else { @if ( service.companyFacets != undefined && service.companyFacets.data['QUOTEPARTY_UIFORMAT'] !=
+undefined) {
+<xml-generic-config-ui
+  [service]="service"
+  [xml]="service.companyFacets.data['QUOTEPARTY_UIFORMAT']"
+  [modelObj]="model"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</xml-generic-config-ui>
+} @else {
+<!-- <sym-field-group
+    [fieldIds]="'title'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="model"
+    [gridColumns]="[3]"
+  ></sym-field-group> -->
+@if ( service.companyFacets && service.companyFacets.data && service.companyFacets.data['MULTILINGUALPARTYNAME'] &&
+service.companyFacets.data['MULTILINGUALPARTYNAME'].length > 0 &&
+service.companyFacets.data['MULTILINGUALPARTYNAME'] == 'YES' ) {
+<div class="block">
+  <h4>{{ settingService.getLabelValue('language1') }}</h4>
+</div>
+}
+<sym-field-group
+  [fieldIds]="'title,firstname,middlename,lastname'"
+  (notifyChange)="onInputChanged($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+></sym-field-group>
+@if ( service.companyFacets && service.companyFacets.data && service.companyFacets.data['MULTILINGUALPARTYNAME'] &&
+service.companyFacets.data['MULTILINGUALPARTYNAME'].length > 0 &&
+service.companyFacets.data['MULTILINGUALPARTYNAME'] == 'YES' ) {
+<div class="block">
+  <h4>{{ settingService.getLabelValue('language2') }}</h4>
+</div>
+<sym-field-group
+  [fieldIds]="'title,firstname2,middlename2,lastname2'"
+  (notifyChange)="onInputChanged($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+></sym-field-group>
+}
+<sym-field-group
+  [fieldIds]="'dob,age,genderCd,smoker'"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+></sym-field-group>
+<!-- <sym-field-group
+  [fieldIds]="'genderCd,smoker'"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+></sym-field-group> -->
+<sym-field-group
+  [fieldIds]="'nsap,maritalStatus,relationCd,otherRelation'"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+  [gridColumns]="[3, 3, 3, 3]"
+></sym-field-group>
+<!-- <sym-field-group
+[fieldIds]="'industryCd,natureOfDuty,occupationCd'"
+(notifyChange)="onInputChanged($event)"
+(notifyFocus)="onInputFocused($event)"
+[responseIO]="service.responseIO"
+(onFieldsCreated)="onIndustryFieldsCreated($event)"
+[model]="model"
+      [displaySearchForField]="
+        service.responseIO.data.Entity.isCompleted || service.responseIO.data.Entity.isInvalid
+          ? undefined
+          : 'industryCd'
+      "
+(searchIconClicked)="onOccupationIndustryDutySearchClick($event)"
+[gridColumns]="[3, 3, 3]"
+></sym-field-group>
+<sym-pop-up
+  [headerText]="'searchOccupation'"
+  [popupID]="'OccupationIndustryDutySearch' + model.guid"
+  class="OccupationIndustryDutySearch"
+  *ngIf="isOccupationIndustryDutySearchDisplayed && model != undefined"
+  >
+  <sym-occupation-industry-duty-search
+    *ngIf="isOccupationIndustryDutySearchDisplayed"
+    (selectedOptionChanged)="onOccupationIndustrySearchSelected($event)"
+  ></sym-occupation-industry-duty-search>
+</sym-pop-up> -->
+<sym-industry-occupation [model]="model" [service]="service"></sym-industry-occupation>
+<sym-field-group
+  [fieldIds]="'coverageCountryCd,coverageCityCd'"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+  [gridColumns]="[3, 3]"
+></sym-field-group>
+<ng-container>
+  <sym-field-group
+    [fieldIds]="'idType,idNumber'"
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="model"
+  ></sym-field-group>
+</ng-container>
+@if (contactReqd) {
+<sym-field-group
+  [fieldIds]="'contactNum,emailAddress'"
+  (notifyChange)="onInputChanged($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+  [gridColumns]="[3, 6]"
+></sym-field-group>
+}
+<sym-field-group
+  [fieldIds]="'homeOwnerTypeCd'"
+  (notifyChange)="onInputChanged($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+></sym-field-group>
+} }

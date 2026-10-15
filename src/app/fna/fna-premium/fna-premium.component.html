@@ -1,0 +1,466 @@
+<div class="innerVerticalTab">
+  <sym-fna-personal-information></sym-fna-personal-information>
+
+  <div class="ivtRight" [style.width]="!settingService.isMobileViewRendered() ? 'calc(100% - 290px)' : 100 + '%'">
+    <div class="pr15">
+      <h2>Your ability to pay premiums</h2>
+      <div id="accordion" class="accordian">
+        <div class="card">
+          <div class="card-header" id="card1Heading" (click)="card1 = !card1">
+            <button
+              class="btn btn-link"
+              data-toggle="collapse"
+              data-target="#card1"
+              aria-expanded="true"
+              aria-controls="card1"
+            >
+              What is your average monthly income from all sources in the past 2 years?
+            </button>
+          </div>
+          <div id="card1" class="collapse" [ngClass]="{ show: card1 }" aria-labelledby="card1Heading">
+            @if (card1) {
+            <div class="card-body">
+              <h6 class="note">Select One</h6>
+              <div class="row cBodyContent">
+                <div class="col-md-6 dFlex vCenter pr30">
+                  <div class="form-group">
+                    <span class="label">Specific amount:</span>
+                    <label for="" class="dFlex vCenter"
+                      >Not less than $
+                      <input
+                        type="text"
+                        class="form-control inlineInput mh5"
+                        id=""
+                        name=""
+                        placeholder="Enter Amount"
+                        value=""
+                      />
+                      per month
+                    </label>
+                  </div>
+                  <span class="nextOptionDiv"></span>
+                </div>
+                <div class="col-md-6 pl30">
+                  <div class="form-group m0">
+                    <span class="label mb20">In the following range:</span>
+                    <div class="radioGrp radioGrpBox fullWidth">
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions1"
+                          id="inlineRadio11"
+                          value="option11"
+                        />
+                        <label class="form-check-label" for="inlineRadio11">Less than $10,000</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions1"
+                          id="inlineRadio12"
+                          value="option12"
+                        />
+                        <label class="form-check-label" for="inlineRadio12">$10,000 - $19,999</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions1"
+                          id="inlineRadio11"
+                          value="option11"
+                        />
+                        <label class="form-check-label" for="inlineRadio11">$20,000 - $49,999</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions1"
+                          id="inlineRadio12"
+                          value="option12"
+                        />
+                        <label class="form-check-label" for="inlineRadio12">$50,000 - $100,000</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions1"
+                          id="inlineRadio12"
+                          value="option12"
+                        />
+                        <label class="form-check-label" for="inlineRadio12">over $100,000</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="card2Heading" (click)="card2 = !card2">
+            <button
+              class="btn btn-link"
+              data-toggle="collapse"
+              data-target="#card2"
+              aria-expanded="true"
+              aria-controls="card2"
+            >
+              What is your approximate current accumulative amount of liquid assets?
+            </button>
+          </div>
+          <div id="card2" class="collapse" [ngClass]="{ show: card2 }" aria-labelledby="card2Heading">
+            @if (card2) {
+            <div class="card-body">
+              <div class="cBodyContent">
+                <div class="form-group m0">
+                  <div class="radioGrp radioGrpBox threeCols">
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio11"
+                        value="option11"
+                      />
+                      <label class="form-check-label" for="inlineRadio11">Cash</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12">Money in bank accounts</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio11"
+                        value="option11"
+                      />
+                      <label class="form-check-label" for="inlineRadio11">Money market accounts </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12">Actively traded stocks</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12">Bonds and mutual funds</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12">US Treasury bills</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12">Others (Please specify)</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="card3Heading" (click)="card3 = !card3">
+            <button
+              class="btn btn-link"
+              data-toggle="collapse"
+              data-target="#card3"
+              aria-expanded="true"
+              aria-controls="card3"
+            >
+              For how long are you able and willing to contribute to an insurance policy and/or investment plan?
+            </button>
+          </div>
+          <div id="card3" class="collapse" [ngClass]="{ show: card3 }" aria-labelledby="card3Heading">
+            @if (card3) {
+            <div class="card-body">
+              <h6 class="note">Select One</h6>
+              <div class="cBodyContent">
+                <div class="form-group m0">
+                  <div class="radioGrp radioGrpBox threeCols">
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio11"
+                        value="option11"
+                      />
+                      <label class="form-check-label" for="inlineRadio11"> < 1 year</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12">1-5 years</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio11"
+                        value="option11"
+                      />
+                      <label class="form-check-label" for="inlineRadio11">6-10 years</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12">11-20 years</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12"> > 20 years</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12">Whole of life</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="card4Heading" (click)="card4 = !card4">
+            <button
+              class="btn btn-link"
+              data-toggle="collapse"
+              data-target="#card4"
+              aria-expanded="true"
+              aria-controls="card4"
+            >
+              Approximately what percentage of your disposable income would you be able to use to pay your monthly
+              premium for the entire term of the insurance policy/investment plan in (e) above?
+            </button>
+          </div>
+          <div id="card4" class="collapse" [ngClass]="{ show: card4 }" aria-labelledby="card4Heading">
+            @if (card4) {
+            <div class="card-body">
+              <h6 class="note">Select One</h6>
+              <div class="cBodyContent">
+                <div class="form-group m0">
+                  <div class="radioGrp radioGrpBox threeCols">
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio11"
+                        value="option11"
+                      />
+                      <label class="form-check-label" for="inlineRadio11"> < 10% </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12">10% - 20% </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio11"
+                        value="option11"
+                      />
+                      <label class="form-check-label" for="inlineRadio11">21% - 30%</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12">31% - 40%</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12"> 41% - 50%</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12"> >50% </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-8">
+                    <div class="form-group fgRange">
+                      <label for="formControlRange">Percentage value: <span>50</span></label>
+                      <input type="range" class="form-control-range" id="formControlRange" min="0" max="100" />
+                      <output class="bubble"></output>
+                      <span data-value="0">0</span>
+                      <span data-value="25">25</span>
+                      <span data-value="50">50</span>
+                      <span data-value="75">75</span>
+                      <span data-value="100">100</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="card5Heading" (click)="card5 = !card5">
+            <button
+              class="btn btn-link"
+              data-toggle="collapse"
+              data-target="#card5"
+              aria-expanded="true"
+              aria-controls="card5"
+            >
+              In considering your ability to make payments, what are your sources of funds?
+            </button>
+          </div>
+          <div id="card5" class="collapse" [ngClass]="{ show: card5 }" aria-labelledby="card5Heading">
+            @if (card5) {
+            <div class="card-body">
+              <h6 class="note">Select One or more</h6>
+              <div class="cBodyContent">
+                <div class="form-group m0">
+                  <div class="checkBoxGrp radioGrpBox threeCols">
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio11"
+                        value="option11"
+                      />
+                      <label class="form-check-label" for="inlineRadio11"> Salary </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12">Income </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio11"
+                        value="option11"
+                      />
+                      <label class="form-check-label" for="inlineRadio11">Savings</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12">Investments</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        name="inlineRadioOptions1"
+                        id="inlineRadio12"
+                        value="option12"
+                      />
+                      <label class="form-check-label" for="inlineRadio12"> Others (Please specify)</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

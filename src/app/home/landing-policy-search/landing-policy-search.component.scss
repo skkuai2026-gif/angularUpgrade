@@ -1,0 +1,8 @@
+/* Apply hide only when class = online-mode */
+
+:host ::ng-deep .online-mode #landingPolicysearch table.dataTable th:nth-child(8),
+:host ::ng-deep .online-mode #landingPolicysearch table.dataTable td:nth-child(8),
+:host ::ng-deep .online-mode #landingPolicysearch table.dataTable th:nth-child(9),
+:host ::ng-deep .online-mode #landingPolicysearch table.dataTable td:nth-child(9) {
+  display: none !important;
+}

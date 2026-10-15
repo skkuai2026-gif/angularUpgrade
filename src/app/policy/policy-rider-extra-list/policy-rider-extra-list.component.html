@@ -1,0 +1,18 @@
+@if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<ng-container class="card m-1 p-2">
+  <h4>
+    Rider extra details for
+    {{ model.productLongName }}
+  </h4>
+  <sym-data-entry-grid
+    [fieldIds]="
+      'extraTypeCd,decisionCd,loadingTypeCd,processingTypeCd,extraFlatAmt,extraFlatDuration,extraPercent,extraPercDuration'
+    "
+    [responseIO]="service.responseIO"
+    (notifyChange)="onInputChanged($event)"
+    [modelList]="model.RiderExtraList"
+    [isAddRequired]="false"
+    [isDeleteRequired]="false"
+  ></sym-data-entry-grid>
+</ng-container>
+}

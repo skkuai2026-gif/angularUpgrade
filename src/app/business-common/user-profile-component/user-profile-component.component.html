@@ -1,0 +1,17 @@
+<div class="card-body">
+  <h2>User Information</h2>
+  <table>
+    <tr>
+      <th>Field</th>
+      <th>Data</th>
+    </tr>
+    <tbody>
+      @for (data of userKeys; track data) {
+      <tr>
+        <td>{{ data }}</td>
+        <td>{{ userData[data] }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

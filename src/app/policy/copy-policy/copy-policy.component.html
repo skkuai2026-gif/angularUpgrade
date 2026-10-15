@@ -1,0 +1,126 @@
+@if (showSearchScreen) {
+<sym-search
+  id="SearchCopyPolicy"
+  [searchCriteriaData]="searchCriteriaData"
+  [searchName]="'SearchCopyPolicy'"
+  [service]="service"
+  [closeOnSelection]="false"
+  [initialResultCount]="isMobileViewRendered ? 5 : 8"
+  [isSelectionRequired]="true"
+  (selectedOptionClick)="onSearchSelectClick($event)"
+  [ExecuteSearchName]="false"
+></sym-search>
+} @else {
+<div
+  [ngClass]="
+    isMobileViewRendered
+      ? service.isLandScapeViewRendered()
+        ? 'main-containerMobileLandscapeView'
+        : 'main-container'
+      : 'main-container'
+  "
+>
+  <div class="form-row">
+    <div class="copyProposalForm-item">
+      <label>{{ service.getMultilingualLabel('proposerName') }}: </label>
+      <span class="fontSizee"> {{ service.responseIO.data.Proposer.fullName }}</span>
+    </div>
+    <div class="copyProposalForm-item">
+      <label>Product: </label>
+      <span class="fontSizee"> {{ service.responseIO.data.BasePlan.productLongName }}</span>
+    </div>
+    <div class="copyProposalForm-item">
+      <label>{{ settingService.getLabelValue('eappStatus') }}: </label>
+      <span class="fontSizee">
+        {{ service.getModelFieldDataDesc(service.responseIO.data.Entity, 'statusCd') }}</span
+      >
+    </div>
+  </div>
+  <div class="copyProposalForm-item">
+    <label>{{ service.getLabelValue(service.responseIO.data.Entity, 'proposalNum') }}: </label>
+    @if (showProposalLink) {
+    <a class="link" (click)="showProposalDataDesc()"> {{ service.responseIO.data.Entity.proposalNum }}</a>
+    } @else {
+    <span class="fontSizee"> {{ service.responseIO.data.Entity.proposalNum }}</span>
+    }
+  </div>
+  <!-- <div class="proposalInfoDataLine">
+        {{ this.service.getMultilingualLabel('proposalInfoData') }}
+      </div> -->
+  <div class="table-responsive">
+    <table class="table table-borderless">
+      <thead>
+        <tr>
+          <th class="text-center copyPolicySelect-column">
+            <input type="checkbox" (change)="selectAll($event)" />
+          </th>
+          <th class="copyPolicyDescription-column parentHeaderText_copyPolicy headerColor textSmall" colspan="2">
+            {{ this.service.getMultilingualLabel('selectAll') }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (proposalOption of proposalDataToBeCopied; track proposalOption) {
+        <tr class="proposal-header">
+          <td
+            class="text-center"
+            [ngClass]="isMobileViewRendered ? 'copyPolicySelect-MobileView' : 'copyPolicySelect-column'"
+          >
+            <input
+              type="checkbox"
+              [(ngModel)]="proposalOption.isSelected"
+              (change)="toggleParent(proposalOption)"
+              [indeterminate]="proposalOption.isSelected === 'indeterminate'"
+            />
+          </td>
+          <td class="copyPolicyDescription-column parentHeaderText_copyPolicy" colspan="2">
+            <span class="proposalTypeCdOfData">
+              {{ this.service.getMultilingualLabel(proposalOption.typeCdOfData) }}: &nbsp;
+            </span>
+            <span class="proposalTypeDescfData"> {{ proposalOption.typeDescOfData }}</span>
+          </td>
+        </tr>
+        @if (proposalOption.childDataList != undefined) { @for (proposalOptionChild of
+        proposalOption.childDataList; track proposalOptionChild) {
+        <tr [class.selected-row]="proposalOptionChild.isSelected">
+          <td
+            class="text-center"
+            [ngClass]="isMobileViewRendered ? 'copyPolicySelect-MobileView' : 'copyPolicySelect-column'"
+          >
+            <input
+              type="checkbox"
+              [(ngModel)]="proposalOptionChild.isSelected"
+              (change)="updateParentCheckState(proposalOption)"
+            />
+          </td>
+          <td class="copyPolicyDescription-column">
+            {{ this.service.getMultilingualLabel(proposalOptionChild.typeCdOfData) }}
+          </td>
+          <td class="copyPolicyData-column">
+            @if (showDataDesc) {
+            <span> {{ proposalOptionChild.typeDescOfData }}</span>
+            }
+          </td>
+        </tr>
+        } } }
+      </tbody>
+    </table>
+  </div>
+  <br /><br />
+  <div class="formFooter">
+    <sym-button
+      [class]="'btn btn_primary mr-1'"
+      id="btn_Copy_Record"
+      text="Select"
+      (onClick)="copy()"
+    ></sym-button>
+    &nbsp;
+    <sym-button
+      [class]="'btn btn_outline_primary'"
+      id="btn_Cancel_Record"
+      text="Cancel"
+      (onClick)="cancel()"
+    ></sym-button>
+  </div>
+</div>
+}

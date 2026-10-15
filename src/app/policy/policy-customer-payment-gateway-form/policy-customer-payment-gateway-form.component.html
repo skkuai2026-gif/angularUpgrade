@@ -1,0 +1,60 @@
+<div class="col-sm-12">
+  <div class="row">
+    <div [ngClass]="'col-sm-12'">
+      <div class="box">
+        <div class="section">
+          <div class="sectionContent">
+            <div class="tableContent scrollDiv scrollX">
+              <table class="symresponsive-table table noBorder tableBlocks m0" id="paymentGateway">
+                <tbody>
+                  <tr class="trProduct">
+                    <td>Payer Name</td>
+                    <td class="mob_td">
+                      {{ inwardPaymentInfo.payerName }}
+                    </td>
+                  </tr>
+                  <tr class="trProduct">
+                    <td>Product Name</td>
+                    <td class="mob_td">
+                      {{ inwardPaymentInfo.productName }}
+                    </td>
+                  </tr>
+                  <tr class="trProduct">
+                    <td>Policy Number</td>
+                    <td class="mob_td">
+                      {{ inwardPaymentInfo.policyNum }}
+                    </td>
+                  </tr>
+                  <tr class="trProduct">
+                    <td>Inward Amount</td>
+                    <td class="mob_td">
+                      {{ inwardPaymentInfo.inwardAmount }}
+                    </td>
+                  </tr>
+                  <tr></tr>
+                  <tr class="trProduct">
+                    <td [attr.data-label]="service.getMultilingualLabel('pay')">
+                      <button
+                        type="button"
+                        class="btn btn_outline_primary p-0"
+                        (click)="onPaymentClick()"
+                        title="Pay"
+                      >
+                        <span class="iconPay"></span>
+                      </button>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form name="paymentGatewayForm" [action]="settingService.getURLValue('PAYMENTGATEWAY')" method="post">
+  <input type="hidden" name="inwardId" id="inwardId" [value]="service.id" />
+</form>

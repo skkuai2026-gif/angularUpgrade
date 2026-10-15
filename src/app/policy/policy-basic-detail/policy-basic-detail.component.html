@@ -1,0 +1,108 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else { @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div class="card m-1">
+  <sym-panel [id]="'basic_Details_Body'" [name]="'basicDetails'">
+    <sym-field-group
+      [fieldIds]="'policyNum,proposalNum,quotationRefNum'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.Entity"
+    ></sym-field-group>
+    <sym-field-group
+      [fieldIds]="'productFamilyCd,productId,productVersion,productPlanOptionCd'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.Entity"
+    ></sym-field-group>
+    <sym-field-group
+      [fieldIds]="'proposalSignedDt,proposalReceivedDt,riskCommencementDt'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.Entity"
+    ></sym-field-group>
+    <sym-field-group
+      [fieldIds]="
+        'leadGenerationCd,campaignCode,' +
+        (service.responseIO.data['Entity'] !== undefined &&
+        service.responseIO.data['Entity'].purposeOfInsuranceCd === 'OTHERS'
+          ? 'intimationSourceCd,purposeOfInsuranceCd,otherPurposeOfInsurance'
+          : 'intimationSourceCd,purposeOfInsuranceCd')
+      "
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.Entity"
+    ></sym-field-group>
+    <!-- <sym-field-group
+      [fieldIds]="
+        this.service.responseIO.data['Entity'] != undefined &&
+        this.service.responseIO.data['Entity'].purposeOfInsuranceCd === 'OTHERS'
+          ? 'intimationSourceCd,purposeOfInsuranceCd,otherPurposeOfInsurance'
+          : 'intimationSourceCd,purposeOfInsuranceCd'
+      "
+        (notifyChange)="onInputChanged($event)"
+        (notifyFocus)="onInputFocused($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.Entity"
+      ></sym-field-group> -->
+    <sym-field-group
+      [fieldIds]="
+        this.service.responseIO.data['Entity'] != undefined &&
+        this.service.responseIO.data['Entity'].sourceOfFund === 'OTHERS'
+          ? 'statCd,sourceOfFund,otherSourceOfFund'
+          : 'statCd,sourceOfFund'
+      "
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.Entity"
+      [gridColumns]="[3, 3, 3]"
+    ></sym-field-group>
+  </sym-panel>
+  <sym-panel [id]="'communication_Preference_Body'" [name]="'communicationPreference'">
+    <sym-field-group
+      fieldIds="policyDispatchModeCd,corrByEmail,communicationPreference"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.Entity"
+      [gridColumns]="[3, 3, 3, 3, 3]"
+    ></sym-field-group>
+  </sym-panel>
+  <sym-policy-base-plan></sym-policy-base-plan>
+  @if (service.responseIO.data.RiderList != undefined && service.responseIO.data.RiderList.length > 0) {
+  <sym-panel [id]="'riderDetails'" [name]="'riderDetails'">
+    <sym-policy-rider></sym-policy-rider>
+  </sym-panel>
+  } @if ( service.responseIO.data['BasePlan'] && service.responseIO.data['BasePlan'].FundList != undefined &&
+  service.responseIO.data['BasePlan'].FundList.length != 0 ) {
+  <sym-policy-fund-list></sym-policy-fund-list>
+  } @if ( service.responseIO.data['BasePlan'] && service.responseIO.data['BasePlan'].PlanExtraList != undefined &&
+  service.responseIO.data['BasePlan'].PlanExtraList.length != 0 ) {
+  <sym-policy-plan-extra-list></sym-policy-plan-extra-list>
+  }
+  <sym-policy-topup></sym-policy-topup>
+  <!-- <sym-policy-withdrawal
+                          *ngIf="
+                              service.responseIO.data['WithdrawalList'] &&
+                              service.responseIO.data['WithdrawalList'].length !=
+                                  0
+                          "
+  ></sym-policy-withdrawal> -->
+  @if (navigationLinkList.length > 0 && !this.service.responseIO['isMetadataHelpReqd']) {
+  <sym-navigation-links [navigationLinkList]="navigationLinkList"></sym-navigation-links>
+  }
+</div>
+} }

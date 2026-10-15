@@ -1,0 +1,96 @@
+.signature_border {
+  border: 1px solid #000000 !important;
+  margin: 2px 1px 7px 1px;
+  width: 100%;
+  max-height: 250px;
+  min-height: 230px;
+}
+
+.supportNote {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: middle;
+  padding-top: 12px;
+  font-size: x-small;
+}
+
+.sign-option {
+  padding: 0px 8px 0px 5px;
+}
+
+.signature-footer {
+  position: relative;
+  bottom: 0rem;
+}
+
+.signatureImageUpload {
+  width: 100%;
+  min-height: 250px;
+  object-fit: contain;
+}
+
+.signature-fields {
+  position: relative;
+  width: 100%;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  /* .sign-option {
+    padding: 0px 1rem 0px 5px;
+  } */
+  .supportNote {
+    margin-left: 2px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .signature-footer {
+    top: 25px;
+  }
+  /* .sign-option {
+    padding: 0px 32px 0px 5px;
+  } */
+  .signatureImageUpload {
+    max-height: fit-content;
+  }
+}
+
+img[src=''] {
+  display: none !important;
+}
+
+.signature_Footer_container {
+  display: grid;
+  grid-column-gap: 25px;
+  grid-template-columns: 88% auto;
+  max-width: 100%;
+}
+
+.mt-4_3 {
+  margin-top: 1.35rem;
+}
+
+.signatureOptionRadio {
+  position: relative;
+  width: 22px;
+  height: 14px;
+  top: 2px;
+}
+
+.signClearButton {
+  width: max-content;
+}
+
+/* @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+  .signature-footer {
+    position: fixed;
+    bottom: 100px;
+    z-index: 9999;
+    display: block;
+    height: 100px;
+    width: 100%;
+    line-height: 1.5;
+    top: 520px !important;
+    border: 0px;
+  }
+} */

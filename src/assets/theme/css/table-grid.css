@@ -1,0 +1,292 @@
+/**dataentry(table) css starts**/
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.tableHeader > div.tableGlobalSearch {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 40%;
+  flex: 0 0 40%;
+  max-width: 40%;
+  width: 40%;
+  margin-right: 20px;
+}
+.tableHeader > div.tableGlobalSearch .form-control {
+  width: 100%;
+  height: 32px;
+  /* font-family: 'montserratlight'; */
+}
+.tableHeaderActions {
+  margin-right: 2px;
+}
+/* .tableHeaderActions a.btn {
+    font-size: 0.9rem;
+    padding: 4px 10px;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.16), 0 1px 2px 0 rgba(0, 0, 0, 0.26);
+    display: inline-block;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    background-color: #fff;
+    color: #36f;
+} */
+/* .tableHeaderActions a.btn:hover {
+    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.36);
+    background-color: #36f;
+    border-color: #36f;
+    color: #fff;
+}
+.tableHeaderActions a.btn:before {
+    content: '\e927';
+    font-family: 'icomoon';
+    display: inline-block;
+    margin-right: 5px;
+    font-weight: bold;
+} */
+.table thead tr th,
+.table tbody tr td {
+  position: relative;
+  border: 1px solid #edf1f7;
+  vertical-align: middle;
+  padding: 0.8rem 1.25rem;
+  color: #222b45;
+  white-space: nowrap;
+}
+.table thead tr th {
+  font-weight: normal;
+  font-size: 0.95rem;
+}
+.table tbody tr td {
+  /* font-family: 'montserratlight'; */
+  font-weight: normal;
+  font-size: 0.95rem;
+}
+.table thead tr:last-child th {
+  padding: 0.2rem 0.5rem;
+}
+/* .table thead tr:first-child th{padding: .2rem 1.25rem;} */
+.table tbody tr:nth-child(2n) {
+  background-color: #f7f9fc;
+}
+.table tbody tr.selected,
+.table tbody tr:hover {
+  background: #edf1f7 !important;
+}
+.table tbody tr td > div.focused {
+  position: relative;
+}
+.table tbody tr td > div.focused:before {
+  content: '';
+  position: absolute;
+  top: -0.8rem;
+  left: -1.25rem;
+  width: calc(100% + 2.5rem);
+  height: calc(100% + 1.6rem);
+  border: 1px solid #36f;
+  z-index: 1;
+  background-color: transparent;
+}
+.table tbody tr td > div > .form-control {
+  padding: 0 2px 0 0;
+  border: 0;
+  background: transparent;
+  height: auto;
+  font-size: 0.95rem;
+  z-index: 2;
+  position: relative;
+}
+.table tbody tr td > div.fgError .errorIcon {
+  left: calc(100% + 1px);
+}
+.table tbody tr td > div.fgError:before {
+  border-color: #ff3d71;
+}
+.table tbody tr td > div.fgError > .form-control {
+  background-color: transparent;
+}
+.table.noBorder thead tr th,
+.table.noBorder tbody tr td {
+  border: 0;
+}
+.table.tableBlocks {
+  border-collapse: separate;
+  border-spacing: 0 0.1em;
+}
+.table.tableBlocks thead tr:first-child th {
+  padding-bottom: 0;
+  padding-top: 0;
+}
+.table.tableBlocks tbody tr {
+  margin-bottom: 10px;
+}
+.table.tableBlocks tr {
+  background-color: #fff !important;
+}
+.table.tableBlocks tr:hover {
+  background-color: #fff !important;
+}
+.table.tableBlocks tr.selected,
+.table.tableBlocks tr.selected:hover {
+  background-color: #fff !important;
+  border: 0;
+  box-shadow: none !important;
+}
+.table.tableBlocks tbody tr td {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #8f9bb3;
+  font-size: 0.9rem;
+}
+.table.tableBlocks tr.selected td {
+  color: #36f;
+  border: 0;
+  font-size: 1rem;
+  padding: 5px 0 5px 1.25rem;
+  border-bottom: 1px solid #edf1f7;
+}
+.table.tableBlocks tr.selected:last-child td {
+  padding-top: 10px;
+}
+.table.tableBlocks tbody tr.trProduct td {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  color: #222b45;
+}
+.thAction {
+  text-align: center;
+}
+.thAction > a.thAddRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #36f;
+  color: #fff;
+  left: 18px;
+}
+.thAction > a.thAddRow::before {
+  content: '\e927';
+  font-family: 'icomoon';
+  font-size: 1.2rem;
+}
+.tdTableAction {
+  padding: 0 !important;
+}
+.tableActions {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.tableActions > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tableActions .dropdownContainer .dropdown-menu {
+  background-color: #36f;
+}
+.tableActions .dropdownContainer .dropdown-menu > a {
+  z-index: 1;
+  background-color: #36f;
+}
+.tableActions .dropdownContainer .dropdown-menu > a,
+.tableActions .dropdown-single-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: #fff;
+}
+.tableActions .dropdownContainer .dropdown-menu > a:after,
+.tableActions .dropdown-single-item:after {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+.tableActions .dropdownContainer .dropdown-menu > a:before,
+.tableActions .dropdown-single-item:before {
+  font-family: 'icomoon';
+  color: #fff;
+  font-size: 1.2rem;
+  margin-right: 10px;
+  line-height: normal;
+}
+.tableActions .dropdownContainer .dropdown-menu > a.tdEdit:before,
+.tableActions .dropdown-single-item.tdEdit:before {
+  content: '\e90d';
+}
+.tableActions .dropdownContainer .dropdown-menu > a.tdForm:before,
+.tableActions .dropdown-single-item.tdForm:before {
+  content: '\e90a';
+}
+.tableActions .dropdownContainer .dropdown-menu > a.tdDelete:before,
+.tableActions .dropdown-single-item.tdDelete:before {
+  content: '\e917';
+}
+.tableActions .dropdownContainer .dropdown-menu > a.tdCopy:before,
+.tableActions .dropdown-single-item.tdCopy:before {
+  content: '\e900';
+}
+.tableActions .dropdownContainer .dropdown-menu > a.tdSummary:before,
+.tableActions .dropdown-single-item.tdSummary:before {
+  content: '\e902';
+}
+.tableActions .dropdownContainer .dropdown-menu > a.tdDownload:before,
+.tableActions .dropdown-single-item.tdDownload:before {
+  font-family: 'FontAwesome';
+  content: '\f019';
+}
+.tableActions .dropdown-single-item {
+  justify-content: center;
+}
+.tableActions .dropdown-single-item span {
+  display: none;
+}
+.tableActions .dropdown-single-item:before {
+  color: #36f !important;
+  margin: 0;
+}
+td > .checkBoxGrp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+td > .checkBoxGrp > .form-check {
+  margin: 0;
+}
+td > .checkBoxGrp .form-check > label {
+  padding-left: 20px;
+}
+td > .checkBoxGrp .form-check > .form-check-input ~ label::before {
+  border: 1px solid #8f9bb3;
+}
+.tableContent {
+  width: 100%;
+  overflow-x: auto;
+  padding: 0 1px;
+}
+
+.tableActions.checkBoxGrp {
+  display: flex;
+  justify-content: center;
+}
+.tableActions.checkBoxGrp .form-check {
+  padding: 0 !important;
+  margin: 0;
+}
+.tableActions.checkBoxGrp .form-check > .form-check-input ~ label::before {
+  border-color: #333;
+}
+.tableActions.checkBoxGrp .form-check > .form-check-input ~ label {
+  padding-left: 20px;
+}
+
+td .form-control,
+tr .form-control {
+  font-size: 0.85rem !important;
+}
+/**dataentry(table) css ends**/

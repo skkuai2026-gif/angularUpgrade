@@ -1,0 +1,26 @@
+.canvasScroll {
+  width: fit-content;
+}
+
+.table thead tr th,
+.table tbody tr td {
+  padding: 0.2rem 0.8rem;
+}
+
+.table tbody tr td {
+  font-size: 0.85rem;
+}
+
+.canvasLandscape {
+  justify-self: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.illustrationtable td,
+.illustrationtable th {
+  font-weight: bold !important;
+  font-family: sans-serif;
+}

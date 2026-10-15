@@ -1,0 +1,88 @@
+@if (service.responseIO && service.responseIO.data) {
+<div class="customerPageData">
+  <div class="scrollDiv">
+    <div class="generic">
+      <sym-page-container
+        [breadCrumbList]="breadCrumbList"
+        [stepList]="stepList"
+        [responseIO]="service.responseIO"
+        [currentStepSelected]="selectedStep"
+        (selectedStep)="onStepChanged($event)"
+      >
+        @if (selectedStep != undefined) {
+        <sym-step
+          [stepItem]="selectedStep"
+          (actionClick)="onActionClicked($event)"
+          (tabChange)="onTabChanged($event)"
+        >
+          <div class="card-body">
+            <div class="leftDescription">
+              <h2>
+                Hi <span>{{ fullNameText }}</span
+                >, we are building a hammock for You. Till then, complete Your journey in
+                <i>{{ productNameText }}</i> to get insured
+              </h2>
+              <div class="stepImg imageBg{{ selectedStep.index + 1 }}"></div>
+            </div>
+            <div class="rightBodyContainer">
+              @for (tab of selectedStep.tabList; track tab) { @if (selectedStep.selectedTab != undefined &&
+              selectedStep.selectedTab.id == tab.id) { @if (service.responseIO != undefined) {
+              <div
+                class="blockContainer"
+                [class.blockSm]="
+                  selectedStep.selectedTab != undefined && selectedStep.selectedTab.id != 'tab_plan'
+                "
+              >
+                <sym-xml-config-ui
+                  [xmlDom]="tab.xmlDom"
+                  [service]="policyService.responseIO != undefined ? policyService : service"
+                  [responseIO]="
+                    policyService.responseIO != undefined ? policyService.responseIO : service.responseIO
+                  "
+                  (notifyChange)="onInputChanged($event)"
+                  (notifyFocus)="onInputFocused($event)"
+                  (onRowAdded)="onGridRowAdded($event)"
+                  (searchIconClicked)="onInputSearchClick($event)"
+                >
+                </sym-xml-config-ui>
+              </div>
+              } } }
+            </div>
+          </div>
+        </sym-step>
+        }
+      </sym-page-container>
+    </div>
+  </div>
+</div>
+}
+
+<!--modal for Acceptance message start -->
+@if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 && policyService != null
+&& policyService != undefined && policyService.responseIO != null && policyService.responseIO != undefined ) {
+<sym-pop-up
+  [popupID]="'submitPolicyModal'"
+  [popupSize]="'small'"
+  [displayPopupAtTop]="true"
+  [hideCloseButton]="true"
+>
+  <div class="successModalHeader">
+    <span class="iconSuccess"></span>
+    @if ( policyService.responseIO.data.Entity.uwDecisionValue != null &&
+    policyService.responseIO.data.Entity.uwDecisionValue != undefined ) {
+    <div [innerHTML]="policyService.responseIO.data.Entity.uwDecisionValue | safeHtml: 'html'"></div>
+    } @if ( policyService.responseIO.data.Entity.uwDecisionValue == null ||
+    policyService.responseIO.data.Entity.uwDecisionValue == undefined ) {
+    <h2>
+      {{ policyService.getMultilingualLabel('policySubmitMesg') }}
+    </h2>
+    }
+    <div class="mt-3 d-flex justify-content-center">
+      <button class="btn btn_primary" (click)="closeSubmitPolicyModal()">
+        {{ service.getMultilingualLabel('Back') }}
+      </button>
+    </div>
+  </div>
+</sym-pop-up>
+}
+<!--modal for congratulation message ends -->

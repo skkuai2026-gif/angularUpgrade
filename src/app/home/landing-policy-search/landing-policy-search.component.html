@@ -1,0 +1,9 @@
+<div [ngClass]="{ 'online-mode': settingService.getApplicationMode() === 'offline' }">
+  <sym-search
+    id="landingPolicysearch"
+    [moreOptionList]="moreOptionList"
+    [service]="service"
+    [isLandingPage]="true"
+    (moreOptionClick)="onMoreOptionClicked($event)"
+  ></sym-search>
+</div>

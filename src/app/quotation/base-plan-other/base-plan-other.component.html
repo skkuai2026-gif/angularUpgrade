@@ -1,0 +1,103 @@
+@if (service.productFacets && service.productFacets.data) {
+<!--PREMIUMHOLIDAY-->
+<!-- <ng-container *ngIf="service.productFacets.data['PREMIUMHOLIDAY'] == 'YES'">
+  <sym-panel [id]="'basic_plan_prmHol_Body'" [name]="'premiumHolidayFl'">
+    <sym-field-group
+      [fieldIds]="'premiumHolidayFl,premiumHolidayYear'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.BasePlan"
+    ></sym-field-group>
+  </sym-panel>
+</ng-container>-->
+<!--PREMIUMOFFSET-->
+@if (service.productFacets.data['PREMIUMOFFSET'] == 'YES') { @if (service.responseIO.data.BasePlan.addtnField4 !=
+'PR') {
+<sym-panel [id]="'basic_plan_prmOffset_Body'" [name]="'nfo'">
+  <sym-field-group
+    [fieldIds]="'premiumOffsetFl,premiumOffsetOptionCd,premiumOffsetValues,premiumOffsetYear,paidUpFl'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.BasePlan"
+  ></sym-field-group>
+</sym-panel>
+} }
+<!--CAPTUREANNUITYOPTION-->
+@if (service.productFacets.data['CAPTUREANNUITYOPTION'] == 'YES') {
+<sym-panel [id]="'basic_plan_annuity_Body'" [name]="'displayAnnuityDetails'">
+  <sym-field-group
+    [fieldIds]="'annuityOptionCd,annuityAge,annuityPerc'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.BasePlan"
+  ></sym-field-group>
+</sym-panel>
+}
+<!--PDFDETAILSREQUIRED-->
+@if (service.productFacets.data['PDFDETAILSREQUIRED'] == 'YES') {
+<sym-panel [id]="'basic_plan_pdf_Body'" [name]="'pdfRequiredFl'">
+  <sym-field-group
+    [fieldIds]="'pdfRequiredFl,solverTypeCd,pdfAmount,pdfFrequencyVal,pdfPeriod'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.BasePlan"
+  ></sym-field-group>
+</sym-panel>
+}
+<!--RETIREMENTREQUIRED-->
+@if (service.productFacets.data['RETIREMENTREQUIRED'] == 'YES') {
+<sym-panel [id]="'basic_plan_retirement_Body'" [name]="'displayRetirementDetails'">
+  <sym-field-group
+    [fieldIds]="'retirementOptionFl,retirementPercent'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.BasePlan"
+  ></sym-field-group>
+</sym-panel>
+}
+<!--OVERRIDERETURNRATES-->
+@if (service.productFacets.data['OVERRIDERETURNRATES'] == 'YES') {
+<sym-panel [id]="'basic_plan_overriderate_Body'" [name]="'displayoverrideRateDetails'">
+  <sym-field-group
+    [fieldIds]="'lowReturnRate,mediumReturnRate,highReturnRate,veryLowReturnRate,veryHighReturnRate'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.BasePlan"
+  ></sym-field-group>
+</sym-panel>
+}
+<!--PRDDISCOUNT-->
+@if (service.productFacets.data['PRDDISCOUNT'] == 'YES') {
+<sym-panel [id]="'basic_plan_discount_Body'" [name]="'displayDiscountDetails'">
+  <sym-field-group
+    [fieldIds]="'extraFlatAmt,extraFlatDuration'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.BasePlan.Discount"
+  ></sym-field-group>
+</sym-panel>
+}
+<!-- <ng-container *ngIf="service.productFacets.data['TARGETFUNDVALUE'] == 'YES'">
+<sym-panel [id]="'tagetFund_Body'" [name]="'targetFundValue'">
+  <sym-field-group
+    [fieldIds]="'targetFundFl'"
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.BasePlan"
+  ></sym-field-group>
+  <sym-field-group
+    [fieldIds]="'payingYears,targetFundVal,targetPeriodRefCd,targetPeriod'"
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.BasePlan"
+  ></sym-field-group>
+</sym-panel>
+</ng-container> -->
+}

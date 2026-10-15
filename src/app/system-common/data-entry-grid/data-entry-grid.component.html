@@ -1,0 +1,354 @@
+@if (!isFormFormatRequired && !isCustomLayout) {
+<div>
+  <div
+    [ngClass]="{
+      'tableHeaderActions float-right mb-2': isAddRequired && !(totalValidrecordCount == maxRecordCount)
+    }"
+  >
+    @if (isAddRequired && !(totalValidrecordCount == maxRecordCount)) {
+    <sym-button
+      [class]="'btn btn_outline_primary btnAddTab mr-5'"
+      [id]="'btn_Add'"
+      [text]="addLabelText != undefined ? addLabelText : 'add'"
+      (onClick)="onAddClick($event)"
+      [isLoaderRequired]="false"
+    ></sym-button>
+    }
+  </div>
+  <div class="sectionContent">
+    @if (responseIO && responseIO.data.length != 0 && list && list.length != 0 && list.length >= 1) {
+    <table class="table" id="data_grid_">
+      <colgroup>
+        @if (colWidthPercList.length > 0) { @for (widthPerc of colWidthPercList; track widthPerc; let j = $index) {
+        <col span="1" [style.width]="widthPerc >= 0 ? widthPerc + '% !important' : '20% !important'" />
+        @if (fieldCodes.length - 1 == j && isMoreRequired) {
+        <col span="1" [ngStyle]="{ width: '5%' }" />
+        } @if (isDeleteRequired) {
+        <col span="1" [ngStyle]="{ width: '5%' }" />
+        } } } @else { @for (className of classNamesList; track className; let j = $index) {
+        <col span="1" [ngClass]="className" />
+        @if (fieldCodes.length - 1 == j && isMoreRequired) {
+        <col span="1" [ngStyle]="{ width: '5%' }" />
+        } } }
+      </colgroup>
+      <tr>
+        @for (id of fieldCodes; track id; let i = $index) { @if ( list != undefined && list[0] != undefined &&
+        responseIO.metadata && responseIO.metadata.length != 0 && responseIO.metadata[list[0].guid] != undefined &&
+        responseIO.metadata[list[0].guid][id] != undefined && responseIO.metadata[list[0].guid][id].APPLICABLE !==
+        'NO' && responseIO.metadata[list[0].guid][id].LABELKEY !== undefined &&
+        responseIO.metadata[list[0].guid][id].LABELKEY !== null ) { @if (
+        responseIO.metadata[list[0].guid][id].VISIBILITY == undefined ||
+        responseIO.metadata[list[0].guid][id].VISIBILITY == null ||
+        responseIO.metadata[list[0].guid][id].VISIBILITY == 'YES' ) {
+        <!-- <th
+                [ngStyle]="{
+                  'width.%': columWidthPerc != undefined && columWidthPerc[i] != undefined ? columWidthPerc[i] : 25
+                }"
+                > -->
+        <th
+          [ngStyle]="
+            colWidthPercList.length > 0
+              ? { 'width.%': colWidthPercList[i] != undefined ? colWidthPercList[i] : 25 }
+              : null
+          "
+        >
+          <!--   {{ columWidthPerc.length }}  [style.width]="
+                                    columWidthPerc != undefined &&
+                                    columWidthPerc[i] != undefined
+                                        ? columWidthPerc[i]
+                                        : '20%'
+                                "  [style.width]="columWidthPerc[i]" {{
+                  settingService.getLabelValue(
+                  responseIO.metadata[list[0].guid][id]
+                  .LABELKEY
+                  )
+                  }} -->
+          <div [class]="responseIO['isMetadataHelpReqd'] === true ? 'help_header' : ''">
+            <sym-field-group
+              [fieldIds]="id"
+              [responseIO]="responseIO"
+              [labelOnly]="true"
+              [model]="list[0]"
+              [rowIndex]="-1"
+              [gridColumns]="[12]"
+              [isXMLCodeRendered]="isXMLCodeRendered"
+              [isFormReadOnly]="isFormReadOnly"
+            ></sym-field-group>
+            @if (responseIO['isMetadataHelpReqd'] === true) {
+            <i class="fa fa-info-circle customtooltip" aria-hidden="true">
+              @if ( list[0].objName != undefined || id != undefined ||
+              responseIO.metadata[list[0]['guid']][id].DATATYPE != undefined ||
+              responseIO.metadata[list[0]['guid']][id].HELP || responseIO.metadata[list[0]['guid']][id].FORMAT ||
+              responseIO.metadata[list[0]['guid']][id].LOOKUPCD ) {
+              <sym-tooltip [placement]="'top'">
+                <div>
+                  @if (list[0].objName != undefined || id != undefined) {
+                  <div>
+                    <span> Field: </span>
+                    <span>
+                      {{ list[0].objName != undefined ? list[0].objName + '.' + id : id + ',' }}
+                    </span>
+                  </div>
+                  } @if (responseIO.metadata[list[0]['guid']][id].DATATYPE != undefined) {
+                  <div>
+                    <span> Datatype: </span>
+                    <span>
+                      {{ responseIO.metadata[list[0]['guid']][id].DATATYPE + ', ' }}
+                    </span>
+                  </div>
+                  } @if (responseIO.metadata[list[0]['guid']][id].HELP != undefined) {
+                  <div>
+                    <span>Help: </span>
+                    <span>
+                      {{ responseIO.metadata[list[0]['guid']][id].HELP + ', ' }}
+                    </span>
+                  </div>
+                  } @if (responseIO.metadata[list[0]['guid']][id].FORMAT != undefined) {
+                  <div>
+                    <span> Format: </span>
+                    <span>
+                      {{ responseIO.metadata[list[0]['guid']][id].FORMAT + ', ' }}
+                    </span>
+                  </div>
+                  } @for (key of metadataKeyList[id]; track key) {
+                  <div>
+                    <span>{{ key }} </span>
+                    <span>
+                      {{ this.responseIO.metadata[this.list[0].guid][id][key] }}
+                    </span>
+                  </div>
+                  } @if (responseIO.metadata[list[0]['guid']][id].LOOKUPCD != undefined) {
+                  <div>
+                    <span> Lookup codes: </span>
+                    <span>
+                      @for ( opt of responseIO.lookups[ this.responseIO.metadata[this.list[0]['guid']][id].LOOKUPCD
+                      ] ; track opt) {
+                      {{ opt.cd + ',' }}
+                      }
+                    </span>
+                    <!-- {{ lookupDesc[id] }} -->
+                  </div>
+                  }
+                </div>
+              </sym-tooltip>
+              }
+            </i>
+            }
+          </div>
+        </th>
+        @if (fieldCodes.length - 1 == i && isMoreRequired) {
+        <th class="moreCol"></th>
+        } } } }
+        <!-- <th
+          *ngIf="isDeleteRequired"
+          class="p-2"
+          [ngStyle]="{
+            'width.%': 10
+          }"
+          > -->
+        @if (isDeleteRequired) {
+        <th class="p-2" [ngStyle]="colWidthPercList.length > 0 ? { 'width.%': 10 } : null">
+          {{ settingService.getLabelValue('del') }}
+        </th>
+        }
+      </tr>
+      @if (fieldsInitialized) {
+      <tbody>
+        @for (item of list; track item; let i = $index) { @if ( (item['status'] != 'D' && item['status'] != null &&
+        item['status'] != undefined) || (item['removed'] != 'YES' && item['removed'] != null && item['removed'] !=
+        undefined) ) {
+        <tr>
+          @for (id of fieldCodes; track id; let j = $index) { @if ( list != undefined && list[0] != undefined &&
+          responseIO.metadata && responseIO.metadata.length != 0 && responseIO.metadata[list[0].guid] != undefined
+          && responseIO.metadata[list[0].guid][id] != undefined && responseIO.metadata[list[0].guid][id].APPLICABLE
+          !== 'NO' ) { @if ( responseIO.metadata[list[0].guid][id].VISIBILITY == undefined ||
+          responseIO.metadata[list[0].guid][id].VISIBILITY == null ||
+          responseIO.metadata[list[0].guid][id].VISIBILITY == 'YES' ) { @if ( responseIO.metadata &&
+          responseIO.metadata.length != 0 && responseIO.metadata[list[0].guid] != undefined &&
+          responseIO.metadata[list[0].guid][id] != undefined && responseIO.metadata[list[0].guid][id].LABELKEY !=
+          undefined ) {
+          <td
+            class="p-2"
+            [attr.data-label]="settingService.getLabelValue(responseIO.metadata[list[0].guid][id].LABELKEY)"
+          >
+            <div class="mob_padding">
+              <sym-field-group
+                [fieldIds]="id"
+                [responseIO]="responseIO"
+                [hideLabel]="true"
+                [rowIndex]="i"
+                [model]="item"
+                [modelPath]="item[i]"
+                [inputOnly]="true"
+                [gridColumns]="[12]"
+                [isXMLCodeRendered]="isXMLCodeRendered"
+                (notifyChange)="onGridChanged($event)"
+                (notifyFocus)="onGridFocused($event)"
+                [isFormReadOnly]="isFormReadOnly"
+                (onFieldsCreated)="onComponentFieldsCreated($event)"
+              ></sym-field-group>
+            </div>
+          </td>
+          } } } @if (fieldCodes.length - 1 == j && isMoreRequired) {
+          <td class="p-2">
+            <button class="btn btn-primary" (click)="onMoreSelected.emit(i)">
+              <i class="fa fa-bars customtooltip" aria-hidden="true">
+                <sym-tooltip [placement]="'left'">
+                  <div
+                    class="viewMoreDetailsTooltip-label-info-container"
+                    [innerHTML]="service.getMultilingualLabel('viewMoreDetails') | safeHtml: 'html'"
+                  ></div
+                ></sym-tooltip>
+              </i>
+            </button>
+          </td>
+          } } @if (isDeleteRequired) {
+          <td class="p-2 tdTableAction" [attr.data-label]="settingService.getLabelValue('del')">
+            <!-- <input
+                        type="checkbox"
+                        (click)="onDeleteSelected(i, $event)"
+                        /> -->
+            <div class="checkBoxGrp">
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input deleteCheckbox"
+                  type="checkbox"
+                  id="inlineCheckbox_1"
+                  (click)="onDeleteSelected(i, $event)"
+                />
+                <label class="form-check-label" for="inlineCheckbox_1"></label>
+              </div>
+            </div>
+          </td>
+          }
+        </tr>
+        } }
+      </tbody>
+      }
+    </table>
+    }
+  </div>
+</div>
+} @if (isFormFormatRequired && !isCustomLayout) {
+<div [ngClass]="{ 'mb-5 pb-2': $safeNavigationMigration(list?.length) > 0, 'mb-3 pb-5': list?.length == 0 }">
+  <div class="">
+    @for (item of list; track item; let i = $index) { @if ( (item['status'] != 'D' && item['status'] != null &&
+    item['status'] != undefined) || (item['removed'] != 'YES' && item['removed'] != null && item['removed'] !=
+    undefined) ) { @if (isDeleteRequired) {
+    <div>
+      @if (isDeleteRequired) {
+      <sym-button
+        [class]="
+          settingService.isNewUIDisplayed
+            ? 'btn float-right datadeletebtn customerDel'
+            : 'btn float-right datadeletebtn'
+        "
+        [id]="'btn_Delete'"
+        (onClick)="onDeleteSelected(i, $event)"
+        [isLoaderRequired]="false"
+        [iconClass]="'fa fa-trash'"
+      ></sym-button>
+      }
+    </div>
+    }
+    <div [class.datadeletebody]="isDeleteRequired">
+      @for (field of rowFieldCodes; track field; let j = $index) {
+      <sym-field-group
+        [fieldIds]="field"
+        [responseIO]="responseIO"
+        [rowIndex]="i"
+        [model]="item"
+        [modelPath]="item[i]"
+        [gridColumns]="rowColumnWidth != undefined ? rowColumnWidth[j] : undefined"
+        [isXMLCodeRendered]="isXMLCodeRendered"
+        [isFormReadOnly]="isFormReadOnly"
+        (notifyChange)="onGridChanged($event)"
+        (notifyFocus)="onGridFocused($event)"
+        (onFieldsCreated)="onComponentFieldsCreated($event)"
+      ></sym-field-group>
+      }
+    </div>
+    @if (list.length > 1) {
+    <hr />
+    } } }
+  </div>
+  <div
+    [ngClass]="{
+      'tableHeaderActions float-right mb-2': isAddRequired && !(totalValidrecordCount == maxRecordCount)
+    }"
+  >
+    @if (isAddRequired && !(totalValidrecordCount == maxRecordCount)) {
+    <sym-button
+      [class]="'btn btn_outline_primary btnAddTab mr-5'"
+      [id]="'btn_Add'"
+      [text]="addLabelText != undefined ? addLabelText : 'add'"
+      (onClick)="onAddClick($event)"
+      [isLoaderRequired]="false"
+    ></sym-button>
+    }
+  </div>
+</div>
+} @if (isCustomLayout) {
+<div [ngClass]="{ 'mb-5 pb-2': list.length > 0, 'mb-3 pb-5': list.length == 0 }">
+  <div class="">
+    @for (item of list; track item; let index = $index) { @if ( (item['status'] != 'D' && item['status'] != null &&
+    item['status'] != undefined) || (item['removed'] != 'YES' && item['removed'] != null && item['removed'] !=
+    undefined) ) { @if (isDeleteRequired) {
+    <div>
+      @if (isDeleteRequired) {
+      <sym-button
+        [class]="
+          settingService.isNewUIDisplayed
+            ? 'btn float-right datadeletebtn customerDel'
+            : 'btn float-right datadeletebtn'
+        "
+        [id]="'btn_Delete'"
+        (onClick)="onDeleteSelected(index, $event)"
+        [isLoaderRequired]="false"
+        [iconClass]="'fa fa-trash'"
+      ></sym-button>
+      }
+    </div>
+    }
+    <div [class.datadeletebody]="isDeleteRequired">
+      @for (field of rowFieldCodes; track field; let j = $index) {
+      <sym-field-group
+        [fieldIds]="field"
+        [responseIO]="responseIO"
+        [rowIndex]="index"
+        [model]="item"
+        [modelPath]="item[index]"
+        [gridColumns]="rowColumnWidth != undefined ? rowColumnWidth[j] : undefined"
+        [isXMLCodeRendered]="isXMLCodeRendered"
+        (notifyChange)="onGridChanged($event)"
+        (notifyFocus)="onGridFocused($event)"
+        (onFieldsCreated)="onComponentFieldsCreated($event)"
+      ></sym-field-group>
+      }
+    </div>
+    @if (list.length > 1) {
+    <hr />
+    }
+    <ng-container>
+      <!-- <ng-content></ng-content> -->
+      <ng-container *ngTemplateOutlet="itemTpl; context: { $implicit: item, index: index }"> </ng-container>
+    </ng-container>
+    } }
+  </div>
+  <div
+    [ngClass]="{
+      'tableHeaderActions float-right mb-2': isAddRequired && !(totalValidrecordCount == maxRecordCount)
+    }"
+  >
+    @if (isAddRequired && !(totalValidrecordCount == maxRecordCount)) {
+    <sym-button
+      [class]="'btn btn_outline_primary btnAddTab mr-5'"
+      [id]="'btn_Add'"
+      [text]="addLabelText != undefined ? addLabelText : 'add'"
+      (onClick)="onAddClick($event)"
+      [isLoaderRequired]="false"
+    ></sym-button>
+    }
+  </div>
+</div>
+}

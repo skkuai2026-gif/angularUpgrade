@@ -1,0 +1,88 @@
+@if (xmlDom != undefined && xmlDom.children != undefined && policyService.responseIO != undefined && renderXML) {
+@for (element of xmlDom.children; track element) { @switch (element.nodeName) { @case ('panel') {
+<ng-template [ngTemplateOutlet]="panel" [ngTemplateOutletContext]="{ panel: element }"></ng-template>
+} @case ('row') {
+<ng-template [ngTemplateOutlet]="row" [ngTemplateOutletContext]="{ row: element }"></ng-template>
+} @case ('col') {
+<ng-template [ngTemplateOutlet]="col" [ngTemplateOutletContext]="{ col: element }"></ng-template>
+} @case ('field') {
+<ng-template [ngTemplateOutlet]="field" [ngTemplateOutletContext]="{ field: element }"></ng-template>
+} @case ('html') {
+<ng-template [ngTemplateOutlet]="html" [ngTemplateOutletContext]="{ html: element }"></ng-template>
+} @case ('symLabel') {
+<ng-template [ngTemplateOutlet]="symLabel" [ngTemplateOutletContext]="{ symLabel: element }"></ng-template>
+} } } }
+<ng-template let-panel="panel" #panel>
+  @if (panel.getAttribute('symIfVal') === 'true') {
+  <sym-panel
+    [id]="panel.getAttribute('id')"
+    [name]="panel.getAttribute('label')"
+    [isHidden]="panel.getAttribute('label') == '#none' || panel.getAttribute('label') == undefined ? true : false"
+    [additionalInfo]="panel.getAttribute('additionalInfo')"
+  >
+    <sym-policy-xml-question-set [xmlDom]="panel" [questionSet]="questionSet"></sym-policy-xml-question-set>
+  </sym-panel>
+  }
+</ng-template>
+<ng-template let-row="row" #row>
+  <div class="col-sm-12 col-md-12 co-lg-12 col-xl-12">
+    @if (row.getAttribute('symIfVal') === 'true') {
+    <sym-policy-xml-question-set
+      class="form-row"
+      [xmlDom]="row"
+      [questionSet]="questionSet"
+      [partyGuid]="partyGuid"
+      [isUpperCaseReq]="isUpperCaseReq"
+      (notifyChange)="onQuestionChanged($event)"
+    ></sym-policy-xml-question-set>
+    }
+  </div>
+</ng-template>
+<ng-template let-col="col" #col>
+  <div [class]="getColClass(col)">
+    @if (col.getAttribute('symIfVal') === 'true') {
+    <sym-policy-xml-question-set
+      [xmlDom]="col"
+      [questionSet]="questionSet"
+      [partyGuid]="partyGuid"
+      [isUpperCaseReq]="isUpperCaseReq"
+      (notifyChange)="onQuestionChanged($event)"
+    ></sym-policy-xml-question-set>
+    }
+  </div>
+</ng-template>
+
+<ng-template let-html="html" #html>
+  <sym-xml-html-ui
+    [html]="html"
+    [service]="policyService"
+    [responseIO]="policyService.responseIO"
+    [productFacets]="policyService.productFacets"
+    [companyFacets]="policyService.companyFacets"
+    [symIndex]="currIndex"
+    (onElementClicked)="onHTMLElementClick($event)"
+  ></sym-xml-html-ui>
+</ng-template>
+<ng-template let-field="field" #field>
+  @if (questionSet.questions != undefined) { @for (question of questionSet.questions; track question) { @if
+  (question.dataElementCd === field.getAttribute('fieldId')) {
+  <sym-policy-question-item
+    [question]="question"
+    [partyGuid]="partyGuid"
+    [questionSetCd]="questionSet.questionSetCd"
+    [parentReferencePath]="questionSet.parentReferencePath"
+    [isUpperCaseReq]="isUpperCaseReq"
+    [displayLabelOnly]="field.getAttribute('displayLabelOnly')"
+    [displayItemOnly]="field.getAttribute('displayItemOnly')"
+    (notifyChange)="onQuestionChanged($event)"
+  ></sym-policy-question-item>
+  } } }
+</ng-template>
+
+<ng-template let-symLabel="symLabel" #symLabel>
+  <label
+    [class]="symLabel.getAttribute('class') != undefined ? symLabel.getAttribute('class') : 'label'"
+    [id]="symLabel.getAttribute('id') != undefined ? symLabel.getAttribute('id') : ''"
+    >{{ policyService.getMultilingualLabel(symLabel.getAttribute('text')) }}</label
+  >
+</ng-template>

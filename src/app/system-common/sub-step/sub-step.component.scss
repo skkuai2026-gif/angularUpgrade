@@ -1,0 +1,384 @@
+.tabNavigationBottomFooter button .btn-arrow > i:before {
+  background-image: linear-gradient(324deg, #d815d8 40%, transparent 59%) !important;
+  background-color: rgb(117 2 117 / 82%) !important;
+}
+
+.tabNavigationBottomFooter button {
+  font-size: 0.94rem;
+}
+
+.tabNavigationBottomFooter button .btn-arrow > i:before {
+  font-size: 0.69rem;
+}
+
+.tabNavigationBottomFooter button .btn-arrow:focus i,
+.tabNavigationBottomFooter button .btn-arrow i:focus,
+.tabNavigationBottomFooter button .btn-arrow:hover i,
+.tabNavigationBottomFooter button .btn-arrow i:hover {
+  border: 3px solid #800080;
+  box-shadow: 0 5px 8px rgba(11, 49, 162, 0.3);
+  border-radius: 32%;
+}
+
+.subStepErrorPop > .modal > .modal-dialog > .modal-content > .modal-header.popup-header {
+  background-color: var(--active-b) !important;
+  color: var(--active-c) !important;
+}
+
+.tabNavigationBottomFooter button:disabled .btn-arrow > i:before {
+  background-image: linear-gradient(324deg, #afa3af 40%, transparent 59%) !important;
+  background-color: rgb(181 173 181 / 82%) !important;
+}
+
+.tabNavigationBottomFooter button:disabled .btn-arrow:focus i,
+.tabNavigationBottomFooter button:disabled .btn-arrow i:focus,
+.tabNavigationBottomFooter button:disabled .btn-arrow:hover i,
+.tabNavigationBottomFooter button:disabled .btn-arrow i:hover {
+  border: 3px solid #af9daf;
+}
+
+// new
+
+.stepper-wrapper {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  --default-b: #ccc; // lightgrey;
+  --default-c: #000000; // black;
+  --active-b: #800080;
+  --active-c: #ffffff;
+  --circle: 1.999em; /* size of circle */
+  --b: 0.2rem; /* line thickness */
+}
+.stepper-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+}
+
+.stepper-item::before {
+  position: absolute;
+  content: '';
+  border-bottom: 2px solid #ccc;
+  width: 100%;
+  top: 13px;
+  left: -50%;
+  z-index: 2;
+}
+
+.stepper-item::after {
+  position: absolute;
+  content: '';
+  border-bottom: 2px solid #ccc;
+  width: 100%;
+  top: 13px;
+  left: 50%;
+  z-index: 2;
+}
+
+.stepper-item .step-counter {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--circle);
+  height: var(--circle);
+  color: var(--active-c);
+  border-radius: 50%;
+  // background: #ccc;
+  background: var(--default-b);
+  margin-bottom: 15px;
+}
+
+.step-counter > i.fa-bullseye {
+  font-size: var(--circle);
+}
+.stepper-item.active {
+  font-weight: bold;
+}
+
+.stepper-item.active .step-counter {
+  border: 5px solid var(--active-b);
+  padding: 0 0px;
+  background-image: linear-gradient(324deg, #f30bf3 29%, transparent 66%) !important;
+  background-color: rgba(128, 0, 128, 0.8196078431) !important;
+}
+
+.stepper-item.completed .step-counter {
+  cursor: pointer;
+  border: 2px solid var(--active-b);
+  background-image: linear-gradient(324deg, #f30bf3 29%, transparent 66%) !important;
+  background-color: rgba(128, 0, 128, 0.8196078431) !important;
+}
+
+.stepper-item.completed::after {
+  position: absolute;
+  content: '';
+  border-bottom: 2px solid var(--active-b);
+  width: 100%;
+  top: 13px;
+  left: 50%;
+  z-index: 3;
+}
+
+.stepper-item:first-child::before {
+  content: none;
+}
+.stepper-item:last-child::after {
+  content: none;
+}
+
+.step-name {
+  font-size: 0.79rem;
+  text-align: center;
+  word-wrap: break-word;
+  margin: 3px;
+}
+
+.vertical_container {
+  display: flex;
+  width: 100%;
+}
+.stepper-wrapper.vertical {
+  display: grid;
+  min-width: 20%;
+  margin: 0;
+}
+
+.vertical .stepper-item.completed::after {
+  position: absolute;
+  content: '';
+
+  z-index: 3;
+  height: 100%;
+  width: 2px;
+  background: var(--active-b);
+}
+
+.vertical .stepper-item::before {
+  position: absolute;
+  content: '';
+  width: 2px;
+  top: 13px;
+  left: -50%;
+  z-index: 2;
+  background: #ccc;
+  height: 100%;
+}
+
+.vertical .stepper-item::after {
+  position: absolute;
+  content: '';
+  width: 2px;
+  top: 13px;
+  left: 50%;
+  z-index: 2;
+  height: 100%;
+  background: #ccc;
+}
+
+.vertical .stepper-item:last-child::after {
+  display: none;
+}
+
+.vertical .step-name {
+  position: relative;
+  width: 100px;
+  top: -2.5rem;
+  z-index: 9;
+  left: 5rem;
+  text-align: left;
+}
+
+.body_container {
+  min-width: 80%;
+  display: grid;
+}
+
+.toastPosition {
+  z-index: 11 !important;
+  right: 0;
+  top: 45px;
+  width: 5rem;
+  height: 28px;
+}
+
+.errorToastPosition {
+  z-index: 11 !important;
+  right: 0;
+  top: 75%;
+}
+
+.toast-close {
+  position: absolute;
+  right: 10px;
+}
+
+.toast-body {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 900px) and (min-width: 600px) {
+  .errorToastPosition {
+    top: 82%;
+  }
+}
+
+@media only screen and (max-width: 1025px) and (min-width: 800px) {
+  .errorToastPosition {
+    top: 88%;
+  }
+}
+@media only screen and (max-width: 500px) and (min-width: 341px) {
+  .errorToastPosition {
+    top: 78%;
+  }
+}
+@media only screen and (max-width: 340px) and (min-width: 300px) {
+  .errorToastPosition {
+    top: 65%;
+  }
+}
+@media only screen and (max-width: 300px) {
+  .errorToastPosition {
+    top: 45%;
+  }
+}
+
+.error_container {
+  position: relative;
+  right: 20px;
+  bottom: 25px;
+
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ff3d71;
+  font-size: 0.78em;
+  font-style: normal;
+  width: 33px;
+  height: 17px;
+  background: #fff;
+  border: 1px solid #ff3d71;
+  border-radius: 10px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.vertical .error_container {
+  left: 41px;
+}
+
+.stepper-item .step-counter .radial_container,
+.step-name-container {
+  display: none;
+}
+
+.step_nameContainer {
+  display: block;
+}
+@media only screen and (max-width: 1024px) {
+  @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 680px) {
+      @media only screen and (max-width: 576px) {
+        .stepper-wrapper {
+          padding-right: 40px;
+          // position: relative;
+          z-index: 11;
+          width: 100%;
+          // top: 0;
+          // left: 7px;
+          background-color: #fff;
+          box-shadow: 0 0.1rem 0.8rem 0 rgba(44, 51, 73, 0.1);
+          position: fixed;
+          top: 105px;
+          left: 55px;
+        }
+
+        .body_container {
+          padding-top: 55px;
+        }
+        .stepper-item.active {
+          font-weight: bold;
+          display: flex;
+          flex-direction: row;
+        }
+        .step_nameContainer {
+          display: none;
+        }
+        .stepper-item.active .step-counter {
+          // counter-increment: section;
+          // content: counter(section);
+          padding: 1rem;
+          margin: 1rem;
+          font-size: 1.69em;
+        }
+
+        .stepper-item.active .step-counter i {
+          display: none;
+        }
+
+        .error_container {
+          width: 40px;
+          height: 25px;
+          // position: relative;
+          // top: 14px;
+          /* right: 32px; */
+          // left: 110px;
+
+          position: absolute;
+          top: 8px;
+          left: 13em;
+        }
+
+        .stepper-item.active .step-name {
+          font-size: 1.3rem;
+          text-align: left;
+        }
+        .next-step {
+          font-size: 0.9em;
+          font-weight: 500;
+        }
+
+        .stepper-item.active .step-counter .radial_container {
+          display: block;
+        }
+
+        .step-name-container {
+          display: grid;
+        }
+
+        .container {
+          display: flex;
+          justify-content: space-around;
+          flex-wrap: wrap;
+          // background-color: lightblue;
+          height: 100%;
+          align-items: center;
+        }
+
+        .stepper-item {
+          display: none;
+          counter-reset: section;
+        }
+        .stepper-item::before,
+        .vertical .stepper-item::before,
+        .stepper-item::after,
+        .stepper-item.completed::after,
+        .vertical .stepper-item.completed::after,
+        .vertical .stepper-item::after {
+          display: none;
+        }
+      }
+    }
+  }
+}

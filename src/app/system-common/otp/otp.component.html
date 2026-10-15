@@ -1,0 +1,116 @@
+@if (isOtpButtonReq) {
+<button type="button" class="btn btn_primary" [attr.id]="'otpButton'" (click)="onClickOtpbutton()">
+  {{ settingService.getLabelValue('getOtp') }}
+</button>
+}
+<div>
+  <sym-pop-up [popupID]="'otpPopup'" [popupSize]="'small'" [hideCloseButton]="true" [displayPopupAtTop]="true">
+    <form
+      name="otp_form"
+      [formGroup]="otpForm"
+      (ngSubmit)="!otpResend ? validateOTP() : return()"
+      (keyup.enter)="!otpResend ? validateOTP() : return()"
+      autocomplete="off"
+    >
+      <div class="otpPopUp">
+        <div class="row">
+          @if (getOTP) {
+          <div class="col-sm-12 text-center">
+            <span class="font-weight-bold" style="font-size: large">
+              {{ settingService.getLabelValue('verification') }} </span
+            ><br /><br />
+            <span class="mt-3"> {{ settingService.getLabelValue('getOTPMessage') }} </span>
+            <div class="mt-3">
+              <sym-button
+                (onClick)="getOTPClick(false)"
+                [text]="settingService.getLabelValue('getOTP')"
+                [id]="'sendOTP'"
+              ></sym-button>
+            </div>
+          </div>
+          } @if (!getOTP) {
+          <div class="col-sm-12">
+            {{ settingService.getLabelValue('otpSent') }}
+            @if (recipientAddress.emailId == undefined || recipientAddress.mobileNumber == undefined) {
+            <span>{{ settingService.getLabelValue('regEmailMobile') }}</span>
+            } @if (recipientAddress != undefined) { @if (recipientAddress.emailId != undefined) {
+            <br />
+            {{ settingService.getLabelValue('email') }} :
+            <span class="text-info">{{ recipientAddress.emailId }}</span>
+            } @if (recipientAddress.emailId != undefined && recipientAddress.mobileNumber != undefined) { , } @if
+            (recipientAddress.mobileNumber != undefined) {
+            {{ settingService.getLabelValue('mobile') }} :
+            <span class="text-info">{{ recipientAddress.mobileNumber }}</span>
+            } }
+          </div>
+          }
+          <div class="col-sm-12"></div>
+          @if (!getOTP) {
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control"
+                id="txtemailOTP"
+                maxlength="6"
+                autocomplete="off"
+                name="txtemailOTP"
+                [(ngModel)]="currentOTP"
+                (keydown.space)="$event.preventDefault()"
+                size="6"
+                formControlName="otp"
+                [disabled]="
+                  recipientAddress != undefined &&
+                  recipientAddress.emailId == undefined &&
+                  recipientAddress.mobileNumber == undefined
+                    ? true
+                    : false
+                "
+              />
+              @if (timeLeft == undefined) {
+              <div class="fa fa-spinner fa-spin ml-2"></div>
+              }
+              <span class="bar"></span>
+              @if (otpError) {
+              <div>
+                <p class="text-danger">{{ settingService.getLabelValue('invalidOtp') }}</p>
+              </div>
+              }
+            </div>
+          </div>
+          } @if (!getOTP) {
+          <div class="col-sm-4">
+            @if (!otpResend) {
+            <span>{{ timeLeft }}</span>
+            } @if (!otpResend && timeLeft != undefined) {
+            <span
+              ><small class="text-warning"> {{ settingService.getLabelValue('timeLeft') }}</small></span
+            >
+            } @if (otpResend) {
+            <a href="javascript:void(0)" (click)="resendOTP()" class="text-primary">
+              {{ settingService.getLabelValue('resendOtp') }}</a
+            >
+            }
+          </div>
+          }
+        </div>
+        @if (!getOTP) {
+        <div class="text-center">
+          <button
+            type="button"
+            class="btn btn_primary"
+            [disabled]="timeLeft == undefined ? true : currentOTP.length !== 6 || otpResend ? true : false"
+            (click)="validateOTP()"
+          >
+            {{ settingService.getLabelValue('but_Submit') }}
+          </button>
+          &nbsp; &nbsp;
+          <button type="button" class="btn btn_outline_primary" (click)="closeModal()">
+            {{ settingService.getLabelValue('CLOSE_CONFIRMATION') }}
+          </button>
+        </div>
+        }
+      </div>
+    </form>
+  </sym-pop-up>
+</div>

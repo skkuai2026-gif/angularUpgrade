@@ -1,0 +1,21 @@
+@if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div>
+  @if (service.responseIO.data.BasePlan.addtnField1 != 'SIO') {
+  <sym-panel [id]="'plan_extra_list_Body'" [name]="'productExtraDetails'">
+    <sym-data-entry-grid
+      [fieldIds]="
+        'extraTypeCd,decisionCd,loadingTypeCd,processingTypeCd,extraFlatAmt,extraFlatDuration,extraPercent,extraPercDuration'
+      "
+      [responseIO]="service.responseIO"
+      (notifyChange)="onInputChanged($event)"
+      [modelList]="service.responseIO.data.BasePlan.PlanExtraList"
+      [isAddRequired]="false"
+      [isDeleteRequired]="false"
+      [columWidthPerc]="
+        service.isMobileViewRendeered() ? [18, 8, 8, 15, 8, 15, 8, 15] : [20, 10, 10, 15, 15, 22, 18, 25]
+      "
+    ></sym-data-entry-grid>
+  </sym-panel>
+  }
+</div>
+}

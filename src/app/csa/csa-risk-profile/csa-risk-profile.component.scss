@@ -1,0 +1,32 @@
+h2 {
+  text-align: center;
+  border: 0;
+  position: relative;
+  padding: 10px 0 5px 0;
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+h2:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 1px;
+  background-color: #575757;
+}
+.noteAlignjustify {
+  text-align: justify;
+  font-style: italic;
+  font-weight: 700;
+  color: #575757;
+  transform: skewX(-2deg);
+  margin-left: 10px;
+  line-height: 1.5;
+}
+
+.noteText {
+  margin: 0;
+  padding: 0;
+}

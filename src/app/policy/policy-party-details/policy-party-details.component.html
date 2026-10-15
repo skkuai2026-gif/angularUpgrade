@@ -1,0 +1,259 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+  [responseUpdated]="responseUpdated"
+>
+</sym-xml-config-ui>
+} @else { @if (model != undefined) {
+<sym-panel [id]="'basic_Details_Body'" [name]="'PartyDetails'">
+  <sym-field-group
+    [fieldIds]="'partyTypeCd'"
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="model"
+  >
+  </sym-field-group>
+  @if ( model != undefined && (model.partyTypeCd === undefined || model.partyTypeCd === null || model.partyTypeCd
+  === 'INDIVIDUAL') ) {
+  <div>
+    <sym-field-group
+      [fieldIds]="'customerId'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="model"
+      [gridColumns]="[3]"
+    ></sym-field-group>
+    @if ( service.companyFacets && service.companyFacets.data &&
+    service.companyFacets.data['MULTILINGUALPARTYNAME'] &&
+    service.companyFacets.data['MULTILINGUALPARTYNAME'].length > 0 &&
+    service.companyFacets.data['MULTILINGUALPARTYNAME'] == 'YES' ) {
+    <div class="block">
+      <h4>{{ settingService.getLabelValue('language1') }}</h4>
+    </div>
+    }
+    <sym-field-group
+      [fieldIds]="'titleCd,otherTitle,firstName1,middleName1,lastName1,extensionName1'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="model"
+      [gridColumns]="[3, 3, 3, 3, 3, 3]"
+    ></sym-field-group>
+    <sym-field-group
+      [fieldIds]="'quotPartyAddtnField3,genderCd'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="model"
+      [gridColumns]="[4, 4]"
+    ></sym-field-group>
+    @if ( service.companyFacets && service.companyFacets.data &&
+    service.companyFacets.data['MULTILINGUALPARTYNAME'] &&
+    service.companyFacets.data['MULTILINGUALPARTYNAME'].length > 0 &&
+    service.companyFacets.data['MULTILINGUALPARTYNAME'] == 'YES' ) {
+    <div class="block">
+      <h4>{{ settingService.getLabelValue('language2') }}</h4>
+    </div>
+    <sym-field-group
+      [fieldIds]="'firstName2,middleName2,lastName2,extensionName2'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="model"
+    ></sym-field-group>
+    }
+    <sym-field-group
+      [fieldIds]="'birthDt,age,smoker,relationCd'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="model"
+      [gridColumns]="[4, 4, 4, 4, 4, 4]"
+    ></sym-field-group>
+    <!-- <sym-field-group
+          [fieldIds]="
+            'OTHER' === model.relationCd
+              ? 'nsap,maritalStatusCd,relationCd,otherRelation'
+              : 'nsap,maritalStatusCd,relationCd'
+          "
+          (notifyChange)="onInputChanged($event)"
+          (notifyFocus)="onInputFocused($event)"
+          [responseIO]="service.responseIO"
+          [model]="model"
+        ></sym-field-group> -->
+    <sym-field-group
+      [fieldIds]="'countryOfBirth,irrevocableFl,percentage'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="model"
+    ></sym-field-group>
+    <!-- <sym-field-group
+        [fieldIds]="
+          'OTHER' === model.relationCd ? 'maritalStatusCd,relationCd,otherRelation' : 'maritalStatusCd,relationCd'
+        "
+        (notifyChange)="onInputChanged($event)"
+        (notifyFocus)="onInputFocused($event)"
+        [responseIO]="service.responseIO"
+        [model]="model"
+      ></sym-field-group> -->
+    <sym-field-group
+      [fieldIds]="'placeOfBirth,motherMaidenFirstname,motherMaidenLastname'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="model"
+    ></sym-field-group>
+    <!-- <sym-field-group
+      [fieldIds]="'irrevocableFl,percentage'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="model"
+    ></sym-field-group> -->
+    <sym-field-group
+      [fieldIds]="'fatherFirstName1,fatherMiddleName1,fatherLastName1'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="model"
+    ></sym-field-group>
+    <sym-field-group
+      [fieldIds]="'coverageCountryCd,coverageCityCd'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="model"
+    ></sym-field-group>
+  </div>
+  } @if (model != undefined && model.partyTypeCd === 'ORGANIZATION') {
+  <div>
+    <sym-field-group
+      [fieldIds]="'corporateName1,corporateName2'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="model"
+    ></sym-field-group>
+  </div>
+  }
+</sym-panel>
+<ng-container>
+  <sym-panel sym-panel [id]="'contact_Details_Body'" [name]="'CONTACTDETAILS'">
+    <!-- <div class="flex">
+    <div class="m-2 p-2 col-xl-6 col-md-6 col-lg-6 col-sm-12" *ngIf="model.ResidentalContact != undefined">
+      <sym-policy-party-contact [model]="model.ResidentalContact"></sym-policy-party-contact>
+    </div>
+    <div class="m-2 p-2 col-xl-6 col-md-6 col-lg-6 col-sm-12" *ngIf="model.OfficeContact != undefined">
+      <sym-policy-party-contact [model]="model.OfficeContact"></sym-policy-party-contact>
+    </div>
+  </div> -->
+    <div class="colorGray"><u>Provide at least one contact number.</u></div>
+    <div class="colorGray">Home Phone</div>
+    <div class="widthSameas">
+      <sym-field-group
+        [fieldIds]="'field26'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="this.model.AdditionalFieldsList[0]"
+        [gridColumns]="[12]"
+      ></sym-field-group>
+    </div>
+    <div class="contact">
+      @if (model.ResidentalContact != undefined) {
+      <div>
+        @if (this.model.AdditionalFieldsList[0]['field26'] == 'OTHERS') {
+        <sym-policy-party-contact [model]="model.ResidentalContact"></sym-policy-party-contact>
+        }
+      </div>
+      }
+    </div>
+    <div class="colorGray">Work Phone</div>
+    <div class="widthSameas">
+      <sym-field-group
+        [fieldIds]="'field27'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="this.model.AdditionalFieldsList[0]"
+        [gridColumns]="[12]"
+      ></sym-field-group>
+    </div>
+    <div class="contact">
+      @if (model.OfficeContact != undefined) {
+      <div>
+        @if (this.model.AdditionalFieldsList[0]['field27'] == 'OTHERS') {
+        <sym-policy-party-contact [model]="model.OfficeContact"></sym-policy-party-contact>
+        }
+      </div>
+      }
+    </div>
+    <div class="colorGray">Mobile Phone</div>
+    <div class="widthSameas">
+      <sym-field-group
+        [fieldIds]="'field28'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="this.model.AdditionalFieldsList[0]"
+        [gridColumns]="[12]"
+      ></sym-field-group>
+    </div>
+    <div class="contact">
+      @if (model.MobileContact != undefined) {
+      <div>
+        @if (this.model.AdditionalFieldsList[0]['field28'] == 'OTHERS') {
+        <sym-policy-party-contact [model]="model.MobileContact"></sym-policy-party-contact>
+        }
+      </div>
+      } @if (model.PersonalEmail != undefined) {
+      <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12">
+        <sym-field-group
+          [fieldIds]="'emailAddress'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="model.PersonalEmail"
+          [inputOnly]="'true'"
+        ></sym-field-group>
+      </div>
+      }
+    </div>
+  </sym-panel>
+  @if (model.Employment != undefined) {
+  <div>
+    <sym-panel [id]="'Employment_Body'" [name]="'employmentHeader'">
+      <sym-policy-party-employment [model]="model.Employment" [partyModel]="model"></sym-policy-party-employment>
+    </sym-panel>
+  </div>
+  } @if (model.IdentityList != undefined) {
+  <div>
+    <sym-panel [id]="'IdentityList_Body'" [name]="'identityHeader'">
+      <sym-policy-party-identity [partyModel]="model"></sym-policy-party-identity>
+    </sym-panel>
+  </div>
+  }
+  <!-- <div *ngIf="model.OtherIncomeList != undefined">
+<sym-panel [id]="'OtherIncomeList_Body'" [name]="'otherSourceIncome'">
+  <sym-policy-party-other-income [partyModel]="model"></sym-policy-party-other-income>
+</sym-panel>
+</div> -->
+  <sym-panel sym-panel [id]="'address_Details_Body'" [name]="'ADDRESSDETAILS'">
+    <sym-policy-party-address-tabs [partyModel]="model"></sym-policy-party-address-tabs>
+  </sym-panel>
+  <sym-panel [id]="'nationalityDetails_Body'" [name]="'nationalityDetails'">
+    <sym-policy-party-nationality-detail [model]="model"></sym-policy-party-nationality-detail>
+  </sym-panel>
+  <sym-panel [id]="'additionalInstruction_Body'" [name]="'additionalInstructions'">
+    <sym-field-group
+      [fieldIds]="'quotPartyAddtnField2'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="model"
+    ></sym-field-group>
+  </sym-panel>
+  @if ( isNavigationReqd === true && navigationLinkList.length > 0 &&
+  !this.service.responseIO['isMetadataHelpReqd'] ) {
+  <sym-navigation-links [navigationLinkList]="navigationLinkList"></sym-navigation-links>
+  }
+</ng-container>
+} }

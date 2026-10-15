@@ -1,0 +1,1651 @@
+/*
+This files has the css for customer portal.
+*/
+/* .product-step-container .headerActions {
+  height: 10px !important;
+} */
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+div.header {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  z-index: 1 !important;
+  width: 100%;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+.header .logo {
+  position: fixed;
+  top: 3px;
+  left: 30px;
+}
+.sectionCategory,
+.sectionProduct {
+  padding: 80px 30px 30px 30px;
+}
+.pgContent {
+  padding: 0 !important;
+  background-color: #f9f9f9;
+  height: 100% !important;
+}
+
+/* .mCSB_inside > .mCSB_container {
+  margin-right: 8px !important;
+  min-height: unset;
+}
+.mCSB_container.mCS_y_hidden.mCS_no_scrollbar_y {
+  height: unset;
+}
+.pgContent > .mCustomScrollBox > .mCSB_container {
+  height: 100% !important;
+} */
+.customerPageData {
+  height: 100%;
+  align-items: flex-end;
+}
+.customerPageData > .card {
+  border: 0;
+  width: 65%;
+  max-width: 1060px;
+  background-color: #fff;
+  position: relative;
+  z-index: 2;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li > a > span {
+  background-color: rgba(0, 0, 0, 0.2);
+  display: none;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li > a > span,
+.customerPageData .card-header.stepHeader .nav-tabs > li > a.active > span {
+  width: 10px !important;
+  height: 10px !important;
+  border: none !important;
+  margin: 0 !important;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li > a > span > i {
+  display: none;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li > a > span.stepName {
+  width: auto;
+  height: auto;
+  display: none;
+  position: absolute !important;
+  top: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  background: none !important;
+  border: none !important;
+  color: rgb(0 0 0 / 60%);
+  min-width: 180px;
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  border-radius: 0;
+  background-color: transparent !important;
+  border-radius: 20px;
+  padding: 5px;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li.currentTab > a > span.stepName {
+  display: block;
+  color: #222;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li.completed > a > span.stepName {
+  color: #222;
+}
+
+.customerPageData .card-header.stepHeader .nav-tabs > li > a:hover > span.stepName {
+  color: rgb(0 0 0 / 60%) !important;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li.completed > a:hover > span.stepName {
+  color: #222 !important;
+}
+.customerPageData .card .card-header.stepHeader {
+  padding: 25px 30px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 65%;
+  max-width: 1060px;
+  background-color: #fff;
+  z-index: 99;
+  right: 0;
+  top: 0;
+  height: 70px !important;
+}
+.customerPageData .card .card-header.stepHeader ul {
+  width: 100%;
+  max-width: 1000px;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li > i {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li.completed > a > span::before {
+  content: '' !important;
+}
+
+.customerPageData .card-header.stepHeader .nav-tabs > li > a:hover > span.stepName {
+  display: block;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li.completed > a > span.stepName::before {
+  content: '';
+  display: none;
+}
+
+.customerPageData .card-header.stepHeader .nav-tabs > li.completed > a > span:first-child:before {
+  background-color: #222;
+  border-color: #222;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li.completed i {
+  background-color: #222;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li > a {
+  background-color: transparent !important;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li > a.active > span:first-child,
+.customerPageData .card-header.stepHeader .nav-tabs > li.currentTab > a > span:first-child {
+  background-color: #222;
+}
+
+.customerPageData .card-header.stepHeader .nav-tabs > li.error > i:before {
+  background-color: #fff;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li.error > i span {
+  padding: 5px;
+  border-radius: 20px;
+  width: 25px;
+  height: 25px;
+  top: 12px;
+  font-size: 12px;
+  background-color: rgb(255 61 113 / 15%);
+  color: #ff3d71;
+  font-weight: bold;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li > a.active > span:first-child,
+.customerPageData .card-header.stepHeader .nav-tabs > li.currentTab > a > span:first-child {
+  background-color: #222 !important;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  animation: pulse 2s infinite;
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4);
+  }
+  70% {
+    -webkit-box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+  100% {
+    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4);
+  }
+  70% {
+    -moz-box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+  100% {
+    -moz-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+.card-header.stepHeader ~ .card-body {
+  padding: 80px 20px 20px 20px !important;
+}
+
+label .asterik,
+.label .asterik {
+  color: red;
+}
+.container-fluid {
+  position: relative;
+}
+.tab-content > .box {
+  padding: 0;
+  border: 0;
+}
+.mb0 {
+  margin-bottom: 0 !important;
+}
+/* border: 1px solid #d1e2e5; */
+.block {
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid #d1e2e5;
+  box-sizing: border-box;
+  padding: 10px 10px; /*Dec 5 to reduce spacing decreased padding*/
+  position: relative;
+  box-shadow: 0 4px 0 0 rgb(209 226 229 / 35%);
+  margin-bottom: 10px;
+}
+.block.blockCollapse {
+  height: 70px !important;
+}
+.block.blockCollapse > h4 {
+  margin-bottom: 20px;
+}
+/* .blockSm {
+  max-width: 680px;
+  width: 100%;
+  margin: 0 auto;
+} */
+.block > h4 {
+  border-bottom: 2px solid rgb(1 138 205);
+  border: 0;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  position: relative;
+  font-size: 18px;
+  /*Dec 5 below css added for heading to improve*/
+  font-weight: bold;
+  color: #fff;
+  padding: 8px;
+  /*padding: 8px !important; Marked as important beacuse it is taking padding from panel.component.css. Required in v10*/
+  border-radius: 4px;
+  background-color: #018acd;
+}
+/*Dec 5 below new added class for reducing space and color change of checkbox in the block element owner*/
+
+#step_yourDetails .block .owner-h .fgMaterial {
+  padding-top: 0px;
+  margin-bottom: 0px;
+}
+
+#step_yourDetails .block .owner-h .form-check-label {
+  color: #fff;
+}
+
+#step_yourDetails .block .owner-h .form-check-label::before {
+  border-color: #fff;
+}
+
+#step_yourDetails .block .owner-h .label {
+  color: #fff;
+  font-weight: normal;
+}
+/*end here added class section*/
+
+.block > h4:before {
+  content: '';
+  background: #0077b3;
+  background: -moz-linear-gradient(left, #0077b3 0%, #8fd8f2 100%);
+  background: -webkit-linear-gradient(left, #0077b3 0%, #8fd8f2 100%);
+  background: linear-gradient(to right, #0077b3 0%, #8fd8f2 100%);
+  width: 100%;
+  height: 0px; /*Dec 5 made 0 to hide bottom border*/
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.block > h4:first-child {
+  margin-top: 0;
+}
+.fgError .errorText {
+  line-height: normal;
+  top: calc(100% + 2px);
+}
+.fgMaterial {
+  position: relative;
+  padding-top: 23px; /*nov 8 padding changed 25px to 23px to align vertically */
+  margin-bottom: 11px; /*Dec 5  to reduce spacing*/
+  /* border-bottom: 1px solid #bcbcbc;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg); */
+}
+.fgMaterial.questionnaire {
+  padding-top: 25px !important;
+}
+.fgMaterial .input-group {
+  position: static;
+}
+.fgMaterial .input-group > .input-group-append > .btn {
+  background-color: transparent;
+  border: 0;
+}
+.fgMaterial .form-control ~ label,
+.form-group .ng-select ~ label {
+  position: absolute;
+  top: calc(20px + 4px);
+  left: 0;
+  pointer-events: none;
+  padding-left: 0.125rem;
+  z-index: 1;
+  /*color: #575757;*/ /*commented to keep eaarlier grey label color*/
+  font-size: 14px;
+  font-weight: normal;
+  -webkit-transition: all 0.28s ease;
+  transition: all 0.28s ease;
+  padding-left: 0;
+  margin: 0;
+}
+
+.fgMaterial .form-control ~ label:before,
+.form-group .ng-select ~ label:before {
+  content: '';
+  position: fixed;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background-color: #000;
+  -webkit-transition: left 0.28s ease, width 0.28s ease;
+  transition: left 0.28s ease, width 0.28s ease;
+  z-index: 2;
+}
+.fgMaterial .form-control {
+  /* border: 0;
+  padding-left: 0 !important;
+  height: 32px;
+  background-color: transparent;
+  box-shadow: none !important; */
+  border: 0;
+  height: 32px;
+  background-color: transparent;
+  box-shadow: none !important;
+  padding: 0 0.29rem !important;
+  margin-bottom: 10px; /*Dec 5 to reduce spacing*/
+  border-bottom: 1px solid #bcbcbc;
+  border-radius: 0;
+}
+.fgMaterial .input-group {
+  height: 32px;
+}
+/* .fgMaterial .form-control:valid */
+.fgMaterial .form-control:focus,
+.form-group .ng-select:focus,
+.form-control:not(:placeholder-shown),
+.form-control[placeholder='DD/MM/YYYY'],
+.form-control[placeholder='xxxx-xxxx-xxxx'] {
+  color: #000;
+  outline: none;
+}
+/* .fgMaterial .form-control:valid ~ label */
+.fgMaterial .form-control:focus ~ label,
+.form-group .ng-select .ng-select-container .ng-value-container .ng-input:focus ~ label,
+.form-control:not(:placeholder-shown) ~ label,
+.form-control[placeholder='DD/MM/YYYY'] ~ label,
+.form-control[placeholder='xxxx-xxxx-xxxx'] ~ label {
+  font-size: 12px;
+  /*color: #000;*/ /*commented to keep eaarlier grey label color*/
+  top: 4px;
+  left: 0;
+}
+.fgMaterial .form-control:focus ~ label:before,
+.form-control[placeholder='DD/MM/YYYY']:focus ~ label::before,
+.form-control[placeholder='xxxx-xxxx-xxxx']:focus ~ label::before {
+  width: 100%;
+  left: 0;
+}
+.ng-select .ng-select-container {
+  min-height: 32px !important;
+  height: 32px !important;
+}
+select:not([value='']):valid {
+  color: #000;
+  outline: none;
+}
+select:not([value='']):valid ~ label {
+  font-size: 12px;
+  color: #000;
+  top: 2px;
+  left: 0;
+}
+select:not([value='']):valid ~ label:before {
+  width: 100%;
+  left: 0;
+}
+
+.radioGrpBox .form-check > label {
+  height: 32px;
+}
+.form-check > .form-check-input ~ label.withicon.iconMale:before {
+  background-image: url(/assets/theme/images/customer/icon_male.svg);
+}
+.form-check > .form-check-input:checked ~ label.withicon.iconMale:before {
+  background-image: url(/assets/theme/images/customer/icon_male_selected.svg);
+}
+.form-check > .form-check-input ~ label.withicon.iconFemale:before {
+  background-image: url(/assets/theme/images/customer/icon_female.svg);
+}
+.form-check > .form-check-input:checked ~ label.withicon.iconFemale:before {
+  background-image: url(/assets/theme/images/customer/icon_female_selected.svg);
+}
+
+.form-check > label.withicon.iconFemale:before,
+.form-check > label.withicon.iconMale:before {
+  top: 50% !important;
+}
+
+.radioGrpBox .form-check > .form-check-input:checked ~ label {
+  color: #018acd;
+  border-color: #018acd;
+}
+.form-check > .form-check-input:checked ~ label.withicon.iconSmoker:before {
+  background-image: url(/assets/theme/images/customer/icon_smoker_hover.svg);
+}
+.form-check > .form-check-input:checked ~ label.withicon.iconNonSmoker:before {
+  background-image: url(/assets/theme/images/customer/icon_non_smoker_hover.svg);
+}
+.blockLeftBanner {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  position: relative;
+  margin-right: 60px;
+}
+.blockLeftBanner::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  left: -260px;
+  background-image: url(/assets/theme/images/customer/term_life_insurance_banner.png);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 75% auto;
+  display: block;
+  width: 300px;
+  height: calc(100% + 60px);
+  background-color: #e8f7ff;
+}
+.radioGrp,
+.checkBoxGrp {
+  line-height: 0;
+}
+.fgInline {
+  align-items: center;
+}
+.form-check-inline {
+  margin-bottom: 0 !important;
+}
+.fgInline .label {
+  margin-bottom: 0;
+}
+.checkBoxGrp .form-check > .form-check-input ~ label::before {
+  border-color: #bcbcbc;
+}
+.blockQuotation {
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.tab-content > .box > .card-body {
+  padding: 10px 0;
+}
+.rowQCompare {
+  display: block;
+}
+.rowQCompare .box {
+  padding: 0;
+  border: 0;
+}
+.rowQCompare .card {
+  padding: 0;
+  background-color: rgb(242 248 249 / 47%);
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  border: 1px solid #d1e2e5 !important;
+  border-radius: 5px;
+  box-shadow: 0 4px 0 0 rgb(209 226 229 / 35%);
+  margin: 10px 10px 30px 10px;
+}
+/* Removed Animation CSS for hovering on Quotation Plan By Snehal Jadhav */
+/* .rowQCompare .card:focus,
+.rowQCompare .card:hover {
+  box-shadow: 4px 4px 10px 0px rgb(51 102 255 / 32%) !important;
+  left: -1px;
+  top: -9px;
+} */
+.rowQCompare .card:before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 10px;
+  right: 10px;
+  background: #4682b4; /*Nov 30 change in background color of selected card to compare*/
+  height: 40px;
+  width: 40px;
+  border-radius: 32px;
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  transition: transform 0.8s ease-out;
+  z-index: -1;
+}
+.rowQCompare .card.selected {
+  box-shadow: 4px 4px 10px 0px rgb(51 102 255 / 32%) !important;
+  left: -1px;
+  top: -9px;
+}
+.rowQCompare .card.selected:before {
+  transform: scale(40);
+}
+.rowQCompare .card:hover {
+  transition: all 0.2s ease-out;
+}
+.rowQCompare .card .radioGrpBox.radioGrpText,
+.radioButton .radioGrpBox.radioGrpText {
+  display: flex;
+}
+.rowQCompare .card .radioGrpBox.radioGrpText .form-check,
+.radioButton .radioGrpBox.radioGrpText .form-check {
+  padding: 0;
+  margin-right: 5px; /*Nov 30 All margins added and width for sepration of payment mode*/
+}
+.rowQCompare .card .radioGrpBox.radioGrpText .form-check:last-child,
+.radioButton .radioGrpBox.radioGrpText .form-check:last-child {
+  margin-right: 0;
+}
+.rowQCompare .card .radioGrpBox.radioGrpText .form-check > label,
+.radioButton .radioGrpBox.radioGrpText .form-check > label {
+  padding: 0px 6px;
+  height: auto !important;
+  min-height: 30px;
+  border-radius: 4px; /*nov 30 for curved shaped border radius added*/
+  position: relative;
+  font-weight: normal;
+  font-size: 11px;
+  border: 1px solid #66cdaa; /*Nov 30 color change*/
+  /*border-left: 0;*/ /*Nov 30 commented as not required*/
+}
+.radioButton .radioGrpBox.radioGrpText .form-check > label {
+  border: 2px solid #018acd;
+}
+
+.rowQCompare .card .radioGrpBox .form-check > .form-check-input:checked ~ label,
+.radioButton .radioGrpBox .form-check > .form-check-input:checked ~ label {
+  background-color: #66cdaa; /*Nov 30 color change */
+  color: #fff;
+  transform: scale(1.1);
+  z-index: 1;
+}
+.rowQCompare .card.selected .radioGrpBox .form-check > .form-check-input:checked ~ label {
+  transition: box-shadow 0.4s ease-out;
+  box-shadow: 4px 4px 2px 0px rgb(0 0 0 / 24%);
+}
+.rowQCompare .card .radioGrpBox .form-check > .form-check-input:active ~ label,
+.radioButton .radioGrpBox .form-check > .form-check-input:active ~ label {
+  border-color: #018acd;
+}
+.rowQCompare .cardAttr {
+  background-color: #fff;
+  pointer-events: none;
+  border: none;
+  box-shadow: none;
+}
+.rowQCompare .cardAttr::before {
+  display: none;
+}
+.counterInput {
+  display: flex;
+}
+.counterInput > span {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: box-shadow 0.2s ease-in-out, top 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  background-color: #018acd;
+  font-size: 24px;
+  color: #fff;
+  border-radius: 4px;
+}
+.counterInput > span:hover {
+  opacity: 0.9;
+}
+.counterInput > span:active {
+  box-shadow: none;
+  top: 2px;
+}
+.counterInput .form-control {
+  width: 80px;
+  padding-right: 0.75rem;
+  margin: 0 5px;
+}
+.form-control:focus {
+  border-color: #018acd;
+}
+.inputsContainer {
+  display: flex;
+}
+.inputsContainer > div {
+  margin-right: 15px;
+}
+.inputsContainer > div:last-child {
+  margin-right: 0;
+}
+.label.required::after {
+  content: '*';
+  color: red;
+  margin-left: 3px;
+  font-size: 1.2rem;
+}
+.tbItem {
+  padding: 8px 15px;
+}
+.rowQCompare .cardAttr .tbItem {
+  height: 46px;
+  padding-left: 0;
+  padding-right: 8px;
+}
+.tbItem .form-group {
+  margin-bottom: 8px;
+}
+.tbItem .form-group.fgError .errorText {
+  width: 15px;
+  overflow: hidden;
+  padding: 0;
+  top: 7px;
+  left: auto;
+  z-index: 2;
+  line-height: normal;
+  height: auto;
+  min-height: 18px;
+  right: -10px;
+  padding: 0 !important;
+  font-size: 0;
+}
+.tbItem .form-group.fgError .errorText .errorIcon {
+  background: #fff;
+  z-index: 2;
+}
+.fgError .form-control,
+.fgError .form-control:hover,
+.fgError .form-control:focus {
+  border-color: #ff3d71 !important;
+}
+.cardAttr p {
+  margin-bottom: 0;
+  padding-top: 3px;
+}
+
+.rowQCompare .card h4 {
+  padding: 15px 50px 10px 15px;
+  border: none;
+  color: #575757;
+  position: relative;
+  margin-bottom: 5px;
+  font-weight: bold; /*Nov 30 added to bold heading*/
+}
+.rowQCompare .card.selected h4 {
+  color: #fff;
+}
+.rowQCompare .card.cardAttr h4 {
+  padding-right: 15px;
+  background-color: transparent;
+  color: inherit;
+  padding-left: 0;
+  font-weight: bold;
+}
+.rowQCompare .card h4:after {
+  content: '';
+  display: block;
+  width: 88px;
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  background: #0077b3;
+}
+.rowQCompare .card.selected h4:after {
+  background-color: #fff;
+}
+
+.rowQCompare .card .radioGrpBox .form-check > label,
+.rowQCompare .card .form-control,
+.radioButton .radioGrpBox .form-check > label,
+.radioButton .form-control {
+  background-color: #fff;
+  font-size: 13px;
+  color: #575757;
+  border: 1px solid #018acd;
+  color: #575757;
+  font-weight: normal;
+}
+.rowQCompare .card .radioGrpBox .form-check > label,
+.radioButton .radioGrpBox .form-check > label {
+  border-left: 0;
+  font-weight: 100;
+}
+.rowQCompare .card .radioGrpBox .form-check:first-child > label,
+.rowQCompare .card .radioGrpBox .form-check input:hover ~ label,
+.rowQCompare .card .radioGrpBox .form-check input:focus ~ label {
+  border-left: 1px solid #66cdaa; /*Nov 30 color change */
+}
+.radioButton .radioGrpBox .form-check:first-child > label,
+.radioButton .radioGrpBox .form-check input:hover ~ label,
+.radioButton .radioGrpBox .form-check input:focus ~ label {
+  border-left: 2px solid #018acd;
+}
+.rowQCompare .card .form-control {
+  height: 30px;
+  padding-left: 0.75rem !important;
+}
+
+.btnSelectCard {
+  position: absolute;
+  cursor: pointer;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 10px;
+  right: 10px;
+  height: 40px;
+  border-radius: 6px; /*Nov 30 back arrow made square - reduced border radius*/
+  background-color: #66cdaa; /*Nov 30 for back arrow*/
+  font-weight: bold; /*Nov 30 for back arrow*/
+  z-index: 2;
+}
+.btnSelectCard::before {
+  content: '\e909';
+  font-family: 'icomoon';
+  color: #fff;
+}
+
+.tbItem .value {
+  font-size: 20px;
+  transition: color 0.6s ease-out;
+  margin: 0;
+  position: relative;
+  min-height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+}
+.rowQCompare .card.selected .value,
+.rowQCompare .card.selected .value .label {
+  color: #fff;
+}
+.tbItem .value .label {
+  margin-bottom: 0;
+  font-weight: normal;
+}
+.rowQCompare .card .skeleton-text-loader {
+  display: inline-block;
+  height: 26px;
+  position: relative;
+  overflow: hidden;
+  background-color: rgb(0 131 141 / 13%);
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.rowQCompare .card .skeleton-text-loader::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.5) 60%,
+    rgba(0, 0, 0, 0)
+  );
+  -webkit-animation: shineAnim 2s infinite;
+  animation: shineAnim 2s infinite;
+  content: '';
+}
+
+@keyframes shineAnim {
+  100% {
+    transform: translateX(100%);
+  }
+}
+.select {
+  position: relative;
+}
+.select:after {
+  content: '\e907';
+  font-family: 'icomoon';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 6px;
+  font-weight: bold;
+}
+
+.editableSelect {
+  position: relative;
+  border: 1px solid #018acd;
+  border-radius: 0.25rem;
+}
+.editableSelect input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 30px);
+  z-index: 3;
+  border: 0 !important;
+}
+.editableSelect select {
+  position: relative;
+  border: 0 !important;
+}
+
+.rowQCompare .card.selected .label,
+.rowQCompare .card.selected label {
+  color: #fff;
+}
+
+.product-summary {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 20px;
+  border: 4px solid #e5f1f9;
+  background-color: #f3f9fc;
+  width: 300px;
+}
+
+.riderContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-column-gap: 15px;
+}
+
+.blockRider {
+  box-shadow: none;
+  border: none;
+  padding: 0;
+}
+
+.blockRider > h3 {
+  text-align: center;
+  border: none;
+  position: relative;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+.blockRider > h3:after {
+  content: '';
+  background: #0077b3;
+  background: -moz-linear-gradient(left, #0077b3 0%, #8fd8f2 100%);
+  background: -webkit-linear-gradient(left, #0077b3 0%, #8fd8f2 100%);
+  background: linear-gradient(to right, #0077b3 0%, #8fd8f2 100%);
+  width: 150px;
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.headerInfo {
+  box-shadow: 0 3px 20px 0 rgb(0 0 0 / 15%);
+  margin: 0 auto;
+  max-width: 1000px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.headerInfo div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px 6px 20px 20px;
+  background-color: #018acd;
+}
+.headerInfo div p {
+  margin-bottom: 0;
+  border-right: 1px dashed #ddd;
+  margin-right: 15px;
+  padding-right: 15px;
+  color: #fff;
+}
+.headerInfo div p:last-child {
+  margin-right: 0;
+  padding-right: 0;
+  border: 0;
+}
+.headerInfo div p .label {
+  color: #fff;
+  max-width: 105px;
+  min-width: 95px;
+}
+.headerInfo div p:last-child,
+.headerInfo div p:nth-last-child(2) {
+  font-size: 20px;
+}
+.iconEdit {
+  /* position: absolute; */
+  top: 50%;
+  right: 20px;
+  /* transform: translateY(-50%); */
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  background-image: url(/assets/theme/images/customer/icon_edit_white.svg);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+
+.rowRider {
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/*.rowRider .card {
+  padding: 0px;/* nov 8 comment it complete class
+  border: 1px solid #00838d;
+}*/
+
+.fgm0ml15 .fgInline {
+  margin: 0 0 0 15px !important;
+}
+
+.fundsContent .fgMaterial {
+  padding: 0;
+  margin: 0;
+}
+.fundsContent .fgMaterial .form-control {
+  border: 1px solid #e4e9f2;
+  padding-left: 5px;
+}
+
+.radioGrp .form-check > label,
+.checkBoxGrp .form-check > label {
+  line-height: 1.5;
+}
+.card.cardRider {
+  overflow: unset;
+  border-color: #018acd !important;
+}
+.cardRider .cardOverlay {
+  position: absolute;
+  left: calc(100% + 15px);
+  background-color: #f3f9fc;
+  border: 1px solid #0077b3;
+  min-height: 310px;
+  width: 100%;
+  box-shadow: 0 3px 20px 0 rgb(0 0 0 / 15%);
+  border-radius: 5px;
+  top: -3px;
+  overflow: unset;
+}
+.riderContent .row > div[class*='col-']:nth-child(even) .cardRider .cardOverlay {
+  right: calc(100% + 15px);
+  left: auto;
+}
+.cardRider .cardOverlay:before {
+  content: '';
+  position: absolute;
+  top: 26px;
+  left: -6px;
+  width: 10px;
+  height: 10px;
+  display: block;
+  background-color: #f3f9fc;
+  border-left: 1px solid #0077b3;
+  border-bottom: 1px solid #0077b3;
+  z-index: 2;
+  transform: rotate(45deg);
+}
+.riderContent .row > div[class*='col-']:nth-child(even) .cardRider .cardOverlay:before {
+  right: -6px;
+  left: auto;
+  border: 0;
+  border-right: 1px solid #0077b3;
+  border-top: 1px solid #0077b3;
+}
+.riderContent .row > div[class*='col-']:last-child .cardRider {
+  margin-bottom: 80px;
+}
+.card.cardRider .cardOverlay .cardOverlayContent {
+  max-height: 310px;
+  padding-left: 20px;
+}
+.card.cardRider .cardOverlay .card-header {
+  border-color: #018acd !important;
+  padding-left: 0;
+  padding-right: 0;
+}
+.cardOverlayActions > a:hover {
+  color: #0077b3;
+}
+.riderContent {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/**css horizontal form field start**/
+.rowQCompare .form-group:not(.radioButton) {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.rowQCompare .form-group.fgMaterial {
+  /* flex-direction: row-reverse; */
+  padding-top: 0;
+  border: 0;
+}
+
+.rowQCompare .form-group.fgMaterial.customer-ui {
+  flex-direction: row-reverse;
+}
+
+.rowQCompare .form-group:not(.radioButton) label {
+  position: static;
+  padding-bottom: 0.5rem;
+  margin: 0;
+}
+.rowQCompare .form-group.fgMaterial .form-control {
+  width: 100%;
+  text-align: right !important;
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: bold;
+  color: #018acd;
+  border: none;
+  border-bottom: 1px solid #018acd;
+  max-width: 50%;
+  border-radius: 0;
+  box-shadow: none !important;
+}
+.rowQCompare .form-group.fgMaterial.customer-ui .form-control {
+  margin-bottom: 8px;
+}
+.rowQCompare .selected .form-group.fgMaterial .form-control {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+.rowQCompare .form-group .ng-select .ng-select-container,
+.form-group .ng-select .ng-select-container {
+  font-size: 14px;
+  font-weight: bold;
+  color: #018acd;
+  background-color: transparent !important;
+  border: 0;
+}
+.rowQCompare .selected .form-group .ng-select .ng-select-container,
+.form-group .ng-select .ng-select-container {
+  color: #fff;
+}
+.rowQCompare .form-group .ng-select .ng-clear-wrapper,
+.form-group .ng-select .ng-clear-wrapper {
+  display: none;
+}
+.rowQCompare .form-group.fgMaterial .form-control:disabled,
+.form-group.fgMaterial .form-control:disabled,
+.rowQCompare .form-group .ng-select.ng-select-disabled,
+.form-group .ng-select.ng-select-disabled {
+  opacity: 0.6;
+}
+
+.rowQCompare .form-group.fgMaterial .form-control ~ label:before,
+.form-group.fgMaterial .form-control ~ label:before {
+  display: none;
+}
+/**css horizontal form field ends**/
+.product-analysis #suitability_analysis .modal-content {
+  border-radius: 0.93rem !important;
+  background-color: #018acd;
+}
+.product-analysis #suitability_analysis .modal-header {
+  background-color: #018acd;
+  color: #fff;
+  font-size: 1.32rem;
+}
+.product-analysis #suitability_analysis .modal-title {
+  font-size: 1.32rem;
+}
+.product-analysis #suitability_analysis .modal-body {
+  background-color: #ffffff;
+  color: #000000;
+  font-family: 'montserratlight';
+}
+.product-analysis #suitability_analysis .modal-footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.product-analysis-body .radioGrpBox .form-check > .form-check-input:checked ~ label,
+.product-analysis-body .radioGrpBox .form-check > .form-check-input:hover ~ label {
+  color: #fff;
+  /* color: #018acd; */
+  background: #018acd;
+  border: 3px solid #e77474;
+}
+
+.product-analysis-body .radioGrpBox.radioGrpText .form-check {
+  padding: 0px 4px;
+}
+
+.product-analysis-body .radioGrpBox .form-check > .form-check-input:hover ~ label,
+.product-analysis-body .radioGrpBox .form-check > .form-check-input:focus ~ label,
+.product-analysis-body .radioGrp.radioGrpBox .form-check > .form-check-input:focus ~ label {
+  box-shadow: 7px 7px 10px 3px rgb(231 116 116 / 50%) !important;
+}
+
+/**new layout css starts 20220120**/
+/**leftDescription starts**/
+.leftDescription {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 35%;
+  height: calc(100% - 100px);
+  padding: 30px;
+  z-index: 9;
+  display: flex;
+  flex-direction: column;
+}
+.leftDescription h2 {
+  font-weight: bold;
+  color: #a9a9a9;
+  line-height: 40px;
+  margin-bottom: 30px;
+  font-size: 1.6rem;
+}
+.leftDescription h2 span {
+  color: #018acd;
+  font-size: 2rem;
+}
+.leftDescription h2 i {
+  color: #018acd;
+  text-decoration: underline;
+  font-style: normal;
+  font-size: 2rem;
+}
+.leftDescription .stepImg {
+  flex-grow: 1;
+  width: 100%;
+  background-image: url(/assets/theme/images/customer/imageBg0.svg);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+}
+.leftDescription .stepImg.imageBg1 {
+  background-image: url(/assets/theme/images/customer/imageBg1.svg);
+}
+.leftDescription .stepImg.imageBg2 {
+  background-image: url(/assets/theme/images/customer/imageBg2.svg);
+}
+.leftDescription .stepImg.imageBg3 {
+  background-image: url(/assets/theme/images/customer/imageBg3.svg);
+}
+.leftDescription .stepImg.imageBg4 {
+  background-image: url(/assets/theme/images/customer/imageBg4.svg);
+}
+.leftDescription .stepImg.imageBg5 {
+  background-image: url(/assets/theme/images/customer/imageBg5.svg);
+}
+.leftDescription .stepImg.imageBg6 {
+  background-image: url(/assets/theme/images/customer/imageBg6.svg);
+}
+.leftDescription .stepImg.imageBg7 {
+  background-image: url(/assets/theme/images/customer/imageBg7.svg);
+}
+/**leftDescription ends**/
+.pgContent .formFooter,
+.pgContent .menuHidden.formFooter {
+  left: auto;
+  right: 0;
+  width: 65%;
+  max-width: 1060px;
+  height: 50px;
+  background-color: transparent;
+}
+.pgContent .formFooter .btn {
+  font-weight: bold;
+}
+
+.rightSideContent {
+  display: none;
+}
+.header .headerActions {
+  position: fixed;
+  bottom: 0;
+  height: 50px;
+  padding: 0;
+}
+.header .headerActions .additionalIconBtn {
+  padding: 4px 16px;
+  border-color: #d9d9d9;
+}
+
+#btn_verifyIdentity {
+  margin-top: 24px;
+}
+@media screen and (max-width: 991px) {
+  body {
+    background-color: #fff;
+  }
+  .formFooter {
+    background-color: #edf1f7 !important;
+  }
+  div.header {
+    z-index: 9 !important;
+    background-color: #018acd !important;
+  }
+  .header .logo {
+    display: flex !important;
+    left: 15px;
+    top: 0;
+    width: 100px;
+  }
+  .header .headerActions {
+    position: static;
+  }
+  .stepdata .card-header.stepHeader > .headerActions {
+    width: 45px;
+  }
+  .header .headerActions .additionalIconBtn > i {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .header .headerActions .additionalIconBtn:hover > i {
+    color: rgba(255, 255, 255, 1);
+  }
+  .leftDescription {
+    display: none;
+  }
+  .customerPageData > .card {
+    width: 100%;
+    max-width: 100%;
+  }
+  .customerPageData .card .card-header.stepHeader {
+    width: 100%;
+    max-width: 100%;
+    top: 50px;
+    box-shadow: 0 0.5rem 1rem 0 rgb(44 51 73 / 10%);
+    padding: 30px 15px;
+    height: 60px !important;
+  }
+  .pgContent .formFooter,
+  .pgContent .menuHidden.formFooter {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /***step header responsive***/
+  .pageData .card .card-header.stepHeader .nav-tabs .nav-item {
+    display: none;
+  }
+  .stepdata .card-header.stepHeader .nav-tabs > li:last-child {
+    margin-left: 0;
+    flex-grow: 1;
+  }
+  .pageData .card .card-header.stepHeader .nav-tabs .nav-item.currentTab,
+  .pageData .card .card-header.stepHeader .nav-tabs .nav-item.upcomingTab {
+    display: flex;
+    flex-grow: unset;
+  }
+  .pageData .card .card-header.stepHeader .nav-tabs .nav-item.currentTab {
+    flex-grow: 1;
+  }
+  .customerPageData .card-header.stepHeader .nav-tabs > li > a > span > i {
+    display: none;
+  }
+  .customerPageData .card-header.stepHeader .nav-tabs > li > a > span.stepName {
+    position: static !important;
+    top: unset !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: unset;
+    text-align: left;
+    left: unset;
+    transform: unset;
+    padding: 0;
+  }
+  .card-header.stepHeader ~ .card-body.pt5 {
+    padding: 120px 15px 15px 15px !important;
+  }
+  .headerInfo {
+    display: flex;
+    flex-direction: column;
+  }
+  .headerInfo div {
+    display: flex;
+    flex-direction: column;
+    align-items: unset;
+    padding-bottom: 10px;
+  }
+  .headerInfo div p {
+    margin: 0 0 10px 0;
+  }
+  .headerInfo div p:last-child {
+    margin: 0;
+  }
+  .headerInfo div p span {
+    font-weight: bold;
+    font-size: 12px;
+    display: inline-block;
+  }
+  .iconEdit {
+    top: auto;
+    bottom: 0;
+    background-image: url(/assets/theme/images/customer/icon_edit.svg);
+  }
+  .customerPageData .btn.btnAddTab.btn_outline_primary {
+    right: -30px !important;
+  }
+  .stepdata .card-header.stepHeader .nav-tabs > li.upcomingTab > a {
+    font-size: 10px;
+  }
+  .stepdata .card-header.stepHeader .nav-tabs > li.upcomingTab > a > span.stepName {
+    font-size: 11px;
+  }
+  .customerPageData .card-header.stepHeader .nav-tabs > li.error > i:before {
+    content: '';
+  }
+  .customerPageData .card .card-header.stepHeader ul {
+    padding-right: 30px;
+  }
+  .stepdata .card-header.stepHeader .nav-tabs > li > a {
+    padding-right: 0;
+  }
+  .innerHorizontalTab .block {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .stepdata .card-header.stepHeader .nav-tabs > li.error > i {
+    margin-left: 6px;
+    margin-top: -2px;
+  }
+
+  .cardRider .cardOverlay {
+    position: fixed;
+    top: 120px;
+    left: 30px;
+    height: calc(100% - 180px);
+    padding: 20px;
+    width: calc(100% - 60px);
+  }
+  .card.cardRider .cardOverlay .cardOverlayContent {
+    max-height: unset;
+  }
+  .cardRider .cardOverlay:before {
+    position: fixed;
+    top: 110px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 160px);
+    transform: unset;
+    background-color: rgb(0 0 0 / 21%);
+    border: none;
+  }
+  .cardRider .cardOverlayActions {
+    z-index: 4;
+  }
+  .card.cardRider .cardOverlay .cardOverlayContent {
+    z-index: 3;
+    background-color: #fff;
+  }
+  .headerActions ~ .col-sm-12 {
+    padding: 0;
+  }
+  .rowQCompare .card {
+    margin: 10px 30px 30px 30px;
+  }
+  #btn_verifyIdentity {
+    margin-top: 0;
+  }
+  .headerInfo div p {
+    border: none;
+  }
+}
+/* .sectionContent {
+  width: 90%;
+} */
+.fundsContent .blockList > li > .inputActions > div:after {
+  height: 51%;
+  top: 25%;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  padding: 2px 10px;
+}
+
+.ng-select .ng-select-container {
+  border-bottom: 1px solid #ccc !important;
+}
+.form-group .ng-select ~ label {
+  top: calc(20px + -19px);
+  /*color: #919191;*/ /*nov 30 commented as not reuired this color to label*/
+  font-size: 12px;
+}
+
+.ng-select.ng-select-opened > .ng-select-container {
+  border-bottom: 2px solid #36f !important;
+  font-size: 14px;
+  font-weight: bold;
+  color: #018acd;
+  background-color: transparent !important;
+  border: 0;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-input > input {
+  border: 0;
+}
+
+.ng-select .ng-select-container {
+  border-bottom: 1px solid #ccc !important;
+  background: transparent;
+}
+.ng-select:hover > div {
+  border-bottom: 1px solid #ccc !important;
+  background: transparent;
+}
+.ng-select > div {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+.form-group .ng-select .ng-select-container {
+  font-size: 14px;
+  font-weight: bold;
+  color: #018acd;
+  background-color: transparent !important;
+  border-bottom: 1px solid #ccc !important;
+}
+
+.ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+  border-color: transparent !important;
+}
+
+.ng-select:hover > div {
+  border-bottom: 0 !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+/*.ng-select-label-font-color {
+  color: #575757 !important;
+}*/ /*Nov 30 commented as not required this color to label*/
+
+.payemntPage {
+  min-width: 20%;
+  max-width: 60%;
+}
+
+.marginAuto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cbgBypassOCR .fgMaterial {
+  padding-top: 3px;
+  margin-bottom: 3px;
+}
+
+.documentContent .card > .card-header {
+  padding: 0px 15px;
+}
+
+.riderContent .fgMaterial > .fgInline > div.checkBoxGrp {
+  margin-top: -28px !important;
+}
+
+.fgMaterial.form-group.radioImgCust {
+  padding-top: 6px;
+  margin-bottom: 10px; /* Dec 5 to reduce space*/
+}
+
+/*nov 8 add css*/
+.card.cardRider .card-header h5 {
+  font-weight: bold;
+}
+
+/*.card.cardRider .card-body > ul > li:not(span){
+  font-weight: bold;
+}*/
+
+.sectionHeader h4 {
+  font-weight: bold;
+}
+
+#benefitSummary thead th {
+  font-weight: bold;
+  padding: 0.2rem 0.9rem;
+}
+
+#benefitSummary tfoot th {
+  padding: 10px 17px 10px 16px;
+}
+.hideBorder {
+  border: none !important;
+  padding-right: 0px !important;
+  margin-right: 0px !important;
+}
+.separator {
+  margin-bottom: 0;
+  border-right: 1px dashed #ddd;
+  margin-right: 15px;
+  padding-right: 25px !important;
+  color: #fff;
+}
+.centerTotPremium {
+  display: block;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto !important;
+}
+
+#data_grid_ th {
+  padding: 0px 10px 0px 10px !important;
+  width: auto !important; /* Added to increase width of column in nominee details for customer portal*/
+}
+
+#data_grid_ th .fgMaterial {
+  padding: 0;
+}
+
+.gridHeight .mob_padding .pb-2 .fgMaterial {
+  height: 15px;
+  padding: 0px;
+}
+
+.gridHeight #data_grid_ tr .p-2 {
+  /* width: 2% !important; Commneted to increase width of column in nominee details customer portal*/
+}
+.hidenLabel {
+  margin: 0px !important;
+}
+
+#data_grid_ th label {
+  margin: 0px !important;
+}
+
+/*nov 30 new class added to remove hover effect*/
+.tbItem .radioGrpBox .form-check > .form-check-input:hover ~ label,
+.tbItem .radioGrpBox .form-check > .form-check-input:focus ~ label,
+.tbItem .radioGrp.radioGrpBox .form-check > .form-check-input:focus ~ label {
+  box-shadow: 4px 4px 10px 0px rgb(51 102 255 / 32%) !important;
+  left: 0;
+  top: 0;
+}
+
+/* XML Configuration for Quotation */
+.customerPageData .rightBodyContainer .blockContainer {
+  padding: 0 60px 22px 20px !important;
+  width: 71%;
+  position: absolute;
+  top: 0;
+  background-color: #fff;
+  margin-left: 34%;
+}
+
+.customerPageData .scrollDiv {
+  overflow: hidden !important;
+}
+
+.generic .stepdata {
+  min-height: calc(119vh - 150px);
+  background-color: #fff;
+}
+
+.generic .leftDescription {
+  background-color: #f5f5f5 !important;
+}
+
+.menuClosed .pgContent .formFooter {
+  left: auto !important;
+}
+
+div.header {
+  background-color: #f5f5f5 !important;
+}
+/*XML Configuration for Quotation Ends here */
+/*Below CSS changes are for customer portal starts here.*/
+.owner-tab-size .fgMaterial {
+  padding-top: 0px;
+  margin-bottom: 0px;
+}
+
+.btnToggleBlock {
+  background-color: #018acd !important;
+  color: #fff !important;
+  /* padding: 10px 10px !important; Required in v10*/
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .customer-portal-chart-size .quoteCompChartSize {
+    width: 350px !important;
+  }
+}
+
+.owner-tab-size .label {
+  color: #fff;
+  font-weight: 100;
+}
+
+.owner-tab-size .checkBoxGrp .form-check > .form-check-input:checked ~ label {
+  color: #fff;
+}
+
+.owner-tab-size .checkBoxGrp .form-check > .form-check-input:checked ~ label::before {
+  border-color: #fff;
+}
+
+.owner-tab-size .checkBoxGrp .form-check > .form-check-input ~ label::before {
+  border-color: #fff;
+}
+
+.customer-portal-chart-size .canvasScroll > .sliderForChart {
+  max-height: max-content;
+}
+/*Below CSS changes are for customer portal ends here*/

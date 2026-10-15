@@ -1,0 +1,95 @@
+@if (uiFormatXmFacetlValue != undefined) { @if (uiFormatXmFacetlValue == 'XMLBASED') {
+<sym-page-container
+  [breadCrumbList]="breadCrumbList"
+  [stepList]="stepList"
+  [responseIO]="service.responseIO"
+  [currentStepSelected]="selectedStep"
+  (selectedStep)="onStepChanged($event)"
+>
+  @if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 && selectedStep !=
+  undefined ) { @if (selectedStep != undefined) {
+  <sym-step
+    [stepItem]="selectedStep"
+    (actionClick)="onActionClicked($event)"
+    (tabChange)="onTabChanged($event)"
+    [contentExcludRightTab]="selectedStep.isRightContentAdded"
+  >
+    @for (tab of selectedStep.tabList; track tab) { @if (selectedStep.selectedTab != undefined &&
+    selectedStep.selectedTab.id == tab.id) {
+    <sym-xml-config-ui
+      [xmlDom]="tab.xmlDom"
+      [service]="service"
+      [responseIO]="service.responseIO"
+      [responseUpdated]="responseUpdated"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      (onRowAdded)="onGridRowAdded($event)"
+      (searchIconClicked)="onInputSearchClick($event)"
+      (onElementClicked)="onHTMLElementClick($event)"
+      (notifyReloadStepOutput)="mergeStepList()"
+    >
+    </sym-xml-config-ui>
+    } }
+  </sym-step>
+  } }
+</sym-page-container>
+} @if (uiFormatXmFacetlValue == 'STATIC') {
+<sym-page-container
+  [breadCrumbList]="breadCrumbList"
+  [stepList]="stepList"
+  [responseIO]="service.responseIO"
+  [currentStepSelected]="selectedStep"
+  (selectedStep)="onStepChanged($event)"
+>
+  @if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 && selectedStep !=
+  undefined ) {
+  <sym-step
+    [stepItem]="selectedStep"
+    (actionClick)="onActionClicked($event)"
+    (tabChange)="onTabChanged($event)"
+    [contentExcludRightTab]="true"
+  >
+    @if (selectedStep.selectedTab != undefined) { @if (selectedStep.id == 'step_completeDataEntry') { @if
+    (selectedStep.selectedTab.id == 'tab_basic') {
+    <div class="tab-pane">
+      <sym-policy-basic-detail></sym-policy-basic-detail>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_owner') {
+    <div class="tab-pane">
+      <sym-policy-proposer></sym-policy-proposer>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_primary') {
+    <div class="tab-pane">
+      <sym-policy-primary-insured></sym-policy-primary-insured>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_joint') {
+    <div class="tab-pane">
+      <sym-policy-joint-life></sym-policy-joint-life>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_supplementary') {
+    <div class="tab-pane">
+      <sym-policy-supplementary></sym-policy-supplementary>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_nominee') {
+    <div class="tab-pane">
+      <sym-policy-beneficiary [responseUpdated]="responseUpdated"></sym-policy-beneficiary>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_payment') {
+    <div class="tab-pane">
+      <sym-policy-payment [responseUpdated]="responseUpdated"></sym-policy-payment>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_questionnaire') {
+    <div class="tab-pane">
+      <sym-policy-party-questionnaire></sym-policy-party-questionnaire>
+    </div>
+    } } @if (selectedStep.id == 'step_requirement') { @if (selectedStep.selectedTab.id == 'tab_requirement') {
+    <div class="tab-pane">
+      <sym-policy-document [responseUpdated]="responseUpdated"></sym-policy-document>
+    </div>
+    } } @if (selectedStep.id == 'step_previewEApp') {
+    <sym-policy-e-app-preview [responseUpdated]="responseUpdated"></sym-policy-e-app-preview>
+    } }
+  </sym-step>
+  }
+</sym-page-container>
+} }

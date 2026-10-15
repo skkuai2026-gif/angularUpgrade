@@ -1,0 +1,36 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else { @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div>
+  <sym-panel [id]="'primary_Insured_Details_Body'" [name]="'primaryPartyInsured'">
+    @if (isProposerLASameDisplay) {
+    <sym-field-group
+      [fieldIds]="'proposerLASame'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.Entity"
+    ></sym-field-group>
+    } @if (displayPrimaryUI) {
+    <div>
+      <sym-quotation-party
+        [model]="service.responseIO.data.PrimaryInsured"
+        [contactReqd]="true"
+      ></sym-quotation-party>
+    </div>
+    }
+  </sym-panel>
+  <div class="" id="insuredPopup">
+    <sym-pop-up class="popup" [headerText]="'SearchInsuredProposal'" [popupID]="'searchInsuredProposal'">
+      <sym-link-search-insured class="setui scrollDiv"></sym-link-search-insured>
+    </sym-pop-up>
+  </div>
+</div>
+} }

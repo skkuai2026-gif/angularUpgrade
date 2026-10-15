@@ -1,0 +1,136 @@
+<div
+  [ngClass]="{
+    'loginWrapper scrollDiv': companySUNPH === 'SLGFI' || (companySUNPH === undefined && company === 'SLGFI'),
+    'loginWrapper2 scrollDiv': companySUNPH === 'SLOCPI' || (companySUNPH === undefined && company === 'SLOCPI')
+  }"
+>
+  <div class="loginContainerParent">
+    <div class="loginContent">
+      <div class="header">
+        <div class="bgWhite" id="oktabgWhite">
+          <span class="btnLeftNav" style="margin-left: 15px; font-size: 1rem"
+            >Please proceed for login with PIN if already registered.
+          </span>
+          @if (companySUNPH === 'SLGFI' || (companySUNPH === undefined && company === 'SLGFI')) {
+          <a href="javascript:void(0);" class="logo_login"
+            ><img src="/assets/theme/images/company/SLGFI.png" width="438px" alt="Logo" id="oktaImgLogin"
+          /></a>
+          } @if (companySUNPH === 'SLOCPI' || (companySUNPH === undefined && company === 'SLOCPI')) {
+          <a href="javascript:void(0);" class="logo_login"
+            ><img src="/assets/theme/images/company/SLOCPI.jpg" width="438px" alt="Logo2" id="oktaImgLogin"
+          /></a>
+          }
+        </div>
+      </div>
+      <div class="loginContent">
+        @if (error == undefined || error == null || error == '') {
+        <p>
+          <!-- Please sign in to your account. -->
+        </p>
+        } @else {
+        <p>
+          <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+          {{ error }}
+        </p>
+        }
+        <form
+          name="loginWithPinForm"
+          (ngSubmit)="loginWithPin()"
+          (keyup.enter)="loginWithPin()"
+          autocomplete="off"
+        >
+          <div class="form-group" id="registerPinForm">
+            <div>
+              <input
+                autocomplete="off"
+                (copy)="onCopy($event)"
+                ondrag="return false"
+                ondrop="return false"
+                (paste)="onPaste($event)"
+                onfocus="return false"
+                type="text"
+                class="form-control txtusername"
+                [(ngModel)]="advisorCode"
+                id="advisorCode"
+                name="advisorCode"
+                required
+                (keypress)="omit_special_char($event)"
+                placeholder="ADVISOR CODE"
+              />
+            </div>
+          </div>
+          <div>
+            <input
+              autocomplete="off"
+              (copy)="onCopy($event)"
+              ondrag="return false"
+              ondrop="return false"
+              (paste)="onPaste($event)"
+              onfocus="return false"
+              type="password"
+              class="form-control txtusername"
+              [(ngModel)]="offlinePin"
+              id="offlinePin"
+              name="offlinePin"
+              required
+              minlength="6"
+              maxlength="6"
+              pattern="^[0-9]*$"
+              #sixDigitconfirm="ngModel"
+              (keypress)="omit_special_char($event)"
+              placeholder="Login PIN"
+            />
+            @if (sixDigitconfirm.invalid && sixDigitconfirm.touched) {
+            <div>
+              @if (sixDigitconfirm.errors?.required) {
+              <p>This field is required.</p>
+              } @if (sixDigitconfirm.errors?.pattern) {
+              <p>Please enter exactly 6 digits.</p>
+              }
+              <!-- <p *ngIf="sixDigitInput.errors?.minlength || sixDigitInput.errors?.maxlength">
+                    Input should be exactly 6 characters long.
+                  </p> -->
+            </div>
+            }
+          </div>
+
+          <div class="form-group">
+            <button
+              class="btn_submit"
+              type="button"
+              (ngSubmit)="loginWithPin()"
+              (keyup.enter)="loginWithPin()"
+              (click)="loginWithPin()"
+            >
+              SIGN IN
+            </button>
+            <button
+              class="btn_submit"
+              type="button"
+              (ngSubmit)="resetPin()"
+              (keyup.enter)="resetPin()"
+              (click)="resetPin()"
+              style="background-color: transparent !important; color: rgb(24, 104, 224); border: none"
+            >
+              RESET PIN
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main-content-wrapper slm-dashboard-bg-image"></div>
+@if (registerPinVar) {
+<div>
+  <sym-disclaimer
+    [displayPopupOnly]="true"
+    (disagreeDisclaimerCLicked)="disagreeDisclaimerClicked($event)"
+    (acceptDisclaimerCLicked)="acceptDisclaimerCLicked($event)"
+  ></sym-disclaimer>
+</div>
+} @if (resetPinVar) {
+<div>
+  <sym-okta-login></sym-okta-login>
+</div>
+}

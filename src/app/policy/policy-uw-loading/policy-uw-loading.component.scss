@@ -1,0 +1,73 @@
+.breakuplabel {
+  color: blue;
+}
+
+.uwdecisionlabel {
+  color: black;
+}
+.uwDecisionCdimg {
+  margin: -35px 0px 5px 217px;
+}
+
+.uwdecisionMesg {
+  font-size: 1.09rem;
+  color: black;
+}
+
+.completedSign {
+  background-image: url(/assets/theme/images/iconSuccess.svg);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 30px;
+}
+.pendingSign {
+  background-image: url(/assets/theme/images/icon_pending.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 30px;
+  height: 21px;
+}
+
+/***panels accordian css starts**/
+.block {
+  margin-bottom: 10px;
+  position: relative;
+  padding-bottom: 0;
+}
+.block:last-child:not(::first-child) {
+  margin-bottom: 0;
+  border: 0;
+}
+.btnToggleBlock {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 10px;
+  background-color: #f2f5ff;
+  color: #8f9bba;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 0.6rem;
+}
+.btnToggleBlock::before {
+  content: '\e949';
+  font-family: 'icomoon';
+}
+.block.blockCollapse {
+  height: 30px;
+  overflow: hidden;
+}
+.block.blockCollapse .btnToggleBlock::before {
+  content: '\e907';
+}
+.block > h4 {
+  border-bottom: 2px solid rgba(51, 102, 255, 0.24);
+  position: relative;
+  /*padding-bottom: 8px;*/
+  cursor: pointer;
+  padding: 0;
+}
+/***panels accordian css ends**/

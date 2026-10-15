@@ -1,0 +1,30 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+>
+</sym-xml-config-ui>
+} @else {
+<sym-panel [id]="'fund_list_Body'" [name]="'fundDetails'">
+  <div class="m-2 p-2">
+    <sym-field-group
+      [fieldIds]="'portfolioModelCd,topUpAllocSameAsPremAllocFl'"
+      [responseIO]="service.responseIO"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [model]="service.responseIO.data.BasePlan"
+    ></sym-field-group>
+  </div>
+  <sym-data-entry-grid
+    [fieldIds]="'fundCd,allocationPerc,topupAllocationPerc'"
+    [responseIO]="service.responseIO"
+    (notifyChange)="onInputChanged($event)"
+    [modelPath]="'BasePlan.FundList'"
+    [isAddRequired]="false"
+    [isDeleteRequired]="false"
+  ></sym-data-entry-grid>
+</sym-panel>
+}

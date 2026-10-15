@@ -1,0 +1,100 @@
+.help_section div > span:first-child {
+  color: #ff3d71;
+  min-width: 120px;
+  max-width: 220px;
+  font-size: 0.7rem;
+  margin: 4px 15px;
+}
+.help_section div > span:last-child {
+  color: #3d98ff;
+  font-size: 0.78rem;
+}
+
+.headerkey {
+  color: #000 !important;
+  margin: 6px 16px !important;
+  font-size: 0.8rem !important;
+}
+
+.tool_container {
+  min-width: 310px;
+  width: 100%;
+  text-align: left;
+  padding: 0px;
+  display: flex;
+}
+
+.info {
+  font-size: 0.75rem;
+  padding: 2px 5px;
+}
+
+.jsonValue {
+  background: #fff;
+  height: 18px;
+  font-size: 0.8rem;
+  margin: 0px 8px;
+  line-height: 0;
+  color: #222b45;
+  border: 0;
+  padding: 0.175rem 0.175rem !important;
+  vertical-align: middle;
+  width: 200px;
+  // min-width: 160px;
+  // width: 235px;
+  // max-width: 240px;
+}
+.jsonValue:focus {
+  padding-right: 5px;
+  /*background-color: #f7f9fc;*/
+  /*border-color: #e4e9f2;*/
+  color: #222b45;
+  /*padding: 0.65rem 0.5rem !important;*/
+  box-shadow: 0px 5px 5px rgb(51 102 255 / 20%);
+  border-color: #36f;
+  background-color: #fff;
+  border: 1px solid #36f;
+  margin: 0px 8px;
+  width: 200px;
+}
+
+.jsonValueTextarea {
+  font-size: 0.78rem;
+}
+.w240 {
+  width: 240px !important;
+}
+.w160 {
+  width: 160px !important;
+}
+
+.w200 {
+  width: 200px !important;
+}
+
+.w100 {
+  width: 100px !important;
+}
+
+.w180 {
+  width: 180px !important;
+}
+
+.w50 {
+  width: 50px !important;
+}
+
+.sign {
+  cursor: pointer;
+}
+
+.wc-100 {
+  width: 100%;
+}
+.w40 {
+  width: 40px !important;
+}
+
+.w120 {
+  width: 120px !important;
+}

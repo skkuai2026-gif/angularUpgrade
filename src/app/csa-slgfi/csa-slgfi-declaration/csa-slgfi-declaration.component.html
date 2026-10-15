@@ -1,0 +1,35 @@
+<div class="col-xl-12">
+  @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+  <sym-panel [id]="'csa_Declaration_Body'" [name]="'DECLARATIONS'" class="col-sm-12 col-md-12 co-lg-12 col-xl-12">
+    <h6 class="datadeletebody">
+      <u>{{ settingService.getLabelValue('clientSuitabilityAssessment') }}</u>
+    </h6>
+    <div id="declarationSlgfiPage">
+      <sym-field-group
+        [fieldIds]="'leadSource'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.LeadRPQ"
+        [gridColumns]="[12]"
+      ></sym-field-group>
+      <h6 class="datadeletebody">
+        <u>{{ settingService.getLabelValue('dataPrivacy') }}</u>
+      </h6>
+      <sym-field-group
+        [fieldIds]="'leadSourceOther'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.LeadRPQ"
+        [gridColumns]="[12]"
+      ></sym-field-group>
+      <sym-field-group
+        [fieldIds]="'language'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.LeadRPQ"
+        [gridColumns]="[12]"
+      ></sym-field-group>
+    </div>
+  </sym-panel>
+  }
+</div>

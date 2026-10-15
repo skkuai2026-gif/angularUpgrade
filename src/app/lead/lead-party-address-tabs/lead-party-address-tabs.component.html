@@ -1,0 +1,130 @@
+@if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 && addressTabList &&
+addressTabList.length > 0 && partyModel && partyModel != undefined && partyModel != null ) {
+<div>
+  @if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 && addressTabList &&
+  addressTabList.length == 1) { @if ( service.responseIO && service.responseIO.data &&
+  service.responseIO.data.length != 0 && partyModel[addressTabList[0].id] && partyModel[addressTabList[0].id] != 0
+  ) {
+  <h4>{{ addressTabList[0].text }}</h4>
+  <sym-lead-party-address [model]="partyModel[addressTabList[0].id]"></sym-lead-party-address>
+  } } @else { @if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 &&
+  addressTabList && addressTabList.length > 1) { @if (addressTabList.length > 1 && selectedAddressTab) {
+  <sym-sub-tab [tabList]="addressTabList" (selectedTab)="displaySelectedTabBody($event)">
+    @for (addressType of addressTabList; track addressType) { @if ( service.responseIO && service.responseIO.data
+    && service.responseIO.data.length != 0 && selectedAddressTab.id === addressType.id &&
+    partyModel[addressType.id] && partyModel[addressType.id] != 0 ) { @if (partyModel[addressType.id].addressTypeCd
+    == 'RESIDENTIAL') {
+    <sym-field-group
+      [fieldIds]="'copyFromAddr1'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="partyModel"
+    ></sym-field-group>
+    @if (partyModel['copyFromAddr1'] == '' || partyModel['copyFromAddr1'] == null) {
+    <sym-lead-party-address [model]="partyModel[addressType.id]"></sym-lead-party-address>
+    } } @if (partyModel[addressType.id].addressTypeCd == 'PERMANENT') {
+    <sym-field-group
+      [fieldIds]="'copyFromAddr2'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="partyModel"
+    ></sym-field-group>
+    @if ( partyModel['copyFromAddr2'] == '' || partyModel['copyFromAddr2'] == null || partyModel['copyFromAddr2']
+    == 'OTHERS' ) {
+    <sym-lead-party-address [model]="partyModel[addressType.id]"></sym-lead-party-address>
+    } } @if (partyModel[addressType.id].addressTypeCd == 'OFFICE') {
+    <sym-field-group
+      [fieldIds]="'copyFromAddr3'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="partyModel"
+    ></sym-field-group>
+    @if ( partyModel['copyFromAddr3'] == '' || partyModel['copyFromAddr3'] == null || partyModel['copyFromAddr3']
+    == 'OTHERS' ) {
+    <sym-lead-party-address [model]="partyModel[addressType.id]"></sym-lead-party-address>
+    } } } }
+  </sym-sub-tab>
+  } } @else {
+  <ng-template [ngTemplateOutlet]="subTabAvailable"></ng-template>
+  } }
+  <ng-template #subTabAvailable>
+    @if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 && addressTabList &&
+    addressTabList.length > 1) { @if (addressTabList.length > 1 && selectedAddressTab) {
+    <sym-sub-tab [tabList]="addressTabList" (selectedTab)="displaySelectedTabBody($event)">
+      @for (addressType of addressTabList; track addressType) { @if ( service.responseIO && service.responseIO.data
+      && service.responseIO.data.length != 0 && selectedAddressTab.id === addressType.id &&
+      partyModel[addressType.id] && partyModel[addressType.id] != 0 ) { @if
+      (partyModel[addressType.id].addressTypeCd == 'RESIDENTIAL') {
+      <sym-field-group
+        [fieldIds]="'copyFromAddr1'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="partyModel"
+      ></sym-field-group>
+      @if (partyModel['copyFromAddr1'] == '' || partyModel['copyFromAddr1'] == null) {
+      <sym-lead-party-address [model]="partyModel[addressType.id]"></sym-lead-party-address>
+      } } @if (partyModel[addressType.id].addressTypeCd == 'PERMANENT') {
+      <sym-field-group
+        [fieldIds]="'copyFromAddr2'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="partyModel"
+      ></sym-field-group>
+      @if ( partyModel['copyFromAddr2'] == '' || partyModel['copyFromAddr2'] == null || partyModel['copyFromAddr2']
+      == 'OTHERS' ) {
+      <sym-lead-party-address [model]="partyModel[addressType.id]"></sym-lead-party-address>
+      } } @if (partyModel[addressType.id].addressTypeCd == 'OFFICE') {
+      <sym-field-group
+        [fieldIds]="'copyFromAddr3'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="partyModel"
+      ></sym-field-group>
+      @if ( partyModel['copyFromAddr3'] == '' || partyModel['copyFromAddr3'] == null || partyModel['copyFromAddr3']
+      == 'OTHERS' ) {
+      <sym-lead-party-address [model]="partyModel[addressType.id]"></sym-lead-party-address>
+      } } } }
+    </sym-sub-tab>
+    } } @else { @if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 &&
+    addressTabList && addressTabList.length > 1) { @if (addressTabList.length > 1 && selectedAddressTab) {
+    <sym-sub-tab [tabList]="addressTabList" (selectedTab)="displaySelectedTabBody($event)">
+      @for (addressType of addressTabList; track addressType) { @if ( service.responseIO && service.responseIO.data
+      && service.responseIO.data.length != 0 && selectedAddressTab.id === addressType.id &&
+      partyModel[addressType.id] && partyModel[addressType.id] != 0 ) { @if
+      (partyModel[addressType.id].addressTypeCd == 'RESIDENTIAL') {
+      <sym-field-group
+        [fieldIds]="'copyFromAddr1'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="partyModel"
+      ></sym-field-group>
+      @if (partyModel['copyFromAddr1'] == '' || partyModel['copyFromAddr1'] == null) {
+      <sym-lead-party-address [model]="partyModel[addressType.id]"></sym-lead-party-address>
+      } } @if (partyModel[addressType.id].addressTypeCd == 'PERMANENT') {
+      <sym-field-group
+        [fieldIds]="'copyFromAddr2'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="partyModel"
+      ></sym-field-group>
+      @if ( partyModel['copyFromAddr2'] == '' || partyModel['copyFromAddr2'] == null || partyModel['copyFromAddr2']
+      == 'OTHERS' ) {
+      <sym-lead-party-address [model]="partyModel[addressType.id]"></sym-lead-party-address>
+      } } @if (partyModel[addressType.id].addressTypeCd == 'OFFICE') {
+      <sym-field-group
+        [fieldIds]="'copyFromAddr3'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="partyModel"
+      ></sym-field-group>
+      @if ( partyModel['copyFromAddr3'] == '' || partyModel['copyFromAddr3'] == null || partyModel['copyFromAddr3']
+      == 'OTHERS' ) {
+      <sym-lead-party-address [model]="partyModel[addressType.id]"></sym-lead-party-address>
+      } } } }
+    </sym-sub-tab>
+    } } @else {
+    <ng-template [ngTemplateOutlet]="subTabAvailable"></ng-template>
+    } }
+  </ng-template>
+</div>
+}

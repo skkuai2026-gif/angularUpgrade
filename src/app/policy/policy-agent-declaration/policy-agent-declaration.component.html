@@ -1,0 +1,23 @@
+@if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 &&
+service.responseIO.data['AgentQuestionnaireResponseList'] &&
+service.responseIO.data['AgentQuestionnaireResponseList'].length != 0) {
+<div>
+  <ng-container>
+    <div>
+      <ng-container>
+        <ng-container>
+          @for ( questionSet of service.responseIO.data['AgentQuestionnaireResponseList'].questionSets; track
+          questionSet; let i = $index) {
+          <sym-policy-question-set
+            [questionSet]="questionSet"
+            [partyGuid]="service.responseIO.data['AgentQuestionnaireResponseList'].partyGuid"
+          ></sym-policy-question-set>
+          }
+        </ng-container>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>
+} @else { No Data to display! } @if (navigationLinkList.length > 1 && this.isNavigationLinkReq) {
+<sym-navigation-links [navigationLinkList]="navigationLinkList"></sym-navigation-links>
+}

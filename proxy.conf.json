@@ -1,0 +1,26 @@
+{
+  "/api/": {
+    "target": "http://192.168.200.39:8090/systemcommon/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/InvokeInwardPaymentGateway.run*": {
+    "target": "http://192.168.200.164:8090/systemcommon/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/InvokeACAApi.run*": {
+    "target": "http://192.168.200.39:8090/systemcommon/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/aiml/*": {
+    "target": "http://192.168.200.164:8090/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

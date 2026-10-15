@@ -1,0 +1,19 @@
+[
+  {
+    "baseURL": "http://localhost:4200/api/",
+    "applicationMode": "online",
+    "addtnlHeader": {}
+  },
+  {
+    "oidc": {
+      "issuer": "https://sso-uat.sunlife.com.ph/oauth2/default/",
+      "redirectUri": "/login/callback",
+      "postLogoutRedirectUri": "/login",
+      "clientId": "0oafwyxh3lUDzbEl11d7",
+      "scopes": ["openid", "profile", "email"]
+    },
+    "isOktaRequired": false,
+    "companySUNPH":"SLOCPI"
+  }
+]
+

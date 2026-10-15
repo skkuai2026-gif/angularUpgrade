@@ -1,0 +1,20 @@
+.pageData .card .card-body {
+  height: calc(100% - 55px);
+  background-color: black;
+  color: white;
+}
+
+.card {
+  border: 0 !important;
+  background-color: black;
+  color: white;
+}
+
+.radioGrp .form-check > label,
+.checkBoxGrp .form-check > label {
+  position: relative;
+  padding-left: 28px;
+  font-size: 1rem;
+  min-height: 20px;
+  color: white;
+}

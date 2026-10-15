@@ -1,0 +1,237 @@
+@if (originalSignatureObj != undefined) {
+<div>
+  @if (!isPopView) { @if (isLocationEnabled === false && locationEnabled) {
+  <div
+    class="fullWidth"
+    [ngClass]="{ 'disabledSignature': disableSignature, }"
+    [class.signature_border]="signatureCaptureOptionType == undefined && signatureImgSrc == undefined"
+    class="signature_border"
+    [class.locationMandatory]="locationEnabled"
+  >
+    <h1>{{ service.getMultilingualLabel('locationMandatory') }}</h1>
+  </div>
+  } @else {
+  <input
+    class="d-none"
+    type="file"
+    ondrop="value = null"
+    (click)="onUploadInputFileClick($event)"
+    (change)="onUploadFileChange($event.target.files)"
+    (cancel)="onUploadCancel($event)"
+    #fileInput
+  />
+  @if (signatureDeclarationText != undefined) {
+  <div [innerHTML]="settingService.getLabelValue(signatureDeclarationText) | safeHtml: 'html'"></div>
+  }
+  <input
+    type="radio"
+    [name]="originalSignatureObj.guid + '_signatureOption'"
+    [(ngModel)]="signatureCaptureOptionType"
+    [value]="'SIGNATUREPAD'"
+    [disabled]="disableSignature"
+  />
+  <span class="sign-option">{{ service.getMultilingualLabel('signaturePad') }} </span>
+  <!-- <ng-container *ngIf="showUploadSignatureOption">
+            <input
+              type="radio"
+              [name]="originalSignatureObj.guid + '_signatureOption'"
+              [(ngModel)]="signatureCaptureOptionType"
+              [value]="'SIGNATUREUPLOAD'"
+              (click)="fileInput.click()"
+              [disabled]="disableSignature"
+              />
+              <span class="sign-option">{{ service.getMultilingualLabel('uploadSignature') }}</span>
+              <p class="supportNote">
+                ({{ service.getMultilingualLabel('supports') }}: {{ allowed_FileTypes?.toString() }}
+                {{ service.getMultilingualLabel('maxSignFileSize') }}: {{ max_FileSize?.toString() }} kb)
+              </p>
+            </ng-container> -->
+  <br />
+  @if (signatureImgSrc != undefined) {
+  <div class="signature_lbl">
+    {{ service.getMultilingualLabel('signature') }}
+  </div>
+  }
+  <div class="text-center">
+    <div
+      class="fullWidth"
+      [ngClass]="{ 'disabledSignature': disableSignature, }"
+      [class.signature_border]="signatureCaptureOptionType == undefined && signatureImgSrc == undefined"
+    >
+      @if (signatureCaptureOptionType != 'SIGNATUREPAD' && signatureImgSrc != undefined) {
+      <img [src]="signatureImgSrc" class="signatureImageUpload signature_border" />
+      } @if (signatureCaptureOptionType == 'SIGNATUREPAD') {
+      <signature-pad
+        #signature
+        [id]="originalSignatureObj != undefined ? originalSignatureObj.guid : 'signature'"
+        [options]="signaturePadOptions"
+        (drawStart)="drawStart()"
+        (drawEnd)="drawComplete()"
+        class="bg-none signature_border"
+      ></signature-pad>
+      }
+    </div>
+  </div>
+  @if (responseIO != undefined && responseIO.data != undefined) {
+  <div class="signature_Footer_container">
+    <sym-field-group
+      [fieldIds]="'placeOfSignature,signatureDt'"
+      [responseIO]="responseIO"
+      [model]="originalSignatureObj"
+      (notifyChange)="onInputChanged($event)"
+    ></sym-field-group>
+    <sym-button
+      [class]="'btn btn_outline_primary m-2'"
+      [isLoaderRequired]="false"
+      [text]="'clearSignature'"
+      (onClick)="onClearClick()"
+      [iconClass]="'fa fa-times'"
+      [showTextAlways]="true"
+      class="mt-4_3 signClearButton"
+      [hidden]="disableSignature"
+    ></sym-button>
+  </div>
+  } } } @if (isPopView) {
+  <div class="text-center">
+    <input
+      class="d-none"
+      type="file"
+      ondrop="value = null"
+      (click)="onUploadInputFileClick($event)"
+      (change)="onUploadFileChange($event.target.files)"
+      (cancel)="onUploadCancel($event)"
+      #fileInput
+    />
+    @if (displaySignatureImage) {
+    <img
+      [attr.src]="signatureImgSrc"
+      [id]="'signature' + originalSignatureObj.guid + '_img'"
+      class="signatureImageUpload signature_border"
+      width="245"
+      height="60"
+    />
+    } @if (isSignatureButtonReq) {
+    <sym-button
+      [class]="'btn btn_primary'"
+      [isLoaderRequired]="false"
+      [text]="'captureSign'"
+      [attr.id]="'signatureButton_' + originalSignatureObj.guid"
+      (click)="onCaptureSignClick($event)"
+    ></sym-button>
+    }
+  </div>
+  @if (openSignaturePopup) {
+  <sym-pop-up
+    [popupID]="'signaturePopup_' + originalSignatureObj.guid"
+    [hideCloseButton]="true"
+    [width]="!service.isMobileViewRendeered() ? '50' : '97'"
+    [height]="!service.isMobileViewRendeered() ? '150' : '80'"
+    [headerText]="
+      service.getMultilingualMessage('captureSignHeader', [
+        originalSignatureObj.roleCd,
+        originalSignatureObj.signatureTypeCd,
+        originalSignatureObj.signatureTypeCd + '_' + originalSignatureObj.roleCd
+      ])
+    "
+  >
+    @if (signatureDeclarationText != undefined) {
+    <div [innerHTML]="settingService.getLabelValue(signatureDeclarationText) | safeHtml: 'html'"></div>
+    }
+    <input
+      type="radio"
+      [name]="originalSignatureObj.guid + '_signatureOption'"
+      [(ngModel)]="signatureCaptureOptionType"
+      [value]="'SIGNATUREPAD'"
+      class="signatureOptionRadio"
+    />
+    <i class="fa fa-pencil pl-1 pr-1"></i>
+    <span class="sign-option">{{ service.getMultilingualLabel('signaturePad') }} </span>
+    <!-- <input
+                  type="radio"
+                  [name]="originalSignatureObj.guid + '_signatureOption'"
+                  [(ngModel)]="signatureCaptureOptionType"
+                  [value]="'SIGNATUREUPLOAD'"
+                  (click)="fileInput.click()"
+                  class="signatureOptionRadio"
+                  />
+                  <i class="fa fa-upload pl-1 pr-1"></i>
+                  <span class="sign-option">{{ service.getMultilingualLabel('uploadSignature') }}</span>
+                  <p class="supportNote">
+                    ({{ service.getMultilingualLabel('supports') }}: {{ allowed_FileTypes?.toString() }}
+                    {{ service.getMultilingualLabel('maxSignFileSize') }}: {{ max_FileSize?.toString() }} kb)
+                  </p> -->
+    <br />
+    @if (signatureImgSrc != undefined) {
+    <div class="signature_lbl">
+      {{ service.getMultilingualLabel('signature') }}
+    </div>
+    }
+    <div class="text-center">
+      <div
+        class="fullWidth"
+        [class.signature_border]="signatureCaptureOptionType == undefined && signatureImgSrc == undefined"
+      >
+        @if (signatureCaptureOptionType != 'SIGNATUREPAD' && signatureImgSrc != undefined) {
+        <img [src]="signatureImgSrc" class="signatureImageUpload signature_border" />
+        } @if (signatureCaptureOptionType == 'SIGNATUREPAD') {
+        <signature-pad
+          #signature
+          [id]="originalSignatureObj != undefined ? originalSignatureObj.guid : 'signature'"
+          [options]="signaturePadOptions"
+          (drawStart)="drawStart()"
+          (drawEnd)="drawComplete()"
+          class="bg-none signature_border"
+        ></signature-pad>
+        }
+      </div>
+    </div>
+    @if (responseIO != undefined && responseIO.data != undefined) {
+    <div class="signature-fields">
+      <sym-field-group
+        [fieldIds]="'placeOfSignature,signatureDt'"
+        [responseIO]="responseIO"
+        [model]="originalSignatureObj"
+        (notifyChange)="onInputChanged($event)"
+      ></sym-field-group>
+      <sym-field-group
+        [fieldIds]="'signatureBy,addtnlField1,addtnlField2'"
+        [responseIO]="responseIO"
+        [model]="originalSignatureObj"
+        (notifyChange)="onInputChanged($event)"
+      ></sym-field-group>
+    </div>
+    }
+    <div
+      class="modal-footer justify-content-center text-center signature-footer"
+      [class.p-0]="settingService.isMobileViewRendered()"
+    >
+      <sym-button
+        [class]="'btn btn_primary m-2'"
+        [isLoaderRequired]="false"
+        [text]="'Save'"
+        (onClick)="onSaveClick()"
+        [iconClass]="'fa fa-check'"
+        [showTextAlways]="true"
+      ></sym-button>
+      <sym-button
+        [class]="'btn btn_outline_primary m-2'"
+        [isLoaderRequired]="false"
+        [text]="'Clear'"
+        (onClick)="onClearClick()"
+        [iconClass]="'fa fa-times'"
+        [showTextAlways]="true"
+        [isDisabled]="disableSignature"
+      ></sym-button>
+      <sym-button
+        [class]="'btn btn_outline_primary m-2'"
+        [isLoaderRequired]="false"
+        [text]="'Cancel'"
+        (onClick)="onCancelClick()"
+        [iconClass]="'fa fa-undo'"
+        [showTextAlways]="true"
+      ></sym-button>
+    </div>
+  </sym-pop-up>
+  } }
+</div>
+}

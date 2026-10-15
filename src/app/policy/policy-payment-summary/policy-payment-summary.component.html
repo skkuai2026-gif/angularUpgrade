@@ -1,0 +1,227 @@
+<div>
+  @if (xmlDom != undefined) {
+  <sym-xml-config-ui
+    [xmlDom]="xmlDom"
+    [service]="service"
+    [responseIO]="service.responseIO"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    (onElementClicked)="onHTMLElementClick($event)"
+  >
+  </sym-xml-config-ui>
+  <div>
+    @if (viewPaymentListDisplayed) {
+    <sym-pop-up
+      [headerText]="'viewPaymentList'"
+      [popupID]="'viewPaymentList'"
+      class="OccupationIndustryDutySearch"
+      (popupClosed)="closePaymentLinkList()"
+    >
+      <div id="payment-table">
+        <div [innerHTML]="paymnetTableHtml"></div>
+      </div>
+      <div class="footer text-center" id="okbuttonPopup">
+        <sym-button
+          [id]="'btn_ok'"
+          [isLoaderRequired]="false"
+          [text]="'Ok'"
+          (onClick)="closePaymentLinkList()"
+        ></sym-button>
+      </div>
+    </sym-pop-up>
+    }
+  </div>
+  } @if ( service.responseIO && service.responseIO != undefined && service.responseIO.data &&
+  service.responseIO.data != undefined && partyRoleList && partyRoleList != undefined &&
+  service.responseIO.data.InitialPayment && service.responseIO.data['InitialPayment'] != undefined &&
+  service.responseIO.data.InitialPayment && service.responseIO.data.InitialPayment.InitialPaymentDetailsList &&
+  service.responseIO.data.InitialPayment.InitialPaymentDetailsList.length > 0 ) {
+  <div class="col-md-12">
+    <!--
+      -->
+    <!-- <div class="box">
+      <div class="section">
+        <div class="sectionHeader mb-2 pb-2">
+          <h4>
+            {{ service.getMultilingualLabel('paymentSummary') }}
+            <span
+              *ngIf="
+                service.responseIO &&
+                service.responseIO.data &&
+                service.responseIO.data.InitialPayment.currencyCd != undefined &&
+                service.responseIO.data.InitialPayment.currencyCd != null
+              "
+              class="small font-italic"
+              >( {{ settingService.getLabelValue('allAmount')
+              }}{{ service.responseIO.data.InitialPayment.currencyCd }})</span
+              >
+            </h4>
+          </div>
+          <div class="sectionContent">
+            <div class="tableContent scrollDiv scrollX">
+              <table class="w-100 table noBorder tableBlocks m0 symresponsive-table">
+                <thead>
+                  <tr class="selected">
+                    <td colspan="4" class="pb-3">
+                      {{ service.getMultilingualLabel('PAYER') }}:
+                      {{
+                      partyRoleList.data['values'][service.responseIO.data['InitialPayment']['payerTypeCd']][0]
+                      .name
+                      }}
+                      <span class="small font-italic"
+                        >({{
+                        service.getFieldLookupDesc(service.responseIO.data['InitialPayment'], 'payerTypeCd')
+                        }})</span
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        {{ service.getMultilingualLabel('Payment method') }}
+                      </th>
+                      <th>
+                        {{ service.getMultilingualLabel('Amount') }}
+                      </th>
+                      <th *ngIf="isOnlineAvailable">
+                        {{ service.getMultilingualLabel('Status') }}
+                      </th>
+                      <th
+                    *ngIf="
+                      isOnlineAvailable &&
+                      (service.responseIO.data.Entity.statusCd == 'PAYMENTPENDING' ||
+                        service.responseIO.data.Entity.statusCd == 'PAYMENTFAILED')
+                    "
+                        >
+                        {{ service.getMultilingualLabel('pay') }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    *ngFor="let initialPayment of service.responseIO.data.InitialPayment.InitialPaymentDetailsList"
+                    >
+                    <tr class="selected InitialPayment-name">
+                      <td colspan="4" class="mob_td pb-3">
+                        {{ service.getMultilingualLabel('PAYER') }}:
+                        {{
+                        partyRoleList.data['values'][service.responseIO.data['InitialPayment']['payerTypeCd']][0]
+                        .name
+                        }}
+                        <span class="small font-italic"
+                          >({{
+                          service.getFieldLookupDesc(service.responseIO.data['InitialPayment'], 'payerTypeCd')
+                          }})</span
+                          >
+                        </td>
+                      </tr>
+                      <tr class="trProduct">
+                        <td class="text-left" [attr.data-label]="service.getMultilingualLabel('Payment method')">
+                          <label
+                      *ngIf="
+                        initialPayment['paymentMethodCd'] != undefined && initialPayment['paymentMethodCd'] != null
+                      "
+                            >
+                            {{ service.getFieldLookupDesc(initialPayment, 'paymentMethodCd') }}
+                          </label>
+                        </td>
+                        <td class="text-left" [attr.data-label]="service.getMultilingualLabel('Amount')">
+                          <label
+                            *ngIf="initialPayment['inwardAmount'] != undefined && initialPayment['inwardAmount'] != null"
+                            >
+                            {{
+                            initialPayment['inwardAmount']
+                            | customFormat: service.getFieldMetadata(initialPayment, 'inwardAmount')
+                            }}
+                          </label>
+                        </td>
+                        <td class="text-left" [attr.data-label]="service.getMultilingualLabel('Status')">
+                          <label
+                      *ngIf="
+                        initialPayment['instrumentStatusCd'] != undefined &&
+                        initialPayment['instrumentStatusCd'] != null
+                      "
+                            >
+                            {{ service.getFieldLookupDesc(initialPayment, 'instrumentStatusCd') }}
+                          </label>
+                        </td>
+                        <td
+                          [attr.data-label]="service.getMultilingualLabel('pay')"
+                    *ngIf="
+                      initialPayment['paymentMethodCd'] != undefined && initialPayment['paymentMethodCd'] == 'IPG'
+                    "
+                          >
+                          <sym-button
+                      *ngIf="
+                        service.responseIO.data.Entity.statusCd == 'PAYMENTPENDING' ||
+                        service.responseIO.data.Entity.statusCd == 'PAYMENTFAILED' ||
+                        (service.isCustomerPortal() && service.responseIO.data.Entity.statusCd == 'PENDING')
+                      "
+                            [class]="'btn btn_outline_primary iconPay'"
+                            [id]="'btn_Pay'"
+                            (onClick)="onPaymentClick()"
+                            [isLoaderRequired]="false"
+                            [text]="'Pay now'"
+                            [tooltip]="'Pay now'"
+                          ></sym-button>
+                          <span
+                            class="p-2 payOrText"
+                      *ngIf="
+                        service.responseIO.data.Entity.statusCd == 'PAYMENTPENDING' ||
+                        service.responseIO.data.Entity.statusCd == 'PAYMENTFAILED' ||
+                        (service.isCustomerPortal() && service.responseIO.data.Entity.statusCd == 'PENDING')
+                      "
+                            >
+                            {{ service.getMultilingualLabel('OR') }}
+                          </span>
+                          <sym-button
+                      *ngIf="
+                        service.responseIO.data.Entity.statusCd == 'PAYMENTPENDING' ||
+                        service.responseIO.data.Entity.statusCd == 'PAYMENTFAILED' ||
+                        (service.isCustomerPortal() && service.responseIO.data.Entity.statusCd == 'PENDING')
+                      "
+                            [class]="'btn btn_outline_primary paylink'"
+                            [id]="'btn_Paylink'"
+                            (onClick)="sendPaymentLinkClick()"
+                            [isLoaderRequired]="false"
+                            [text]="'Pay link'"
+                            [tooltip]="'sendPaymentLink'"
+                          ></sym-button>
+                          &nbsp;&nbsp;
+                          <sym-button
+                      *ngIf="
+                        service.responseIO.data.Entity.statusCd == 'PAYMENTPENDING' ||
+                        service.responseIO.data.Entity.statusCd == 'PAYMENTFAILED'
+                      "
+                            [class]="'btn btn_outline_primary iconCheckstatus'"
+                            [id]="'btn_PayStatusChk'"
+                            (onClick)="onPaymentStatusClick()"
+                            [isLoaderRequired]="false"
+                            [text]="'Check status'"
+                            [tooltip]="'Check Payment Status'"
+                          ></sym-button>
+                          Used for Offline -->
+    <!--  <button
+                          type="button"
+                          class="btn btn_outline_primary"
+                          id="payment_status_btn"
+                          (click)="onPaymentStatusClick()"
+                          title="Check Payment Status"
+                      *ngIf="
+                        service.responseIO.data.Entity.statusCd == 'PAYMENTPENDING' ||
+                        service.responseIO.data.Entity.statusCd == 'PAYMENTFAILED'
+                      "
+                          >
+                          <span class="iconCheckstatus"></span>
+                        </button>
+                        -->
+    <!-- </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div> -->
+    <sym-policy-payment-gateway-form></sym-policy-payment-gateway-form>
+  </div>
+  }
+</div>

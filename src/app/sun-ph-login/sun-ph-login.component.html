@@ -1,0 +1,269 @@
+@if (!authService.isUserLoggedIn()) {
+<div
+  [ngClass]="{
+    'loginWrapper scrollDiv': companySUNPH === 'SLGFI' || (companySUNPH === undefined && company === 'SLGFI'),
+    'loginWrapper2 scrollDiv': companySUNPH === 'SLOCPI' || (companySUNPH === undefined && company === 'SLOCPI')
+  }"
+>
+  <div class="loginContainerParent">
+    <div class="loginContent">
+      <!-- <h1>Sign In</h1> -->
+      <!-- <p
+        *ngIf="
+          settingService.message == undefined || settingService.message == null || settingService.message == '';
+          else elseTemplate
+        "
+        >
+        Please sign in to your account.
+      </p> -->
+      <!-- *****SLOCPI************ -->
+      <!-- <div class="header">
+      <span class="btnLeftNav"></span>
+      <a href="javascript:void(0);" class="logo_login"
+        ><img src="/assets/theme/images/company/New-V8PHLogo.PNG" width="450px" alt="Logo"
+      /></a>
+    </div> -->
+      <!-- ******SLIGFI*********** -->
+      <div class="header">
+        <div class="bgWhite">
+          <span class="btnLeftNav"></span>
+          @if (companySUNPH === 'SLGFI' || (companySUNPH === undefined && company === 'SLGFI')) {
+          <a href="javascript:void(0);" class="logo_login">
+            <!-- src="/assets/theme/images/company/HEADER IMAGE - 2774x786.png" -->
+            <!-- src="/assets/theme/images/company/SLGFI.png" -->
+            <img src="/assets/theme/images/company/SLGFI.png" width="438px" alt="Logo" id="sunPhLoginImg"
+          /></a>
+          } @if (companySUNPH === 'SLOCPI' || (companySUNPH === undefined && company === 'SLOCPI')) {
+          <a href="javascript:void(0);" class="logo_login"
+            ><img src="/assets/theme/images/company/SLOCPI.jpg" width="438px" alt="Logo2" id="sunPhLoginImg"
+          /></a>
+          }
+        </div>
+      </div>
+      <ng-template #elseTemplate>
+        <p>
+          <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+          {{ settingService.message }}
+        </p>
+      </ng-template>
+      @if (loginForm != undefined) {
+      <form
+        name="abm_admin_login_form"
+        [formGroup]="loginForm"
+        (ngSubmit)="onLoginClick()"
+        (keyup.enter)="onLoginClick()"
+        autocomplete="off"
+      >
+        <div class="form-group" id="sunPhLoginForm">
+          <!-- <label for="userName">Username<i class="fa fa-asterisk asterik pl-1" aria-hidden="true"></i></label> -->
+          <div>
+            <input
+              autocomplete="off"
+              (copy)="onCopy($event)"
+              ondrag="return false"
+              ondrop="return false"
+              (paste)="onPaste($event)"
+              onfocus="return false"
+              type="text"
+              class="form-control txtusername"
+              id="userName"
+              name="login_username"
+              required
+              formControlName="userId"
+              [ngClass]="{
+                'is-invalid': (submitted && form.userId.errors) || isLoginFailed
+              }"
+              (focus)="isLoginFailed = false"
+              (keypress)="omit_special_char($event)"
+              placeholder="ADVISOR CODE"
+            />
+            @if (submitted && form.userId.errors) {
+            <div class="invalid-feedback">
+              @if (form.userId.errors.required) {
+              <div>Username is required</div>
+              }
+            </div>
+            } @if (isLoginFailed) {
+            <div class="invalid-feedback">
+              <div>Please enter a valid username.</div>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="form-group" id="sunPhLoginForm">
+          <!-- <label for="password">Password<i class="fa fa-asterisk asterik pl-1" aria-hidden="true"></i></label> -->
+          <div class="password-container">
+            <input
+              autocomplete="off"
+              (copy)="onCopy($event)"
+              ondrag="return false"
+              ondrop="return false"
+              (paste)="onPaste($event)"
+              onfocus="return false"
+              placeholder="PASSWORD"
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control txtPassword"
+              name="login_password"
+              id="password"
+              required
+              formControlName="password"
+              [ngClass]="{
+                'is-invalid': (submitted && form.password.errors) || isLoginFailed
+              }"
+              (focus)="isLoginFailed = false"
+            />
+            <img
+              class="fa toggle-password pweye"
+              src="/assets/theme/images/company/pweye.gif"
+              (click)="togglePasswordVisibility()"
+              aria-hidden="true"
+            />
+            @if (submitted && form.password.errors) {
+            <div class="invalid-feedback">
+              @if (form.password.errors.required) {
+              <div>Password is required</div>
+              }
+            </div>
+            } @if (isLoginFailed) {
+            <div class="invalid-feedback">
+              @if (form.password.errors.required) {
+              <div>Please enter a valid password.</div>
+              }
+            </div>
+            }
+          </div>
+        </div>
+        <!-- <div class="form-group">
+                <label for="language">Language<i class="fa fa-asterisk asterik pl-1" aria-hidden="true"></i></label>
+                <div class="iconA selectGrp">
+                  <select
+                    class="form-control"
+                    id="language"
+                    name="language"
+                    formControlName="language"
+                    (change)="changeLanguage($event)"
+                    (focus)="isLoginFailed = false"
+                    >
+                    <option [ngValue]="'selected'" selected>Select</option>
+                    <option *ngFor="let lang of languageList" [value]="lang.cd">
+                      {{ lang.desc }}
+                    </option>
+                  </select>
+                  <div *ngIf="submitted && form.language.errors" class="invalid-feedback">
+                    <div *ngIf="form.language.errors && form.language.errors.required">Language is required</div>
+                  </div>
+                  <div *ngIf="isLoginFailed" class="invalid-feedback">
+                    <div *ngIf="form.language.errors && form.language.errors.required">
+                      Please select a valid language.
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+        <!-- <div>
+              <div class="form-group">
+                <div *ngIf="!isUseCaseClicked" class="iconA selectGrp" id="useCase">
+                  <a href="javascript:void(0)" (click)="showUseCase()">+</a>
+                </div>
+                <div *ngIf="isUseCaseClicked">
+                  <a href="javascript:void(0)" (click)="hideUseCase()">-</a>
+                  <br />
+                  <label for="language">Use Case</label>
+                  <div class="iconA selectGrp">
+                    <select
+                      class="form-control"
+                      id="useCase"
+                      name="useCase"
+                      formControlName="useCase"
+                      (focus)="isLoginFailed = false"
+                      >
+                      <option [ngValue]="null">Select</option>
+                      <option *ngFor="let useCase of useCaseList" [value]="useCase.cd">
+                        {{ useCase.desc }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+        <button
+          class="btn btn_primary btn_submit"
+          type="button"
+          (ngSubmit)="onLoginClick()"
+          (keyup.enter)="onLoginClick()"
+          (click)="onLoginClick()"
+          [disabled]="languageList == undefined || languageList == null || languageList.length == 0"
+          id="sunPhLoginBtn"
+        >
+          Log in
+        </button>
+        <!-- <p
+            *ngIf="company != 'SLGFI'"
+            style="font-size: 14px; text-align: center; margin-top: 20px; font-weight: bold; padding-top: 1rem"
+            >
+            Version 5.9/12.0
+          </p>
+          <p
+            *ngIf="company == 'SLGFI'"
+            style="font-size: 14px; text-align: center; margin-top: 20px; font-weight: bold; padding-top: 1rem"
+            >
+            Version 6.0/2.8
+          </p> -->
+        @if (this.settingService.getApplicationMode() === 'offline') {
+        <p style="font-size: 14px; text-align: center; font-weight: bold; margin-top: 10px">
+          {{ 'Version ' + appVersion + ' / ' + dbVersion }}
+        </p>
+        }
+        <p style="font-size: 14px; text-align: center; font-weight: bold; padding-top: 5px">
+          <!-- Version 5.9/13.4 -->
+          {{ proposalVersion }}
+        </p>
+        <p></p>
+        <!-- <p style="font-size: 14px; font-weight: bold; text-align: center; padding-top: 1rem">PROP.v24.1.00</p> -->
+        <br />
+        <div
+          style="
+            width: 405px;
+            margin-left: 10px;
+            font-size: 9pt;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            text-align: center;
+          "
+          id="sunPhContactInfo"
+        >
+          Need help? Contact Advisor Technology Support (ATS) at &nbsp;<a style="color: #0d6efd">+63285558888</a>
+          local <a style="color: #0d6efd">3000</a> <br />or email at
+          <a href="mailto: phil-ats@sunlife.com">phil-ats<span>&#64;</span>sunlife.com</a>
+        </div>
+        <!-- <a href="phil-ats@sunlife.com"></a> -->
+        <!-- <p>local 3000 or email at phil-ats@sunlife.com</p> -->
+      </form>
+      }
+    </div>
+  </div>
+</div>
+} @if (submitted && loginOtpReqd) {
+<div class="loginOtp">
+  <div class="header">
+    <a href="javascript:void(0);" class="logo"
+      ><img src="/assets/theme/images/company/New-V8PHLogo.PNG" alt="Logo"
+    /></a>
+  </div>
+  <!-- [otpRecipientAddress]="otpRecipientAddress"
+    [otpErrorFailed]="otpErrorFailed" -->
+  <sym-otp
+    [displayPopupOnly]="true"
+    [isOtpButtonReq]="false"
+    (otpActionClicked)="onOTPActionClick($event)"
+    (isValidOtp)="onValidateOtp($event)"
+    [otpExpiryTimeInput]="otpExpiryTime"
+  ></sym-otp>
+</div>
+} @if (showDisclaimer && settingService.isLabelLoaded) {
+<div>
+  <sym-disclaimer
+    [displayPopupOnly]="true"
+    (disagreeDisclaimerCLicked)="disagreeDisclaimerClicked($event)"
+    (acceptDisclaimerCLicked)="acceptDisclaimerCLicked($event)"
+  ></sym-disclaimer>
+</div>
+}

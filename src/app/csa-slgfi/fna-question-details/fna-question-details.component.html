@@ -1,0 +1,30 @@
+@if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) { @if (
+service.responseIO.data.FNARequestAdditionalPriorityList != null &&
+service.responseIO.data.FNARequestAdditionalPriorityList != undefined ) {
+<div id="discussionArea">
+  <sym-data-entry-grid
+    [fieldIds]="'field1,field11,field12,field13,field3'"
+    [responseIO]="service.responseIO"
+    [modelList]="service.responseIO.data.FNARequestAdditionalPriorityList"
+    [isAddRequired]="false"
+    [isDeleteRequired]="false"
+    (notifyFocus)="onDataFieldFocus($event)"
+    (notifyChange)="onInputChanged($event)"
+    [columWidthPerc]="[30, 15, 15, 15, 25]"
+  ></sym-data-entry-grid>
+  <sym-field-group
+    [fieldIds]="'reasonForRecoCd'"
+    (notifyFocus)="onInputFocused($event)"
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.Entity"
+  ></sym-field-group>
+  <sym-field-group
+    [fieldIds]="'reasonForRecommendation'"
+    (notifyFocus)="onInputFocused($event)"
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.Entity"
+  ></sym-field-group>
+</div>
+} }

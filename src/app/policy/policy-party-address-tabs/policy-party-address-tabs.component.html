@@ -1,0 +1,322 @@
+@if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 && addressTabList &&
+addressTabList.length > 0 ) {
+<div>
+  @if (addressTabList.length == 1) { @if (partyModel[addressTabList[0].id] &&
+  partyModel[addressTabList[0].id].length != 0) {
+  <h4>
+    <span style="color: #fff !important; background-color: #eaab00 !important; display: inline; padding: 0 4px">
+      {{ addressTabList[0].text }}
+    </span>
+  </h4>
+  <!-- <sym-policy-party-address [model]="partyModel[addressTabList[0].id]"></sym-policy-party-address> -->
+  <div>
+    <sym-field-group
+      [fieldIds]="'copyFromAddr2'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="partyModel"
+      [modelPath]="partyModel.objName"
+      [gridColumns]="[6]"
+    ></sym-field-group>
+  </div>
+  <div id="topAlignment">
+    @if ( partyModel['copyFromAddr2'] == '' || partyModel['copyFromAddr2'] == null || partyModel['copyFromAddr2']
+    == 'OTHERS' ) {
+    <sym-policy-party-address
+      [model]="partyModel[addressTabList[0].id]"
+      [modelPath]="partyModel.objName + '.' + addressTabList[0].id"
+    ></sym-policy-party-address>
+    }
+  </div>
+  } } @else { @if (addressTabList.length > 1) { @if (addressTabList.length > 1 && selectedAddressTab) {
+  <sym-sub-tab [tabList]="addressTabList" (selectedTab)="displaySelectedTabBody($event)">
+    @for (addressType of addressTabList; track addressType) { @if ( selectedAddressTab.id === addressType.id &&
+    partyModel[addressType.id] && partyModel[addressType.id].length != 0 ) {
+    <ng-container>
+      @if (partyModel[addressType.id]['addressTypeCd'] == 'RESIDENTIAL') { @if (selectedStep.selectedTab.id ==
+      'tab_primary') {
+      <div class="sameAs">
+        <sym-field-group
+          [fieldIds]="'copyFromAddr1'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="partyModel"
+          [modelPath]="partyModel.objName"
+          [gridColumns]="[6]"
+        ></sym-field-group>
+      </div>
+      }
+      <div id="topAlignment">
+        @if ( partyModel['copyFromAddr1'] == '' || partyModel['copyFromAddr1'] == null ||
+        partyModel['copyFromAddr1'] == 'OTHERS' ) {
+        <sym-policy-party-address
+          [model]="partyModel[addressType.id]"
+          [modelPath]="partyModel.objName + '.' + addressType.id"
+        ></sym-policy-party-address>
+        }
+      </div>
+      }
+    </ng-container>
+    <ng-container>
+      @if (partyModel[addressType.id]['addressTypeCd'] == 'PERMANENT') {
+      <div class="sameAs" id="sameAs">
+        <sym-field-group
+          [fieldIds]="'copyFromAddr2'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="partyModel"
+          [modelPath]="partyModel.objName"
+          [gridColumns]="[6]"
+        ></sym-field-group>
+      </div>
+      @if ( partyModel['copyFromAddr2'] == '' || partyModel['copyFromAddr2'] == null || partyModel['copyFromAddr2']
+      == 'OTHERS' ) {
+      <sym-policy-party-address
+        [model]="partyModel[addressType.id]"
+        [modelPath]="partyModel.objName + '.' + addressType.id"
+      ></sym-policy-party-address>
+      } }
+    </ng-container>
+    @if (partyModel[addressType.id]['addressTypeCd'] == 'OFFICE') {
+    <div class="sameAs">
+      <sym-field-group
+        [fieldIds]="'copyFromAddr3'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="partyModel"
+        [modelPath]="partyModel.objName"
+        [gridColumns]="[6]"
+      ></sym-field-group>
+    </div>
+    <!-- <sym-policy-party-address
+                  [model]="partyModel[addressType.id]"
+                  *ngIf="partyModel['copyFromAddr3'] == '' || partyModel['copyFromAddr3'] == null"
+                ></sym-policy-party-address> -->
+    @if (partyModel['copyFromAddr3'] == '' || partyModel['copyFromAddr3'] == 'OTHERS') {
+    <sym-policy-party-address
+      [model]="partyModel[addressType.id]"
+      [modelPath]="partyModel.objName + '.' + addressType.id"
+    ></sym-policy-party-address>
+    } @if (partyModel['copyFromAddr3'] == '' || partyModel['copyFromAddr3'] == 'OTHERS') {
+    <div>
+      <sym-field-group
+        [fieldIds]="'otherReligion'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="partyModel"
+        [gridColumns]="[6]"
+      ></sym-field-group>
+    </div>
+    } @if ( partyModel['copyFromAddr3'] == 'SAMEASPRESENTRES' || partyModel['copyFromAddr3'] == null ||
+    partyModel['copyFromAddr3'] == 'SAMEASBUSINESS' || partyModel['copyFromAddr3'] == 'SAMEASPERMANENTRESINSURED'
+    || partyModel['copyFromAddr3'] == 'SAMEASPRESENTRESINSURED' || partyModel['copyFromAddr3'] ==
+    'SAMEASPERMANENTRES' ) {
+    <div class="marginTop">
+      <sym-field-group
+        [fieldIds]="'otherReligion'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="partyModel"
+        [gridColumns]="[6]"
+      ></sym-field-group>
+    </div>
+    } } } }
+  </sym-sub-tab>
+  } } @else {
+  <ng-template [ngTemplateOutlet]="subTabAvailable"></ng-template>
+  } }
+  <ng-template #subTabAvailable>
+    @if (addressTabList.length > 1) { @if (addressTabList.length > 1 && selectedAddressTab) {
+    <sym-sub-tab [tabList]="addressTabList" (selectedTab)="displaySelectedTabBody($event)">
+      @for (addressType of addressTabList; track addressType) { @if ( selectedAddressTab.id === addressType.id &&
+      partyModel[addressType.id] && partyModel[addressType.id].length != 0 ) {
+      <ng-container>
+        @if (partyModel[addressType.id]['addressTypeCd'] == 'RESIDENTIAL') { @if (selectedStep.selectedTab.id ==
+        'tab_primary') {
+        <div class="sameAs">
+          <sym-field-group
+            [fieldIds]="'copyFromAddr1'"
+            (notifyChange)="onInputChanged($event)"
+            [responseIO]="service.responseIO"
+            [model]="partyModel"
+            [modelPath]="partyModel.objName"
+            [gridColumns]="[6]"
+          ></sym-field-group>
+        </div>
+        }
+        <div id="topAlignment">
+          @if ( partyModel['copyFromAddr1'] == '' || partyModel['copyFromAddr1'] == null ||
+          partyModel['copyFromAddr1'] == 'OTHERS' ) {
+          <sym-policy-party-address
+            [model]="partyModel[addressType.id]"
+            [modelPath]="partyModel.objName + '.' + addressType.id"
+          ></sym-policy-party-address>
+          }
+        </div>
+        }
+      </ng-container>
+      <ng-container>
+        @if (partyModel[addressType.id]['addressTypeCd'] == 'PERMANENT') {
+        <div class="sameAs" id="sameAs">
+          <sym-field-group
+            [fieldIds]="'copyFromAddr2'"
+            (notifyChange)="onInputChanged($event)"
+            [responseIO]="service.responseIO"
+            [model]="partyModel"
+            [modelPath]="partyModel.objName"
+            [gridColumns]="[6]"
+          ></sym-field-group>
+        </div>
+        @if ( partyModel['copyFromAddr2'] == '' || partyModel['copyFromAddr2'] == null ||
+        partyModel['copyFromAddr2'] == 'OTHERS' ) {
+        <sym-policy-party-address
+          [model]="partyModel[addressType.id]"
+          [modelPath]="partyModel.objName + '.' + addressType.id"
+        ></sym-policy-party-address>
+        } }
+      </ng-container>
+      @if (partyModel[addressType.id]['addressTypeCd'] == 'OFFICE') {
+      <div class="sameAs">
+        <sym-field-group
+          [fieldIds]="'copyFromAddr3'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="partyModel"
+          [modelPath]="partyModel.objName"
+          [gridColumns]="[6]"
+        ></sym-field-group>
+      </div>
+      <!-- <sym-policy-party-address
+                [model]="partyModel[addressType.id]"
+                *ngIf="partyModel['copyFromAddr3'] == '' || partyModel['copyFromAddr3'] == null"
+              ></sym-policy-party-address> -->
+      @if (partyModel['copyFromAddr3'] == '' || partyModel['copyFromAddr3'] == 'OTHERS') {
+      <sym-policy-party-address
+        [model]="partyModel[addressType.id]"
+        [modelPath]="partyModel.objName + '.' + addressType.id"
+      ></sym-policy-party-address>
+      } @if (partyModel['copyFromAddr3'] == '' || partyModel['copyFromAddr3'] == 'OTHERS') {
+      <div>
+        <sym-field-group
+          [fieldIds]="'otherReligion'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="partyModel"
+          [gridColumns]="[6]"
+        ></sym-field-group>
+      </div>
+      } @if ( partyModel['copyFromAddr3'] == 'SAMEASPRESENTRES' || partyModel['copyFromAddr3'] == null ||
+      partyModel['copyFromAddr3'] == 'SAMEASBUSINESS' || partyModel['copyFromAddr3'] == 'SAMEASPERMANENTRESINSURED'
+      || partyModel['copyFromAddr3'] == 'SAMEASPRESENTRESINSURED' || partyModel['copyFromAddr3'] ==
+      'SAMEASPERMANENTRES' ) {
+      <div class="marginTop">
+        <sym-field-group
+          [fieldIds]="'otherReligion'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="partyModel"
+          [gridColumns]="[6]"
+        ></sym-field-group>
+      </div>
+      } } } }
+    </sym-sub-tab>
+    } } @else { @if (addressTabList.length > 1) { @if (addressTabList.length > 1 && selectedAddressTab) {
+    <sym-sub-tab [tabList]="addressTabList" (selectedTab)="displaySelectedTabBody($event)">
+      @for (addressType of addressTabList; track addressType) { @if ( selectedAddressTab.id === addressType.id &&
+      partyModel[addressType.id] && partyModel[addressType.id].length != 0 ) {
+      <ng-container>
+        @if (partyModel[addressType.id]['addressTypeCd'] == 'RESIDENTIAL') { @if (selectedStep.selectedTab.id ==
+        'tab_primary') {
+        <div class="sameAs">
+          <sym-field-group
+            [fieldIds]="'copyFromAddr1'"
+            (notifyChange)="onInputChanged($event)"
+            [responseIO]="service.responseIO"
+            [model]="partyModel"
+            [modelPath]="partyModel.objName"
+            [gridColumns]="[6]"
+          ></sym-field-group>
+        </div>
+        }
+        <div id="topAlignment">
+          @if ( partyModel['copyFromAddr1'] == '' || partyModel['copyFromAddr1'] == null ||
+          partyModel['copyFromAddr1'] == 'OTHERS' ) {
+          <sym-policy-party-address
+            [model]="partyModel[addressType.id]"
+            [modelPath]="partyModel.objName + '.' + addressType.id"
+          ></sym-policy-party-address>
+          }
+        </div>
+        }
+      </ng-container>
+      <ng-container>
+        @if (partyModel[addressType.id]['addressTypeCd'] == 'PERMANENT') {
+        <div class="sameAs" id="sameAs">
+          <sym-field-group
+            [fieldIds]="'copyFromAddr2'"
+            (notifyChange)="onInputChanged($event)"
+            [responseIO]="service.responseIO"
+            [model]="partyModel"
+            [modelPath]="partyModel.objName"
+            [gridColumns]="[6]"
+          ></sym-field-group>
+        </div>
+        @if ( partyModel['copyFromAddr2'] == '' || partyModel['copyFromAddr2'] == null ||
+        partyModel['copyFromAddr2'] == 'OTHERS' ) {
+        <sym-policy-party-address
+          [model]="partyModel[addressType.id]"
+          [modelPath]="partyModel.objName + '.' + addressType.id"
+        ></sym-policy-party-address>
+        } }
+      </ng-container>
+      @if (partyModel[addressType.id]['addressTypeCd'] == 'OFFICE') {
+      <div class="sameAs">
+        <sym-field-group
+          [fieldIds]="'copyFromAddr3'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="partyModel"
+          [modelPath]="partyModel.objName"
+          [gridColumns]="[6]"
+        ></sym-field-group>
+      </div>
+      <!-- <sym-policy-party-address
+                [model]="partyModel[addressType.id]"
+                *ngIf="partyModel['copyFromAddr3'] == '' || partyModel['copyFromAddr3'] == null"
+              ></sym-policy-party-address> -->
+      @if (partyModel['copyFromAddr3'] == '' || partyModel['copyFromAddr3'] == 'OTHERS') {
+      <sym-policy-party-address
+        [model]="partyModel[addressType.id]"
+        [modelPath]="partyModel.objName + '.' + addressType.id"
+      ></sym-policy-party-address>
+      } @if (partyModel['copyFromAddr3'] == '' || partyModel['copyFromAddr3'] == 'OTHERS') {
+      <div>
+        <sym-field-group
+          [fieldIds]="'otherReligion'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="partyModel"
+          [gridColumns]="[6]"
+        ></sym-field-group>
+      </div>
+      } @if ( partyModel['copyFromAddr3'] == 'SAMEASPRESENTRES' || partyModel['copyFromAddr3'] == null ||
+      partyModel['copyFromAddr3'] == 'SAMEASBUSINESS' || partyModel['copyFromAddr3'] == 'SAMEASPERMANENTRESINSURED'
+      || partyModel['copyFromAddr3'] == 'SAMEASPRESENTRESINSURED' || partyModel['copyFromAddr3'] ==
+      'SAMEASPERMANENTRES' ) {
+      <div class="marginTop">
+        <sym-field-group
+          [fieldIds]="'otherReligion'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="partyModel"
+          [gridColumns]="[6]"
+        ></sym-field-group>
+      </div>
+      } } } }
+    </sym-sub-tab>
+    } } @else {
+    <ng-template [ngTemplateOutlet]="subTabAvailable"></ng-template>
+    } }
+  </ng-template>
+</div>
+}

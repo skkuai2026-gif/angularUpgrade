@@ -1,0 +1,158 @@
+<ng-container>
+  <sym-page-container
+    [stepList]="stepList"
+    [responseIO]="service.responseIO"
+    [currentStepSelected]="selectedStep"
+    (selectedStep)="onStepChanged($event)"
+  >
+    <!--  -->
+    @if ( (restApiDataInfo != undefined && restApiDataInfo.screenReqdFl == 'YES') || restApiDataInfo == undefined )
+    { @if (service.responseIO && service.responseIO.data && selectedStep != undefined) {
+    <div class="row fieldHeader">
+      <div
+        class="
+          offset-sm-4 offset-md-4 offset-lg-4 offset-xl-4
+          col-sm-8 col-md-8
+          co-lg-8
+          col-xl-8
+          help_container
+          no-gutters
+        "
+      >
+        <div
+          [ngClass]="
+            (restApiDataInfo != undefined && restApiDataInfo.screenReqdFl == 'YES') || restApiDataInfo == undefined
+              ? 'col-sm-3 col-md-3 co-lg-3 col-xl-3 m-0 p-0 '
+              : 'col-sm-3 col-md-3 co-lg-3 col-xl-3 ml-5 '
+          "
+        >
+          Field
+        </div>
+        <div
+          [ngClass]="
+            (restApiDataInfo != undefined && restApiDataInfo.screenReqdFl == 'YES') || restApiDataInfo == undefined
+              ? 'col-sm-2 col-md-2 co-lg-2 col-xl-2 m-0 p-0'
+              : 'col-sm-2 col-md-2 co-lg-2 col-xl-2 ml-5'
+          "
+        >
+          Datatype
+        </div>
+        <div
+          [ngClass]="
+            (restApiDataInfo != undefined && restApiDataInfo.screenReqdFl == 'YES') || restApiDataInfo == undefined
+              ? 'col-sm-4 col-md-4 co-lg-4 col-xl-4 m-0 p-0'
+              : 'col-sm-4 col-md-4 co-lg-4 col-xl-4 ml-5'
+          "
+        >
+          <!-- offset-sm-2 offset-md-2 offset-lg-2 offset-xl-2  -->
+          Description
+        </div>
+      </div>
+    </div>
+    <sym-step [stepItem]="selectedStep" (actionClick)="onActionClicked($event)" (tabChange)="onTabChanged($event)">
+      @if (selectedStep.selectedTab != undefined) { @if (selectedStep.selectedTab.id == 'tab_basic') { @if (
+      restApiDataInfo == undefined || (restApiDataInfo != undefined && restApiDataInfo.apiName !=
+      'getApplicableProducts') ) { @if ( service.responseIO.data['BasePlan'].productId == undefined ||
+      service.responseIO.data['BasePlan'].productId == null || service.responseIO.data['BasePlan'].productSeq ==
+      undefined || service.responseIO.data['BasePlan'].productSeq == null || (restApiDataInfo != undefined &&
+      restApiDataInfo.apiName == 'getProductData')) {
+      <sym-panel [id]="'productSel_Api_Body'" [name]="'Product Selection'">
+        <sym-field-group
+          [fieldIds]="
+            restApiDataInfo != undefined &&
+            (restApiDataInfo.apiName == 'calculateIllustration' ||
+              restApiDataInfo.apiName == 'generateIllustrationPdf')
+              ? 'productId'
+              : 'productSeq'
+          "
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="service.responseIO.data.BasePlan"
+        >
+        </sym-field-group>
+      </sym-panel>
+      } @else {
+      <sym-field-group
+        [fieldIds]="'productPlanOptionCd'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.BasePlan"
+      >
+      </sym-field-group>
+      <a href="javascript:void(0);" (click)="onChangeProductClick()">Change Product</a>
+      <br /><br />
+      } } @if ( (service.responseIO.data['BasePlan'].productSeq == undefined && restApiDataInfo != undefined &&
+      restApiDataInfo.apiName == 'getApplicableProducts') || ((service.responseIO.data['BasePlan'].productSeq !=
+      undefined || service.responseIO.data['BasePlan'].productId != undefined) && restApiDataInfo != undefined &&
+      restApiDataInfo.apiName != 'getProductData') || (service.responseIO.data['BasePlan'].productSeq != undefined
+      && restApiDataInfo == undefined) || (service.responseIO.data['BasePlan'].productId != undefined &&
+      restApiDataInfo == undefined) ) {
+      <sym-basic-detail></sym-basic-detail>
+      @if (!isProposerCopiedFromLA) {
+      <sym-proposer [isProposerLASameDisplay]="false"></sym-proposer>
+      <sym-primary-insured [isProposerLASameDisplay]="true"></sym-primary-insured>
+      } @if (isProposerCopiedFromLA) {
+      <sym-primary-insured [isProposerLASameDisplay]="false"></sym-primary-insured>
+      <sym-proposer [isProposerLASameDisplay]="true"></sym-proposer>
+      } @if ( restApiDataInfo == undefined || (restApiDataInfo != undefined && restApiDataInfo.apiName !=
+      'getApplicableProducts') ) {
+      <sym-base-plan></sym-base-plan>
+      @if (service.responseIO.data['BasePlan'] && service.responseIO.data['BasePlan'].RiderList) {
+      <sym-panel
+        [id]="'rider'"
+        [name]="'Riders'"
+        [blockCollapse]="true"
+        (panelCollapse)="onRiderPanelCollapsed($event)"
+      >
+        <sym-rider [responseUpdated]="responseUpdated"></sym-rider>
+      </sym-panel>
+      } @if ( service.responseIO.data['WithdrawalList'] && service.responseIO.data['WithdrawalList'].length > 0 ) {
+      <sym-withdrawal></sym-withdrawal>
+      } @if (service.responseIO.data['BasePlan'] && service.responseIO.data['BasePlan'].FundList) {
+      <sym-fund-list></sym-fund-list>
+      }
+      <sym-base-plan-other></sym-base-plan-other>
+      <sym-topup></sym-topup>
+      @if ( service.responseIO.data['BasePlan'] && service.responseIO.data['BasePlan'].PlanExtraList ) {
+      <sym-plan-extra-list></sym-plan-extra-list>
+      }
+      <!-- <sym-panel
+                    [id]="'fund_list_Body'"
+                    [name]="'FUNDSINFORMATION'"
+              *ngIf="
+                service.responseIO.data.BasePlan.FundList != undefined &&
+                service.responseIO.data.BasePlan.FundList.length > 0
+              "
+                    >
+                    <div class="m-2 p-2">
+                      <sym-field-group
+                        <sym-rider [responseUpdated]="responseUpdated"></sym-rider>
+                      </sym-panel> -->
+      @if (restApiDataInfo.apiName != 'sendEmail') {
+      <sym-output-preferences></sym-output-preferences>
+      } @if (restApiDataInfo.apiName == 'sendEmail') {
+      <sym-email-request></sym-email-request>
+      } } } } }
+      <div
+        class="footer_override"
+        [class.left_footer]="
+          (restApiDataInfo != undefined && restApiDataInfo.screenReqdFl == 'YES') || restApiDataInfo == undefined
+        "
+      ></div>
+    </sym-step>
+    } } @if (displayPopupApiResponse) { @if (service.responseIO && service.responseIO.data && selectedStep !=
+    undefined) {
+    <div>
+      <sym-api-body-editor
+        [restApiDataInfo]="restApiDataInfo"
+        [apiRequestData]="apiRequestData.value"
+        [apiResponseData]="apiResponseData"
+        [responseIO]="service.responseIO"
+        [service]="service"
+        (requestBtnClicked)="sendRequest($event)"
+        (popupClosed)="onPopupClosed($event)"
+      ></sym-api-body-editor>
+    </div>
+    } }
+  </sym-page-container>
+</ng-container>

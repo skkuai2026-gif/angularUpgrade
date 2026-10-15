@@ -1,0 +1,141 @@
+<sym-page-container
+  [breadCrumbList]="breadCrumbList"
+  [stepList]="stepList"
+  [responseIO]="service.responseIO"
+  [currentStepSelected]="selectedStep"
+  (selectedStep)="onStepChanged($event)"
+>
+  @if ( service.responseIO != undefined && selectedStep != undefined && selectedStep.id != undefined &&
+  selectedStep.selectedTab != undefined && selectedStep.selectedTab.id != undefined ) { @if (selectedStep !=
+  undefined) {
+  <sym-step
+    [stepItem]="selectedStep"
+    (actionClick)="onActionClicked($event)"
+    (tabChange)="onTabChanged($event)"
+    [contentExcludRightTab]="selectedStep.isRightContentAdded"
+  >
+    @for (tab of selectedStep.tabList; track tab) { @if (selectedStep.selectedTab != undefined &&
+    selectedStep.selectedTab.id == tab.id) {
+    <sym-xml-config-ui
+      [xmlDom]="tab.xmlDom"
+      [service]="service"
+      [responseUpdated]="responseUpdated"
+      [responseIO]="service.responseIO"
+      [productFacets]="service.productFacets"
+      [companyFacets]="service.companyFacets"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      (onRowAdded)="onGridRowAdded($event)"
+      (searchIconClicked)="onInputSearchClick($event)"
+    >
+    </sym-xml-config-ui>
+    } }
+    <div class="ok">
+      <div class="footer text-center">
+        @if ( selectedStep.id === 'step_submitStatus' && (service.responseIO?.data?.Entity?.statusCd ===
+        'SUBMITTED' || (service.responseIO?.data?.Entity?.statusCd === 'ACCEPTED' && hasNoValidationErrors() &&
+        !service.responseIO?.data?.Entity?.applicationRefNum && service.isPolicySubmitSuccess === false &&
+        service.isPolicySubmitSuccess != undefined)) ) {
+        <sym-button
+          [class]="
+            company === 'SLOCPI' && service.responseIO.data.Proposer.partyTypeCd === 'INDIVIDUAL'
+              ? 'btn btn_primary ml-2 mr-2 slocpiIndividualBtnClass'
+              : ' btn btn_primary ml-2 mr-2 text-center'
+          "
+          [id]="'btn_ok'"
+          [isLoaderRequired]="false"
+          [text]="'Ok'"
+          (click)="but_ok_click()"
+        ></sym-button>
+        }
+      </div>
+    </div>
+  </sym-step>
+  } }
+</sym-page-container>
+@if (service.responseIO && service.responseIO.data && selectedStep != undefined) {
+<div>
+  <sym-pop-up
+    [headerText]="'transferToCustomer'"
+    [popupID]="'policytransferToCustomer'"
+    [popupSize]="'large'"
+    (popupClosed)="setTransferToCustomerPopup()"
+    [hideCloseButton]="true"
+  >
+    @if (getTransferToCustomerPopup()) {
+    <sym-policy-transfer-to-customer
+      (isChangeAllocationSuccess)="onSuccessChangeAllocation($event)"
+    ></sym-policy-transfer-to-customer>
+    }
+  </sym-pop-up>
+</div>
+} @if (service.responseIO && service.responseIO.data && selectedStep != undefined) {
+<div>
+  <sym-pop-up
+    [headerText]="'Client Transfer History'"
+    [popupID]="'policytransferToCustomerView'"
+    [popupSize]="'large'"
+    (popupClosed)="setTransferToCustomerPopup()"
+  >
+    @if (getTransferToCustomerPopup()) {
+    <sym-policy-transfer-to-customer [isViewMode]="true"></sym-policy-transfer-to-customer>
+    }
+  </sym-pop-up>
+</div>
+} @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div>
+  <sym-pop-up [popupID]="'submitPolicyModal'" [popupSize]="'small'" [width]="50" [height]="30">
+    <div class="successModalHeader">
+      <span class="iconSuccess"></span>
+      @if ( service.responseIO.data.Entity.uwDecisionValue != null &&
+      service.responseIO.data.Entity.uwDecisionValue != undefined ) {
+      <h4>
+        {{ service.responseIO.data.Entity.uwDecisionValue }}
+      </h4>
+      } @if ( service.responseIO.data.Entity.uwDecisionValue == null ||
+      service.responseIO.data.Entity.uwDecisionValue == undefined ) {
+      <h4>
+        {{ service.getMultilingualLabel('policySubmitMesg') }}
+      </h4>
+      }
+    </div>
+  </sym-pop-up>
+</div>
+} @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div>
+  <sym-pop-up
+    [popupID]="'copyPolicyModal'"
+    [headerText]="'copyProposalData'"
+    [popupSize]="'large'"
+    [height]="service.isMobileViewRendeered() ? 55 : 85"
+    (popupClosed)="setCopyPolicyPopup()"
+  >
+    @if (getCopyPolicyPopup()) {
+    <sym-copy-policy
+      [showDataDesc]="copyProposalDataDisplay"
+      [currentProposalService]="service"
+      (copyPolicyDataArray)="copyPolicyDataArray($event)"
+    ></sym-copy-policy>
+    }
+  </sym-pop-up>
+</div>
+}
+<sym-pop-up
+  [popupID]="'editQuotationPopUp'"
+  [popupSize]="'small'"
+  [displayPopupAtTop]="true"
+  [hideCloseButton]="true"
+>
+  <div>
+    <div>Are you sure you want to edit the Proposal?</div>
+    <div class="mt-3 d-flex justify-content-center">
+      <button class="btn btn_primary me-3 okbtnId" (click)="editQuotationclick($event)">
+        {{ service.getMultilingualLabel('Ok') }}
+      </button>
+
+      <button class="btn btn_primary cancelbtnId" (click)="closeeditModal()">
+        {{ service.getMultilingualLabel('Cancel') }}
+      </button>
+    </div>
+  </div>
+</sym-pop-up>

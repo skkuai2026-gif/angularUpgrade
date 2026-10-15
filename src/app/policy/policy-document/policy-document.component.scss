@@ -1,0 +1,162 @@
+.requirement-content-wrapper-left {
+  float: left;
+  position: relative;
+  width: 30%;
+  overflow: auto;
+}
+.requirement-content-wrapper-right {
+  float: right;
+  position: relative;
+  width: 65%;
+}
+
+.checkBoxGrp.cbgLabel.cbgBypassOCR
+  .form-check.form-check-inline
+  .fgInline
+  .checkBoxGrp
+  .form-check.form-check-inline
+  .form-check-input,
+.checkBoxGrp.cbgLabel.cbgBypassOCR .form-check.form-check-inline .form-check-label {
+  cursor: pointer !important;
+}
+
+/***** Tooltip for displaying info starts here *****/
+.tooltip-label-info-container {
+  min-width: 250px;
+  width: 100%;
+  max-width: 300px;
+  min-height: 50px;
+  font-size: 0.99rem;
+  line-height: 1.2;
+  text-align: left;
+  padding: 5px;
+  font-weight: 200;
+  white-space: normal;
+  font-style: normal;
+  background: rgb(234 234 79 / 50%);
+}
+
+.tooltip-label-info {
+  font-size: 1.2rem;
+  color: #317d03;
+  position: relative;
+  white-space: normal;
+  font-style: normal;
+  line-height: 0;
+  margin-left: 9px;
+}
+
+.tooltip-label-info:before {
+  content: '\f29c';
+  font-family: 'FontAwesome';
+}
+/***** Tooltip for displaying info ends here *****/
+
+/***** AIML related starts here *****/
+.verify_aiml {
+  background: #008000;
+  color: white;
+  border: 1px solid white;
+  border-radius: 35px;
+  padding: 0;
+  margin: 0 14px;
+  padding: 3px 10px;
+  font-size: 0.93em;
+  cursor: pointer;
+}
+
+.collapse:not(.show) {
+  display: contents !important;
+}
+
+.aiml_Container {
+  position: absolute;
+  right: 28%;
+  top: 10px;
+}
+// Added for mobile view
+.aiml_Container_right {
+  right: 35%;
+}
+/***** AIML related ends here *****/
+/****** Added for responsiveness sarts here  *******/
+.mob_cbgBypassOCR {
+  right: 5.5px;
+}
+
+.documentContent .checkBoxGrp .form-check.mob_check > label {
+  padding: 5px;
+}
+tr td {
+  border: 1px solid #ededed;
+}
+#infoPopup div {
+  margin: 10px 0px;
+}
+#infoPopup p {
+  margin: 0px 0px 0px 20px;
+  padding: 0px;
+}
+#infoPopup {
+  text-align: justify;
+}
+/****** Added for responsiveness ends here *******/
+@media only screen and (min-width: 768px) and (max-width: 1365px) {
+  .documentContent .checkBoxGrp .form-check.mob_check > label {
+    padding: 0px;
+  }
+}
+
+.table-wrapper {
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.column {
+  width: 100%;
+  padding: 0;
+  border-left: 1px solid #ccc;
+}
+
+.column:first-child {
+  border-left: none;
+}
+
+.column h4 {
+  margin: 0;
+  padding: 12px 20px;
+  background-color: #e0e0e0; /* light gray */
+  color: #333;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+}
+
+.column ul {
+  list-style-type: disc; /* bullet points */
+  padding: 5px 40px;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+a {
+  color: #3366cc;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  color: #444;
+}
+#specialPaymentArrangementPopup p {
+  margin-left: 10px;
+}

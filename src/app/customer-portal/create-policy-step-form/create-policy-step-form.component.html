@@ -1,0 +1,434 @@
+@if (service.responseIO && service.responseIO.data) { @if (!isProductSelected) { @if
+(!isSuitabilityAnalysisDisplayed) {
+<sym-product-selection (notifyPrdSelection)="onPrdSelection()"> </sym-product-selection>
+<div class="help-product">
+  <span> Or </span>
+</div>
+<div
+  class="help-product"
+  [attr.data-toggle]="'modal'"
+  [attr.data-target]="'suitability_analysis'"
+  (click)="onSuitabilityAnalysisClick('suitability_analysis')"
+>
+  <a> {{ analysisText }} </a>
+</div>
+} @if (isSuitabilityAnalysisDisplayed) {
+<div class="product-analysis">
+  <sym-pop-up [headerText]="'Suitability Analysis'" [popupID]="'suitability_analysis'" [hideCloseButton]="true">
+    <div class="product-analysis-body">
+      <p class="header">Please select the relevant option below</p>
+      <div class="tbItem">
+        <div class="form-group">
+          <span class="label">1. What is your investment / insurance objective?</span>
+          <div class="radioGrp radioGrpBox radioGrpText">
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="investment" value="Life Protection" id="" />
+              <label class="form-check-label" for="">Life Protection </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="investment" value="Wealth Creation" id="" />
+              <label class="form-check-label" for=""> Wealth Creation </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="investment" value="Retirement Planning" id="" />
+              <label class="form-check-label" for="">Retirement Planning</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="investment" value="Regular Income" id="" />
+              <label class="form-check-label" for=""> Regular Income </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="investment" value="Child Future" id="" />
+              <label class="form-check-label" for=""> Child Future</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="investment" value="Health" id="" />
+              <label class="form-check-label" for=""> Health </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tbItem">
+        <div class="form-group">
+          <span class="label">2.What is your current Profile?</span>
+          <div class="radioGrp radioGrpBox radioGrpText">
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="life-choice" value="Single" id="" />
+              <label class="form-check-label" for="">Single </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="life-choice" value="Married" id="" />
+              <label class="form-check-label" for=""> Married </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                name="life-choice"
+                value="Married with children"
+                id=""
+              />
+              <label class="form-check-label" for="">Married with children</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                name="life-choice"
+                value="Married with older children"
+                id=""
+              />
+              <label class="form-check-label" for=""> Married with older children </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="life-choice" value="Nearing retirement" id="" />
+              <label class="form-check-label" for=""> Nearing retirement</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="life-choice" value="Retired" id="" />
+              <label class="form-check-label" for=""> Retired</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tbItem">
+        <div class="form-group">
+          <span class="label"> 3. What is your annual Income</span>
+          <div class="radioGrp radioGrpBox radioGrpText">
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="income" value="Below 5 lacs" id="" />
+              <label class="form-check-label" for="">Below 5 lacs </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="income" value="5 - 10 lacs" id="" />
+              <label class="form-check-label" for=""> 5 - 10 lacs </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="income" value="11 - 15 lacs " id="" />
+              <label class="form-check-label" for="">11 - 15 lacs </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="income" value="16 - 20 lacs" id="" />
+              <label class="form-check-label" for=""> 16 - 20 lacs </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="income" value="21 - 25 lacs" id="" />
+              <label class="form-check-label" for=""> 21 - 25 lacs </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="income" value="25 lacs & above " id="" />
+              <label class="form-check-label" for=""> 25 lacs & above </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tbItem">
+        <div class="form-group">
+          <span class="label">4. How would you define your Risk Appetite</span>
+          <div class="radioGrp radioGrpBox radioGrpText">
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="risk-appettite" value="Aggressive" id="" />
+              <label class="form-check-label" for="">Aggressive </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="risk-appettite" value="Moderate" id="" />
+              <label class="form-check-label" for=""> Moderate </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" name="risk-appettite" value="Conservative" id="" />
+              <label class="form-check-label" for=""> Conservative </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <sym-button
+        [class]="'btn btn_primary ml-2 mr-2'"
+        [id]="'btn_Select'"
+        [isLoaderRequired]="false"
+        [attr.data-dismiss]="'modal'"
+        [text]="'Ok'"
+        (onClick)="closeSuitabilityAnalysis('Back')"
+      >
+      </sym-button>
+      <sym-button
+        [class]="'btn btn_outline_primary ml-2 mr-2'"
+        [id]="'btn_Cancel'"
+        [isLoaderRequired]="false"
+        [attr.data-dismiss]="'modal'"
+        [text]="'CANCEL'"
+        (onClick)="closeSuitabilityAnalysis('Help me select a Product')"
+      >
+      </sym-button>
+    </div>
+  </sym-pop-up>
+</div>
+} } @else {
+<sym-page-container
+  [breadCrumbList]="breadCrumbList"
+  [stepList]="stepList"
+  [responseIO]="service.responseIO"
+  [currentStepSelected]="selectedStep"
+  (selectedStep)="onStepChanged($event)"
+>
+  @if (service.responseIO && service.responseIO.data && selectedStep != undefined) {
+  <sym-step [stepItem]="selectedStep" (actionClick)="onActionClicked($event)" (tabChange)="onTabChanged($event)">
+    <div class="card-body">
+      <div class="leftDescription">
+        <h2>
+          Hi <span>{{ fullNameText }}</span
+          >, we are building a hammock for You. Till then, complete Your journey in <i>{{ productNameText }}</i> to
+          get insured
+        </h2>
+        <div class="stepImg imageBg{{ selectedStep.index + 1 }}"></div>
+      </div>
+      @if (service.responseIO != undefined) {
+      <div
+        class="blockContainer"
+        [class.blockSm]="selectedStep.selectedTab != undefined && selectedStep.selectedTab.id != 'tab_plan'"
+      >
+        @if (selectedStep.selectedTab != undefined) { @if (selectedStep.selectedTab.id == 'tab_basic') {
+        <div>
+          @if (service.responseIO.data.PrimaryInsured != undefined) {
+          <div class="block">
+            <h4>Insured</h4>
+            <sym-customer-quotation-party
+              [model]="service.responseIO.data.PrimaryInsured"
+            ></sym-customer-quotation-party>
+          </div>
+          } @if (service.responseIO.data.Proposer != undefined) {
+          <div class="block">
+            <h4>
+              Owner
+              <sym-field-group
+                [fieldIds]="'proposerLASame'"
+                (notifyChange)="onInputChanged($event)"
+                [responseIO]="service.responseIO"
+                [isRowRequired]="false"
+                [model]="service.responseIO.data.Entity"
+                class="fgm0ml15 owner-tab-size"
+              ></sym-field-group>
+            </h4>
+            @if (service.responseIO.data['Entity'].proposerLASame == 'YES' ? false : true) {
+            <div>
+              <sym-customer-quotation-party
+                [model]="service.responseIO.data.Proposer"
+              ></sym-customer-quotation-party>
+            </div>
+            }
+          </div>
+          }
+        </div>
+        } @if (isTriggerOtpBtn) {
+        <sym-otp
+          [triggerOTPGeneration]="isTriggerOtpBtn"
+          [isOtpButtonReq]="false"
+          [service]="service"
+          [otpType]="'CUSTOMERVERIFICATION'"
+          [entityGuid]="service.responseIO.data.Entity.guid"
+          (isValidOtp)="onValidateOtp($event)"
+        ></sym-otp>
+        } @if (selectedStep.selectedTab.id == 'tab_plan' && !isTriggerOtpBtn) {
+        <sym-customer-quotation-coverage
+          [responseIO]="service.responseIO"
+          [responseUpdated]="responseUpdated"
+        ></sym-customer-quotation-coverage>
+        } @if (selectedStep.selectedTab.id == 'tab_premiumSummary') {
+        <div class="sectionHeader">
+          @if (!service.responseIO.data.Entity.isInvalid) {
+          <div class="headerActions previewOptions">
+            @if ( (service.companyFacets && service.companyFacets.data['SHOWDOWNLOADSIBEFOREACCEPTANCE'] &&
+            service.companyFacets.data['SHOWDOWNLOADSIBEFOREACCEPTANCE'].length > 0 &&
+            service.companyFacets.data['SHOWDOWNLOADSIBEFOREACCEPTANCE'] == 'YES' &&
+            !service.responseIO.data.Entity.isCompleted) || service.responseIO.data.Entity.isCompleted ) {
+            <sym-button
+              (onClick)="onDownloadPDFClick($event)"
+              [id]="'downloadPDF'"
+              [text]="service.getMultilingualLabel('DOWNLOADIllus')"
+              [iconClass]="'fa fa-download'"
+              [class]="'previewActions'"
+              class="mr-2"
+            ></sym-button>
+            }
+          </div>
+          }
+        </div>
+        <div class="customer-portal-chart-size">
+          <sym-premium-summary
+            [displayBenefitChart]="true"
+            [displayLastBenefitChartValues]="true"
+          ></sym-premium-summary>
+        </div>
+        } @if (selectedStep.selectedTab.id == 'tab_owner') {
+        <div class="modal-body row">
+          <div>
+            <div class="block">
+              <div class="row">
+                <div class="col-sm-4">
+                  <sym-field-group
+                    [fieldIds]="'identityNum'"
+                    (notifyChange)="onInputChanged($event)"
+                    [responseIO]="policyService.responseIO"
+                    [model]="policyService.responseIO.data.Proposer.IdentityList[0]"
+                    [isRowRequired]="false"
+                  ></sym-field-group>
+                </div>
+                <div class="col-sm-4">
+                  <sym-button
+                    [class]="'btn btn_secondary'"
+                    [id]="'btn_verifyIdentity'"
+                    [isLoaderRequired]="true"
+                    [text]="'Verify'"
+                    (onClick)="onVerifyButtonClick()"
+                  >
+                  </sym-button>
+                  <sym-otp
+                    [triggerOTPGeneration]="isTriggerAadharOtpBtn"
+                    [isOtpButtonReq]="false"
+                    [service]="service"
+                    [otpType]="'CUSTOMERVERIFICATION'"
+                    [entityGuid]="service.responseIO.data.Entity.guid"
+                    (isValidOtp)="onValidateAadharOtp($event)"
+                  ></sym-otp>
+                </div>
+              </div>
+            </div>
+            <sym-panel sym-panel [id]="'address_Details_Body'" [name]="'Mailing Address'">
+              @if ( service.getUserLoginData() != undefined && service.getUserLoginData()['useCase'] != undefined
+              && service.getUserLoginData()['useCase'] === 'BRAZIL' ) {
+              <div>
+                <sym-field-group
+                  [fieldIds]="'pinCode,countryCd'"
+                  (notifyChange)="onInputChanged($event)"
+                  (notifyFocus)="onInputFocused($event)"
+                  [responseIO]="policyService.responseIO"
+                  [model]="policyService.responseIO.data.Proposer.ResidentalAddress"
+                  [gridColumns]="[6, 6]"
+                ></sym-field-group>
+              </div>
+              }
+              <sym-field-group
+                [fieldIds]="
+                  service.getUserLoginData() != undefined &&
+                  service.getUserLoginData()['useCase'] != undefined &&
+                  service.getUserLoginData()['useCase'] === 'BRAZIL'
+                    ? 'addressLine1Lang1,addressLine2Lang1,addressLine3Lang1,addressLine4Lang1,stateCd,cityCd'
+                    : 'addressLine1Lang1,addressLine2Lang1,addressLine3Lang1,addressLine4Lang1,addressSubTypeCd,countryCd,pinCode,stateCd,cityCd,districtCd,poBox,status,talukaCd,villageCd'
+                "
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="policyService.responseIO"
+                [model]="policyService.responseIO.data.Proposer.ResidentalAddress"
+                [gridColumns]="[6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6]"
+              ></sym-field-group>
+              <!-- commented code for permanent mailing address -->
+              <!-- <sym-field-group
+                                  [fieldIds]="'copyFromAddr2'"
+                                  (notifyChange)="onInputChanged($event)"
+                                  [responseIO]="policyService.responseIO"
+                                  [model]="policyService.responseIO.data.Proposer"
+                                ></sym-field-group>
+                                <ng-container
+                                  *ngIf="policyService.responseIO.data.Proposer.copyFromAddr2 == 'NONRESIDENTIAL'"
+                                  >
+                                  <sym-field-group
+                            [fieldIds]="
+                              'addressTypeCd,addressLine1Lang1,addressLine2Lang1,addressLine3Lang1,addressLine4Lang1,addressSubTypeCd,countryCd,pinCode,stateCd,cityCd,districtCd,poBox,status,talukaCd,villageCd'
+                            "
+                                    (notifyChange)="onInputChanged($event)"
+                                    (notifyFocus)="onInputFocused($event)"
+                                    [responseIO]="policyService.responseIO"
+                                    [model]="policyService.responseIO.data.Proposer.PermanentAddress"
+                                  ></sym-field-group>
+                                </ng-container> -->
+            </sym-panel>
+            <sym-panel sym-panel [id]="'Educational_Occupation'" [name]="'Occupation'">
+              <sym-field-group
+                [fieldIds]="'occupationTypeCd'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="policyService.responseIO"
+                [model]="policyService.responseIO.data.Proposer.Employment"
+                [gridColumns]="[4]"
+              ></sym-field-group>
+              <sym-field-group
+                [fieldIds]="'industryCd,natureOfDuty,occupationCd'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="policyService.responseIO"
+                [model]="policyService.responseIO.data.Proposer.Employment"
+              ></sym-field-group>
+            </sym-panel>
+            <sym-panel sym-panel [id]="'Nominee_details'" [name]="'Nominee details'">
+              <div class="gridHeight">
+                <sym-data-entry-grid
+                  [fieldIds]="'titleCd,firstName1,lastName1,birthDt,relationCd,percentage'"
+                  [modelList]="policyService.responseIO.data.NomineeList"
+                  [responseIO]="policyService.responseIO"
+                  (notifyChange)="onInputChanged($event)"
+                  (onRowAdded)="onAddNominee($event)"
+                  [isFormFormatRequired]="
+                    service.getUserLoginData() != undefined &&
+                    service.getUserLoginData()['useCase'] != undefined &&
+                    service.getUserLoginData()['useCase'] === 'BRAZIL'
+                      ? false
+                      : true
+                  "
+                  [formColumnWidth]="'3,4,4,3,4,3'"
+                  [columWidthPerc]="[10, 10, 0, 0, 0, 0]"
+                ></sym-data-entry-grid>
+              </div>
+            </sym-panel>
+          </div>
+        </div>
+        } @if (selectedStep.selectedTab.id == 'tab_questionnaire') {
+        <div class="tab-pane">
+          <sym-policy-party-questionnaire></sym-policy-party-questionnaire>
+        </div>
+        } @if (selectedStep.id == 'step_requirement') { @if (selectedStep.selectedTab.id == 'tab_requirement') {
+        <div class="tab-pane">
+          <sym-policy-document></sym-policy-document>
+        </div>
+        } } @if (selectedStep.selectedTab.id == 'tab_paymentsummary') {
+        <div class="tab-pane">
+          <!-- <sym-policy-payment-summary></sym-policy-payment-summary> -->
+          <sym-customer-payment-summary> </sym-customer-payment-summary>
+        </div>
+        } }
+      </div>
+      }
+    </div>
+  </sym-step>
+  }
+</sym-page-container>
+} }
+<!--modal for Acceptance message start -->
+@if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 && policyService != null
+&& policyService != undefined && policyService.responseIO != null && policyService.responseIO != undefined ) {
+<sym-pop-up
+  [popupID]="'submitPolicyModal'"
+  [popupSize]="'small'"
+  [displayPopupAtTop]="true"
+  [hideCloseButton]="true"
+>
+  <div class="successModalHeader">
+    <span class="iconSuccess"></span>
+    @if ( policyService.responseIO.data.Entity.uwDecisionValue != null &&
+    policyService.responseIO.data.Entity.uwDecisionValue != undefined ) {
+    <div [innerHTML]="policyService.responseIO.data.Entity.uwDecisionValue | safeHtml: 'html'"></div>
+    } @if ( policyService.responseIO.data.Entity.uwDecisionValue == null ||
+    policyService.responseIO.data.Entity.uwDecisionValue == undefined ) {
+    <h2>
+      {{ policyService.getMultilingualLabel('policySubmitMesg') }}
+    </h2>
+    }
+    <div class="mt-3 d-flex justify-content-center">
+      <button class="btn btn_primary" (click)="closeSubmitPolicyModal()">
+        {{ service.getMultilingualLabel('Back') }}
+      </button>
+    </div>
+  </div>
+</sym-pop-up>
+}
+<!--modal for congratulation message ends -->

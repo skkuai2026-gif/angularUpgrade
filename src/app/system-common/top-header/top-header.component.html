@@ -1,0 +1,107 @@
+@if (authService.isUserLoggedIn()) {
+<div id="topHeader" class="header headerbg">
+  @if (!authService.isMenuHidden()) {
+  <span class="btnLeftNav"><i></i></span>
+  } @if (company != 'SLGFI') {
+  <a href="javascript:void(0);" class="logo"><img src="assets/theme/images/company/logo2.png" alt="Logo" /></a>
+  } @if (company == 'SLGFI') {
+  <a href="javascript:void(0);" class="logo"
+    ><img src="assets/theme/images/company/UPPER LEFT LOGO - 2064x499.png" alt="Logo2"
+  /></a>
+  } @if (headerService.pageHeader != undefined && headerService.pageHeader.title != undefined && headerChanges()) {
+  <h1>
+    {{ settingService.getLabelValue(headerService.pageHeader.title) }}
+    @if ( headerService.pageHeader != undefined && headerService.pageHeader.refNumber != undefined &&
+    headerService.pageHeader != undefined && headerService.pageHeader.refNumber != '' ) {
+    <span> ({{ headerService.pageHeader.refNumber }}) </span>
+    } @if ( headerService.pageHeader != undefined && headerService.pageHeader.additionalInfo != undefined &&
+    headerService.pageHeader != undefined && headerService.pageHeader.additionalInfo != '' ) {
+    <span [class]="headerService.pageHeader.additionalInfo.length > 70 ? 'addinfo' : 'small'">
+      {{ headerService.pageHeader.additionalInfo }}
+    </span>
+    }
+  </h1>
+  }
+  <div class="headerActions">
+    @if ( headerService.pageHeader && headerService.pageHeader.additionalButtonList &&
+    headerService.pageHeader.additionalButtonList != undefined && headerService.pageHeader.additionalButtonList !=
+    null && headerService.pageHeader.additionalButtonList.length > 0 ) { @for (iconBtn of
+    headerService.pageHeader.additionalButtonList; track iconBtn) {
+    <div class="additionalIconBtn" (click)="onMoreOptionClicked(iconBtn)">
+      <i class="{{ iconBtn.iconClass }} pr-1" aria-hidden="true" [id]="iconBtn.id"></i>
+      {{ settingService.getLabelValue(iconBtn.text) }}
+    </div>
+    } }
+    <!-- <ng-container *ngIf="settingService.getApplicationMode() === 'offline'"> -->
+    <div class="notification-row">
+      <!-- <span class="notification-title"> {{ notificationSubject }} </span>&nbsp; -->
+      <!-- <span class="notification-body">
+        {{ notificationBody }}
+      </span> -->
+    </div>
+    <a (click)="agentNotificationMoreOption_click()" class="notification-more-link">
+      <!-- <u> More</u> -->
+      <div class="custom-bell-wrapper">
+        <i class="fa fa-bell-o" aria-hidden="true"></i>
+        <!-- <i class="fa fa-bell" aria-hidden="true"></i> -->
+        @if (!isNotificationSeen) {
+        <span class="notification-badge"></span>
+        }
+      </div>
+    </a>
+    <!-- </ng-container> -->
+    @if ( headerService.pageHeader && headerService.pageHeader.moreOptionList &&
+    headerService.pageHeader.moreOptionList != undefined && headerService.pageHeader.moreOptionList != null &&
+    headerService.pageHeader.moreOptionList.length > 0 ) {
+    <div class="dropdownContainer" id="iconmenuId" #dropdown>
+      <button
+        type="button"
+        class="dropdown-toggle"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+        (click)="headerService.isShow = !headerService.isShow"
+        #dropdownMenuBtn
+      >
+        <i class="icon_menu"></i>
+      </button>
+      <div class="dropdown-menu" #dropdownMenu [ngClass]="{ show: headerService.isShow }">
+        @for (moreOption of headerService.pageHeader.moreOptionList; track moreOption) {
+        <a
+          href="javascript:void(0);"
+          class="dropdown-item tdEdit"
+          (click)="headerService.isShow = !headerService.isShow; onMoreOptionClicked(moreOption)"
+        >
+          @if (moreOption.iconClass) {
+          <i [class]="moreOption.iconClass" aria-hidden="true"></i>
+          }
+          {{
+            moreOption.text != null
+              ? settingService.getLabelValue(moreOption.text)
+              : settingService.getLabelValue(moreOption.id)
+          }}
+        </a>
+        }
+      </div>
+    </div>
+    }
+  </div>
+  <!-- <div class="notification-card">
+<div class="notification-content">
+  <div class="notification-row" *ngIf="notificationSubject?.trim() && notificationBody?.trim()">
+    <span class="notification-title"> {{ notificationSubject }} </span>&nbsp;
+    <span class="notification-body">
+      {{ notificationBody }}
+    </span>
+  </div>
+  <a (click)="agentNotificationMoreOption_click()" class="notification-more-link">
+    <u> More</u>
+  </a>
+</div> -->
+  <!-- </div> -->
+</div>
+} @if (isClickNotificationIcon) {
+<sym-pop-up [headerText]="'Agent Notification'" [popupID]="'AgentNotification'">
+  <sym-agent-notification-search></sym-agent-notification-search>
+</sym-pop-up>
+}

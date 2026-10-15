@@ -1,0 +1,225 @@
+.hidden {
+  margin-left: -200px;
+}
+
+a[data-toggle='collapse'] {
+  position: relative;
+}
+
+@media (max-width: 575px) {
+  .hidden {
+    margin-left: 0;
+  }
+}
+
+.sidebar-header {
+  padding: 20px;
+}
+
+ul li a {
+  padding: 15px;
+  /* display: block; */
+  display: flex;
+  width: 100%;
+  /* &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  } */
+}
+
+hr {
+  border-top: 1px solid #fff;
+  margin-top: 0;
+}
+/**tabbar left navigation starts**/
+
+li {
+  display: block;
+  padding: 0 5px 0 0;
+}
+li > a {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #222b45;
+  border-bottom: 1px solid #edf1f7;
+  position: relative;
+  font-family: 'montserratregular', Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  padding: 14px 25px 14px 15px;
+}
+li:last-child > a {
+  border-bottom-color: transparent;
+}
+li:hover > a,
+li:hover > a > i {
+  color: #36f;
+  cursor: pointer;
+}
+li > a.active,
+li > a.active > i {
+  color: #36f;
+}
+li > a.active::before {
+  content: '';
+  width: 3px;
+  height: 100%;
+  background-color: #7f8dff;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+li > a > span {
+  display: block;
+  font-size: 0.9rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: normal;
+}
+li > a > i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  margin-right: 10px;
+  width: 20px;
+  color: #828c9f;
+}
+li:hover ul {
+  background-color: rgba(0, 0, 0, 0.01);
+}
+li.hasSubMenu > a:after {
+  content: '\e908';
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  font-family: 'icomoon';
+  font-weight: normal;
+  font-size: 0.7rem;
+  transition: all 0.2s ease-out;
+}
+
+li.hasSubMenu > a.selected:after {
+  content: '\f078';
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  font-family: 'FontAwesome';
+  font-weight: normal;
+  font-size: 0.7rem;
+  transition: all 0.2s ease-out;
+}
+
+li.hasSubMenu > a.activeTab:after {
+  transform: translateY(-50%) rotate(90deg);
+}
+/* li.hasSubMenu ul {
+  display: none;
+} */
+li.hasSubMenu > ul li {
+  padding: 0;
+}
+li.hasSubMenu > ul li > a {
+  padding-left: 30px;
+  color: #617d95;
+}
+li.hasSubMenu > ul li > a:hover {
+  color: #36f;
+}
+li.hasSubMenu > ul > li.hasSubMenu > ul {
+  position: fixed;
+  top: 400px;
+  left: 235px;
+  z-index: 99;
+  box-shadow: 0 7px 18px -8px #000;
+  -webkit-box-shadow: 0 7px 18px -8px #000;
+  -moz-box-shadow: 0 7px 18px -8px #000;
+  background-color: #fff;
+  overflow: hidden;
+  overflow-y: auto;
+}
+li.hasSubMenu > ul > li.hasSubMenu > ul > li > a {
+  color: #153d77;
+}
+li.hasSubMenu > ul > li.hasSubMenu > ul.active {
+  display: block;
+  background-color: #f2f2f2;
+}
+.menuClosed .leftNav {
+  margin-left: -250px;
+}
+.leftNavActionbar {
+  height: 45px;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+.leftNavActionbar a {
+  background-color: #8f9bb3;
+  color: #fff;
+  padding: 10px 15px;
+  height: 45px;
+  display: flex;
+  width: 100%;
+}
+/**tabbar left navigation ends**/
+
+@media (max-width: 767px) {
+  .leftNav {
+    position: fixed;
+    top: 50px;
+    z-index: 98;
+    height: calc(100% - 50px);
+  }
+}
+.btnToggleBlock {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 10px;
+  /* background-color: #f2f5ff; */
+  color: #ffffff;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 0.6rem;
+}
+
+.profileContent .block > h4 {
+  border-bottom: none !important;
+
+  padding-bottom: 0px !important
+   ;
+}
+
+.leftNav .userSetting ul.lnUl li > a {
+  border-bottom: 1px solid;
+  border-image-slice: 1;
+  border-width: 1px;
+  border-image-source: linear-gradient(to left, #1bd2f7, #c0eef7);
+}
+
+.signout {
+  background: linear-gradient(to left, #1bd2f7, #c0eef7);
+}
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+  .leftNav {
+    width: 170px;
+  }
+}
+
+li.hasSubMenu > ul li ul li > a {
+  padding-left: 38px !important;
+}
+
+li.hasSubMenu > ul li ul li > a > span,
+li.hasSubMenu > ul li ul li > a > i {
+  font-size: 0.85rem;
+}

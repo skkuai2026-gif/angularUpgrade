@@ -1,0 +1,117 @@
+<div class="row">
+  <div [class]="service.isMobileViewRendered() ? 'col-sm-12' : 'col-sm-6'">
+    @if (illustrationResult != undefined) {
+    <div class="illustration_chart_controls col-sm-12">
+      @if (illustrationResult.ratesElements[illustrationResult.elementLabel[0]] != 'NORATE') { @for (rate of
+      illustrationResult.rateOrder; track rate; let i = $index) { @if ( (illustrationResult.rates[rate] > 1 ||
+      illustrationResult.rates[rate] < -1 ? illustrationResult.rates[rate] : illustrationResult.rates[rate] * 100)
+      != 0 ) {
+      <span [class.active]="selectedGraphPer == i" (click)="createDataForGraph(i)">
+        {{
+          (illustrationResult.rates[rate] > 1 || illustrationResult.rates[rate] < -1
+            ? illustrationResult.rates[rate]
+            : illustrationResult.rates[rate] * 100) %
+            1 !=
+          0
+            ? (illustrationResult.rates[rate] > 1 || illustrationResult.rates[rate] < -1
+                ? illustrationResult.rates[rate]
+                : illustrationResult.rates[rate] * 100
+              ).toFixed(2)
+            : illustrationResult.rates[rate] > 1 || illustrationResult.rates[rate] < -1
+            ? illustrationResult.rates[rate]
+            : illustrationResult.rates[rate] * 100
+        }}
+        %</span
+      >
+      } } }
+    </div>
+    }
+    <div class="col-sm-12" [class]="service.isLandScapeViewRendered() ? 'canvasLandscape' : ''">
+      <div class="sliderForChart">
+        @if (illustrationResult != undefined && dataList?.length != 0) {
+        <sym-custom-charts
+          [dataList]="dataList"
+          [lineChartYPlotDetails]="plotDetails"
+          [xAxisLabel]="settingService.getLabelValue('ageIns')"
+          [yAxisLabel]="settingService.getLabelValue('insPolicyValues')"
+          [widthInPX]="widthInPX"
+        ></sym-custom-charts>
+        }
+      </div>
+    </div>
+  </div>
+  <div [class]="service.isMobileViewRendered() ? 'col-sm-12' : 'col-sm-6'">
+    <div class="tableContent">
+      @if (illustrationResult != undefined) {
+      <table class="table m0 illustrationtable" id="illustrationtable">
+        <thead>
+          <tr>
+            @if (rateLength > 1 || (rateLength == 1 && illustrationResult.rates[0] != 'NORATE')) {
+            <th rowspan="2">
+              {{ settingService.getLabelValue('polyear') }}
+            </th>
+            } @if (rateLength == 1 && illustrationResult.rates[0] == 'NORATE') {
+            <th rowspan="1">
+              {{ settingService.getLabelValue('polyear') }}
+            </th>
+            } @if (rateLength > 1 || (rateLength == 1 && illustrationResult.rates[0] != 'NORATE')) {
+            <th rowspan="2">
+              {{ settingService.getLabelValue('age') }}
+            </th>
+            } @if (rateLength == 1 && illustrationResult.rates[0] == 'NORATE') {
+            <th rowspan="1">
+              {{ settingService.getLabelValue('age') }}
+            </th>
+            } @for (elementLabel of illustrationResult.elementLabel; track elementLabel) {
+            <th class="text-center" [attr.colspan]="rateLength">
+              {{ elementLabel }}
+            </th>
+            }
+          </tr>
+          <tr>
+            @for (elementLabel of illustrationResult.elementLabel; track elementLabel; let k = $index) { @if
+            (illustrationResult.ratesElements[k] != 'NORATE') { @for (rate of illustrationResult.rateOrder; track
+            rate) {
+            <th class="text-center">
+              {{
+                illustrationResult.rates[rate] > 1 || illustrationResult.rates[rate] < -1
+                  ? illustrationResult.rates[rate]
+                  : illustrationResult.rates[rate] * 100
+              }}
+              %
+            </th>
+            } } }
+          </tr>
+        </thead>
+        <tbody>
+          @for (year of illustrationResult.yearsToPrint; track year; let i = $index) {
+          <tr>
+            <td>{{ year }}</td>
+            <td>
+              {{ illustrationResult.ageToPrint[i] }}
+            </td>
+            @for (elementLabel of illustrationResult.elementLabel; track elementLabel; let j = $index) { @if
+            (illustrationResult.ratesElements[j] != 'NORATE') { @for (rate of illustrationResult.rateOrder; track
+            rate) {
+            <td class="text-right">
+              {{
+                illustrationResult.calculatedData[rate].data[j][year - 1]
+                  | number: (mask != undefined ? mask : '1.0-0')
+              }}
+            </td>
+            } } @if (illustrationResult.ratesElements[j] == 'NORATE') {
+            <td class="text-right">
+              {{
+                illustrationResult.calculatedData.NORATE.data[j][year - 1]
+                  | number: (mask != undefined ? mask : '1.0-0')
+              }}
+            </td>
+            } }
+          </tr>
+          }
+        </tbody>
+      </table>
+      }
+    </div>
+  </div>
+</div>

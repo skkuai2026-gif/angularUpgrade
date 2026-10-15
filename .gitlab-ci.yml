@@ -1,0 +1,20 @@
+variables:
+  SymbiosysAngular: 'Project:$CI_PROJECT_TITLE----Branch:$CI_COMMIT_BRANCH-----Commited-by:$GITLAB_USER_NAME-----Commit-id:$CI_COMMIT_SHORT_SHA------Commit-Message:$CI_COMMIT_MESSAGE'
+stages:
+  - AngularCodeCoverage
+codeCoverage_job:
+  stage: AngularCodeCoverage
+  variables:
+    GIT_STRATEGY: fetch
+    SONAR_URL: $sonarurl
+    SONAR_LOGIN: $sonarlogin
+    SYMAPP_PATH: .
+    SRC_PATH: $srcpath
+    PROJECT_KEY: $projectkey
+  script:
+    - export PATH=/opt/maven/bin:/opt/maven/bin:/opt/maven/bin:/usr/java/jdk-13.0.2/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/c2ladmin/.local/bin:/home/c2ladmin/bin:/opt/sonar/bin
+    - echo $PATH
+    - sonar-scanner -Dsonar.projectKey=symbiosys-app-SUNPH_Dev -Dsonar.sources=. -Dsonar.host.url=https://devops.c2lbiz.com/sonarqube -Dsonar.login=574b7522b8ecf2d0361e220d262fec8f93e08062
+
+  only:
+    - SUNPH_Dev

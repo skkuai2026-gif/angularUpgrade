@@ -1,0 +1,8 @@
+@if (!iconOnly && errorMesg!=undefined) {
+<p class="errorText">
+  <i class="errorIcon error" data-toggle="tooltip" data-placement="right" [title]="errorMesg"></i>
+  {{ errorMesg }}
+</p>
+} @if (iconOnly && errorMesg!=undefined) {
+<i class="errorIcon" data-toggle="tooltip" data-placement="right" [title]="errorMesg"></i>
+}

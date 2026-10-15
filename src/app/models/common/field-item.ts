@@ -1,0 +1,30 @@
+export class FieldItem {
+  index: number;
+  fieldID: string;
+  event: any;
+  type: string;
+  path: string;
+  updateStatus: string;
+  fieldCd: any;
+  fieldValue: any;
+  //code: any;
+  label: any;
+  // required: any;
+  // maxlength: any;
+  model: any;
+  options: any;
+  // enabled: any;
+  // visibility: any;
+  fieldMetadata: any;
+  // applicable: any;
+  modelName: string;
+  error: string;
+  foptions: any; // Array<Select2OptionData>;
+  divClass: string;
+  minDateValue: Date;
+  maxDateValue: Date;
+  isOnChangeTriggered: boolean;
+  errorList: string[];
+  multiSelectValues: any[];
+  fieldUnName: string;
+}

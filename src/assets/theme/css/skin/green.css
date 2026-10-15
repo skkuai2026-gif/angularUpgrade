@@ -1,0 +1,150 @@
+/*
+This files over ride the styles.css.
+*/
+.btn_primary {
+  background: #00a982;
+  border-color: #00a982;
+}
+
+.btn_primaryy:hover {
+  background: #00a982;
+  border-color: #00a982;
+}
+
+.btn_primary:focus {
+  background: #00a982;
+  border-color: #00a982;
+}
+
+.thAction > a.thAddRow {
+  background-color: #00a982;
+}
+
+.table thead tr th {
+  background: #002677 !important;
+  color: #fff;
+}
+
+a.link {
+  color: #00a982 !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  color: #fff !important;
+  border: 1px solid #00a982;
+  background: #00a982;
+}
+
+.navVertical a.active {
+  color: #00a982;
+}
+
+.btn_secondary {
+  background-image: linear-gradient(90deg, #3369ff, #002677);
+}
+
+.btn_secondary:hover {
+  background-image: linear-gradient(90deg, #002677, #3369ff);
+}
+
+.btn_secondary:focus {
+  background-image: linear-gradient(90deg, #002677, #3369ff);
+}
+
+.table th {
+  border: 1px solid #002677 !important;
+  background: #002677 !important;
+  color: #fff !important;
+}
+
+a:hover {
+  color: #3369ff;
+}
+
+.innerHorizontalTab .nav-tabs .nav-link.active,
+.innerHorizontalTab .nav-tabs .nav-link:hover {
+  color: #00a982 !important;
+}
+
+.innerHorizontalTab .nav-tabs .nav-link.active:before {
+  background-color: #00a982 !important;
+}
+
+.leftNav ul.lnUl li:hover > a,
+.leftNav ul.lnUl li:hover > a > i {
+  color: #00a982 !important;
+}
+
+.leftNav ul.lnUl li > a.active,
+.leftNav ul.lnUl li > a.active > i {
+  color: #00a982 !important;
+}
+
+.leftNavContent .profileContent {
+  background: #00a982;
+  background: linear-gradient(90deg, #33dfb7 0%, #56ceb2 35%, #87cebd 100%) !important;
+}
+
+.leftNavContent .profileContent > span {
+  background: rgb(0 169 130 / 100%) !important;
+}
+
+.stepdata .card-header.stepHeader .nav-tabs > li > a.active > span:first-child {
+  background-color: #3369ff;
+  border-color: #002677;
+}
+
+a {
+  color: #00a982;
+}
+
+.btnLeftNav > i,
+.btnLeftNav > i:before,
+.btnLeftNav > i:after {
+  background-color: #00a982 !important;
+}
+
+.rightSideContent h4 {
+  color: #002677 !important;
+}
+
+.rightSideContent h4:after {
+  background-color: #00a982;
+}
+
+.block > h4 {
+  background-color: #16876d;
+  padding: 6px 6px 6px 13px !important;
+  border-radius: 3px;
+  color: #fff !important;
+}
+
+.quickNavContent ul > li > a,
+.tableActions .dropdown-single-item:before {
+  color: #3369ff !important;
+}
+
+#user_dropdown h4 {
+  background-color: rgba(255, 255, 255, 0);
+}
+
+#heading_basic_Details_Body .btnToggleBlock {
+  background-color: #002677 !important;
+  color: #fff !important;
+  padding: 8px 10px !important;
+}
+
+.header h1 {
+  color: #00a982 !important;
+}
+
+#heading_AgentReport .btnToggleBlock {
+  background-color: #002677 !important;
+  column-rule: #fff !important;
+  padding: 8px 10px !important;
+}
+
+.btnToggleBlock {
+  background-color: transparent;
+}

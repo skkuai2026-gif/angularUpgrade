@@ -1,0 +1,13 @@
+.fundDesc {
+  font-size: 0.75em;
+  font-weight: 300;
+}
+.validationError_height {
+  height: 62px;
+}
+@media only screen and (max-width: 567px) {
+  #pieChart {
+    width: 100% !important;
+    height: 200px !important;
+  }
+}

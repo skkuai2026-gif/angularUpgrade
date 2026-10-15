@@ -1,0 +1,143 @@
+<sym-page-container
+  [breadCrumbList]="breadCrumbList"
+  [stepList]="stepList"
+  [responseIO]="service.responseIO"
+  [currentStepSelected]="selectedStep"
+  (selectedStep)="onStepChanged($event)"
+>
+  @if ( service.responseIO != undefined && selectedStep != undefined && selectedStep.id != undefined &&
+  selectedStep.selectedTab != undefined && selectedStep.selectedTab.id != undefined ) { @if (selectedStep !=
+  undefined) {
+  <sym-step
+    [stepItem]="selectedStep"
+    (actionClick)="onActionClicked($event)"
+    (tabChange)="onTabChanged($event)"
+    [contentExcludRightTab]="
+      (selectedStep.selectedTab != undefined && selectedStep.selectedTab.isRightContentAdded) ||
+      selectedStep.isRightContentAdded
+    "
+  >
+    @for (tab of selectedStep.tabList; track tab) { @if (selectedStep.selectedTab != undefined &&
+    selectedStep.selectedTab.id == tab.id) {
+    <sym-xml-config-ui
+      [xmlDom]="tab.xmlDom"
+      [service]="service"
+      [responseUpdated]="responseUpdated"
+      [responseIO]="service.responseIO"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      (onRowAdded)="onGridRowAdded($event)"
+      (searchIconClicked)="onInputSearchClick($event)"
+      (notifyReloadStepOutput)="mergeStepList()"
+    >
+    </sym-xml-config-ui>
+    } } @if (successPopup) {
+    <div class="position-fixed bottom-0 end-0 p-3 leadToastPosition" style="display: inline-block">
+      <div
+        id="leadliveToast"
+        class="toast"
+        [class.show]="successPopup"
+        [class.hide]="!successPopup"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div
+          class="toast-body"
+          style="font-size: 16px; background-color: #5dcf81; color: black; text-align: center"
+        >
+          Lead saved successfully.
+        </div>
+      </div>
+    </div>
+    }
+  </sym-step>
+  } }
+</sym-page-container>
+
+<sym-pop-up [popupID]="'selectInsuranceType'" [popupSize]="'medium'" [width]="50" [height]="90">
+  <sym-insurance-type-selection
+    (notifyInsuranceTypeSelect)="onInsuranceTypeSelect($event)"
+  ></sym-insurance-type-selection>
+</sym-pop-up>
+@if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div>
+  @if (service.viewCSAListDisplayed) {
+  <sym-pop-up
+    [headerText]="'viewCSAList'"
+    [popupID]="'viewCSAList'"
+    class="OccupationIndustryDutySearch"
+    (popupClosed)="csaPopupClosed()"
+  >
+    <sym-view-csa-list [leadId]="this.service.responseIO.data.Entity.leadId"></sym-view-csa-list>
+  </sym-pop-up>
+  }
+</div>
+<div>
+  @if (service.viewProposalListLeadDisplayed) {
+  <sym-pop-up
+    [headerText]="'viewProposalListLead'"
+    [popupID]="'viewProposalListLead'"
+    class="OccupationIndustryDutySearch"
+    (popupClosed)="proposalPopupClosed()"
+  >
+    <sym-view-proposal-list-lead
+      [leadId]="this.service.responseIO.data.Entity.leadId"
+    ></sym-view-proposal-list-lead>
+  </sym-pop-up>
+  }
+</div>
+<div>
+  @if (service.viewPolicyListDisplayed) {
+  <sym-pop-up
+    [headerText]="'viewPolicyList'"
+    [popupID]="'viewPolicyList'"
+    class="OccupationIndustryDutySearch"
+    (popupClosed)="policyPopupClosed()"
+  >
+    <sym-view-policy-list [leadId]="this.service.responseIO.data.Entity.leadId"></sym-view-policy-list>
+  </sym-pop-up>
+  }
+</div>
+<!-- <sym-pop-up [popupID]="'selectInsuranceType'" [popupSize]="'medium'" [width]="50" [height]="90">
+  <sym-insurance-type-selection
+    (notifyInsuranceTypeSelect)="onInsuranceTypeSelect($event)"
+  ></sym-insurance-type-selection>
+</sym-pop-up> -->
+@if (leadOtpOption) {
+<div>
+  <sym-pop-up
+    [popupID]="'leadOtpOptionPopup'"
+    [popupSize]="'small'"
+    [hideCloseButton]="true"
+    [displayPopupAtTop]="true"
+  >
+    <sym-field-group
+      [fieldIds]="'field1'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.LeadParty.AdditionalFieldsList[0]"
+      [gridColumns]="[12]"
+    ></sym-field-group>
+    <div class="footer text-center">
+      <sym-button
+        [class]="'btn btn_primary ml-2 mr-2 text-center'"
+        [id]="'btn_ok'"
+        [isLoaderRequired]="false"
+        [text]="'Ok'"
+        (onClick)="otpOptionClick()"
+      ></sym-button>
+    </div>
+  </sym-pop-up>
+</div>
+} @if (service.isTriggerOtpBtn) {
+<sym-otp
+  [displayPopupOnly]="true"
+  [isOtpButtonReq]="false"
+  [otpErrorFailed]="otpErrorFailed"
+  (otpActionClicked)="onOTPActionClick($event)"
+  (isValidOtp)="onValidateOtp($event)"
+  [otpExpiryTimeInput]="otpExpiryTime"
+></sym-otp>
+} }

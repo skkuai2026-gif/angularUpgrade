@@ -1,0 +1,15 @@
+.errorIcon.error {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    font-size: 0.821rem;
+    font-weight: 600;
+    transform: translateY(-50%);
+    color: #ff3d71;
+    font-style: normal;
+}
+
+.errorText {
+    padding-left: 15px;
+    left: 60px;
+}

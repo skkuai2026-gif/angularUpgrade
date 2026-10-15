@@ -1,0 +1,63 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else {
+<sym-panel [id]="'initial_payment_Body'" [name]="'initialPayment'">
+  <sym-payer-party [modelPath]="'InitialPayment'" [responseUpdated]="responseUpdated"></sym-payer-party>
+  @if (service.responseIO.data.InitialPayment.payerTypeCd === 'OTHER') {
+  <div>
+    <div class="accordion" [id]="'InitialOtherPayerParty'">
+      <div class="card m-1">
+        <sym-panel [id]="'initial_other_payer_party_Body'" [name]="'Initial Payment Payer Details '">
+          <div class="accordion" id="accordionPartyDetails">
+            <sym-policy-party-details
+              [model]="service.responseIO.data.InitialOtherPayerParty"
+              [isNavigationReqd]="false"
+            >
+            </sym-policy-party-details>
+          </div>
+        </sym-panel>
+      </div>
+    </div>
+  </div>
+  }
+  <ng-container>
+    <sym-sub-tab
+      [tabList]="paymentDetailTabList"
+      (selectedTab)="setSelectedTab($event)"
+      [isAddRequired]="!service.responseIO.data.Entity.isCompleted"
+      [isDeleteRequired]="!service.responseIO.data.Entity.isCompleted"
+      (onTabAdded)="addInitialPaymentDetailsList($event)"
+      (onTabDeleted)="onDeletePaymentDetail($event)"
+    >
+      @if (selectedPaymentDetailTab && selectedPaymentDetailTab != undefined) {
+      <sym-field-group
+        [fieldIds]="'paymentMethodCd'"
+        (notifyChange)="onInputChanged($event)"
+        (notifyFocus)="onInputFocused($event)"
+        [responseIO]="service.responseIO"
+        [gridColumns]="[12]"
+        [model]="service.responseIO.data.InitialPayment.InitialPaymentDetailsList[selectedPaymentDetailTab.index]"
+      >
+      </sym-field-group>
+      } @if (selectedPaymentDetailTab && selectedPaymentDetailTab != undefined) {
+      <sym-field-group
+        [fieldIds]="fieldIds"
+        (notifyChange)="onInputChanged($event)"
+        (notifyFocus)="onInputFocused($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.InitialPayment.InitialPaymentDetailsList[selectedPaymentDetailTab.index]"
+      >
+      </sym-field-group>
+      }
+    </sym-sub-tab>
+  </ng-container>
+</sym-panel>
+}

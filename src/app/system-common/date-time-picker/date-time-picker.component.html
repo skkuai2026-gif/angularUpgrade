@@ -1,0 +1,62 @@
+@if (fieldType == 'DATE' || fieldType == undefined) { @if (isDisabled && model[fieldCd + '_dt'] == undefined) {
+<div
+  class="disabledDatepicker"
+  [attr.data-placeholder]="placeholder != undefined ? placeholder : symDateFormat.toUpperCase()"
+></div>
+}
+<ui5-date-picker
+  #datePicker
+  [id]="fieldID"
+  origami
+  [value]="model[fieldCd + '_dt']"
+  [(ngModel)]="model[fieldCd + '_dt']"
+  [disabled]="isDisabled"
+  [attr.name]="fieldUnName"
+  (change)="onInputChange(model, $event)"
+  (blur)="onInputChange(model, $event)"
+  class="form-control customDatePicker"
+  [minDate]="minDateValue != undefined ? minDateValue : ''"
+  [maxDate]="maxDateValue != undefined ? maxDateValue : ''"
+  [placeholder]="placeholder != undefined ? placeholder : symDateFormat.toUpperCase()"
+  [formatPattern]="symDateFormat"
+  [primaryCalendarType]="calendarType"
+  [hideWeekNumbers]="true"
+  ngDefaultControl
+>
+  <div slot="valueStateMessage">Please enter the correct format DD-MMM-YYYY</div>
+</ui5-date-picker>
+<!-- (blur)="onInputChange(model, $event)" -->
+<!-- [primaryCalendarType]="'Buddhist'"
+  [secondaryCalendarType]="'Buddhist'" -->
+} @if (fieldType == 'DATETIME') { @if (isDisabled && model[fieldCd + '_dt'] == undefined) {
+<div
+  class="disabledDatepicker"
+  [attr.data-placeholder]="
+    placeholder != undefined ? placeholder : symDateFormat.toUpperCase() + ' ' + symTimeFormat.toUpperCase()
+  "
+></div>
+}
+<ui5-datetime-picker
+  #dateTimePicker
+  [formatPattern]="symDateFormat + ' ' + symTimeFormat"
+  [id]="fieldID"
+  origami
+  [value]="model[fieldCd + '_dt']"
+  [attr.name]="fieldUnName"
+  [(ngModel)]="model[fieldCd + '_dt']"
+  [disabled]="isDisabled"
+  (change)="onInputChange(model, $event)"
+  (blur)="onInputChange(model, $event)"
+  class="form-control customDatePicker"
+  [minDate]="minDateValue != undefined ? minDateValue : ''"
+  [maxDate]="maxDateValue != undefined ? maxDateValue : ''"
+  [placeholder]="
+    placeholder != undefined ? placeholder : symDateFormat.toUpperCase() + ' ' + symTimeFormat.toUpperCase()
+  "
+  [primaryCalendarType]="calendarType"
+  [hideWeekNumbers]="true"
+  ngDefaultControl
+>
+  <div slot="valueStateMessage">Please enter the correct format DD-MMM-YYYY</div>
+</ui5-datetime-picker>
+}

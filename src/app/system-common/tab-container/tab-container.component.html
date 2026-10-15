@@ -1,0 +1,46 @@
+@if (selectedStep.tabList.length > 1 && isTabVisible) {
+<div [class]="tabNavigationOnFooter ? 'tabNavigationBottomFooter' : 'tabNavigationBottomFooter topBoderOnFooter'">
+  @if (isPreviousRequired && previousTab != undefined) {
+  <button type="button" (click)="setPreviousTabOrVisibility(false)" class="btn_icon btn_icon_prev mr-10">
+    @if (tabNavigationOnFooter) {
+    <div>
+      <div class="prev-bg-color">
+        <div class="icon-arrow-size">
+          <i class="fa fa-angle-double-left" aria-hidden="true"> </i>
+        </div>
+        <div class="tab-text-size">
+          {{ settingService.getLabelValue(previousTab.text != undefined ? previousTab.text : previousTab.id) }}
+        </div>
+      </div>
+    </div>
+    } @if (!tabNavigationOnFooter) {
+    <div class="btn-arrow">
+      <i class="fa fa-chevron-up"></i>
+      {{ settingService.getLabelValue('PREVIOUS') }}
+    </div>
+    }
+  </button>
+  } @if (isNextRequired && nextTab != undefined) {
+  <button type="button" (click)="setNextTabOrVisibility(false)" class="btn_icon btn_icon_next">
+    @if (tabNavigationOnFooter) {
+    <div>
+      <div class="next-bg-color">
+        <div class="tab-text-size">
+          {{ settingService.getLabelValue(nextTab.text != undefined ? nextTab.text : nextTab.id) }}
+        </div>
+        <div class="icon-arrow-size">
+          <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+    } @if (!tabNavigationOnFooter) {
+    <div class="btn-arrow">
+      <i class="fa fa-chevron-down"></i>
+      {{ settingService.getLabelValue('NEXT') }}
+    </div>
+    }
+  </button>
+  }
+  <div class="clear"></div>
+</div>
+}

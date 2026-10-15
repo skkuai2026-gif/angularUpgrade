@@ -1,0 +1,87 @@
+<ng-container>
+  <div class="listOfDocs">
+    <table>
+      <tr>
+        <td>
+          <b> {{ service.getMultilingualLabel('review_documents') }}</b>
+        </td>
+        <td></td>
+      </tr>
+      @for (documentCd of currRoleCodeDocsList; track documentCd; let i = $index) {
+      <tr style="height: 40px">
+        <td style="width: 80%">
+          <div class="sequenceOfDoc">{{ i + 1 }}. {{ getEformsLabel(documentCd) }}</div>
+        </td>
+        <td style="width: 20%">
+          <div class="btn_reviewDocs">
+            <sym-button
+              [class]="'btn btn_eForm m-2'"
+              [id]="'btn_ok'"
+              [isLoaderRequired]="false"
+              [text]="service.getMultilingualLabel('review')"
+              [showTextAlways]="true"
+              (onClick)="loadPreview(documentCd, 'html')"
+            ></sym-button>
+          </div>
+        </td>
+      </tr>
+      }
+    </table>
+  </div>
+</ng-container>
+
+<sym-pop-up
+  [popupID]="'eFormPreviewModal'"
+  [headerText]="service.getMultilingualLabel(currentSelectedDoc)"
+  [popupSize]="'large'"
+  [maxWidth]="95"
+  [maxHeight]="service.isMobileViewRendered() ? 70 : 95"
+  (popupClosed)="previewPopupClosed()"
+>
+  <div
+    id="viewIllustrationContainer"
+    [ngClass]="
+      service.isMobileViewRendered() ? 'viewIllustrationContainer_mobileView' : 'viewIllustrationContainer'
+    "
+  >
+    @if ( eFormPreviewHtmlMap.get($safeNavigationMigration(this.selectedServiceDocument?.documentCd) + '_html') !=
+    undefined && selectedServiceDocument != undefined ) {
+    <div class="pdf-container">
+      <div
+        [symDynamicStyle]="
+          $safeNavigationMigration(
+            eFormPreviewHtmlMap.get($safeNavigationMigration(this.selectedServiceDocument?.documentCd) + '_html')
+              ?.css
+          )
+        "
+        [innerHTML]="
+          $safeNavigationMigration(
+            eFormPreviewHtmlMap.get($safeNavigationMigration(this.selectedServiceDocument?.documentCd) + '_html')
+              ?.html
+          ) | safeHtml: 'html'
+        "
+        [symDynamicStyleId]="$safeNavigationMigration(this.selectedServiceDocument?.documentCd) + '_css'"
+      ></div>
+      @if (currServiceSignature != undefined) { @if (!newSignatureUIReqd) {
+      <sym-signature
+        [isSignatureButtonReq]="false"
+        [serviceSignature]="currServiceSignature"
+        [responseIO]="service.responseIO"
+        [triggerBtnClick]="triggerBtnClick"
+        (isSignatureDone)="onSignatureDone()"
+        [hideHeaderText]="captureSign"
+        [showUploadSignatureOption]="false"
+      ></sym-signature>
+      } @if (newSignatureUIReqd) {
+      <sym-signatureUI
+        [triggerBtnClick]="triggerBtnClick"
+        [model]="currServiceSignature"
+        (notifySignatureDone)="onSignatureDone($event)"
+        [responseIO]="service.responseIO"
+      ></sym-signatureUI>
+      } }
+    </div>
+    }
+  </div>
+  <label id="eAappButtonGUID" (click)="getElement()"></label>
+</sym-pop-up>

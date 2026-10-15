@@ -1,0 +1,25 @@
+<!-- <sym-chatbot></sym-chatbot> -->
+<div id="HOMEPAGEDASHBOARD">
+  <sym-page-container [breadCrumbList]="breadCrumbList">
+    <div class="col-sm-12">
+      <div class="row">
+        <!-- <div class="col-sm-4"></div> ----------->
+        <div class="p-0 col-sm-12">
+          <sym-sub-tab [tabList]="tabList" (selectedTab)="setTab($event)" class="hideText">
+            @if (selectedTab && selectedTab.id === 'NBDASHBOARD') {
+            <sym-nb-dashboard></sym-nb-dashboard>
+            } @if (selectedTab && selectedTab.id === 'NEWLEAD') {
+            <sym-landing-lead-search></sym-landing-lead-search>
+            } @if (selectedTab && selectedTab.id === 'LEADATFNASTAGE') {
+            <sym-landing-fna-search></sym-landing-fna-search>
+            } @if (selectedTab && selectedTab.id === 'LEADATSISTAGE') {
+            <sym-landing-quotation-search></sym-landing-quotation-search>
+            } @if (selectedTab && selectedTab.id === 'LEADATEAPPSTAGE') {
+            <sym-landing-policy-search></sym-landing-policy-search>
+            }
+          </sym-sub-tab>
+        </div>
+      </div>
+    </div>
+  </sym-page-container>
+</div>

@@ -1,0 +1,39 @@
+<div class="fnaContent">
+  <h2>Signature</h2>
+  <div class="block">
+    <h4 id="heading_personal_details">RPQ Evaluation <span class="btnToggleBlock"></span></h4>
+    <div>
+      <div class="tableContainer mb30">
+        <table class="table" style="width: 100%">
+          <thead>
+            <tr>
+              <th>Total RPQ Score</th>
+              <th>Risk Level</th>
+              <!-- <th>Suitable Product Risk</th> -->
+              <th>Investor Risk Profile</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>80</td>
+              <td>High</td>
+              <!-- <td>Drop the column</td> -->
+              <td>Aggressive</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="form-group">
+        <label for="">Signature</label>
+        <div class="signature_height">
+          <!-- <textarea rows="6" class="form-control bgWhite" placeholder="Enter Signature"></textarea> -->
+          <sym-signature
+            [serviceSignature]="serviceSignature"
+            [isPopView]="false"
+            [canvasHeight]="200"
+          ></sym-signature>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

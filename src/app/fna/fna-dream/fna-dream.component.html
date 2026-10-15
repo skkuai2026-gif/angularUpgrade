@@ -1,0 +1,56 @@
+<div class="innerVerticalTab">
+  <sym-fna-personal-information></sym-fna-personal-information>
+
+  <div class="ivtRight" [style.width]="!settingService.isMobileViewRendered() ? 'calc(100% - 290px)' : 100 + '%'">
+    <h2>Please select your dreams</h2>
+    <h6 class="note">(Choose one or more)</h6>
+    <div class="fnaContent">
+      <div class="checkGrpContainer">
+        <div class="cbElement cbElement1">
+          <input
+            class=""
+            type="checkbox"
+            name="inputCheckbox1"
+            id="inputCheckbox1_1"
+            value="Do you dream to travel the world?"
+            (click)="onInputChanged($event)"
+          />
+          <label>Do you dream to travel the world?</label>
+        </div>
+        <div class="cbElement cbElement2">
+          <input
+            class=""
+            type="checkbox"
+            name="inputCheckbox1"
+            id="inputCheckbox1_2"
+            value="Do you dream to drive a sports car?"
+            (click)="onInputChanged($event)"
+          />
+          <label>Do you dream to drive a sports car? </label>
+        </div>
+        <div class="cbElement cbElement3">
+          <input
+            class=""
+            type="checkbox"
+            name="inputCheckbox1"
+            id="inputCheckbox1_3"
+            value="Do you dream to tour the world to play golf?"
+            (click)="onInputChanged($event)"
+          />
+          <label>Do you dream to tour the world to play golf? </label>
+        </div>
+        <div class="cbElement cbElement4">
+          <input
+            class=""
+            type="checkbox"
+            name="inputCheckbox1"
+            id="inputCheckbox1_4"
+            value="Do you dream to have a fit body?"
+            (click)="onInputChanged($event)"
+          />
+          <label>Do you dream to have a fit body? </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

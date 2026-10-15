@@ -1,0 +1,127 @@
+@for (json of jsonObjectList; track json) {
+<div class="container">
+  <div>
+    <div class="form-row">
+      @if (!json.isChildAvailable) {
+      <span class="ml-4"> </span>
+      } @else { @if (json.isBlockCollapsed) {
+      <span class="ml-4 sign" (click)="json.isBlockCollapsed = !json.isBlockCollapsed">+</span>
+      } @if (!json.isBlockCollapsed) {
+      <span class="ml-4 sign" (click)="json.isBlockCollapsed = !json.isBlockCollapsed">-</span>
+      } }
+      <div class="info">
+        <i class="fa fa-info-circle customtooltip" aria-hidden="true">
+          <div class="help_section">
+            <sym-tooltip>
+              <div>
+                @if (json.metadata != undefined) {
+                <div class="tool_container">
+                  <span class="headerkey">{{ key | titlecase }}.{{ json.key }}</span>
+                </div>
+                @for (metakey of json.metadataKeyList; track metakey) { @if (metakey != 'FORMAT' && metakey !=
+                'EXTENDSENTITYTYPE') {
+                <div class="tool_container">
+                  <span>{{ metakey }}:</span>
+                  <span>{{ json.metadata[metakey] }}</span>
+                </div>
+                } } @if (json.metadata.LOOKUPCD != undefined) {
+                <div class="tool_container">
+                  <span> @if (json.metadata.FORMAT != undefined) { , } Lookup data: </span>
+                  <span>
+                    @if (responseIO != undefined && responseIO.lookups[json.metadata.LOOKUPCD] != undefined) { @for
+                    (opt of responseIO.lookups[json.metadata.LOOKUPCD]; track opt) {
+                    {{ opt.cd + ',' }}
+                    } }
+                  </span>
+                </div>
+                } }
+              </div>
+            </sym-tooltip>
+          </div>
+        </i>
+      </div>
+      <label (click)="json.isBlockCollapsed = !json.isBlockCollapsed">
+        {{ json.key }} : @if (json.isChildAvailable) { @if (json.addBracket) {
+        <span> &#91;</span>
+        } @if (!json.addBracket) {
+        <span> &#123; </span>
+        } }
+      </label>
+      @if (!json.isChildAvailable) { @if (json.value != undefined && json.value != null && json.value.length > 40)
+      {
+      <textarea
+        spellcheck="false"
+        class="form-control jsonValueTextarea ml-5"
+        #requestInput
+        [attr.rows]="
+          json.value.length <= 80 && json.value.indexOf('\n') == 0
+            ? 1
+            : json.value.length <= 150
+            ? 3
+            : json.value.length >= 151 && json.value.length <= 300
+            ? 5
+            : 15
+        "
+        [attr.cols]="json.value.length > 10 ? 5 : json.value.length > 20 ? 8 : 10"
+        scrollTop="0"
+        [(ngModel)]="json.value"
+        [disabled]="disableInput"
+      ></textarea>
+      } @else {
+      <div>
+        <input
+          type="text"
+          [ngClass]="{
+            'form-control jsonValue': true,
+            w40: json.value == undefined || (json.key.length < 10 && json.value.length < 5),
+            w50: json.value != undefined && (json.key.length > 30 || json.value.length <= 5),
+            w100: json.value != null && json.value != undefined && json.value.length <= 10,
+            w120: json.value != null && json.value != undefined && json.value.length < 20 && json.key.length < 15,
+            w160: (json.value == null || json.value == undefined || json.value == '') && json.key.length <= 10,
+            w180: json.value != null && json.value != undefined && json.value.length <= 20,
+            w200:
+              json.value != null && json.value != undefined && json.value.length > 20 && json.value.length < 30,
+
+            w240: json.value != null && json.value != undefined && json.value.length > 30
+          }"
+          [(ngModel)]="json.value"
+          [disabled]="disableInput"
+          (change)="onInputChange(json)"
+        />
+      </div>
+      } } @else { @if (!json.isBlockCollapsed) {
+      <div class="wc-100">
+        <div [class.ml-3]="json.isChildAvailable">
+          <sym-json-tree-editor-item
+            [jsonObject]="json.value"
+            [disableInput]="disableInput"
+            [collapseAll]="collapseAll"
+            [responseIO]="responseIO"
+            [service]="service"
+            [key]="json.key"
+            (updatedJson)="afterInputChange($event)"
+          ></sym-json-tree-editor-item>
+        </div>
+      </div>
+      } } @if (json.isChildAvailable && json.isBlockCollapsed) {
+      <div>
+        @if (!json.addBracket) {
+        <label> &#125;</label>
+        } @if (json.addBracket) {
+        <label>&#93;</label>
+        }
+      </div>
+      }
+    </div>
+    @if (json.isChildAvailable && !json.isBlockCollapsed) {
+    <div>
+      @if (!json.addBracket) {
+      <label> &#125;</label>
+      } @if (json.addBracket) {
+      <label>&#93;</label>
+      }
+    </div>
+    }
+  </div>
+</div>
+}

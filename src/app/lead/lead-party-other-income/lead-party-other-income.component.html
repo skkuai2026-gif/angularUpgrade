@@ -1,0 +1,10 @@
+@if (partyModel.OtherIncomeList != undefined) {
+<sym-data-entry-grid
+  [fieldIds]="'incomeTypeCd,sourceOfIncome,otherSourceIncome,incomeAmount,currencyCd,incomeYear'"
+  [modelList]="partyModel.OtherIncomeList"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  [isFormFormatRequired]="true"
+  (onRowAdded)="onAddPartyOtherIncome($event)"
+></sym-data-entry-grid>
+}

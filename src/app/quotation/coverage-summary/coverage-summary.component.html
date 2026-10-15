@@ -1,0 +1,118 @@
+@if ( service.responseIO && service.responseIO.data && service.responseIO.data && service.responseIO.data.BasePlan
+!= null ) {
+<div class="rightSideContent">
+  @if ( service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productFamilyCd') != undefined ||
+  service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productId') != undefined ||
+  service.responseIO.data.BasePlan['productPlanOptionCd'] != undefined ||
+  service.responseIO.data['BasePlan']['baseSumAssured'] != undefined ) {
+  <h4>
+    {{ settingService.getLabelValue('productSummary') }}
+  </h4>
+  } @if (service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productFamilyCd') != undefined) {
+  <p>
+    <label>{{ settingService.getLabelValue('family') }}</label>
+    <span>
+      {{ service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productFamilyCd') }}
+    </span>
+  </p>
+  } @if (service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productId') != undefined) {
+  <p>
+    <label>{{ settingService.getLabelValue('planName') }}</label>
+    <span>
+      {{ service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productId') }}
+    </span>
+  </p>
+  } @if (service.responseIO.data.BasePlan['productPlanOptionCd'] != undefined) {
+  <p>
+    <label> {{ service.getLabelValue(service.responseIO.data.BasePlan, 'productPlanOptionCd') }}</label>
+    <span>
+      {{ settingService.getLabelValue(service.responseIO.data['BasePlan']['productPlanOptionDesc']) }}
+    </span>
+  </p>
+  } @if (service.isFieldApplicable(service.responseIO.data['BasePlan'], 'baseSumAssured')) {
+  <p>
+    <label>{{ service.getLabelValue(service.responseIO.data.BasePlan, 'baseSumAssured') }}</label>
+    <span>
+      {{
+        service.responseIO.data['BasePlan']['baseSumAssured']
+          | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseSumAssured')
+      }}
+    </span>
+  </p>
+  } @if (isMultiLifeApplicable()) {
+  <p>
+    <label>{{ service.getMultilingualLabel('multiLifeTotSumAssured') }}</label>
+    <span>
+      {{
+        getMultiLifeTotalSA()
+          | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseSumAssured')
+      }}
+    </span>
+  </p>
+  } @if ( service.responseIO.data['BasePlan']['productTerm'] != undefined ||
+  service.responseIO.data['BasePlan']['premiumPayingTerm'] != undefined ) {
+  <h4>
+    {{ settingService.getLabelValue('Term') }}
+  </h4>
+  } @if (service.responseIO.data['BasePlan']['productTerm'] != undefined) {
+  <p>
+    <label>{{ settingService.getLabelValue('ProposalPolicy') }}</label>
+    <span> {{ service.responseIO.data['BasePlan']['productTerm'] }}</span>
+  </p>
+  } @if (service.responseIO.data['BasePlan']['premiumPayingTerm'] != undefined) {
+  <p>
+    <label>{{ settingService.getLabelValue('payment') }}</label>
+    <span>{{ service.responseIO.data['BasePlan']['premiumPayingTerm'] }} </span>
+  </p>
+  } @if ( service.responseIO.data['PrimaryInsured'] != undefined &&
+  service.responseIO.data['PrimaryInsured']['age'] != undefined ) {
+  <p>
+    <label>{{ settingService.getLabelValue('entryAge') }}</label>
+    <span>{{ service.responseIO.data['PrimaryInsured']['age'] }} </span>
+  </p>
+  } @if ( service.responseIO.data['BasePlan']['modalPremium'] != undefined || getRiderTotalPremium() != undefined
+  || service.responseIO.data['BasePlan']['modalPremium'] + getRiderTotalPremium() != undefined ) {
+  <h4>
+    {{ settingService.getLabelValue('Premium') }}
+  </h4>
+  } @if (service.responseIO.data['BasePlan']['modalPremium'] != undefined) {
+  <p>
+    <label>{{ settingService.getLabelValue('planPremium') }}</label>
+    <span
+      >{{
+        service.responseIO.data['BasePlan']['modalPremium']
+          | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+      }}
+    </span>
+  </p>
+  } @if (getRiderTotalPremium() != undefined) {
+  <p>
+    <label>{{ settingService.getLabelValue('riderPremium') }}</label>
+    <span>{{
+      getRiderTotalPremium()
+        | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+    }}</span>
+  </p>
+  } @if (isMultiLifeApplicable()) {
+  <p>
+    <label>{{ service.getMultilingualLabel('multiLifeTotPremium') }}</label>
+    <span>
+      {{
+        getMultiLifeTotalPremium()
+          | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+      }}
+    </span>
+  </p>
+  } @if (service.responseIO.data['BasePlan']['modalPremium'] + getRiderTotalPremium() != undefined) {
+  <p>
+    <label>{{ settingService.getLabelValue('totalPremium') }}</label>
+    <span
+      >{{
+        getTotalPolicyPremium()
+          | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+      }}
+    </span>
+  </p>
+  }
+</div>
+}

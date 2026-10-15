@@ -1,0 +1,35 @@
+.row {
+  display: flex;
+  white-space: nowrap;
+  margin-left: 10px;
+  background-color: gainsboro;
+}
+.ui-grid-d {
+  margin-left: 10px;
+  margin-top: 30px;
+}
+// h4 {
+//   margin-left: 10%;
+// }
+.ok {
+  margin-top: 10px !important;
+}
+.customList {
+  margin-left: 20px !important;
+  list-style-type: none; /* Remove default bullet points */
+}
+
+.customList li {
+  position: relative; /* Required for absolute positioning of ::before pseudo-element */
+  padding-left: 30px; /* Add padding to create space for larger bullet */
+  padding-bottom: 12px;
+}
+
+.customList li::before {
+  // content: '\2022'; /* Unicode character for bullet point */
+  font-size: 3.5em; /* Adjust the size of the bullet points */
+  color: #000; /* Optional: Change color of the bullet points */
+  position: absolute;
+  left: 0;
+  top: -30px; /* Adjust the vertical alignment of the bullet */
+}

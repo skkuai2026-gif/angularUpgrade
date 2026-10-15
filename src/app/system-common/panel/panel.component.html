@@ -1,0 +1,38 @@
+<div class="p-2 m-1">
+  <div
+    class="block"
+    [class.borderAdded]="settingService.isNewUIDisplayed"
+    [class.blockCollapse]="blockCollapse && !isHidden"
+    [class.pb-40]="blockCollapse && !isHidden && settingService.isNewUIDisplayed"
+    id="panel_{{ id }}"
+  >
+    @if (name != undefined && !isHidden) {
+    <h4
+      (click)="onPanelClick()"
+      [attr.id]="id != undefined && id != null ? 'heading_' + id : 'heading_' + name"
+      class="h4"
+      [class.subPanel]="isSubPanel && !isHidden"
+    >
+      <span [innerHTML]="settingService.getLabelValue(name) | safeHtml: 'html'"></span>
+      @if (additionalInfo != undefined && !isHidden) { &nbsp; {{ additionalInfo }}
+      }
+      <ng-content select="[header]"></ng-content>
+      @if (!isHidden) {
+      <span class="btnToggleBlock panelButton"></span>
+      }
+    </h4>
+    }
+
+    <!-- ✅ FIX: Use *ngIf instead of CSS height collapse :related ios 26.4 issue fix -->
+    @if (!blockCollapse) {
+    <div
+      [class.subPanel]="isSubPanel && !isHidden"
+      [class.customerBody]="settingService.isNewUIDisplayed"
+      class="panel-body"
+    >
+      <ng-content></ng-content>
+      <ng-content select="[body]"></ng-content>
+    </div>
+    }
+  </div>
+</div>

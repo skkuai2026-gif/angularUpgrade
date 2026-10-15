@@ -1,0 +1,306 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url('/assets/theme/jazz/css/fonts/icomoon.eot?egxc4d');
+  src: url('/assets/theme/jazz/css/fonts/icomoon.eot?egxc4d#iefix') format('embedded-opentype'),
+    url('/assets/theme/jazz/css/fonts/icomoon.ttf?egxc4d') format('truetype'),
+    url('/assets/theme/jazz/css/fonts/icomoon.woff?egxc4d') format('woff'),
+    url('/assets/theme/jazz/css/fonts/icomoon.svg?egxc4d#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+[class^='icon-'],
+[class*=' icon-'] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-copy:before {
+  content: '\e900';
+}
+.icon-mail:before {
+  content: '\e901';
+}
+.icon-summary:before {
+  content: '\e902';
+}
+.icon-about-insurance:before {
+  content: '\e903';
+}
+.icon-action:before {
+  content: '\e904';
+}
+.icon-address-proof:before {
+  content: '\e905';
+}
+.icon-arrow-back:before {
+  content: '\e906';
+}
+.icon-arrow-down:before {
+  content: '\e907';
+}
+.icon-arrow-right:before {
+  content: '\e908';
+}
+.icon-arrow-right02:before {
+  content: '\e909';
+}
+.icon-progressupward:before {
+  content: '\e90b';
+}
+.icon-change-status:before {
+  content: '\e90d';
+}
+.icon-checked:before {
+  content: '\e90e';
+}
+.icon-childrens-plan:before {
+  content: '\e90f';
+}
+.icon-claim-guide:before {
+  content: '\e910';
+}
+.icon-close:before {
+  content: '\e911';
+}
+.icon-close02:before {
+  content: '\e912';
+}
+.icon-date:before {
+  content: '\e915';
+}
+.icon-delete:before {
+  content: '\e917';
+}
+.icon-generate-sIlrm:before {
+  content: '\e91b';
+}
+.icon-health-plans:before {
+  content: '\e91c';
+}
+.icon-knowledge-house:before {
+  content: '\e920';
+}
+.icon-minus:before {
+  content: '\e922';
+}
+.icon-notification:before {
+  content: '\e923';
+}
+.icon-owner:before {
+  content: '\e924';
+}
+.icon-planning-insurance:before {
+  content: '\e926';
+}
+.icon-plus:before {
+  content: '\e927';
+}
+.icon-protection-plan:before {
+  content: '\e928';
+}
+.icon-retirement-plan:before {
+  content: '\e92c';
+}
+.icon-rpq02:before {
+  content: '\e92d';
+}
+.icon-sales-ilustration02:before {
+  content: '\e92e';
+}
+.icon-savings-plan:before {
+  content: '\e92f';
+}
+.icon-search:before {
+  content: '\e930';
+}
+.icon-settting:before {
+  content: '\e931';
+}
+.icon-snapshot:before {
+  content: '\e932';
+}
+.icon-tax-centre:before {
+  content: '\e933';
+}
+.icon-unchecked:before {
+  content: '\e934';
+}
+.icon-insurance-me:before {
+  content: '\e935';
+}
+.icon-child_education:before {
+  content: '\e936';
+}
+.icon-human-life:before {
+  content: '\e937';
+}
+.icon-long_solver:before {
+  content: '\e938';
+}
+.icon-marriage:before {
+  content: '\e939';
+}
+.icon-retirement:before {
+  content: '\e93a';
+}
+.icon-profile:before {
+  content: '\e93b';
+}
+.icon-tick:before {
+  content: '\e93c';
+}
+.icon-error-message:before {
+  content: '\e93e';
+}
+.icon-basic:before {
+  content: '\e93f';
+}
+.icon-beneficiary:before {
+  content: '\e940';
+}
+.icon-coverage:before {
+  content: '\e941';
+}
+.icon-declaration:before {
+  content: '\e942';
+}
+.icon-insured:before {
+  content: '\e943';
+}
+.icon-menu-bar:before {
+  content: '\e944';
+}
+.icon-payment:before {
+  content: '\e946';
+}
+.icon-questionnaire:before {
+  content: '\e947';
+}
+.icon-requirements:before {
+  content: '\e948';
+}
+.icon-arrow-up:before {
+  content: '\e949';
+}
+.icon-collateral:before {
+  content: '\e94a';
+}
+.icon-e-app:before {
+  content: '\e94b';
+}
+.icon-fna-rpq:before {
+  content: '\e94c';
+}
+.icon-home:before {
+  content: '\e94d';
+}
+.icon-illustration:before {
+  content: '\e94e';
+}
+.icon-lead:before {
+  content: '\e94f';
+}
+.icon-receipting:before {
+  content: '\e950';
+}
+.icon-view-illustration:before {
+  content: '\e951';
+}
+.icon-quatation:before {
+  content: '\e952';
+}
+.icon-arrow-next:before {
+  content: '\e953';
+}
+.icon-arrow-previous:before {
+  content: '\e954';
+}
+.icon-cancel:before {
+  content: '\e955';
+}
+.icon-save:before {
+  content: '\e957';
+}
+.icon-save-continue:before {
+  content: '\e958';
+}
+.icon-save-previous:before {
+  content: '\e958';
+}
+.icon-joint-life:before {
+  content: '\e95a';
+}
+.icon-supplementary:before {
+  content: '\e95b';
+}
+.icon-advanced-serach:before {
+  content: '\e95b';
+}
+.icon-base-plan:before {
+  content: '\e95c';
+}
+.icon-delete-record:before {
+  content: '\e95d';
+}
+.icon-personal-info:before {
+  content: '\e95f';
+}
+.icon-rider-details:before {
+  content: '\e960';
+}
+.icon-select-product:before {
+  content: '\e961';
+}
+.icon-ok:before {
+  content: '\e961';
+}
+.icon-upload:before {
+  content: '\e962';
+}
+.icon-back-to-top:before {
+  content: '\e963';
+}
+.icon-galleryimages:before {
+  content: '\e964';
+}
+.icon-questioninfo:before {
+  content: '\ea09';
+}
+.icon-birth-proof:before {
+  content: '\e90c';
+}
+.icon-basic_old:before {
+  content: '\e90a';
+}
+.icon-beneficiary_old:before {
+  content: '\e913';
+}
+.icon-e-application_old:before {
+  content: '\e919';
+}
+.icon-owner_old:before {
+  content: '\e925';
+}
+.icon-payment_old:before {
+  content: '\e929';
+}
+.icon-questionnaire_old:before {
+  content: '\e92a';
+}
+.icon-receipting_old:before {
+  content: '\e92b';
+}
+.icon-requirements_old:before {
+  content: '\e93d';
+}
+.icon-file-pdf:before {
+  content: '\eadf';
+}

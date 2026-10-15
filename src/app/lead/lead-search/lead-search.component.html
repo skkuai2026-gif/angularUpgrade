@@ -1,0 +1,13 @@
+<sym-page-container [breadCrumbList]="breadCrumbList">
+  <div id="leadSearch">
+    <sym-search
+      [addRouterLink]="addLink"
+      [addTooltip]="'addLead'"
+      [moreOptionList]="moreOptionList"
+      [isDeleteRequired]="true"
+      [service]="service"
+      (moreOptionClick)="onMoreOptionClicked($event)"
+      [showDownloadClientButton]="showDownloadClientButton"
+    ></sym-search>
+  </div>
+</sym-page-container>

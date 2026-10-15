@@ -1,0 +1,176 @@
+@for (partyDocumentForm of service?.responseIO?.data['PartyDocumentFormList']; track partyDocumentForm; let i =
+$index) { @for (documentCatgeoryForm of partyDocumentForm?.DocumentFormCategoryList; track documentCatgeoryForm;
+let j = $index) {
+<div id="accordion" class="documentContent">
+  @for (document of documentCatgeoryForm?.DocumentList; track document; let k = $index) {
+  <div class="row block">
+    <div class="col-sm-12">
+      <div [id]="'heading_' + document.documentCd" class="card">
+        <div
+          class="card-header"
+          [id]="'data_' + document.docCategoryCd + '_Head'"
+          (click)="onPanelClick(document)"
+        >
+          <div class="checkBoxGrp checkBoxToggle fgError">
+            <div class="form-check d-flex flex-row">
+              <sym-field-group
+                [fieldIds]="'selected'"
+                (notifyChange)="onInputChanged($event)"
+                [responseIO]="service.responseIO"
+                [hideLabel]="true"
+                [inputOnly]="true"
+                [model]="document"
+                [modelPath]="
+                  'PartyDocumentFormList[' + i + '].DocumentFormCategoryList[' + j + '].DocumentList[' + k + ']'
+                "
+              ></sym-field-group>
+              <label class="form-check-label"
+                >{{ service.getMultilingualLabel(service.getFieldLookupDesc(document, 'documentCd')) }}
+                @if ( '1' === service.getFieldMetadataPropertyValue(document, 'documentCd', 'MINOCCURS') ? true :
+                false ) {
+                <i class="fa fa-asterisk asterik" aria-hidden="true"></i>
+                }
+              </label>
+              @if (document.selected == 'YES') {
+              <div class="block ml-auto mb-1 pb-0">
+                <span
+                  class="btnToggleBlock"
+                  [class.blockCollapse]="!this.panelVisibility[document.documentCd]"
+                  id="'heading_' + document.documentCd"
+                ></span>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+        @if (document.selected == 'YES' ? this.panelVisibility[document.documentCd] : false) {
+        <div class="card-body">
+          <div class="viewQuestionsDiv">
+            @if ( document.DocumentQuestionResponseList?.questionSets != undefined && document.formCaptureTypeCd ==
+            'FORM' ) {
+            <sym-policy-question-set
+              [questionSet]="document.DocumentQuestionResponseList.questionSets[0]"
+              [partyGuid]="document.partyGuid"
+              [isParentPanel]="true"
+              (clearRequire)="checkClearBtnReq($event)"
+            >
+            </sym-policy-question-set>
+            }
+          </div>
+          @if (document.formCaptureTypeCd == 'PREVIEW') { @if ( eFormPreviewHtmlMap.get(document.documentCd +
+          '_htmlEntry') == undefined) {
+          <sym-loader></sym-loader>
+          } @else {
+          <div
+            class="viewillustrationHtmlEntry"
+            #eFormPreviewDiv
+            [symDynamicStyle]="
+              $safeNavigationMigration(eFormPreviewHtmlMap.get(document.documentCd + '_htmlEntry')?.css)
+            "
+            [symDynamicStyleId]="document.documentCd + '_css'"
+            [innerHTML]="
+              $safeNavigationMigration(eFormPreviewHtmlMap.get(document.documentCd + '_htmlEntry')?.html)
+                | safeHtml: 'html'
+            "
+            symRunScripts
+          ></div>
+          } } @if ( eFormPreviewHtmlMap.get(document.documentCd + '_htmlEntry') != undefined ||
+          document.formCaptureTypeCd == 'FORM' ) {
+          <div class="justify-content-center text-center">
+            <!-- <sym-button
+                      *ngIf="showPreviewEformButton"
+                      [class]="'btn btn_eForm m-2'"
+                      [isLoaderRequired]="false"
+                      [text]="'closeEForm'"
+                      [iconClass]="'fa fa-check'"
+                      [showTextAlways]="true"
+                      (onClick)="onOkClick(document)"
+                    ></sym-button> -->
+            @if (showEformButtons) {
+            <sym-button
+              [id]="'preview_eForm_' + document.documentCd"
+              [class]="'btn btn_eForm m-2'"
+              [isLoaderRequired]="true"
+              [text]="'preview_eForm'"
+              [iconClass]="'fa fa-eye'"
+              [showTextAlways]="true"
+              (onClick)="loadPreview(document, 'html')"
+            ></sym-button>
+            } @if (showEformButtons) {
+            <sym-button
+              [id]="'download_eForm_' + document.documentCd"
+              [class]="'btn btn_eForm m-2'"
+              [isLoaderRequired]="true"
+              [text]="'download'"
+              [iconClass]="'fa fa-download'"
+              [showTextAlways]="true"
+              (onClick)="loadPreview(document, 'pdf')"
+            ></sym-button>
+            }
+            <!-- <sym-button
+                    *ngIf="
+                      document.DocumentQuestionResponseList?.questionSets != undefined
+                        ? isClearBtnReq
+                          ? true
+                          : false
+                        : false
+                    "
+                    [id]="'clear_eForm_' + document.documentCd"
+                    [class]="'btn btn_eForm m-2'"
+                    [isLoaderRequired]="false"
+                    [text]="'clearEFormData'"
+                    [iconClass]="'fa fa-close'"
+                    [showTextAlways]="true"
+                    (onClick)="clearQuestionResponse(document)"
+                  ></sym-button> -->
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  }
+  <!-- DocumentList loop ends -->
+</div>
+}
+<!-- DocumentFormCategoryList loop ends -->
+}
+<!-- PartyDocumentFormList loop ends -->
+<sym-navigation-links [navigationLinkList]="navigationLinkList"></sym-navigation-links>
+
+@if ( eFormPreviewHtmlMap.get($safeNavigationMigration(this.selectedServiceDocument?.documentCd) + '_html') !=
+undefined && selectedServiceDocument != undefined ) {
+<sym-pop-up
+  [popupID]="'eFormPreviewModal'"
+  [headerText]="
+    service.getMultilingualLabel(service.getFieldLookupDesc(this.selectedServiceDocument, 'documentCd'))
+  "
+  [popupSize]="'large'"
+  [maxWidth]="95"
+  [maxHeight]="service.isMobileViewRendered() ? 70 : 95"
+>
+  <div
+    id="viewIllustrationContainer"
+    [ngClass]="
+      service.isMobileViewRendered() ? 'viewIllustrationContainer_mobileView' : 'viewIllustrationContainer'
+    "
+  >
+    <div
+      [symDynamicStyle]="
+        $safeNavigationMigration(
+          eFormPreviewHtmlMap.get($safeNavigationMigration(this.selectedServiceDocument?.documentCd) + '_html')
+            ?.css
+        )
+      "
+      [innerHTML]="
+        $safeNavigationMigration(
+          eFormPreviewHtmlMap.get($safeNavigationMigration(this.selectedServiceDocument?.documentCd) + '_html')
+            ?.html
+        ) | safeHtml: 'html'
+      "
+      [symDynamicStyleId]="$safeNavigationMigration(this.selectedServiceDocument?.documentCd) + '_css'"
+    ></div>
+  </div>
+</sym-pop-up>
+}

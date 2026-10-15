@@ -1,0 +1,95 @@
+/* # Phone */
+@media only screen and (max-width: 320px) {
+  .overflowX {
+    overflow-x: scroll !important;
+  }
+}
+/* # Tablet */
+@media only screen and (min-width: 321px) and (max-width: 768px) {
+  .overflowX {
+    overflow-x: scroll !important;
+  }
+}
+/*
+Generic Styling, for Desktops/Laptops
+*/
+table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+/* Zebra striping */
+
+/*
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+  /* Force table to not be like tables anymore */
+  .symresponsive-table.table,
+  .symresponsive-table.table thead,
+  .symresponsive-table.table tbody,
+  .symresponsive-table.table th,
+  .symresponsive-table.table td,
+  .symresponsive-table.table tr {
+    display: block !important;
+  }
+
+  .symresponsive-table.table th {
+    display: none !important;
+  }
+  /* Hide table headers (but not display: none;, for accessibility) */
+  .symresponsive-table.table thead tr {
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+  }
+
+  .symresponsive-table.table tr {
+    border: 1px solid #ccc !important;
+  }
+
+  .symresponsive-table.table td {
+    /* Behave  like a "row" */
+    border: none !important;
+    border-bottom: 1px solid #eee !important;
+    position: relative !important;
+    padding-left: 8px !important;
+  }
+  .symresponsive-table.table .table tbody tr td {
+    text-align: left !important ;
+  }
+
+  .symresponsive-table.table td:before {
+    /* Now like a table header */
+    position: absolute !important;
+    /* Top/left values mimic padding */
+    top: 6px !important;
+    left: 0px !important;
+    white-space: nowrap !important;
+    padding-left: 8px !important;
+  }
+
+  /*
+	Label the data
+	*/
+  .symresponsive-table.table td::before {
+    content: attr(data-label) !important;
+  }
+  .symresponsive-table.table .mob_padding {
+    padding-top: 21px !important;
+    text-align: inherit !important;
+  }
+
+  .symresponsive-table.table .mob_td {
+    padding: 0.45rem 0.5rem !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  .symresponsive-table.table .mob_td > span {
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    vertical-align: middle;
+    white-space: normal;
+  }
+}

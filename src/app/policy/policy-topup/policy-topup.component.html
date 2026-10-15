@@ -1,0 +1,88 @@
+@if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 && service.productFacets
+&& service.productFacets.data && service.productFacets.data['TOPUPTYPESELECTIONREQUIRED'] == 'YES' ) {
+<div class="card m-1">
+  <sym-panel [id]="'overallTopup_Body'" [name]="'topupDetails'">
+    <div class="m-2 p-2">
+      <sym-field-group
+        [fieldIds]="'topupOptionCd'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.Entity"
+      ></sym-field-group>
+      @if ( service.responseIO.data['InitialInvestment'] && service.responseIO.data['InitialInvestment'].length !=
+      0 && (topupOptionCd == 'EXCESSWITHOUTPH' || topupOptionCd == 'EXCESSWITHPH' || topupOptionCd ==
+      'EXCESSANDTFCALCULATIONWITHPH') ? true : false ) {
+      <div>
+        <hr class="initialTopuphr" />
+        <sym-field-group
+          [fieldIds]="'initialTopupFl'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="service.responseIO.data.Entity"
+        ></sym-field-group>
+        <sym-field-group
+          [fieldIds]="'topUpAmount'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="service.responseIO.data.InitialInvestment"
+        ></sym-field-group>
+      </div>
+      } @if ( service.responseIO.data['RegularTopup'] && service.responseIO.data['RegularTopup'].length != 0 &&
+      (topupOptionCd == 'EXCESSWITHOUTPH' || topupOptionCd == 'EXCESSWITHPH' || topupOptionCd ==
+      'EXCESSANDTFCALCULATIONWITHPH') ? true : false ) {
+      <div>
+        <hr />
+        <sym-field-group
+          [fieldIds]="'regularTopupFl'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="service.responseIO.data.Entity"
+        ></sym-field-group>
+        <sym-field-group
+          [fieldIds]="'topUpPeriod,topUpAmount,topupFrequencyVal'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="service.responseIO.data.RegularTopup"
+        ></sym-field-group>
+      </div>
+      } @if ( topupOptionCd == 'TFCALCULATIONWITHOUTPH' || topupOptionCd == 'TFCALCULATIONWITHPH' || topupOptionCd
+      == 'EXCESSANDTFCALCULATIONWITHPH' ? true : false ) {
+      <div>
+        <hr />
+        <sym-field-group
+          [fieldIds]="'targetFundFl,payingYears,targetFundVal,targetPeriodRefCd,targetPeriod'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="service.responseIO.data.BasePlan"
+        ></sym-field-group>
+      </div>
+      } @if (service.responseIO.data['AdHocTopupList'] && service.responseIO.data['AdHocTopupList'].length != 0) {
+      <div>
+        <hr />
+        {{ service.getMultilingualLabel('ADHOCTOPUP') }}
+        <sym-data-entry-grid
+          [fieldIds]="'policyYearFrom,policyYearTo,topUpAmount,topUpTypeCd'"
+          [responseIO]="service.responseIO"
+          (notifyChange)="onAdHocTopupChanged($event)"
+          (onRowAdded)="onAdHocTopupRowAdded($event)"
+          [modelPath]="'AdHocTopupList'"
+        ></sym-data-entry-grid>
+      </div>
+      } @if ( service.responseIO.data['TransferTopupList'] && service.responseIO.data['TransferTopupList'].length
+      != 0 ) {
+      <div>
+        <hr />
+        {{ service.getMultilingualLabel('transferContributionDetail') }}
+        <sym-data-entry-grid
+          [fieldIds]="'policyYearFrom,policyYearTo,topUpAmount'"
+          [responseIO]="service.responseIO"
+          (notifyChange)="onTransferTopupChanged($event)"
+          (onRowAdded)="onTransferTopupRowAdded($event)"
+          [modelPath]="'TransferTopupList'"
+        ></sym-data-entry-grid>
+      </div>
+      }
+    </div>
+  </sym-panel>
+</div>
+}

@@ -1,0 +1,211 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else { @if (selectedTab != undefined) {
+<sym-sub-tab [tabList]="tabList" (selectedTab)="setTab($event)">
+  <div class="riderContent">
+    <div class="row">
+      @for (rider of service.responseIO.data.RiderList; track rider; let i = $index) { @if
+      (rider.insuredPartyRefGuid === selectedTab.id) {
+      <div class="col-md-6">
+        <div
+          [ngClass]="{
+            'card cardRider': true,
+            validated: rider['errorExists'] == 0 && rider.selected == 'YES',
+            error: rider['errorExists'] > 0
+          }"
+        >
+          <!-- Conetnt for the card displayed -->
+          <div class="card-header">
+            <h5>{{ rider.productLongName }}</h5>
+            <div class="headerActions">
+              <ul>
+                <li>
+                  <div>
+                    @if (rider.selected == 'YES') {
+                    <a class="editCardDetails" (click)="onEditBtnClick(rider)"></a>
+                    }
+                  </div>
+                </li>
+                <li>
+                  <!-- class="flipper" <div class="front">
+                          <a class="iconChecked" *ngIf="rider.selected == 'YES'"></a>
+                          <a class="iconunChecked" *ngIf="rider.selected == 'NO'">
+                            <sym-field-group
+                              [fieldIds]="'selected'"
+                              [responseIO]="service.responseIO"
+                              [hideLabel]="true"
+                              [model]="rider"
+                              [inputOnly]="true"
+                              (notifyChange)="onRiderChanged($event)"
+                              (notifyFocus)="onRiderFocused($event)"
+                            ></sym-field-group>
+                          </a>
+                        </div> class="back" -->
+                  <div>
+                    <sym-field-group
+                      [fieldIds]="'selected'"
+                      [responseIO]="service.responseIO"
+                      [hideLabel]="true"
+                      [model]="rider"
+                      [rowIndex]="i"
+                      [inputOnly]="true"
+                      (notifyChange)="onRiderChanged($event)"
+                      (notifyFocus)="onRiderFocused($event)"
+                    ></sym-field-group>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="cardLeftContent">
+              @if (rider.html != undefined) {
+              <div [innerHTML]="rider.html | safeHtml: 'html'"></div>
+              } @else {
+              <div id="ProductImage">
+                <div class="cardImg">
+                  <div
+                    class="videoBanner card-rider"
+                    [class.no-cursor]="rider.media == undefined"
+                    [style.background-image]="
+                      rider.icon != undefined ? 'url(/assets/theme/images/company/' + rider.icon + ') ' : ''
+                    "
+                  >
+                    @if (rider.media != undefined) {
+                    <span class="videoBtn"></span>
+                    }
+                  </div>
+                </div>
+              </div>
+              }
+              <!-- <a>View More</a> -->
+            </div>
+            <ul>
+              @if (service.getLabelValue(rider, 'productPlanOptionCd') != undefined) {
+              <li>
+                <span class="label">{{ service.getLabelValue(rider, 'productPlanOptionCd') }}</span>
+                {{ service.getFieldLookupDesc(rider, 'productPlanOptionCd') }}
+              </li>
+              } @if (service.getLabelValue(rider, 'baseSumAssured') != undefined) {
+              <li>
+                <span class="label">{{ service.getLabelValue(rider, 'baseSumAssured') }}</span>
+                {{
+                  rider.baseSumAssured | customFormat: service.responseIO.metadata[rider.guid]['baseSumAssured']
+                }}
+              </li>
+              } @if (service.getLabelValue(rider, 'modalPremium') != undefined) {
+              <li>
+                <span class="label"> {{ service.getLabelValue(rider, 'modalPremium') }}</span>
+                {{ rider.modalPremium | customFormat: service.responseIO.metadata[rider.guid]['modalPremium'] }}
+              </li>
+              } @if (service.getLabelValue(rider, 'baseAnnualPremium') != undefined) {
+              <li>
+                <span class="label">{{ service.getLabelValue(rider, 'baseAnnualPremium') }}</span>
+                {{
+                  rider.baseAnnualPremium
+                    | customFormat: service.responseIO.metadata[rider.guid]['baseAnnualPremium']
+                }}
+              </li>
+              } @if (service.getLabelValue(rider, 'productTerm') != undefined) {
+              <li>
+                <span class="label">{{ service.getLabelValue(rider, 'productTerm') }}</span>
+                {{ rider.productTerm }}
+              </li>
+              } @if (service.getLabelValue(rider, 'premiumPayingTerm') != undefined) {
+              <li>
+                <span class="label">{{ service.getLabelValue(rider, 'premiumPayingTerm') }}</span>
+                {{ rider.premiumPayingTerm }}
+              </li>
+              } @if (service.getLabelValue(rider, 'annualIncome') != undefined) {
+              <li>
+                <span class="label">{{ service.getLabelValue(rider, 'annualIncome') }}</span>
+                {{ rider.annualIncome | customFormat: service.responseIO.metadata[rider.guid]['annualIncome'] }}
+              </li>
+              } @if (service.getLabelValue(rider, 'serviceTax') != undefined) {
+              <li>
+                <span class="label">{{ service.getLabelValue(rider, 'serviceTax') }}</span>
+                {{ rider.serviceTax | customFormat: service.responseIO.metadata[rider.guid]['serviceTax'] }}
+              </li>
+              } @if (service.getLabelValue(rider, 'ropPerc') != undefined) {
+              <li>
+                <span class="label">{{ service.getLabelValue(rider, 'ropPerc') }}</span>
+                {{ rider.ropPerc }}
+              </li>
+              } @if (service.getLabelValue(rider, 'coi') != undefined) {
+              <li>
+                <span class="label">{{ service.getLabelValue(rider, 'coi') }}</span>
+                {{ rider.coi }}
+              </li>
+              }
+            </ul>
+          </div>
+          <div class="cardOverlay" data-content="cardOverlayVideo">
+            <div class="cardOverlayContent">
+              <i class="fa fa-close"></i>
+              @if (rider?.media) {
+              <video class="videoElement" width="320" height="240" controls>
+                <source
+                  [src]="'/assets/theme/images/company/' + rider.media + '?autoplay=0' | safeHtml: 'resourceUrl'"
+                  type="video/mp4"
+                />
+                <source
+                  [src]="'/assets/theme/images/company/' + rider.media + '?autoplay=0' | safeHtml: 'resourceUrl'"
+                  type="video/ogg"
+                />
+                Your browser does not support the video tag.
+              </video>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+      } } @if (selectedRider != undefined) {
+      <sym-pop-up
+        [headerText]="selectedRider.productLongName"
+        [popupID]="'riderEditor'"
+        [popupSize]="'medium'"
+        [hideCloseButton]="true"
+      >
+        <div>
+          <div>
+            <sym-field-group
+              [fieldIds]="
+                'productPlanOptionCd,baseSumAssured,baseAnnualPremium,modalPremium,productTerm,premiumPayingTerm,serviceTax,ropPerc,annualIncome,coi,extraPremium,unapliedPremium,computedmodalPremium'
+              "
+              (notifyChange)="onRiderChanged($event)"
+              (notifyFocus)="onRiderFocused($event)"
+              [responseIO]="service.responseIO"
+              [model]="selectedRider"
+              [gridColumns]="[6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6]"
+            ></sym-field-group>
+            @if (selectedRider.RiderExtraList && selectedRider.RiderExtraList.length > 0) {
+            <div class="rider-extra">
+              <sym-rider-extra-list [modelList]="selectedRider.RiderExtraList"></sym-rider-extra-list>
+            </div>
+            }
+          </div>
+          <div class="footer text-center">
+            <sym-button
+              [class]="'btn btn_primary ml-2 mr-2 text-center'"
+              [id]="'btn_ok'"
+              [isLoaderRequired]="false"
+              [attr.data-dismiss]="'modal'"
+              [text]="'Ok'"
+              (onClick)="closeModal('riderEditor'); selectedRider = undefined"
+            ></sym-button>
+          </div>
+        </div>
+      </sym-pop-up>
+      }
+    </div>
+  </div>
+</sym-sub-tab>
+} }

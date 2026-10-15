@@ -1,0 +1,640 @@
+@if (!service.responseIO.data.Entity.isInvalid) {
+<div class="headerActions previewOptions">
+  @if ( (isConvertToEappReq && service.responseIO && service.responseIO.data.Entity.isCompleted &&
+  service.companyFacets && service.companyFacets.data['EAPPAPPLICABLE'] &&
+  service.companyFacets.data['EAPPAPPLICABLE'].length > 0 && service.companyFacets.data['EAPPAPPLICABLE'] == 'YES'
+  && service.productFacets != undefined) || (isConvertToEappReq && service.productFacets.data['ILLUSTRATIONMODEL']
+  == undefined) ) {
+  <sym-button
+    (onClick)="onConvertToEappClick($event)"
+    [id]="'proceedEApp'"
+    [text]="service.getMultilingualLabel('proceedEApp')"
+    [iconClass]="'fa fa-cart-arrow-down'"
+    [class]="'previewActions'"
+    class="mr-2"
+  ></sym-button>
+  }
+</div>
+}
+<div class="col-sm-12 p-0">
+  <div class="row">
+    <div
+      [ngClass]="
+        service.productFacets &&
+        service.productFacets.data &&
+        service.productFacets.data['SISUMMARYELEMENTS'] != undefined &&
+        displayBenefitSummary &&
+        displayBenefitChart &&
+        !isCustomerPortal
+          ? 'col-sm-6'
+          : 'col-sm-12'
+      "
+    >
+      @if (service.responseIO.data.Entity.insuranceTypeCd == 'AUTO') {
+      <div class="box">
+        <div class="section">
+          <div class="sectionHeader nav nav-tabs pb">
+            <h4>
+              {{ settingService.getLabelValue('vehicleDetails') }}
+            </h4>
+          </div>
+          <div class="sectionContent">
+            <div class="tableContent noBorder">
+              <ng-container>
+                <table class="symresponsive-table table noBorder m0">
+                  <tbody>
+                    <tr>
+                      @if (service.isFieldApplicable(service.responseIO.data['Entity'], 'autoMakeCd')) {
+                      <td class="hide_bg">
+                        <span class="summaryLabel">
+                          {{ service.getLabelValue(service.responseIO.data['Entity'], 'autoMakeCd') }}:
+                        </span>
+                        <span class="summaryContent">
+                          {{ service.getFieldLookupDesc(service.responseIO.data['Entity'], 'autoMakeCd') }}
+                        </span>
+                      </td>
+                      } @if (service.isFieldApplicable(service.responseIO.data['Entity'], 'autoModelCd')) {
+                      <td class="hide_bg">
+                        <span class="summaryLabel">
+                          {{ service.getLabelValue(service.responseIO.data['Entity'], 'autoModelCd') }}:
+                        </span>
+                        <span class="summaryContent">
+                          {{ service.getFieldLookupDesc(service.responseIO.data['Entity'], 'autoModelCd') }}
+                        </span>
+                      </td>
+                      }
+                    </tr>
+                    <tr>
+                      @if ( service.isFieldApplicable(service.responseIO.data['Entity'], 'autoRegistrationYear') )
+                      {
+                      <td class="hide_bg">
+                        <span class="summaryLabel">
+                          {{ service.getLabelValue(service.responseIO.data['Entity'], 'autoRegistrationYear') }}:
+                        </span>
+                        <span class="summaryContent">
+                          {{
+                            service.getFieldLookupDesc(service.responseIO.data['Entity'], 'autoRegistrationYear')
+                          }}
+                        </span>
+                      </td>
+                      } @if (service.isFieldApplicable(service.responseIO.data['Entity'], 'autoRegistrationNum')) {
+                      <td class="hide_bg">
+                        <span class="summaryLabel">
+                          {{ service.getLabelValue(service.responseIO.data['Entity'], 'autoRegistrationNum') }}:
+                        </span>
+                        <span class="summaryContent">
+                          {{ service.responseIO.data.Entity.autoRegistrationNum }}
+                        </span>
+                      </td>
+                      }
+                    </tr>
+                  </tbody>
+                </table>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+      } @if (service.responseIO.data.Entity.insuranceTypeCd == 'TRAVEL') {
+      <div class="box">
+        <div class="section">
+          <div class="sectionHeader nav nav-tabs pb">
+            <h4>
+              {{ settingService.getLabelValue('tripDetails') }}
+            </h4>
+          </div>
+          <div class="sectionContent">
+            <div class="tableContent noBorder">
+              <ng-container>
+                <table class="symresponsive-table table noBorder m0">
+                  <tbody>
+                    <tr>
+                      @if (service.getLabelValue(service.responseIO.data['Entity'], 'startDt') != undefined) {
+                      <td class="hide_bg">
+                        <span class="summaryLabel">
+                          {{ service.getLabelValue(service.responseIO.data['Entity'], 'startDt') }}:
+                        </span>
+                        <span class="summaryContent">
+                          {{ service.getDateFormatted(service.responseIO.data.Entity.startDt) }}
+                        </span>
+                      </td>
+                      } @if (service.getLabelValue(service.responseIO.data['Entity'], 'endDt') != undefined) {
+                      <td class="hide_bg">
+                        <span class="summaryLabel">
+                          {{ service.getLabelValue(service.responseIO.data['Entity'], 'endDt') }}:
+                        </span>
+                        <span class="summaryContent">
+                          {{ service.getDateFormatted(service.responseIO.data.Entity.endDt) }}
+                        </span>
+                      </td>
+                      }
+                    </tr>
+                    <tr>
+                      @if ( service.getLabelValue(service.responseIO.data['Entity'], 'travelGeographyCd') !=
+                      undefined ) {
+                      <td class="hide_bg">
+                        <span class="summaryLabel">
+                          {{ service.getLabelValue(service.responseIO.data['Entity'], 'travelGeographyCd') }}:
+                        </span>
+                        <span class="summaryContent">
+                          {{ service.getFieldLookupDesc(service.responseIO.data['Entity'], 'travelGeographyCd') }}
+                        </span>
+                      </td>
+                      } @if ( service.getLabelValue(service.responseIO.data['Entity'], 'numberOfAdult') !=
+                      undefined && service.getLabelValue(service.responseIO.data['Entity'], 'numberOfChildren') !=
+                      undefined ) {
+                      <td class="hide_bg">
+                        <!-- <span class="summaryLabel"> {{ service.getMultilingualLabel('Travellers') }}: </span> -->
+                        <span class="summaryLabel"> {{ service.getMultilingualLabel('Travellers') }}: </span>
+                        <span class="summaryContent">
+                          {{
+                            (service.responseIO.data.Entity.numberOfAdult === 0 ||
+                            service.responseIO.data.Entity.numberOfAdult === null
+                              ? ''
+                              : service.responseIO.data.Entity.numberOfChildren === 0 ||
+                                service.responseIO.data.Entity.numberOfChildren === null
+                              ? service.responseIO.data.Entity.numberOfAdult + ' Adult(s) '
+                              : service.responseIO.data.Entity.numberOfAdult + ' Adult(s), ') +
+                              (service.responseIO.data.Entity.numberOfChildren === 0 ||
+                              service.responseIO.data.Entity.numberOfChildren === null
+                                ? ''
+                                : service.responseIO.data.Entity.numberOfChildren === 1
+                                ? service.responseIO.data.Entity.numberOfChildren + ' Child'
+                                : service.responseIO.data.Entity.numberOfChildren + ' Children')
+                          }}
+                        </span>
+                      </td>
+                      }
+                    </tr>
+                  </tbody>
+                </table>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+      <br />
+      @if (displayBenefitSummary) {
+      <div class="box">
+        <div class="section">
+          <div class="sectionHeader nav nav-tabs pb">
+            <h4>
+              {{ settingService.getLabelValue('step_quoteSummary') }}
+              @if ( service.responseIO && service.responseIO.data && service.responseIO.data.BasePlan.currencyCd !=
+              undefined && service.responseIO.data.BasePlan.currencyCd != null ) {
+              <span class="small font-italic pr-2">
+                ({{ settingService.getLabelValue('allAmount') }}
+                {{ service.responseIO.data.BasePlan.currencyCd }})</span
+              >
+              }
+            </h4>
+          </div>
+          <div class="sectionContent">
+            <div class="tableContent scrollDiv scrollX">
+              <table class="symresponsive-table table noBorder tableBlocks m0" id="benefitSummary">
+                <thead>
+                  <tr>
+                    <th></th>
+                    @if ( service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') != undefined )
+                    {
+                    <th class="text-right">
+                      {{ service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') }}
+                    </th>
+                    } @if ( service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured') !=
+                    undefined ) {
+                    <th class="text-right">
+                      {{ service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured') }}
+                    </th>
+                    } @if ( service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium') != undefined
+                    ) {
+                    <th class="text-right">
+                      {{ service.getLabelValue(service.responseIO.data['BasePlan'], 'modalPremium') }}
+                    </th>
+                    } @if ( service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax') != undefined
+                    && service.responseIO.data.BasePlan['serviceTax'] != null &&
+                    service.responseIO.data.BasePlan['serviceTax'] != undefined ) {
+                    <th class="text-right">
+                      {{ service.getLabelValue(service.responseIO.data['BasePlan'], 'serviceTax') }}
+                    </th>
+                    } @if ( service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') != undefined
+                    && service.responseIO.data.BasePlan['totDiscount'] != null &&
+                    service.responseIO.data.BasePlan['totDiscount'] != undefined ) {
+                    <th class="text-right">
+                      {{ settingService.getLabelValue('totDiscount') }}
+                    </th>
+                    } @if ( service.getLabelValue(service.responseIO.data['BasePlan'], 'totDiscount') != undefined
+                    && service.responseIO.data.BasePlan['totDiscount'] != null &&
+                    service.responseIO.data.BasePlan['totDiscount'] != undefined ) {
+                    <th class="text-right">
+                      {{ settingService.getLabelValue('netPremium') }}
+                    </th>
+                    }
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="selected">
+                    @if ( service.responseIO && service.responseIO.data && service.responseIO.data.PrimaryInsured
+                    != null && service.responseIO.data.PrimaryInsured != undefined ) {
+                    <td class="mob_td" colspan="4">
+                      <span>
+                        @if ( service.responseIO.metadata[service.responseIO.data['PrimaryInsured']['guid']][
+                        'title' ] != undefined ) {
+                        <span class="roleCd font-italic pr-2">
+                          ({{ service.getMultilingualLabel(service.responseIO.data.PrimaryInsured['roleCd']) }})
+                        </span>
+                        {{ service.getFieldLookupDesc(service.responseIO.data['PrimaryInsured'], 'title') }}
+                        }
+                        {{ service.responseIO.data.PrimaryInsured['firstname'] }}
+                        {{ service.responseIO.data.PrimaryInsured['lastname'] }},
+                        {{
+                          service.getMultilingualLabel('age') +
+                            '-' +
+                            service.responseIO.data.PrimaryInsured['age']
+                        }},
+                        {{ service.getFieldLookupDesc(service.responseIO.data['PrimaryInsured'], 'genderCd') }}
+                      </span>
+                    </td>
+                    }
+                  </tr>
+                  @for (quotationId of idList; track quotationId) {
+                  <tr
+                    class="trProduct"
+                    sym-combo-premium-summary-details
+                    [quotationId]="quotationId"
+                    (notifyComboChildPrdLoad)="onComboChildPrdLoad($event)"
+                  ></tr>
+                  } @for (comboChildPrdService of comboChildPrdServiceList; track comboChildPrdService) { @if
+                  (comboChildPrdService.responseIO.data.RiderList != undefined) { @for (rider of
+                  comboChildPrdService.responseIO.data.RiderList; track rider) { @if ( rider.insuredPartyRefGuid
+                  === comboChildPrdService.responseIO.data.PrimaryInsured['guid'] && rider.selected == 'YES' ) {
+                  <tr
+                    sym-combo-premium-summary-details
+                    [quotationId]="comboChildPrdService.id"
+                    [rider]="rider"
+                  ></tr>
+                  } } } } @if ( service.responseIO && service.responseIO.data && service.responseIO.data.Proposer
+                  != null && service.responseIO.data.Proposer != undefined ) { @if
+                  (service.responseIO.data.Entity['proposerLASame'] != 'YES') {
+                  <tr class="selected">
+                    <td colspan="4" class="mob_td proposerRole">
+                      <span>
+                        @if ( service.responseIO.metadata[service.responseIO.data['Proposer']['guid']]['title'] !=
+                        undefined ) {
+                        <span class="roleCd font-italic pr-2">
+                          ( {{ service.getMultilingualLabel(service.responseIO.data.Proposer['roleCd']) }})
+                        </span>
+                        {{ service.getFieldLookupDesc(service.responseIO.data['Proposer'], 'title') }}
+                        }
+                        {{ service.responseIO.data.Proposer['firstname'] }}
+                        {{ service.responseIO.data.Proposer['lastname'] }},
+                        {{ service.getMultilingualLabel('age') + '-' + service.responseIO.data.Proposer['age'] }},
+                        {{ service.getFieldLookupDesc(service.responseIO.data['Proposer'], 'genderCd') }}
+                      </span>
+                    </td>
+                  </tr>
+                  } @for (comboChildPrdService of comboChildPrdServiceList; track comboChildPrdService) { @for
+                  (rider of comboChildPrdService.responseIO.data.RiderList; track rider) { @if (
+                  rider.insuredPartyRefGuid === comboChildPrdService.responseIO.data.Proposer['guid'] &&
+                  rider.selected == 'YES' ) {
+                  <tr
+                    sym-combo-premium-summary-details
+                    [quotationId]="comboChildPrdService.id"
+                    [rider]="rider"
+                  ></tr>
+                  } } } }
+                  <!-- JointLife Details -->
+                  @if ( service.responseIO && service.responseIO.data && service.responseIO.data.JointLife != null
+                  && service.responseIO.data.JointLife != undefined && service.responseIO.data.Entity['jointLife']
+                  == 'YES' ) {
+                  <tr class="selected">
+                    <td colspan="4" class="mob_td jointLife">
+                      <span>
+                        @if ( service.responseIO.metadata[service.responseIO.data['JointLife']['guid']]['title'] !=
+                        undefined ) {
+                        <span class="roleCd font-italic pr-2">
+                          ( {{ service.getMultilingualLabel(service.responseIO.data.JointLife['roleCd']) }})
+                        </span>
+                        {{ service.getFieldLookupDesc(service.responseIO.data['JointLife'], 'title') }}
+                        }
+                        {{ service.responseIO.data.JointLife['firstname'] }}
+                        {{ service.responseIO.data.JointLife['lastname'] }},
+                        {{ service.getMultilingualLabel('age') + '-' + service.responseIO.data.JointLife['age'] }},
+                        {{ service.getFieldLookupDesc(service.responseIO.data['JointLife'], 'genderCd') }}
+                      </span>
+                    </td>
+                  </tr>
+                  @for (comboChildPrdService of comboChildPrdServiceList; track comboChildPrdService) { @for (rider
+                  of comboChildPrdService.responseIO.data.RiderList; track rider) { @if ( rider.insuredPartyRefGuid
+                  === comboChildPrdService.responseIO.data.JointLife['guid'] && rider.selected == 'YES' ) {
+                  <tr
+                    sym-combo-premium-summary-details
+                    [quotationId]="comboChildPrdService.id"
+                    [rider]="rider"
+                  ></tr>
+                  } } } }
+                  <!-- SupplementaryList Details -->
+                  @for (comboChildPrdService of comboChildPrdServiceList; track comboChildPrdService) { @for
+                  (supplementary of comboChildPrdService.responseIO.data.SupplementaryList; track supplementary) {
+                  <tr class="selected">
+                    <td colspan="4" class="mob_td supplementaryTitle">
+                      <span>
+                        @if ( comboChildPrdService.responseIO.metadata[supplementary.guid]['title'] != undefined )
+                        {
+                        <span class="roleCd font-italic pr-2">
+                          ({{ comboChildPrdService.getMultilingualLabel(supplementary['roleCd']) }})
+                        </span>
+                        {{ comboChildPrdService.getFieldLookupDesc(supplementary, 'title') }}
+                        }
+                        {{ supplementary.firstname }}
+                        {{ supplementary.lastname }},
+                        {{ comboChildPrdService.getMultilingualLabel('age') + '-' + supplementary.age }},
+                        {{ comboChildPrdService.getFieldLookupDesc(supplementary, 'genderCd') }}
+                      </span>
+                    </td>
+                  </tr>
+                  @if ( comboChildPrdService.productFacets && comboChildPrdService.productFacets.data &&
+                  comboChildPrdService.productFacets.data['MULTILIFEAPPLICABLE'] &&
+                  comboChildPrdService.productFacets.data['MULTILIFEAPPLICABLE'].length > 0 &&
+                  comboChildPrdService.productFacets.data['MULTILIFEAPPLICABLE'] == 'YES' ) {
+                  <tr
+                    class="trProduct"
+                    sym-combo-premium-summary-details
+                    [quotationId]="comboChildPrdService.id"
+                  ></tr>
+                  } @for (rider of comboChildPrdService.responseIO.data.RiderList; track rider) { @if
+                  (rider.insuredPartyRefGuid === supplementary.guid && rider.selected == 'YES') {
+                  <tr
+                    sym-combo-premium-summary-details
+                    [quotationId]="comboChildPrdService.id"
+                    [rider]="rider"
+                  ></tr>
+                  } } } }
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th
+                      [attr.colspan]="
+                        service.getLabelValue(service.responseIO.data['BasePlan'], 'baseSumAssured') != undefined
+                          ? 3
+                          : service.getLabelValue(service.responseIO.data['BasePlan'], 'productTerm') != undefined
+                          ? 2
+                          : 1
+                      "
+                    >
+                      {{ settingService.getLabelValue('total') }}
+                    </th>
+                    <th class="text-right pd-f">
+                      <!-- &#x20B9; -->
+                      {{
+                        totalModalPremium
+                          | customFormat
+                            : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                      }}
+                    </th>
+                    @if ( service.responseIO.data.BasePlan['serviceTax'] != null &&
+                    service.responseIO.data.BasePlan['serviceTax'] != undefined ) {
+                    <th class="text-right pd-f">
+                      {{
+                        totalServiceTax
+                          | customFormat
+                            : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                      }}
+                    </th>
+                    } @if ( service.responseIO.data.BasePlan['totDiscount'] != null &&
+                    service.responseIO.data.BasePlan['totDiscount'] != undefined ) {
+                    <th class="text-right pd-f">
+                      {{
+                        totalDiscount
+                          | customFormat
+                            : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                      }}
+                    </th>
+                    } @if ( service.responseIO.data.BasePlan['totDiscount'] != null &&
+                    service.responseIO.data.BasePlan['totDiscount'] != undefined ) {
+                    <th class="text-right pd-f">
+                      {{
+                        totalNetPremium
+                          | customFormat
+                            : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                      }}
+                    </th>
+                    }
+                  </tr>
+                  @if ( service.responseIO.data.BasePlan['totDiscount'] != null &&
+                  service.responseIO.data.BasePlan['totDiscount'] != undefined ) {
+                  <tr>
+                    <th colspan="3">
+                      {{ settingService.getLabelValue('Premium to be Paid') }}
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th class="text-right pd-f">
+                      <!-- &#x20B9; -->
+                      {{
+                        totalModalPremium - totalDiscount
+                          | customFormat
+                            : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+                      }}
+                    </th>
+                  </tr>
+                  }
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          @if (displayLastBenefitChartValues && illustrationResult != undefined) {
+          <div>
+            <div class="box">
+              <div>
+                @if (illustrationResult.ratesElements[illustrationResult.elementLabel.length - 1] == 'NORATE') {
+                @for (elementLabel of illustrationResult.elementLabel; track elementLabel; let j = $index) {
+                <div class="grid-layout">
+                  <span class="text-left"> {{ elementLabel }} </span>
+                  <span class="text-right">
+                    {{
+                      illustrationResult.calculatedData.NORATE.data[j][
+                        illustrationResult.yearsToPrint[illustrationResult.yearsToPrint.length - 1] - 1
+                      ]
+                        | customFormat
+                          : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseSumAssured')
+                    }}</span
+                  >
+                </div>
+                } }
+                <ng-container>
+                  @if ( illustrationResult.ratesElements[illustrationResult.elementLabel.length - 1] != 'NORATE' )
+                  { @for (rate of illustrationResult.rateOrder; track rate) {
+                  <div class="grid-layout">
+                    @for (elementLabel of illustrationResult.elementLabel; track elementLabel) {
+                    <span class="text-left">
+                      {{ elementLabel }} &#64;
+                      {{
+                        illustrationResult.rates[rate] > 1 || illustrationResult.rates[rate] < -1
+                          ? illustrationResult.rates[rate]
+                          : illustrationResult.rates[rate] * 100
+                      }}
+                      %
+                    </span>
+                    <span class="text-right">
+                      {{
+                        illustrationResult.calculatedData[rate].data[illustrationResult.elementLabel.length - 1][
+                          illustrationResult.yearsToPrint[illustrationResult.yearsToPrint.length - 1] - 1
+                        ]
+                          | customFormat
+                            : service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseSumAssured')
+                      }}
+                    </span>
+                    }
+                  </div>
+                  } }
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+        <!-- PDF content changes for ref starts here -->
+        <!-- <div
+              class="sectionContent"
+              id="convertToPDFTemplate"
+              #convertToPDFTemplate
+              style="width: 100%; visibility: hidden"
+              >
+              Sample pdf conversion code
+            </div> -->
+        <!-- PDF content changes for ref ends here -->
+      </div>
+      }
+    </div>
+    @if ( service.productFacets && service.productFacets.data && service.productFacets.data['SISUMMARYELEMENTS'] &&
+    displayBenefitChart ) {
+    <div [ngClass]="displayBenefitSummary && !isCustomerPortal ? 'col-sm-6' : 'col-sm-12'">
+      <sym-sub-tab [tabList]="tabList" (selectedTab)="setTab($event)">
+        @if (selectedTab && selectedTab.id === 'illustrationChart' && illustrationResult != undefined) {
+        <div class="illustration_chart_controls col-sm-12">
+          @if (illustrationResult.ratesElements[illustrationResult.elementLabel[0]] != 'NORATE') { @for (rate of
+          illustrationResult.rateOrder; track rate; let i = $index) { @if ( (illustrationResult.rates[rate] > 1 ||
+          illustrationResult.rates[rate] < -1 ? illustrationResult.rates[rate] : illustrationResult.rates[rate] *
+          100) != 0 ) {
+          <span [class.active]="selectedGraphPer == i" (click)="createDataForGraph(i)">
+            {{
+              (illustrationResult.rates[rate] > 1 || illustrationResult.rates[rate] < -1
+                ? illustrationResult.rates[rate]
+                : illustrationResult.rates[rate] * 100) %
+                1 !=
+              0
+                ? (illustrationResult.rates[rate] > 1 || illustrationResult.rates[rate] < -1
+                    ? illustrationResult.rates[rate]
+                    : illustrationResult.rates[rate] * 100
+                  ).toFixed(2)
+                : illustrationResult.rates[rate] > 1 || illustrationResult.rates[rate] < -1
+                ? illustrationResult.rates[rate]
+                : illustrationResult.rates[rate] * 100
+            }}
+            %</span
+          >
+          } } }
+        </div>
+        <!-- <div> -->
+        <div class="canvasScroll">
+          <div class="sliderForChart">
+            @if (illustrationResult != undefined) {
+            <sym-custom-charts
+              [dataList]="dataList"
+              [lineChartYPlotDetails]="plotDetails"
+              [xAxisLabel]="settingService.getLabelValue('ageIns')"
+              [yAxisLabel]="settingService.getLabelValue('insPolicyValues')"
+            ></sym-custom-charts>
+            }
+          </div>
+        </div>
+        <!-- <canvas
+                baseChart
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [chartType]="lineChartType"
+                [plugins]="lineChartPlugins"
+                >
+              </canvas> -->
+        <!-- </div> -->
+        <!-- <div [chart]="chart"></div> -->
+        } @if (selectedTab && selectedTab.id === 'illustrationTable' && illustrationResult != undefined) {
+        <div class="tableContent">
+          <table class="table m0" id="illustrationtable">
+            <thead>
+              <tr>
+                @if (rateLength > 1 || (rateLength == 1 && illustrationResult.rates[0] != 'NORATE')) {
+                <th rowspan="2">
+                  {{ settingService.getLabelValue('polyear') }}
+                </th>
+                } @if (rateLength == 1 && illustrationResult.rates[0] == 'NORATE') {
+                <th rowspan="1">
+                  {{ settingService.getLabelValue('polyear') }}
+                </th>
+                } @if (rateLength > 1 || (rateLength == 1 && illustrationResult.rates[0] != 'NORATE')) {
+                <th rowspan="2">
+                  {{ settingService.getLabelValue('age') }}
+                </th>
+                } @if (rateLength == 1 && illustrationResult.rates[0] == 'NORATE') {
+                <th rowspan="1">
+                  {{ settingService.getLabelValue('age') }}
+                </th>
+                } @for (elementLabel of illustrationResult.elementLabel; track elementLabel) {
+                <th class="text-center" [attr.colspan]="rateLength">
+                  {{ elementLabel }}
+                </th>
+                }
+              </tr>
+              <tr>
+                @for (elementLabel of illustrationResult.elementLabel; track elementLabel; let k = $index) { @if
+                (illustrationResult.ratesElements[k] != 'NORATE') { @for (rate of illustrationResult.rateOrder;
+                track rate) {
+                <th class="text-center">
+                  {{
+                    illustrationResult.rates[rate] > 1 || illustrationResult.rates[rate] < -1
+                      ? illustrationResult.rates[rate]
+                      : illustrationResult.rates[rate] * 100
+                  }}
+                  %
+                </th>
+                } } }
+              </tr>
+            </thead>
+            <tbody>
+              @for (year of illustrationResult.yearsToPrint; track year; let i = $index) {
+              <tr>
+                <td>{{ year }}</td>
+                <td>
+                  {{ illustrationResult.ageToPrint[i] }}
+                </td>
+                @for (elementLabel of illustrationResult.elementLabel; track elementLabel; let j = $index) { @if
+                (illustrationResult.ratesElements[j] != 'NORATE') { @for (rate of illustrationResult.rateOrder;
+                track rate) {
+                <td class="text-right">
+                  {{
+                    illustrationResult.calculatedData[rate].data[j][year - 1]
+                      | number: (mask != undefined ? mask : '1.0-0')
+                  }}
+                </td>
+                } } @if (illustrationResult.ratesElements[j] == 'NORATE') {
+                <td class="text-right">
+                  {{
+                    illustrationResult.calculatedData.NORATE.data[j][year - 1]
+                      | number: (mask != undefined ? mask : '1.0-0')
+                  }}
+                </td>
+                } }
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        }
+      </sym-sub-tab>
+    </div>
+    }
+  </div>
+</div>

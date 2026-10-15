@@ -1,0 +1,69 @@
+<!-- Modal -->
+<div
+  tabindex="-1"
+  [attr.role]="hidePopLayout == undefined || hidePopLayout == false ? 'dialog' : ''"
+  [class]="hidePopLayout == undefined || hidePopLayout == false ? 'modal fade in show' : 'show'"
+  [id]="hidePopLayout == undefined || hidePopLayout == false ? popupID : 'defaultPopup'"
+  [attr.aria-labelledby]="hidePopLayout == undefined || hidePopLayout == false ? popupID : ''"
+  [attr.aria-hidden]="hidePopLayout == undefined || hidePopLayout == false ? true : ''"
+  [attr.data-backdrop]="hidePopLayout == undefined || hidePopLayout == false ? 'static' : ''"
+>
+  <div
+    [class]="
+      (hidePopLayout == undefined || hidePopLayout == false) && popUpClass != undefined
+        ? popUpClass
+        : (hidePopLayout == undefined || hidePopLayout == false) &&
+          (popupSize == '' || popupSize == undefined || popupSize == null)
+        ? 'modal-dialog modal modal-dialog-scrollable modal-lg modal-dialog-centered'
+        : (hidePopLayout == undefined || hidePopLayout == false) && popupSize.toLowerCase() == 'medium'
+        ? 'modal-dialog modal-dialog-centered'
+        : (hidePopLayout == undefined || hidePopLayout == false) && popupSize.toLowerCase() == 'small'
+        ? 'modal-dialog modal-sm modal-dialog-centered'
+        : (hidePopLayout == undefined || hidePopLayout == false) &&
+          !displayPopupAtTop &&
+          (popupSize.toLowerCase() == 'medium' || popupSize.toLowerCase() == 'small')
+        ? 'modal-dialog-centered  modal-dialog'
+        : (hidePopLayout == undefined || hidePopLayout == false) && popupSize.toLowerCase() == 'large'
+        ? 'modal-dialog modal modal-dialog-scrollable modal-lg modal-dialog-centered'
+        : hidePopLayout == undefined || hidePopLayout == false
+        ? 'modal-dialog modal-dialog-centered'
+        : ''
+    "
+    [attr.role]="hidePopLayout == undefined || hidePopLayout == false ? 'document' : ''"
+    [style.width]="width + '%'"
+    [style.height]="maxHeight != undefined ? maxHeight + '%' : height != undefined ? height + '%' : 'auto'"
+    [style.max-width]="maxWidth + '% !important'"
+  >
+    <div class="modal-content" [style.height]="maxHeight != undefined ? maxHeight + '%' : height + '%'">
+      @if ( headerText != undefined || (!hideCloseButton && (hidePopLayout == undefined || hidePopLayout == false))
+      ) {
+      <div class="modal-header popup-header">
+        @if (headerIcon) {
+        <i class="{{ headerIcon }}" aria-hidden="true"></i>
+        } @if (headerText != undefined) {
+        <h4
+          class="modal-title pull-left popup-header-fontSize"
+          [innerHTML]="settingService.getLabelValue(headerText) | safeHtml: 'html'"
+        >
+          {{ settingService.getLabelValue(headerText) | safeHtml: 'html' }}
+        </h4>
+        } @if (!hideCloseButton && (hidePopLayout == undefined || hidePopLayout == false)) {
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onPopUpClose()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        }
+      </div>
+      }
+      <div
+        class="modal-body"
+        [ngClass]="
+          popupSize != undefined && (popupSize.toLowerCase() == 'medium' || popupSize.toLowerCase()) == 'small'
+            ? ' '
+            : 'scrollDiv'
+        "
+      >
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

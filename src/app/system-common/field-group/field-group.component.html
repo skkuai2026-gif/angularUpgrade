@@ -1,0 +1,2278 @@
+<div
+  [ngClass]="{ 'form-row': !inputOnly && isRowRequired && !isXMLCodeRendered }"
+  [ngClass]="{ 'pb-2': !labelOnly }"
+  [class]="responseIO['isMetadataHelpReqd'] === true ? 'help_div' : ''"
+  *ngIf="fields && fields.length != 0 && responseIO != undefined && !isFormReadOnly; else readOnlyTemplate"
+>
+  <div [ngClass]="{ hidenLabel: labelOnly }">
+    <div [ngClass]="{ 'form-row': !inputOnly && isRowRequired }" *ngIf="fields && fields.length != 0">
+      <ng-container *ngFor="let field of fields; index as i">
+        <ng-container *ngIf="field.fieldMetadata != null && field.fieldMetadata != undefined">
+          <ng-container
+            *ngIf="
+              field.fieldMetadata.APPLICABLE != null &&
+              field.fieldMetadata.APPLICABLE != undefined &&
+              field.fieldMetadata.APPLICABLE === 'NO'
+                ? false
+                : true
+            "
+          >
+            <ng-container
+              *ngIf="
+                field.fieldMetadata.VISIBILITY != null &&
+                field.fieldMetadata.VISIBILITY != undefined &&
+                field.fieldMetadata.VISIBILITY === 'NO'
+                  ? false
+                  : true
+              "
+            >
+              <div
+                [ngClass]="{ 'mt-2': !inputOnly }"
+                [ngClass]="
+                  responseIO['isMetadataHelpReqd'] === true && (field.index == undefined || field.index <= -2)
+                    ? 'col-sm-3 col-md-3 co-lg-3 col-xl-3'
+                    : field.divClass
+                "
+              >
+                <ng-container [ngSwitch]="field.type">
+                  <div
+                    [class]="
+                      ((displaySearchForField != undefined && displaySearchForField == field.fieldCd) ||
+                        field.fieldMetadata.SEARCHREQD === 'YES') &&
+                      settingService.isMobileViewRendered()
+                        ? 'industry_mob'
+                        : (displaySearchForField != undefined && displaySearchForField == field.fieldCd) ||
+                          field.fieldMetadata.SEARCHREQD === 'YES'
+                        ? 'form-row mr-1'
+                        : ''
+                    "
+                  >
+                    <div
+                      [class]="
+                        (displaySearchForField != undefined && displaySearchForField == field.fieldCd) ||
+                        (field.fieldMetadata.SEARCHREQD === 'YES' && !settingService.isMobileViewRendered())
+                          ? 'col-sm-11 col-md-11 co-lg-11 col-xl-11 p-0 m-0 pl-1'
+                          : ''
+                      "
+                    >
+                      <ng-container *ngSwitchCase="'TEXT'">
+                        <div
+                          [ngClass]="{
+                            'form-group ': !inputOnly,
+                            'fgMaterial customer-ui': isCustomerPortal || settingService.isNewUIDisplayed,
+                            'pt-20': (isCustomerPortal || settingService.isNewUIDisplayed) && !inputOnly,
+                            ptForLabel:
+                              isLabelHidden != undefined ? isLabelHidden[i] && !inputOnly : hideLabel && !inputOnly
+                          }"
+                          [class.fgError]="field.error != undefined"
+                        >
+                          <ng-container
+                            *ngIf="!isCustomerPortal && !settingService.isNewUIDisplayed && !displayErrorOnly"
+                          >
+                            <label
+                              [for]="field.fieldID"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                  : !hideLabel &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                              "
+                            >
+                              <span
+                                [innerHTML]="
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                                "
+                              ></span>
+                              <i
+                                class="fa fa-asterisk asterik"
+                                aria-hidden="true"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                "
+                              ></i>
+
+                              <i
+                                [ngClass]="{
+                                  'tooltip-label-info customtooltip pl-2': true,
+                                  'pl-3':
+                                    isLabelHidden != undefined
+                                      ? !isLabelHidden[i] &&
+                                        settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                        (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                      : !hideLabel &&
+                                        settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                        (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                }"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      field.fieldMetadata.TOOLTIP !== undefined
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      field.fieldMetadata.TOOLTIP !== undefined
+                                "
+                                aria-hidden="true"
+                              >
+                                <sym-tooltip [placement]="'right'">
+                                  <div
+                                    class="tooltip-label-info-container"
+                                    [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                  ></div
+                                ></sym-tooltip>
+                              </i>
+                            </label>
+                          </ng-container>
+                          <input
+                            *ngIf="!displayLabelOnly && !displayErrorOnly"
+                            [type]="
+                              (field.fieldMetadata.DATATYPE == 'DOUBLE' ||
+                                field.fieldMetadata.DATATYPE == 'SHORT' ||
+                                field.fieldMetadata.DATATYPE == 'INT' ||
+                                field.fieldMetadata.DATATYPE == 'NUMBER') &&
+                              field.fieldMetadata.MASK == undefined
+                                ? 'number'
+                                : 'text'
+                            "
+                            [class.text-left]="
+                              field.fieldMetadata.DATATYPE == 'DOUBLE' ||
+                              field.fieldMetadata.DATATYPE == 'BIGDECIMAL'
+                            "
+                            [class.text-uppercase]="
+                              (field.fieldMetadata.CASEVALUE != undefined &&
+                                field.fieldMetadata.CASEVALUE == 'UPPER') ||
+                              isFieldUpperCaseReq
+                            "
+                            (keypress)="numberOnly($event, field)"
+                            class="form-control"
+                            [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                            [id]="field.fieldID"
+                            [attr.name]="field.fieldUnName"
+                            [ngModel]="
+                              field.fieldMetadata.MASK != undefined
+                                ? field.model[field.fieldCd + '_mk']
+                                : field.model[field.fieldCd]
+                            "
+                            (ngModelChange)="
+                              field.fieldMetadata.MASK != undefined
+                                ? unMaskValue(field, $event)
+                                : (field.model[field.fieldCd] = $event)
+                            "
+                            (change)="onInputChange(field, $event)"
+                            [attr.maxlength]="field.fieldMetadata.MAXLENGTH"
+                            [attr.max]="field.fieldMetadata.MAXVALUE"
+                            [attr.placeholder]="
+                              field.fieldMetadata.PLACEHOLDER != undefined &&
+                              !isCustomerPortal &&
+                              !settingService.isNewUIDisplayed
+                                ? settingService.getLabelValue(field.fieldMetadata.PLACEHOLDER)
+                                : field.fieldMetadata.PLACEHOLDERREQD === 'YES' &&
+                                  !isCustomerPortal &&
+                                  !settingService.isNewUIDisplayed
+                                ? settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                                : ' '
+                            "
+                            step="any"
+                            [pattern]="field.fieldMetadata.FORMAT != undefined ? field.fieldMetadata.FORMAT : null"
+                            (keydown)="numberOnly($event, field); onKeyDown(field, $event)"
+                            (compositionend)="numberOnly($event, field)"
+                            (paste)="field.fieldMetadata.MASK != undefined ? numberOnly($event, field) : ''"
+                          />
+
+                          <ng-container
+                            *ngIf="isCustomerPortal || (settingService.isNewUIDisplayed && !displayErrorOnly)"
+                          >
+                            <label
+                              [for]="field.fieldID"
+                              *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel"
+                              [class.required]="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                  : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              "
+                            >
+                              <ng-container *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel">{{
+                                settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                              }}</ng-container>
+                            </label></ng-container
+                          >
+                          <p
+                            *ngIf="
+                              (field.error != undefined || field.errorList != undefined) &&
+                              (!displayLabelOnly || displayErrorOnly)
+                            "
+                            class="errorText"
+                          >
+                            <i
+                              class="errorIcon"
+                              data-toggle="tooltip"
+                              data-placement="right"
+                              [title]="settingService.extractHTML(field.error)"
+                            ></i>
+                            {{ settingService.extractHTML(field.error) }}
+                          </p>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="['DATE', 'DATETIME'].includes(field.type) ? field.type : ''">
+                        <div
+                          [ngClass]="{
+                            'form-group ': !inputOnly,
+                            fgMaterial: isCustomerPortal || settingService.isNewUIDisplayed,
+                            'p-0': isCustomerPortal,
+                            ptForLabel:
+                              isLabelHidden != undefined ? isLabelHidden[i] && !inputOnly : hideLabel && !inputOnly
+                          }"
+                          [class.fgError]="field.error != undefined"
+                        >
+                          <ng-container>
+                            <label
+                              [for]="field.fieldID"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && !displayErrorOnly
+                                  : !hideLabel && !displayErrorOnly
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                "
+                                [innerHTML]="
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                                "
+                              ></span>
+                              <i
+                                class="fa fa-asterisk asterik"
+                                aria-hidden="true"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                "
+                              ></i>
+                              <i
+                                [ngClass]="{
+                                  'tooltip-label-info customtooltip pl-2': true,
+                                  'pl-3':
+                                    isLabelHidden != undefined
+                                      ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                      : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                }"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                    : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                                "
+                                aria-hidden="true"
+                              >
+                                <sym-tooltip [placement]="'right'">
+                                  <div
+                                    class="tooltip-label-info-container"
+                                    [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                  ></div
+                                ></sym-tooltip>
+                              </i>
+                            </label>
+                          </ng-container>
+
+                          <sym-date-time-picker
+                            *ngIf="!displayLabelOnly && !displayErrorOnly"
+                            [fieldType]="field.type"
+                            [fieldID]="field.fieldID"
+                            [fieldCd]="field.fieldCd"
+                            [model]="field.model"
+                            [fieldUnName]="field.fieldUnName"
+                            (notifyChange)="onInputChange(field, $event)"
+                            [min]="field.fieldMetadata.MINVALUE"
+                            [max]="field.fieldMetadata.MAXVALUE"
+                            [fieldItem]="field"
+                            [isDisabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                            [placeholder]="
+                              field.fieldMetadata.PLACEHOLDER != undefined &&
+                              !isCustomerPortal &&
+                              !settingService.isNewUIDisplayed
+                                ? settingService.getLabelValue(field.fieldMetadata.PLACEHOLDER)
+                                : field.fieldMetadata.PLACEHOLDERREQD === 'YES' &&
+                                  !isCustomerPortal &&
+                                  !settingService.isNewUIDisplayed
+                                ? settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                                : undefined
+                            "
+                            [calendarType]="
+                              field.fieldMetadata.CALENDARTYPE != undefined
+                                ? field.fieldMetadata.CALENDARTYPE
+                                : undefined
+                            "
+                          ></sym-date-time-picker>
+                          <p
+                            *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                            class="errorText"
+                          >
+                            <i
+                              class="errorIcon"
+                              data-toggle="tooltip"
+                              data-placement="right"
+                              [title]="settingService.extractHTML(field.error)"
+                            ></i>
+                            {{ settingService.extractHTML(field.error) }}
+                          </p>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'COMBO'">
+                        <div
+                          [ngClass]="{
+                            'form-group ': !inputOnly,
+                            fgMaterial: isCustomerPortal || settingService.isNewUIDisplayed,
+                            ptForLabel:
+                              isLabelHidden != undefined ? isLabelHidden[i] && !inputOnly : hideLabel && !inputOnly
+                          }"
+                          [class.fgError]="field.error != undefined"
+                        >
+                          <label
+                            [for]="field.fieldID"
+                            *ngIf="
+                              isLabelHidden != undefined
+                                ? !isLabelHidden[i] &&
+                                  !displayErrorOnly &&
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                : !hideLabel &&
+                                  !displayErrorOnly &&
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                            "
+                          >
+                            <span
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                  : !hideLabel &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                              "
+                              [innerHTML]="
+                                settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                              "
+                            ></span>
+                            <i
+                              class="fa fa-asterisk asterik"
+                              aria-hidden="true"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                    (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                  : !hideLabel &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                    (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              "
+                            ></i>
+                            <i
+                              [ngClass]="{
+                                'tooltip-label-info customtooltip pl-2': true,
+                                'pl-3':
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              }"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                  : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                              "
+                              aria-hidden="true"
+                            >
+                              <sym-tooltip [placement]="'right'">
+                                <div
+                                  class="tooltip-label-info-container"
+                                  [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                ></div
+                              ></sym-tooltip>
+                            </i>
+                          </label>
+                          <ng-container *ngIf="!displayLabelOnly && !displayErrorOnly">
+                            <select
+                              [id]="field.fieldID"
+                              [attr.name]="field.fieldUnName"
+                              class="form-control"
+                              [(ngModel)]="field.model[field.fieldCd]"
+                              (change)="onInputChange(field, $event)"
+                              (focus)="onInputFocus(field, $event)"
+                              [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                            >
+                              <option [ngValue]="null">
+                                -
+                                {{
+                                  field.fieldMetadata.PLACEHOLDER != undefined
+                                    ? settingService.getLabelValue(field.fieldMetadata.PLACEHOLDER)
+                                    : settingService.getLabelValue('selectFirstOption')
+                                }}
+                                -
+                              </option>
+
+                              <ng-container *ngFor="let opt of field.options">
+                                <option [ngValue]="opt.cd">
+                                  {{ opt.desc }}
+                                </option>
+                              </ng-container>
+                            </select></ng-container
+                          >
+
+                          <p
+                            *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                            class="errorText"
+                          >
+                            <i
+                              class="errorIcon"
+                              data-toggle="tooltip"
+                              data-placement="right"
+                              [title]="settingService.extractHTML(field.error)"
+                            ></i>
+                            {{ settingService.extractHTML(field.error) }}
+                          </p>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'RADIOIMAGE'">
+                        <div
+                          [ngClass]="{
+                            'form-group ': !inputOnly,
+                            'fgMaterial radioImgCust': isCustomerPortal || settingService.isNewUIDisplayed,
+                            ptForLabel:
+                              isLabelHidden != undefined ? isLabelHidden[i] && !inputOnly : hideLabel && !inputOnly
+                          }"
+                          [class.fgError]="field.error != undefined"
+                        >
+                          <span
+                            class="label"
+                            *ngIf="
+                              isLabelHidden != undefined
+                                ? !isLabelHidden[i] && !displayErrorOnly
+                                : !hideLabel && !displayErrorOnly
+                            "
+                          >
+                            <span
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                  : !hideLabel &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                              "
+                              [innerHTML]="
+                                settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                              "
+                            ></span>
+                            <i
+                              class="fa fa-asterisk asterik"
+                              aria-hidden="true"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] &&
+                                    (field.fieldMetadata.MINOCCURS === '1' ? true : false) &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                  : !hideLabel &&
+                                    (field.fieldMetadata.MINOCCURS === '1' ? true : false) &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                              "
+                            ></i>
+                            <i
+                              [ngClass]="{
+                                'tooltip-label-info customtooltip pl-2': true,
+                                'pl-3':
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              }"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                  : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                              "
+                              aria-hidden="true"
+                            >
+                              <sym-tooltip [placement]="'right'">
+                                <div
+                                  class="tooltip-label-info-container"
+                                  [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                ></div
+                              ></sym-tooltip>
+                            </i>
+                          </span>
+                          <div class="radioGrp radioGrpBox" *ngIf="!displayLabelOnly && !displayErrorOnly">
+                            <div class="form-check form-check-inline" *ngFor="let opt of field.options">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="{{ 'image_' + field.fieldID }}"
+                                [id]="field.fieldID + '_' + opt.cd"
+                                [attr.name]="field.fieldUnName + '_' + opt.cd"
+                                value="{{ opt.cd }}"
+                                (click)="field.model[field.fieldCd] = opt.cd; onInputChange(field, $event)"
+                                (focus)="onInputFocus(field, $event)"
+                                [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                                [checked]="
+                                  field.model[field.fieldCd] != undefined && field.model[field.fieldCd] == opt.cd
+                                    ? true
+                                    : false
+                                "
+                                [class.selectedValue]="
+                                  field.model[field.fieldCd] != undefined && field.model[field.fieldCd] == opt.cd
+                                    ? true
+                                    : false
+                                "
+                              />
+                              <label
+                                class="form-check-label withicon"
+                                [class]="opt.addtnlFld2 != undefined ? opt.addtnlFld2 : 'pl-2'"
+                                [for]="field.fieldID"
+                              >
+                                {{ opt.desc }}
+                              </label>
+                            </div>
+                            <p
+                              *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                              class="errorText"
+                            >
+                              <i
+                                class="errorIcon"
+                                data-toggle="tooltip"
+                                data-placement="right"
+                                [title]="settingService.extractHTML(field.error)"
+                              ></i>
+                              {{ settingService.extractHTML(field.error) }}
+                            </p>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'RADIO'">
+                        <div
+                          [ngClass]="{
+                            'form-group ': !inputOnly,
+                            fgMaterial: isCustomerPortal || settingService.isNewUIDisplayed,
+                            ptForLabel:
+                              isLabelHidden != undefined ? isLabelHidden[i] && !inputOnly : hideLabel && !inputOnly
+                          }"
+                          [class.fgError]="field.error != undefined"
+                        >
+                          <label
+                            class="label"
+                            *ngIf="
+                              isLabelHidden != undefined
+                                ? !isLabelHidden[i] &&
+                                  !displayErrorOnly &&
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                : !hideLabel &&
+                                  !displayErrorOnly &&
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                            "
+                          >
+                            <span
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? isLabelHidden[i] &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                  : !hideLabel &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                              "
+                              [innerHTML]="
+                                settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                              "
+                            ></span>
+                            <i
+                              class="fa fa-asterisk asterik"
+                              aria-hidden="true"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] &&
+                                    (field.fieldMetadata.MINOCCURS === '1' ? true : false) &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                  : !hideLabel &&
+                                    (field.fieldMetadata.MINOCCURS === '1' ? true : false) &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                              "
+                            ></i>
+                            <i
+                              [ngClass]="{
+                                'tooltip-label-info customtooltip pl-2': true,
+                                'pl-3':
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              }"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                  : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                              "
+                              aria-hidden="true"
+                            >
+                              <sym-tooltip [placement]="'right'">
+                                <div
+                                  class="tooltip-label-info-container"
+                                  [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                ></div
+                              ></sym-tooltip>
+                            </i>
+                          </label>
+                          <div class="radioGrp radio" *ngIf="!displayLabelOnly && !displayErrorOnly">
+                            <ng-container *ngFor="let opt of field.options">
+                              <div class="form-check form-check-inline">
+                                <input
+                                  class="form-check-input"
+                                  type="radio"
+                                  name="{{ field.fieldID }}"
+                                  [id]="field.fieldID + '_' + opt.cd"
+                                  [attr.name]="field.fieldUnName + '_' + opt.cd"
+                                  value="{{ opt.cd }}"
+                                  (click)="field.model[field.fieldCd] = opt.cd; onInputChange(field, $event)"
+                                  [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                                  [checked]="
+                                    field.model[field.fieldCd] != undefined && field.model[field.fieldCd] == opt.cd
+                                      ? true
+                                      : false
+                                  "
+                                  [class.selectedValue]="
+                                    field.model[field.fieldCd] != undefined && field.model[field.fieldCd] == opt.cd
+                                      ? true
+                                      : false
+                                  "
+                                />
+                                <label
+                                  class="form-check-label"
+                                  [attr.for]="field.fieldID"
+                                  [innerHTML]="opt.desc | safeHtml: 'html'"
+                                ></label>
+                              </div>
+                            </ng-container>
+                          </div>
+                          <p
+                            *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                            class="errorText"
+                          >
+                            <i
+                              class="errorIcon"
+                              data-toggle="tooltip"
+                              data-placement="right"
+                              [title]="settingService.extractHTML(field.error)"
+                            ></i>
+                            {{ settingService.extractHTML(field.error) }}
+                          </p>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'CHECKBOX'">
+                        <ng-container
+                          *ngIf="
+                            field.fieldMetadata.LOOKUPCD == 'BOOLEAN' ||
+                              (responseIO.lookups[field.fieldMetadata.LOOKUPCD] != undefined &&
+                                responseIO.lookups[field.fieldMetadata.LOOKUPCD].length <= 1);
+                            else multiCheckboxContainer
+                          "
+                        >
+                          <div>
+                            <div
+                              [ngClass]="{
+                                'form-group ': !inputOnly,
+                                fgMaterial: isCustomerPortal || settingService.isNewUIDisplayed,
+                                ptForLabel:
+                                  isLabelHidden != undefined
+                                    ? isLabelHidden[i] && !inputOnly
+                                    : hideLabel && !inputOnly
+                              }"
+                              [class.fgError]="field.error != undefined"
+                            >
+                              <span
+                                class="label"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      responseIO.lookups[field.fieldMetadata.LOOKUPCD][0].desc != undefined &&
+                                      responseIO.lookups[field.fieldMetadata.LOOKUPCD][0].desc != '' &&
+                                      !displayErrorOnly
+                                    : !hideLabel &&
+                                      field.fieldMetadata.LOOKUPCD != 'BOOLEAN' &&
+                                      responseIO.lookups[field.fieldMetadata.LOOKUPCD][0].desc != undefined &&
+                                      responseIO.lookups[field.fieldMetadata.LOOKUPCD][0].desc != '' &&
+                                      !displayErrorOnly
+                                "
+                              >
+                                <span
+                                  *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel"
+                                  [innerHTML]="
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                                  "
+                                ></span>
+                                <i
+                                  class="fa fa-asterisk asterik"
+                                  aria-hidden="true"
+                                  *ngIf="
+                                    isLabelHidden != undefined
+                                      ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                      : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                  "
+                                ></i>
+                                <i
+                                  [ngClass]="{
+                                    'tooltip-label-info customtooltip pl-2': true,
+                                    'pl-3':
+                                      isLabelHidden != undefined
+                                        ? !isLabelHidden[i] &&
+                                          (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                        : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                  }"
+                                  *ngIf="
+                                    isLabelHidden != undefined
+                                      ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                      : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                                  "
+                                  aria-hidden="true"
+                                >
+                                  <sym-tooltip [placement]="'right'">
+                                    <div
+                                      class="tooltip-label-info-container"
+                                      [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                    ></div
+                                  ></sym-tooltip>
+                                </i>
+                              </span>
+                              <div class="fgInline">
+                                <div class="checkBoxGrp" *ngIf="!displayLabelOnly && !displayErrorOnly">
+                                  <div
+                                    class="form-check form-check-inline"
+                                    *ngIf="field.fieldMetadata.LOOKUPCD == 'BOOLEAN'"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      [attr.name]="field.fieldUnName"
+                                      [checked]="
+                                        (field.model[field.fieldCd] == 'YES' ||
+                                          field.model[field.fieldCd] == true) &&
+                                        field.model[field.fieldCd] != null &&
+                                        field.model[field.fieldCd] != undefined
+                                          ? true
+                                          : false
+                                      "
+                                      [attr.id]="field.fieldID"
+                                      [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                                      class="form-check-input"
+                                      (click)="onInputChange(field, $event)"
+                                      [class.selectedValue]="
+                                        (field.model[field.fieldCd] == 'YES' ||
+                                          field.model[field.fieldCd] == true) &&
+                                        field.model[field.fieldCd] != null &&
+                                        field.model[field.fieldCd] != undefined
+                                          ? true
+                                          : false
+                                      "
+                                    />
+                                    <label class="form-check-label" [attr.for]="field.fieldCd"></label>
+                                  </div>
+                                  <div
+                                    class="form-check form-check-inline"
+                                    *ngIf="field.fieldMetadata.LOOKUPCD != 'BOOLEAN'"
+                                  >
+                                    <input
+                                      *ngFor="let opt of responseIO.lookups[field.fieldMetadata.LOOKUPCD]"
+                                      type="checkbox"
+                                      [attr.name]="field.fieldUnName"
+                                      [checked]="
+                                        field.model[field.fieldCd] == opt.cd &&
+                                        field.model[field.fieldCd] != null &&
+                                        field.model[field.fieldCd] != undefined
+                                          ? true
+                                          : false
+                                      "
+                                      [attr.id]="field.fieldID"
+                                      [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                                      class="form-check-input"
+                                      (click)="onInputChange(field, $event)"
+                                      [class.selectedValue]="
+                                        field.model[field.fieldCd] == opt.cd &&
+                                        field.model[field.fieldCd] != null &&
+                                        field.model[field.fieldCd] != undefined
+                                          ? true
+                                          : false
+                                      "
+                                    />
+                                    <label class="form-check-label" [attr.for]="field.fieldCd"></label>
+                                  </div>
+                                </div>
+                                <span
+                                  class="label"
+                                  *ngIf="
+                                    isLabelHidden != undefined
+                                      ? !isLabelHidden[i] && !displayErrorOnly
+                                      : !hideLabel && !displayErrorOnly
+                                  "
+                                >
+                                  <span *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel">
+                                    <ng-container
+                                      *ngIf="field.fieldMetadata.LOOKUPCD != 'BOOLEAN'; else elseLabel"
+                                    >
+                                      <ng-container
+                                        *ngFor="let opt of responseIO.lookups[field.fieldMetadata.LOOKUPCD]"
+                                      >
+                                        <ng-container
+                                          *ngIf="opt.desc != undefined && opt.desc != ''; else checkBoxLabel"
+                                        >
+                                          <span [innerHTML]="opt.desc | safeHtml: 'html'"> </span>
+                                        </ng-container>
+                                        <ng-template #checkBoxLabel>
+                                          <span
+                                            [innerHTML]="
+                                              settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                                                | safeHtml: 'html'
+                                            "
+                                          >
+                                          </span>
+                                        </ng-template>
+                                      </ng-container>
+                                    </ng-container>
+                                    <ng-template #elseLabel>
+                                      <span
+                                        [innerHTML]="
+                                          settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                                            | safeHtml: 'html'
+                                        "
+                                      >
+                                      </span>
+                                    </ng-template>
+                                  </span>
+
+                                  <i
+                                    [ngClass]="{
+                                      'tooltip-label-info customtooltip pl-2': true,
+                                      'pl-3':
+                                        isLabelHidden != undefined
+                                          ? !isLabelHidden[i] &&
+                                            (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                          : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    }"
+                                    *ngIf="
+                                      isLabelHidden != undefined
+                                        ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                        : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                                    "
+                                    aria-hidden="true"
+                                  >
+                                    <sym-tooltip [placement]="'right'">
+                                      <div
+                                        class="tooltip-label-info-container"
+                                        [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                      ></div
+                                    ></sym-tooltip>
+                                  </i>
+                                </span>
+
+                                <p
+                                  *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                                  class="errorText"
+                                >
+                                  <i
+                                    class="errorIcon"
+                                    data-toggle="tooltip"
+                                    data-placement="right"
+                                    [title]="settingService.extractHTML(field.error)"
+                                  ></i>
+                                  {{ settingService.extractHTML(field.error) }}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                        <ng-template #multiCheckboxContainer>
+                          <div>
+                            <span
+                              class="label"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && !displayErrorOnly
+                                  : !hideLabel && !displayErrorOnly
+                              "
+                            >
+                              <span
+                                *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel"
+                                [innerHTML]="
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                                "
+                              ></span>
+                              <i
+                                class="fa fa-asterisk asterik"
+                                aria-hidden="true"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                "
+                              ></i>
+                              <i
+                                [ngClass]="{
+                                  'tooltip-label-info customtooltip pl-2': true,
+                                  'pl-3':
+                                    isLabelHidden != undefined
+                                      ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                      : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                }"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                    : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                                "
+                                aria-hidden="true"
+                              >
+                                <sym-tooltip [placement]="'right'">
+                                  <div
+                                    class="tooltip-label-info-container"
+                                    [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                  ></div
+                                ></sym-tooltip>
+                              </i>
+                            </span>
+                            <div
+                              [ngClass]="{
+                                'form-group ': !inputOnly,
+                                fgMaterial: isCustomerPortal || settingService.isNewUIDisplayed,
+                                ptForLabel:
+                                  isLabelHidden != undefined
+                                    ? isLabelHidden[i] && !inputOnly
+                                    : hideLabel && !inputOnly
+                              }"
+                              [class.fgError]="field.error != undefined"
+                            >
+                              <ng-container *ngFor="let opt of field.options">
+                                <ng-container>
+                                  <div class="fgInline m-0">
+                                    <div class="checkBoxGrp" *ngIf="!displayLabelOnly && !displayErrorOnly">
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          type="checkbox"
+                                          [attr.name]="field.fieldUnName + '_' + opt.cd"
+                                          [checked]="
+                                            field.model[field.fieldCd] != null &&
+                                            field.model[field.fieldCd] != undefined &&
+                                            field.multiSelectValues != undefined &&
+                                            field.multiSelectValues.includes(opt.cd)
+                                              ? true
+                                              : false
+                                          "
+                                          [attr.value]="opt.cd"
+                                          [attr.id]="field.fieldID"
+                                          [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                                          class="form-check-input"
+                                          (click)="onInputChange(field, $event)"
+                                          [class.selectedValue]="
+                                            field.model[field.fieldCd] != null &&
+                                            field.model[field.fieldCd] != undefined &&
+                                            field.multiSelectValues != undefined &&
+                                            field.multiSelectValues.includes(opt.cd)
+                                              ? true
+                                              : false
+                                          "
+                                        />
+                                        <label class="form-check-label" [attr.for]="opt.cd"></label>
+                                      </div>
+                                    </div>
+                                    <span
+                                      class="label"
+                                      *ngIf="
+                                        isLabelHidden != undefined
+                                          ? !isLabelHidden[i] && !displayErrorOnly
+                                          : !hideLabel && !displayErrorOnly
+                                      "
+                                    >
+                                      <span
+                                        *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel"
+                                        [innerHTML]="opt.desc | safeHtml: 'html'"
+                                      >
+                                      </span>
+                                    </span>
+                                  </div>
+                                </ng-container>
+                              </ng-container>
+                              <p
+                                *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                                class="errorText"
+                              >
+                                <i
+                                  class="errorIcon"
+                                  data-toggle="tooltip"
+                                  data-placement="right"
+                                  [title]="settingService.extractHTML(field.error)"
+                                ></i>
+                                {{ settingService.extractHTML(field.error) }}
+                              </p>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'NUMERICSTRING'">
+                        <div
+                          [ngClass]="{
+                            'form-group ': !inputOnly,
+                            fgMaterial: isCustomerPortal || settingService.isNewUIDisplayed,
+                            'pt-20': (isCustomerPortal || settingService.isNewUIDisplayed) && !inputOnly,
+                            ptForLabel:
+                              isLabelHidden != undefined ? isLabelHidden[i] && !inputOnly : hideLabel && !inputOnly
+                          }"
+                          [class.fgError]="field.error != undefined"
+                        >
+                          <ng-container
+                            *ngIf="!isCustomerPortal && !settingService.isNewUIDisplayed && !displayErrorOnly"
+                          >
+                            <label
+                              [for]="field.fieldID"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                  : !hideLabel &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                "
+                                [innerHTML]="
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                                "
+                              ></span>
+                              <i
+                                class="fa fa-asterisk asterik"
+                                aria-hidden="true"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                "
+                              ></i>
+                              <i
+                                [ngClass]="{
+                                  'tooltip-label-info customtooltip pl-2': true,
+                                  'pl-3':
+                                    isLabelHidden != undefined
+                                      ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                      : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                }"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                    : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                                "
+                                aria-hidden="true"
+                              >
+                                <sym-tooltip [placement]="'right'">
+                                  <div
+                                    class="tooltip-label-info-container"
+                                    [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                  ></div
+                                ></sym-tooltip>
+                              </i> </label
+                          ></ng-container>
+                          <input
+                            *ngIf="!displayLabelOnly && !displayErrorOnly"
+                            type="text"
+                            class="form-control"
+                            [class.text-left]="
+                              field.fieldMetadata.DATATYPE == 'DOUBLE' ||
+                              field.fieldMetadata.DATATYPE == 'BIGDECIMAL'
+                            "
+                            [id]="field.fieldID"
+                            [attr.name]="field.fieldUnName"
+                            [(ngModel)]="field.model[field.fieldCd]"
+                            [attr.maxlength]="field.fieldMetadata.MAXLENGTH"
+                            [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                            [pattern]="field.fieldMetadata.FORMAT != undefined ? field.fieldMetadata.FORMAT : null"
+                            (keypress)="numberOnly($event, field)"
+                            (change)="onInputChange(field, $event)"
+                            [attr.placeholder]="
+                              field.fieldMetadata.PLACEHOLDER != undefined &&
+                              !isCustomerPortal &&
+                              !settingService.isNewUIDisplayed
+                                ? settingService.getLabelValue(field.fieldMetadata.PLACEHOLDER)
+                                : field.fieldMetadata.PLACEHOLDERREQD === 'YES' &&
+                                  !isCustomerPortal &&
+                                  !settingService.isNewUIDisplayed
+                                ? settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                                : ' '
+                            "
+                          />
+                          <ng-container
+                            *ngIf="(isCustomerPortal || settingService.isNewUIDisplayed) && !displayErrorOnly"
+                            ><label
+                              [for]="field.fieldID"
+                              *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel"
+                              [class.required]="
+                                ((hideLabel != undefined && !hideLabel) || isLabelHidden != undefined) &&
+                                (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              "
+                            >
+                              <ng-container *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel">{{
+                                settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                              }}</ng-container>
+                            </label>
+                          </ng-container>
+                          <p
+                            *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                            class="errorText"
+                          >
+                            <i
+                              class="errorIcon"
+                              data-toggle="tooltip"
+                              data-placement="right"
+                              [title]="settingService.extractHTML(field.error)"
+                            ></i>
+                            {{ settingService.extractHTML(field.error) }}
+                          </p>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'EMAIL'">
+                        <div
+                          [ngClass]="{
+                            'form-group ': !inputOnly,
+                            fgMaterial: isCustomerPortal || settingService.isNewUIDisplayed,
+                            'pt-20': (isCustomerPortal || settingService.isNewUIDisplayed) && !inputOnly,
+                            ptForLabel:
+                              isLabelHidden != undefined ? isLabelHidden[i] && !inputOnly : hideLabel && !inputOnly
+                          }"
+                          [class.fgError]="field.error != undefined"
+                        >
+                          <ng-container *ngIf="!isCustomerPortal && !settingService.isNewUIDisplayed">
+                            <label
+                              [for]="field.fieldID"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && !displayErrorOnly
+                                  : !hideLabel && !displayErrorOnly
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                "
+                                [innerHTML]="
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                                "
+                              ></span>
+                              <i
+                                class="fa fa-asterisk asterik"
+                                aria-hidden="true"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                "
+                              ></i>
+                              <i
+                                [ngClass]="{
+                                  'tooltip-label-info customtooltip pl-2': true,
+                                  'pl-3':
+                                    isLabelHidden != undefined
+                                      ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                      : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                }"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                    : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                                "
+                                aria-hidden="true"
+                              >
+                                <sym-tooltip [placement]="'right'">
+                                  <div
+                                    class="tooltip-label-info-container"
+                                    [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                  ></div
+                                ></sym-tooltip>
+                              </i>
+                            </label>
+                          </ng-container>
+                          <input
+                            *ngIf="!displayLabelOnly && !displayErrorOnly"
+                            type="email"
+                            class="form-control"
+                            [id]="field.fieldID"
+                            [attr.name]="field.fieldUnName"
+                            [(ngModel)]="field.model[field.fieldCd]"
+                            (change)="onInputChange(field, $event)"
+                            [attr.aria-describedby]="'emailHelp' + field.fieldID"
+                            [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                            [attr.maxlength]="field.fieldMetadata.MAXLENGTH"
+                            [attr.placeholder]="
+                              field.fieldMetadata.PLACEHOLDER != undefined &&
+                              !isCustomerPortal &&
+                              !settingService.isNewUIDisplayed
+                                ? settingService.getLabelValue(field.fieldMetadata.PLACEHOLDER)
+                                : field.fieldMetadata.PLACEHOLDERREQD === 'YES' &&
+                                  !isCustomerPortal &&
+                                  !settingService.isNewUIDisplayed
+                                ? settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                                : ' '
+                            "
+                            [class.text-uppercase]="
+                              (field.fieldMetadata.CASEVALUE != undefined &&
+                                field.fieldMetadata.CASEVALUE == 'UPPER') ||
+                              isFieldUpperCaseReq
+                            "
+                          />
+                          <ng-container
+                            *ngIf="(isCustomerPortal || settingService.isNewUIDisplayed) && !displayErrorOnly"
+                            ><label
+                              [for]="field.fieldID"
+                              *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel"
+                              [class.required]="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                  : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              "
+                            >
+                              <ng-container *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel">{{
+                                settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                              }}</ng-container>
+                            </label>
+                          </ng-container>
+                          <p
+                            *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                            class="errorText"
+                          >
+                            <i
+                              class="errorIcon"
+                              data-toggle="tooltip"
+                              data-placement="right"
+                              [title]="settingService.extractHTML(field.error)"
+                            ></i>
+                            {{ settingService.extractHTML(field.error) }}
+                          </p>
+                        </div>
+                      </ng-container>
+                      <ng-container
+                        *ngSwitchCase="['FCOMBO', 'LOOKUPTEXT', 'NCOMBO'].includes(field.type) ? field.type : ''"
+                      >
+                        <div
+                          [ngClass]="{
+                            'form-group ': !inputOnly,
+                            'fgMaterial customer-ui': isCustomerPortal || settingService.isNewUIDisplayed,
+                            fgMaterial: isCustomerPortal || settingService.isNewUIDisplayed,
+                            ptForLabel:
+                              isLabelHidden != undefined ? isLabelHidden[i] && !inputOnly : hideLabel && !inputOnly
+                          }"
+                          [class.fgError]="field.error != undefined"
+                        >
+                          <ng-container
+                            *ngIf="!isCustomerPortal && !settingService.isNewUIDisplayed && !displayErrorOnly"
+                          >
+                            <label
+                              [for]="field.fieldID"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && !displayErrorOnly
+                                  : !hideLabel && !displayErrorOnly
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                "
+                                [innerHTML]="
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                                "
+                              ></span>
+                              <i
+                                class="fa fa-asterisk asterik"
+                                aria-hidden="true"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                "
+                              ></i>
+                              <i
+                                [ngClass]="{
+                                  'tooltip-label-info customtooltip pl-2': true,
+                                  'pl-3':
+                                    isLabelHidden != undefined
+                                      ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                      : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                }"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                    : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                                "
+                                aria-hidden="true"
+                              >
+                                <sym-tooltip [placement]="'right'">
+                                  <div
+                                    class="tooltip-label-info-container"
+                                    [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                  ></div
+                                ></sym-tooltip>
+                              </i>
+                            </label>
+                          </ng-container>
+                          <ng-select
+                            #ngSelect
+                            *ngIf="!displayLabelOnly && !displayErrorOnly"
+                            [items]="field.foptions"
+                            [(ngModel)]="field.model[field.fieldCd + '_fc']"
+                            [id]="field.fieldID"
+                            [attr.name]="field.fieldUnName"
+                            [inputAttrs]="{ name: field.fieldUnName }"
+                            (change)="field.type != 'NCOMBO' ? onInputChange(field, $event) : undefined"
+                            (close)="field.type == 'NCOMBO' ? onInputChange(field, $event) : undefined"
+                            (open)="adjustDropdownWidth(ngSelect, field)"
+                            (clear)="onInputChange(field, $event)"
+                            (remove)="onInputChange(field, $event)"
+                            (focus)="onInputFocus(field, $event)"
+                            [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                            [multiple]="field.type == 'NCOMBO' ? true : false"
+                            [closeOnSelect]="field.type == 'NCOMBO' ? false : true"
+                            [virtualScroll]="'true'"
+                            [dropdownPosition]="'auto'"
+                            [placeholder]="
+                              field.fieldMetadata.PLACEHOLDER != undefined &&
+                              !isCustomerPortal &&
+                              !settingService.isNewUIDisplayed
+                                ? settingService.getLabelValue(field.fieldMetadata.PLACEHOLDER)
+                                : field.fieldMetadata.PLACEHOLDERREQD === 'YES' &&
+                                  !isCustomerPortal &&
+                                  !settingService.isNewUIDisplayed
+                                ? settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                                : ' - ' + settingService.getLabelValue('selectFirstOption') + ' - '
+                            "
+                            [notFoundText]="settingService.getLabelValue('No items found')"
+                          >
+                          </ng-select>
+                          <ng-container
+                            *ngIf="
+                              isLabelHidden != undefined
+                                ? !isLabelHidden[i] &&
+                                  !displayErrorOnly &&
+                                  (isCustomerPortal || settingService.isNewUIDisplayed)
+                                : !hideLabel &&
+                                  !displayErrorOnly &&
+                                  (isCustomerPortal || settingService.isNewUIDisplayed)
+                            "
+                          >
+                            <label
+                              [class.opacity-0]="
+                                isLabelHidden != undefined
+                                  ? isLabelHidden[i] &&
+                                    field.model[field.fieldCd + '_fc'] != undefined &&
+                                    field.model[field.fieldCd] != undefined
+                                  : hideLabel &&
+                                    field.model[field.fieldCd + '_fc'] != undefined &&
+                                    field.model[field.fieldCd] != undefined
+                              "
+                              [class.ng-select-label-font-color]="
+                                field.model[field.fieldCd + '_fc'] == undefined &&
+                                field.model[field.fieldCd] == undefined
+                              "
+                              [for]="field.fieldID"
+                              *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel"
+                              [class.required]="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                  : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              "
+                            >
+                              <ng-container *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel">{{
+                                settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                              }}</ng-container>
+                            </label>
+                          </ng-container>
+                          <p
+                            *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                            class="errorText"
+                          >
+                            <i
+                              class="errorIcon"
+                              data-toggle="tooltip"
+                              data-placement="right"
+                              [title]="settingService.extractHTML(field.error)"
+                            ></i>
+                            {{ settingService.extractHTML(field.error) }}
+                          </p>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'HIDDEN'">
+                        <input
+                          type="hidden"
+                          [id]="field.fieldID"
+                          [(ngModel)]="field.value"
+                          [attr.name]="field.fieldUnName"
+                        />
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'LABEL'">
+                        <div
+                          [ngClass]="{
+                            'form-group ': !inputOnly,
+                            fgMaterial: isCustomerPortal || settingService.isNewUIDisplayed,
+                            ptForLabel:
+                              isLabelHidden != undefined ? isLabelHidden[i] && !inputOnly : hideLabel && !inputOnly
+                          }"
+                          [class.fgError]="field.error != undefined"
+                        >
+                          <label
+                            [for]="field.fieldID"
+                            *ngIf="
+                              isLabelHidden != undefined
+                                ? !isLabelHidden[i] && field.index != -1 && !displayErrorOnly
+                                : !hideLabel && field.index != -1 && !displayErrorOnly
+                            "
+                          >
+                            <span
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                  : !hideLabel &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                              "
+                              [innerHTML]="
+                                settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                              "
+                            ></span>
+                            <i
+                              class="fa fa-asterisk asterik"
+                              aria-hidden="true"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                    (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                  : !hideLabel &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                    (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              "
+                            ></i>
+                            <i
+                              [ngClass]="{
+                                'tooltip-label-info customtooltip pl-2': true,
+                                'pl-3':
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              }"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                  : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                              "
+                              aria-hidden="true"
+                            >
+                              <sym-tooltip [placement]="'right'">
+                                <div
+                                  class="tooltip-label-info-container"
+                                  [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                ></div
+                              ></sym-tooltip>
+                            </i>
+                          </label>
+                          <div
+                            [id]="field.fieldID"
+                            class="pt-2"
+                            *ngIf="
+                              settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                              field.model[field.fieldCd] != undefined
+                            "
+                          >
+                            <span
+                              [innerHTML]="
+                                settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                rowIndex == -1
+                                  ? settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                                  : field.model[field.fieldCd] != undefined
+                                  ? (field.model[field.fieldCd] | safeHtml: 'html')
+                                  : ''
+                              "
+                              [class.label]="field.index == -1"
+                            >
+                            </span>
+                          </div>
+                          <p
+                            *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                            class="errorText"
+                          >
+                            <i
+                              class="errorIcon"
+                              data-toggle="tooltip"
+                              data-placement="right"
+                              [title]="settingService.extractHTML(field.error)"
+                            ></i>
+                            {{ settingService.extractHTML(field.error) }}
+                          </p>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'LABELCOMBO'">
+                        <div
+                          [ngClass]="{
+                            'form-group ': !inputOnly,
+                            fgMaterial: isCustomerPortal || settingService.isNewUIDisplayed,
+                            ptForLabel:
+                              isLabelHidden != undefined ? isLabelHidden[i] && !inputOnly : hideLabel && !inputOnly
+                          }"
+                          [class.fgError]="field.error != undefined"
+                        >
+                          <ng-container
+                            *ngIf="!isCustomerPortal && !settingService.isNewUIDisplayed && !displayErrorOnly"
+                          >
+                            <label
+                              [for]="field.fieldID"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && !displayErrorOnly
+                                  : !hideLabel && !displayErrorOnly
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                "
+                                [innerHTML]="
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                                "
+                              ></span>
+                              <i
+                                class="fa fa-asterisk asterik"
+                                aria-hidden="true"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                "
+                              ></i>
+                              <i
+                                [ngClass]="{
+                                  'tooltip-label-info customtooltip pl-2': true,
+                                  'pl-3':
+                                    isLabelHidden != undefined
+                                      ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                      : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                }"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                    : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                                "
+                                aria-hidden="true"
+                              >
+                                <sym-tooltip [placement]="'right'">
+                                  <div
+                                    class="tooltip-label-info-container"
+                                    [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                  ></div
+                                ></sym-tooltip>
+                              </i>
+                            </label>
+                          </ng-container>
+
+                          <select
+                            *ngIf="!displayLabelOnly && !displayErrorOnly"
+                            [id]="field.fieldID"
+                            class="labelCombo form-control"
+                            [(ngModel)]="field.model[field.fieldCd]"
+                            (change)="onInputChange(field, $event)"
+                            (focus)="onInputFocus(field, $event)"
+                            [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                          >
+                            <option [ngValue]="null">- Select -</option>
+                            <option *ngFor="let opt of field.options" [ngValue]="opt.cd">
+                              {{ opt.desc }}
+                            </option>
+                          </select>
+                          <ng-container
+                            *ngIf="(isCustomerPortal || settingService.isNewUIDisplayed) && !displayErrorOnly"
+                            ><label
+                              [for]="field.fieldID"
+                              *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel"
+                              [class.required]="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                  : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              "
+                            >
+                              <ng-container *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel">{{
+                                settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                              }}</ng-container>
+                            </label>
+                          </ng-container>
+                          <p
+                            *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                            class="errorText"
+                          >
+                            <i
+                              class="errorIcon"
+                              data-toggle="tooltip"
+                              data-placement="right"
+                              [title]="settingService.extractHTML(field.error)"
+                            ></i>
+                            {{ settingService.extractHTML(field.error) }}
+                          </p>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'TEXTAREA'">
+                        <div
+                          [ngClass]="{
+                            'form-group ': !inputOnly,
+                            fgMaterial: isCustomerPortal || settingService.isNewUIDisplayed,
+                            'pt-20': (isCustomerPortal || settingService.isNewUIDisplayed) && !inputOnly,
+                            ptForLabel:
+                              isLabelHidden != undefined ? isLabelHidden[i] && !inputOnly : hideLabel && !inputOnly
+                          }"
+                          [class.fgError]="field.error != undefined"
+                        >
+                          <ng-container *ngIf="!isCustomerPortal && !settingService.isNewUIDisplayed">
+                            <label
+                              [for]="field.fieldID"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && !displayErrorOnly
+                                  : !hideLabel && !displayErrorOnly
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                "
+                                [innerHTML]="
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                                "
+                              ></span>
+                              <i
+                                class="fa fa-asterisk asterik"
+                                aria-hidden="true"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                "
+                              ></i>
+                              <i
+                                [ngClass]="{
+                                  'tooltip-label-info customtooltip pl-2': true,
+                                  'pl-3':
+                                    isLabelHidden != undefined
+                                      ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                      : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                }"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                    : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                                "
+                                aria-hidden="true"
+                              >
+                                <sym-tooltip [placement]="'right'">
+                                  <div
+                                    class="tooltip-label-info-container"
+                                    [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                  ></div>
+                                </sym-tooltip>
+                              </i> </label
+                          ></ng-container>
+                          <textarea
+                            *ngIf="!displayLabelOnly && !displayErrorOnly"
+                            class="form-control"
+                            [id]="field.fieldID"
+                            [attr.name]="field.fieldUnName"
+                            type="textArea"
+                            [class.text-uppercase]="
+                              (field.fieldMetadata.CASEVALUE != undefined &&
+                                field.fieldMetadata.CASEVALUE == 'UPPER') ||
+                              isFieldUpperCaseReq
+                            "
+                            [(ngModel)]="field.model[field.fieldCd]"
+                            [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                            (change)="onInputChange(field, $event)"
+                            (focus)="onInputFocus(field, $event)"
+                            [attr.maxlength]="field.fieldMetadata.MAXLENGTH"
+                            [attr.placeholder]="
+                              field.fieldMetadata.PLACEHOLDER != undefined &&
+                              !isCustomerPortal &&
+                              !settingService.isNewUIDisplayed
+                                ? settingService.getLabelValue(field.fieldMetadata.PLACEHOLDER)
+                                : field.fieldMetadata.PLACEHOLDERREQD === 'YES' &&
+                                  !isCustomerPortal &&
+                                  !settingService.isNewUIDisplayed
+                                ? settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                                : ' '
+                            "
+                          ></textarea>
+                          <ng-container
+                            *ngIf="(isCustomerPortal || settingService.isNewUIDisplayed) && !displayErrorOnly"
+                            ><label
+                              [for]="field.fieldID"
+                              *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel"
+                              [class.required]="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                  : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              "
+                            >
+                              <ng-container *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel">{{
+                                settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                              }}</ng-container>
+                            </label>
+                          </ng-container>
+                          <p
+                            *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                            class="errorText"
+                          >
+                            <i
+                              class="errorIcon"
+                              data-toggle="tooltip"
+                              data-placement="right"
+                              [title]="settingService.extractHTML(field.error)"
+                            ></i>
+                            {{ settingService.extractHTML(field.error) }}
+                          </p>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'RADIOBUTTON'">
+                        <div
+                          [ngClass]="{
+                            'form-group radioButton ': !inputOnly,
+                            fgMaterial: isCustomerPortal || settingService.isNewUIDisplayed
+                          }"
+                          [class.fgError]="field.error != undefined"
+                        >
+                          <span
+                            class="label"
+                            *ngIf="
+                              isLabelHidden != undefined
+                                ? !isLabelHidden[i] && !displayErrorOnly
+                                : !hideLabel && !displayErrorOnly
+                            "
+                          >
+                            <span
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                  : !hideLabel &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                              "
+                              [innerHTML]="
+                                settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                              "
+                            ></span>
+                            <i
+                              class="fa fa-asterisk asterik"
+                              aria-hidden="true"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                    (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                  : !hideLabel &&
+                                    settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                    (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              "
+                            ></i>
+                            <i
+                              [ngClass]="{
+                                'tooltip-label-info customtooltip pl-2': true,
+                                'pl-3':
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              }"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                  : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                              "
+                              aria-hidden="true"
+                            >
+                              <sym-tooltip [placement]="'right'">
+                                <div
+                                  class="tooltip-label-info-container"
+                                  [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                ></div
+                              ></sym-tooltip>
+                            </i>
+                          </span>
+                          <div
+                            class="radioGrp radioGrpBox radioGrpText"
+                            *ngIf="!displayLabelOnly && !displayErrorOnly"
+                          >
+                            <div class="form-check form-check-inline" *ngFor="let opt of field.options">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [attr.name]="field.fieldUnName + '_' + opt.cd"
+                                [id]="field.fieldID + '_' + opt.cd"
+                                value="{{ opt.cd }}"
+                                (click)="field.model[field.fieldCd] = opt.cd; onInputChange(field, $event)"
+                                [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                                [checked]="
+                                  field.model[field.fieldCd] != undefined && field.model[field.fieldCd] == opt.cd
+                                    ? true
+                                    : false
+                                "
+                                [class.selectedValue]="
+                                  field.model[field.fieldCd] != undefined && field.model[field.fieldCd] == opt.cd
+                                    ? true
+                                    : false
+                                "
+                              />
+                              <label
+                                class="form-check-label"
+                                [class]="opt.addtnlFld2"
+                                [for]="field.fieldID"
+                                [innerHTML]="opt.desc | safeHtml: 'html'"
+                              >
+                              </label>
+                            </div>
+                            <p
+                              *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                              class="errorText"
+                            >
+                              <i
+                                class="errorIcon"
+                                data-toggle="tooltip"
+                                data-placement="right"
+                                [title]="settingService.extractHTML(field.error)"
+                              ></i>
+                              {{ settingService.extractHTML(field.error) }}
+                            </p>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'SWITCHBUTTON'">
+                        <div>
+                          <div
+                            [ngClass]="{
+                              'form-group ': !inputOnly,
+                              fgMaterial: isCustomerPortal || settingService.isNewUIDisplayed,
+                              ptForLabel:
+                                isLabelHidden != undefined
+                                  ? isLabelHidden[i] && !inputOnly
+                                  : hideLabel && !inputOnly
+                            }"
+                            class="fgInline"
+                            [class.fgError]="field.error != undefined"
+                          >
+                            <span
+                              class="label switchBtn-right mt-2"
+                              *ngIf="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && !displayErrorOnly
+                                  : !hideLabel && !displayErrorOnly
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                "
+                                [innerHTML]="
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                                "
+                              ></span>
+                              <i
+                                class="fa fa-asterisk asterik"
+                                aria-hidden="true"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      (field.error == undefined ? true : false) &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel &&
+                                      (field.error == undefined ? true : false) &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                "
+                              ></i>
+                              <i
+                                [ngClass]="{
+                                  'tooltip-label-info customtooltip pl-2': true,
+                                  'pl-3':
+                                    isLabelHidden != undefined
+                                      ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                      : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                }"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                    : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                                "
+                                aria-hidden="true"
+                              >
+                                <sym-tooltip [placement]="'right'">
+                                  <div
+                                    class="tooltip-label-info-container"
+                                    [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                  ></div
+                                ></sym-tooltip>
+                              </i>
+                            </span>
+                            <div *ngIf="!displayLabelOnly && !displayErrorOnly">
+                              <ng-container *ngIf="field.options != undefined && field.options.length > 0">
+                                <div class="form-check form-check-inline switchBtn">
+                                  <button
+                                    type="button"
+                                    [ngClass]="{
+                                      'btn btn-toggle': true,
+                                      active:
+                                        (field.model[field.fieldCd] == 'YES' ||
+                                          field.model[field.fieldCd] == true) &&
+                                        field.model[field.fieldCd] != null &&
+                                        field.model[field.fieldCd] != undefined
+                                          ? true
+                                          : false
+                                    }"
+                                    data-toggle="button"
+                                    aria-pressed="true"
+                                    autocomplete="off"
+                                    *ngIf="i == 0"
+                                    class="form-check-input"
+                                    type="radio"
+                                    [attr.name]="field.fieldUnName"
+                                    [id]="field.fieldID"
+                                    (click)="
+                                      field.model[field.fieldCd] =
+                                        (field.model[field.fieldCd] == 'YES' ||
+                                          field.model[field.fieldCd] == true) &&
+                                        field.model[field.fieldCd] != null &&
+                                        field.model[field.fieldCd] != undefined
+                                          ? 'NO'
+                                          : 'YES';
+                                      onInputChange(field, $event)
+                                    "
+                                    [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                                  >
+                                    <div class="handle"></div>
+                                    <div class="toggle-button-text">
+                                      <div class="toggle-button-text-on">
+                                        {{ settingService.getLabelValue('YES') | uppercase }}
+                                      </div>
+                                      <div class="toggle-button-text-off">
+                                        {{ settingService.getLabelValue('NO') | uppercase }}
+                                      </div>
+                                    </div>
+                                  </button>
+                                </div>
+                              </ng-container>
+                            </div>
+
+                            <p
+                              *ngIf="field.error != undefined && (!displayLabelOnly || displayErrorOnly)"
+                              class="errorText"
+                            >
+                              <i
+                                class="errorIcon"
+                                data-toggle="tooltip"
+                                data-placement="right"
+                                [title]="settingService.extractHTML(field.error)"
+                              ></i>
+                              {{ settingService.extractHTML(field.error) }}
+                            </p>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'FILE'">
+                        <div
+                          [ngClass]="{
+                            'form-group ': !inputOnly,
+                            'fgMaterial customer-ui': isCustomerPortal || settingService.isNewUIDisplayed,
+                            'pt-20': (isCustomerPortal || settingService.isNewUIDisplayed) && !inputOnly,
+                            ptForLabel:
+                              isLabelHidden != undefined ? isLabelHidden[i] && !inputOnly : hideLabel && !inputOnly
+                          }"
+                          [class.fgError]="field.error != undefined"
+                        >
+                          <ng-container
+                            *ngIf="!isCustomerPortal && !settingService.isNewUIDisplayed && !displayErrorOnly"
+                          >
+                            <label
+                              [for]="field.fieldID"
+                              *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel"
+                            >
+                              <span
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined
+                                "
+                                [innerHTML]="
+                                  settingService.getLabelValue(field.fieldMetadata.LABELKEY) | safeHtml: 'html'
+                                "
+                              ></span>
+                              <i
+                                class="fa fa-asterisk asterik"
+                                aria-hidden="true"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                    : !hideLabel &&
+                                      settingService.getLabelValue(field.fieldMetadata.LABELKEY) != undefined &&
+                                      (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                "
+                              ></i>
+
+                              <i
+                                [ngClass]="{
+                                  'tooltip-label-info customtooltip pl-2': true,
+                                  'pl-3':
+                                    isLabelHidden != undefined
+                                      ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                      : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                }"
+                                *ngIf="
+                                  isLabelHidden != undefined
+                                    ? !isLabelHidden[i] && field.fieldMetadata.TOOLTIP !== undefined
+                                    : !hideLabel && field.fieldMetadata.TOOLTIP !== undefined
+                                "
+                                aria-hidden="true"
+                              >
+                                <sym-tooltip [placement]="'right'">
+                                  <div
+                                    class="tooltip-label-info-container"
+                                    [innerHTML]="field.fieldMetadata.TOOLTIP | safeHtml: 'html'"
+                                  ></div
+                                ></sym-tooltip>
+                              </i>
+                            </label>
+                          </ng-container>
+                          <input
+                            class="form-control"
+                            *ngIf="!displayLabelOnly && !displayErrorOnly"
+                            type="file"
+                            multiple="1"
+                            [(ngModel)]="field.value"
+                            [disabled]="field.fieldMetadata.ENABLED == 'NO' ? true : false"
+                            (change)="onInputChange(field, $event)"
+                          />
+                          <ng-container
+                            *ngIf="isCustomerPortal || (settingService.isNewUIDisplayed && !displayErrorOnly)"
+                            ><label
+                              [for]="field.fieldID"
+                              *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel"
+                              [class.required]="
+                                isLabelHidden != undefined
+                                  ? !isLabelHidden[i] && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                                  : !hideLabel && (field.fieldMetadata.MINOCCURS === '1' ? true : false)
+                              "
+                            >
+                              <ng-container *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel">{{
+                                settingService.getLabelValue(field.fieldMetadata.LABELKEY)
+                              }}</ng-container>
+                            </label></ng-container
+                          >
+                          <p
+                            *ngIf="
+                              (field.error != undefined || field.errorList != undefined) &&
+                              (!displayLabelOnly || displayErrorOnly)
+                            "
+                            class="errorText"
+                          >
+                            <i
+                              class="errorIcon"
+                              data-toggle="tooltip"
+                              data-placement="right"
+                              [title]="settingService.extractHTML(field.error)"
+                            ></i>
+                            {{ settingService.extractHTML(field.error) }}
+                          </p>
+                        </div>
+                      </ng-container>
+                    </div>
+                    <div
+                      *ngIf="
+                        (displaySearchForField != undefined && displaySearchForField == field.fieldCd) ||
+                        field.fieldMetadata.SEARCHREQD === 'YES'
+                      "
+                      [class]="
+                        ((displaySearchForField != undefined && displaySearchForField == field.fieldCd) ||
+                          field.fieldMetadata.SEARCHREQD === 'YES') &&
+                        settingService.isMobileViewRendered()
+                          ? 'pt-4 mt-2 pl-2 '
+                          : 'col-sm-1 col-md-1 co-lg-1 col-xl-1 mt-4 pt-2 '
+                      "
+                    >
+                      <a class="search-icon customtooltip" (click)="onSearchIconClick(field)">
+                        <sym-tooltip>
+                          {{ settingService.getLabelValue('search') }}
+                        </sym-tooltip>
+                      </a>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+              <div
+                *ngIf="
+                  responseIO['isMetadataHelpReqd'] === true && (field.index == undefined || field.index <= -2)
+                "
+                [ngClass]="{
+                  'col-sm-9 col-md-9 co-lg-9 col-xl-9 help_container':
+                    responseIO['isMetadataHelpReqd'] === true && (field.index == undefined || field.index <= -2)
+                }"
+              >
+                <div class="help_section form-group no-gutters">
+                  <div class="col-sm-4 col-md-4 co-lg-4 col-xl-4 no-gutters">
+                    {{
+                      field.model.objName != undefined ? field.model.objName + '.' + field.fieldCd : field.fieldCd
+                    }}
+                  </div>
+                  <div class="col-sm-2 col-md-2 co-lg-2 col-xl-2 no-gutters">
+                    {{ field.fieldMetadata.DATATYPE }}
+                  </div>
+                  <div class="col-sm-6 col-md-6 co-lg-6 col-xl-6 no-gutters">
+                    <div>
+                      <span *ngIf="field.fieldMetadata.HELP != undefined">
+                        <span>Help: </span>
+                        <span>{{ field.fieldMetadata.HELP }},</span>
+                      </span>
+                      <span *ngIf="field.fieldMetadata.FORMAT != undefined">
+                        <span>Format:</span>
+                        <span>
+                          {{ field.fieldMetadata.FORMAT }}
+                        </span>
+                      </span>
+                    </div>
+                    <div>
+                      <i class="fa fa-info-circle customtooltip" aria-hidden="true">
+                        <sym-tooltip
+                          [placement]="
+                            field.fieldMetadata.HELP == undefined && field.fieldMetadata.FORMAT == undefined
+                              ? 'right'
+                              : 'left'
+                          "
+                        >
+                          <ng-container *ngFor="let key of field['metadataKeyList']">
+                            <div *ngIf="key != 'HELP' && key != 'FORMAT' && key != 'EXTENDSENTITYTYPE'">
+                              <span>{{ key }}:</span>
+                              <span>{{ field.fieldMetadata[key] }}</span>
+                            </div>
+                          </ng-container>
+                          <div *ngIf="field.fieldMetadata.LOOKUPCD != undefined">
+                            <span>
+                              <ng-container *ngIf="field.fieldMetadata.FORMAT != undefined"> ,</ng-container>
+                              Lookup data:
+                            </span>
+                            <span>
+                              <ng-container *ngIf="field.options != undefined">
+                                <ng-container *ngFor="let opt of field.options">
+                                  {{ opt.cd + ',' }}
+                                </ng-container>
+                              </ng-container>
+                            </span>
+                          </div>
+                        </sym-tooltip>
+                      </i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<ng-template #readOnlyTemplate>
+  <div [ngClass]="{ 'pb-2': !labelOnly }" *ngIf="fields && fields.length != 0 && responseIO != undefined">
+    <div [ngClass]="{ hidenLabel: labelOnly }">
+      <div [ngClass]="{ 'form-row': !inputOnly && isRowRequired }" *ngIf="fields && fields.length != 0">
+        <ng-container *ngFor="let field of fields; index as i">
+          <div [ngClass]="{ 'mt-2': !inputOnly }" [ngClass]="field.divClass">
+            <div
+              [ngClass]="{
+                'form-groupReadonly ': !inputOnly,
+                ptForLabel: isLabelHidden != undefined ? isLabelHidden[i] && !inputOnly : hideLabel && !inputOnly
+              }"
+            >
+              <div [ngClass]="rowIndex === undefined ? 'label-container' : 'gridLabel-container'">
+                <label
+                  *ngIf="
+                    isLabelHidden != undefined
+                      ? !isLabelHidden[i] && field.label != undefined
+                      : !hideLabel && field.label != undefined
+                  "
+                >
+                  <ng-container *ngIf="isLabelHidden != undefined ? !isLabelHidden[i] : !hideLabel">
+                    <span>{{ field.label }} </span></ng-container
+                  >
+                </label>
+              </div>
+              <div class="input-container" *ngIf="rowIndex != undefined ? (rowIndex != -1 ? true : false) : true">
+                <a
+                  class="input_isFormReadOnly"
+                  *ngIf="'VALUELINK' == field.type"
+                  href="javascript:void(0);"
+                  (click)="onValueClicked(field)"
+                >
+                  {{ field.fieldValue }}</a
+                >
+                <span *ngIf="!displayLabelOnly && !('VALUELINK' == field.type)" class="input_isFormReadOnly">
+                  {{ field.fieldValue }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>

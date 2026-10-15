@@ -1,0 +1,199 @@
+<div
+  [ngClass]="{
+    'loginWrapper scrollDiv': companySUNPH === 'SLGFI' || (companySUNPH === undefined && company === 'SLGFI'),
+    'loginWrapper2 scrollDiv': companySUNPH === 'SLOCPI' || (companySUNPH === undefined && company === 'SLOCPI')
+  }"
+>
+  <sym-pop-up [popupID]="'otpPopup'" [popupSize]="'small'" [hideCloseButton]="true" [displayPopupAtTop]="true">
+    <form
+      name="otp_form"
+      [formGroup]="otpForm"
+      (ngSubmit)="!otpResend ? validateOTP() : return()"
+      (keyup.enter)="!otpResend ? validateOTP() : return()"
+      autocomplete="off"
+    >
+      <div class="otpPopUp">
+        <div class="row">
+          @if (getOTP) {
+          <div class="col-sm-12 text-center">
+            <span class="font-weight-bold" style="font-size: large">
+              <!-- {{ settingService.getLabelValue('verification') }} -->
+              @if (company === 'SLOCPI' || (company === undefined && companySUNPH === 'SLOCPI')) {
+              <div>
+                <img
+                  [src]="'assets/theme/images/company/logo2.png'"
+                  height="70;"
+                  style="width: 100% !important; max-width: 358px !important"
+                />
+              </div>
+              } @if (company === 'SLGFI' || (company === undefined && companySUNPH === 'SLGFI')) {
+              <div>
+                <img
+                  [src]="'assets/theme/images/company/UPPER LEFT LOGO - 2064x499.png'"
+                  height="70"
+                  style="width: 100% !important; max-width: 358px !important"
+                />
+              </div>
+              } </span
+            ><br /><br />
+            @if (otpRecipientEmailId) {
+            <span class="mt-3">
+              {{
+                settingService.getLabelValue('We will send you a 6-digit code to your mobile number to proceed')
+              }}
+              <br />
+              {{ settingService.getLabelValue('Is this email address?') }}
+              <br />
+              {{ otpRecipientEmailId }}
+            </span>
+            } @if (otpMobileNumber) {
+            <span class="mt-3">
+              {{
+                settingService.getLabelValue('We will send you a 6-digit code to your mobile number to proceed')
+              }}
+              <br />
+              {{ settingService.getLabelValue('Is this your number?') }}
+              <br />
+              {{ otpMobileNumber }}
+            </span>
+            }
+            <div class="mt-3">
+              <sym-button
+                (onClick)="getOTPClick(false)"
+                [text]="settingService.getLabelValue('Send code')"
+                [id]="'sendOTP'"
+              ></sym-button>
+              <!-- *ngIf="sendOtpClicked && timeLeft === undefined" -->
+              <!-- <sym-button *ngIf="showButton "
+                        (onClick)="getOTPClickEmail()"
+                      [text]="'Send OTP to my email'" [id]="'sendOTPEmail'"></sym-button> -->
+              <sym-button
+                (onClick)="notMyNumber()"
+                [text]="settingService.getLabelValue('Not my number')"
+                [id]="'notMyNumber'"
+              ></sym-button>
+              <sym-pop-up
+                [popupID]="'notMyNumberPopup'"
+                [popupSize]="'large'"
+                [displayPopupAtTop]="true"
+                [hideCloseButton]="false"
+                ><div>
+                  <span>Please contact your advisor to change your mobile number.</span>
+                </div>
+              </sym-pop-up>
+            </div>
+          </div>
+          } @if (!getOTP) {
+          <div class="col-sm-12">
+            {{ settingService.getLabelValue('otpSent') }}
+            <!-- <ng-container
+                  *ngIf="recipientAddress.emailId == undefined || recipientAddress.mobileNumber == undefined"
+                  >
+                  <span>{{ settingService.getLabelValue('regEmailMobile') }}</span></ng-container
+                  > -->
+            @if (recipientAddress != undefined) { @if (recipientAddress.emailId != undefined || isEmailClicked) {
+            <span>{{ settingService.getLabelValue('your email address') }}</span
+            ><br />
+            <span class="text-info showRecipientAddress">{{ recipientAddress.emailId }}</span>
+            }
+            <!-- <ng-container *ngIf="recipientAddress.mobileNumber != undefined"> </ng-container> -->
+            @if (recipientAddress.mobileNumber != undefined) {
+            <span>{{ settingService.getLabelValue('your mobile number') }}</span
+            ><br />
+            <span class="text-info showRecipientAddress">{{ recipientAddress.mobileNumber }}</span>
+            } }
+          </div>
+          }
+          <div class="col-sm-12"></div>
+          @if (!getOTP) {
+          <div class="col-sm-8">
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control"
+                id="txtemailOTP"
+                maxlength="6"
+                autocomplete="off"
+                name="txtemailOTP"
+                [(ngModel)]="currentOTP"
+                (keydown.space)="$event.preventDefault()"
+                size="6"
+                formControlName="otp"
+                [disabled]="
+                  recipientAddress != undefined &&
+                  recipientAddress.emailId == undefined &&
+                  recipientAddress.mobileNumber == undefined
+                    ? true
+                    : false
+                "
+              />
+              @if (timeLeft == undefined) {
+              <div class="fa fa-spinner fa-spin ml-2"></div>
+              }
+              <span class="bar"></span>
+              @if (otpError) {
+              <div>
+                <p class="text-danger">{{ settingService.getLabelValue('invalidOtp') }}</p>
+              </div>
+              }
+            </div>
+          </div>
+          } @if (!getOTP) {
+          <div class="col-sm-4" id="timerChange">
+            @if (!otpResend) {
+            <span>{{ timeLeft }}</span>
+            } @if (!otpResend && timeLeft != undefined) {
+            <span><small class="text-warning"> </small></span>
+            } @if (otpResend) {
+            <a href="javascript:void(0)" (click)="resendOTP()" class="text-primary">
+              {{ settingService.getLabelValue('resendOtp') }}</a
+            >
+            }
+          </div>
+          }
+        </div>
+        @if (!getOTP) {
+        <div class="text-center">
+          <button
+            type="button"
+            class="btn btn_primary submitbtnId"
+            [disabled]="isLoaderRequired || timeLeft == undefined || currentOTP.length !== 6 || otpResend"
+            (click)="validateOTP()"
+          >
+            Log in @if (isLoaderRequired) {
+            <span class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>
+            }
+            <!-- {{ 'Log in') }} -->
+          </button>
+          &nbsp; &nbsp;
+          <!-- <button type="button" class="btn btn_outline_primary closebtnId" (click)="closeModal()">
+                      {{ settingService.getLabelValue('CLOSE_CONFIRMATION') }}
+                    </button> -->
+        </div>
+        }
+        <br />
+        <!-- email button -->
+        @if (otpResend && !isEmailClicked) {
+        <div class="text-center" style="margin-right: 15px">
+          <button
+            type="button"
+            id="emailotpbutton"
+            class="btn btn_primary submitbtnId"
+            (click)="getOTPClickEmail()"
+          >
+            Send to my email instead
+          </button>
+        </div>
+        }
+        <!-- sms button -->
+        @if (otpResend && isEmailClicked) {
+        <div class="text-center" style="margin-right: 15px">
+          <button type="button" id="smsotpbutton" class="btn btn_primary submitbtnId" (click)="getOTPClick(true)">
+            Send to SMS instead
+          </button>
+        </div>
+        }
+      </div>
+    </form>
+  </sym-pop-up>
+</div>

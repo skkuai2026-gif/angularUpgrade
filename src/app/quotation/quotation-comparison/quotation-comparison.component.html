@@ -1,0 +1,33 @@
+<sym-page-container [stepList]="stepList" [breadCrumbList]="breadCrumbList">
+  <sym-carousel>
+    @for (id of idList; track id) {
+    <div [style.width]="100 / idList.length + '%'" class="card div_border pb-5">
+      <div>
+        <div class="btn_align">
+          <sym-button
+            [class]="'btn btn_outline_primary ml-2 mr-2'"
+            [id]="'btn_Cancel'"
+            [iconClass]="'fa fa-close'"
+            [isLoaderRequired]="false"
+            (onClick)="onDeleteSelected(id)"
+          ></sym-button>
+        </div>
+        <div class="for-subtabs">
+          <sym-quotation-preview [quotationId]="id"></sym-quotation-preview>
+        </div>
+      </div>
+      <div class="btn_bottom">
+        <div class="text-center btn-block">
+          <sym-button
+            [id]="'btn_proceed'"
+            [text]="'proceed'"
+            (onClick)="onProceedButtonClick(id)"
+            [isLoaderRequired]="true"
+          >
+          </sym-button>
+        </div>
+      </div>
+    </div>
+    }
+  </sym-carousel>
+</sym-page-container>

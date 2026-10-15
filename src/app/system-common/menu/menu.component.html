@@ -1,0 +1,70 @@
+@if (authService.isUserLoggedIn() && !authService.isMenuHidden()) {
+<div class="leftNav">
+  <div class="leftNavContent">
+    <div class="profileContent">
+      <span>{{ userName.charAt(0) }}</span>
+      <!-- <h6>{{ userName }}</h6> -->
+      <div
+        class="block"
+        [class.blockCollapse]="isUserDropdownOpen"
+        id="user_dropdown"
+        (click)="onUserDropDownClick()"
+      >
+        <h4 id="{{ userName }}">
+          <span class="loginUsername">{{ settingService.getLabelValue(userName) }}</span>
+          <!-- <span *ngIf="showMDRTLabel" class="mdrt-label">MDRT User</span> -->
+          <span class="btnToggleBlock">
+            @if (isUserDropdownOpen) {
+            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+            } @if (!isUserDropdownOpen) {
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            }
+          </span>
+        </h4>
+      </div>
+    </div>
+    <div class="menubar scrollDiv">
+      @if (isUserDropdownOpen) {
+      <div class="userSetting">
+        <ul class="lnUl">
+          @for (systemMenu of service.menuItems; track systemMenu) { @if (systemMenu.serviceType === 'SYSTEM') {
+          <sym-menu-item [menu]="systemMenu"></sym-menu-item>
+          }
+          <!-- <li *ngIf="setting.serviceType === 'SYSTEM'">
+                <a
+                  [routerLink]="setting.action"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="onSettingOptionClicked(setting)"
+                  [ngClass]="setting.code === 'SignOutAPI' ? 'signout' : ''"
+                  >
+                  <i [class]="setting.imageSrc"></i>
+                  <span>{{ settingService.getLabelValue(setting.description) }}</span>
+                </a>
+              </li> -->
+          }
+        </ul>
+      </div>
+      } @if (service.menuItems && service.menuItems.length > 0 && !isUserDropdownOpen) {
+      <ul class="lnUl">
+        @for (menu of service.menuItems; track menu; let i = $index) { @if (menu.serviceType !== 'SYSTEM') {
+        <sym-menu-item [menu]="menu"></sym-menu-item>
+        }
+        <!-- <li *ngIf="menu.serviceType !== 'SYSTEM'">
+            <a
+              [routerLink]="menu.action"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="onMenuSelected()"
+              >
+              <i [class]="menu.imageSrc"></i>
+              <span>{{ menu.description }}</span>
+            </a>
+          </li> -->
+        }
+      </ul>
+      }
+    </div>
+  </div>
+</div>
+}

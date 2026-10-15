@@ -1,0 +1,86 @@
+<sym-pop-up
+  [headerText]="
+    restApiDataInfo != undefined && restApiDataInfo.screenReqdFl != 'NO'
+      ? restApiDataInfo.apiDesc + ' API'
+      : undefined
+  "
+  [popupID]="'apiRequest'"
+  [popupSize]="'large'"
+  [hidePopLayout]="restApiDataInfo != undefined && restApiDataInfo.screenReqdFl == 'NO' ? true : false"
+  (popupClosed)="onPopupClosed($event)"
+>
+  <div class="requestResposneContainer">
+    <div class="row p-0">
+      <div class="rrBodyDisplayed">
+        @if (service.httpReq != undefined) {
+        <div>
+          <div class="rrHeader pb-2">
+            <h4>Request</h4>
+            <div class="btn-end">
+              <i class="fa fa-download" aria-hidden="true" (click)="downloadJson('RequestIO')"></i>
+              &nbsp; @if (!showAPITextArea) {
+              <i class="fa fa-pencil" aria-hidden="true" (click)="showAPITextArea = !showAPITextArea"></i>
+              } @if (showAPITextArea) {
+              <i class="fa fa-code-fork" aria-hidden="true" (click)="showAPITextArea = !showAPITextArea"></i>
+              }
+              <!-- <i class="fa fa-copy ml-2 mr-2" aria-hidden="true" (click)="CopyJson()"></i> -->
+            </div>
+          </div>
+          <div class="scrollDiv json-body">
+            @if (showAPITextArea) {
+            <textarea rows="20" cols="300" (change)="onRequestJSONChangeTA($event)">
+                  {{ apiRequestData }} </textarea
+            >
+            } @if (!showAPITextArea) {
+            <sym-json-tree-editor
+              [jsonString]="apiRequestData"
+              [responseIO]="responseIO"
+              [service]="service"
+              [collapseAll]="requestCollapseAll"
+              [disableInput]="disableReqInput"
+              (inputChanged)="onRequestJSONChange($event)"
+            ></sym-json-tree-editor>
+            }
+          </div>
+        </div>
+        }
+      </div>
+      <div class="rrBodyDisplayed">
+        @if (apiResponseData != undefined) {
+        <div>
+          <div class="rrHeader pb-2">
+            <h4 class="d-inline-block">Response</h4>
+            <div class="btn-end">
+              <i class="fa fa-download" aria-hidden="true" (click)="downloadJson('ResponseIO')"></i>
+            </div>
+          </div>
+          <div class="scrollDiv json-body">
+            <sym-json-tree-editor
+              [jsonString]="apiResponseData"
+              [disableInput]="true"
+              [collapseAll]="responseCollapseAll"
+              [responseIO]="updatedResponseIO"
+              [service]="service"
+            ></sym-json-tree-editor>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  @if (!disableReqInput) {
+  <div class="text-center mt-1">
+    <sym-button [class]="'btn btn_primary'" [text]="'Resend Request'" (onClick)="sendRequest()"></sym-button>
+    &nbsp;&nbsp; <label> No. of threads </label> &nbsp;<input type="number" id="threadCount" value="3" />
+    &nbsp;&nbsp;
+    <sym-button
+      [class]="'btn btn-dark'"
+      [text]="'Resend Multi Request'"
+      (onClick)="sendRequestMulti()"
+    ></sym-button>
+  </div>
+  }
+</sym-pop-up>
+<!-- <sym-pop-up [headerText]="'Copy & Paste Editor'" [popupID]="'copyPasteEditor'" [popupSize]="'large'"
+  >editpor</sym-pop-up
+  >" -->

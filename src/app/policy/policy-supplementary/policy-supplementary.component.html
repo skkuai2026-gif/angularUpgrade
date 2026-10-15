@@ -1,0 +1,28 @@
+@if (selectedTab && selectedTab != undefined) {
+<sym-sub-tab [tabList]="tabList" (selectedTab)="setTab($event)">
+  <sym-policy-party-details [model]="service.responseIO.data.SupplementaryList[selectedTab.index]">
+  </sym-policy-party-details>
+  @if ( service.productFacets && service.productFacets.data && service.productFacets.data['MULTILIFEAPPLICABLE'] &&
+  service.productFacets.data['MULTILIFEAPPLICABLE'].length > 0 && service.productFacets.data['MULTILIFEAPPLICABLE']
+  == 'YES' ) {
+  <sym-field-group
+    [fieldIds]="
+      'multiLifeField1,multiLifeField2,multiLifeField3,productPlanOptionCd,baseSumAssured,modalPremium,baseAnnualPremium'
+    "
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.SupplementaryList[selectedTab.index]"
+  ></sym-field-group>
+  <sym-data-entry-grid
+    [fieldIds]="
+      'extraTypeCd,decisionCd,loadingTypeCd,processingTypeCd,extraFlatAmt,extraFlatDuration,extraPercent,extraPercDuration'
+    "
+    [responseIO]="service.responseIO"
+    (notifyChange)="onInputChanged($event)"
+    [modelList]="service.responseIO.data.SupplementaryList[selectedTab.index]['ProductExtraList']"
+    [isAddRequired]="false"
+    [isDeleteRequired]="false"
+  ></sym-data-entry-grid>
+  }
+</sym-sub-tab>
+}

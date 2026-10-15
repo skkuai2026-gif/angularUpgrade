@@ -1,0 +1,703 @@
+{
+    "data": {
+        "type": "collateral",
+        "types":[
+            {
+                "id":"product_suite",
+                "name":"Product Suite",
+                "icon":"icon_product_suite.png",
+                "link":"sub_types",
+                "sub_types":[
+                    {
+                        "id":"protection_plan",
+                        "name":"Protection Plans",
+                        "icon":"icon_protection_plan.png",
+                        "link":"features",
+                        "features": [
+                            {
+                                "id":"why_protection_plan",
+                                "name":"Why Protection Plans?",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":""
+                            },
+                            {
+                                "id":"eProtect",
+                                "name":"eProtect",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>The simplest way to secure your family online</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<p>Affordable life insurance premium rates: You can get yourself insured at affordable premium rates with this life insurance term policy</p><p>Life Insurance Benefit: The life insurance coverage that you get ensures that incase of an unfortunate death of the Life Insured, an amount equal to sum assured will be paid as a life insurance benefit to the nominee</p><p>Family Care Benefit as part of the life insurance benefit: Unfortunate events in life come unannounced and during this time of distress your family could require contingency support. Family Care Benefit, is a unique proposition by way of which, a part of the life insurance benefit i.e. Rs 100,000 is paid as a lumpsum to the nominee in case of death of the life insured, within 48 hours** of submission of all relevant claim documents. This term life insurance benefit is paid subject to the policy being inforce and the premiums for 2 consecutive term insurance policy years from the date of issuance or the date of latest reinstatement have been paid.</p><p>Reward for non-smokers, premium discounts on the term insurance policy: You will be eligible for special rates if you are a non-smoker and you have applied for a life insurance benefit (sum assured) in excess of Rs 5,000,000. This gives better value for money for non-smokers when it comes to the life insurance premium that they pay.</p><p>Hassle Free process of buying a term insurance policy: Now get the advantage of Life Insurance cover at the click of a button. eProtect offers you convenience at your finger tips, as you can buy this term insurance plan online to save the time and effort that would have been required otherwise.</p><p>Tax benefits along with life insurance: Apart from the life insurance benefit with this term insurance plan, you can avail the tax benefits on the premiums paid and the benefits received subject to the prevailing provisions under Income Tax Act, 1961. The tax benefits are subject to change as per change in Tax laws from time to time. So in addition to the life insurance coverage you also get to save tax.</p>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '><table class='table'><thead><tr><th colspan='2'>POLICY TERM (Years)</th><th colspan='2'>ENTRY AGE (Years)</th><th>MAXIMUM MATURITY AGE (Years)</th></tr></thead><tbody><tr><td>Minimum</td><td>Maximum</td><td>Minimum</td><td>Maximum</td><td rowspan='2'>60</td> </tr><tr><td>10</td><td>30</td><td>18</td><td>60 (-) Policy term</td></tr></tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    },
+                                    {
+                                        "id":"calculators",
+                                        "title":"Calculators",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"elite_secure",
+                                "name":"Elite Secure",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>Pure Life Insurance cover at very competitive premiums</p><p>Option to cover your life till 75 years with a unique to age 75 years term</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><b>What you will get:</b> <ul> <li> Pure Life Insurance cover at very competitive premiums </li><li> Option to cover your life till 75 years with a unique to age 75 years term </li><li> You receive tax benefits under section 80C and 10(10D)</li></ul> <br> <b>Why chose this plan?</b> <ul> <li> You want comprehensive protection for your loved ones </li><li> You want a single product that can take care of all your Insurance needs</li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "icon":"",
+                                        "content":"<div class='tableContent'><table  class='table'> <tbody><tr class='eligibilitytableheader'> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td>Minimum</td> <td>Maximum</td> <td>Minimum</td> <td>Maximum</td> <td rowspan='2' style='font-size:16px;'>75</td> </tr> <tr class='eligibilitytablerow'> <td colspan='2'>10, 15, 20, 25</td> <td>18</td> <td>65</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"secure_confident",
+                                "name":"Secure Confident",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>A simple Life Insurance product</p><p>Option to enhance protection with the addition of Riders</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><b>What you will get:</b> <ul> <li> Pure Life Insurance cover at very competitive premiums </li><li> Option to cover your life till 75 years with a unique to age 75 years term </li><li> You receive tax benefits under section 80C and 10(10D)</li></ul> <br> <b>Why chose this plan?</b> <ul> <li> You want comprehensive protection for your loved ones </li><li> You want a single product that can take care of all your Insurance needs</li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "icon":"",
+                                        "content":"<div class='tableContent'><table  class='table'> <tbody><tr class='eligibilitytableheader'> <td> PREMIUMS </td> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td> </td> <td>Minimum</td> <td>Maximum</td> <td>Minimum</td> <td>Maximum</td> <td rowspan='3' style='font-size:16px;'>65</td> </tr> <tr class='eligibilitytablerow'> <td>Single</td> <td>5</td> <td>15</td> <td>18</td> <td>60</td> </tr> <tr class='eligibilitytablerow'> <td>Regular</td> <td>10</td> <td>30</td> <td>18</td> <td>55</td> </tr> </tbody></table>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"family_income_secure",
+                                "name":"Family Income Secure",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>Guaranteed Annual Income for your family in case of any eventuality 100% return of premium at maturity</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><b>What you will get:</b> <ul> <li> Pure Life Insurance cover at very competitive premiums </li><li> Option to cover your life till 75 years with a unique to age 75 years term </li><li> You receive tax benefits under section 80C and 10(10D)</li></ul> <br> <b>Why chose this plan?</b> <ul> <li> You want comprehensive protection for your loved ones </li><li> You want a single product that can take care of all your Insurance needs</li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "icon":"",
+                                        "content":"<div class='tableContent'><table  class='table'> <tbody><tr class='eligibilitytableheader'> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td>Minimum</td> <td>Maximum</td> <td>Minimum</td> <td>Maximum</td> <td rowspan='2' style='font-size:16px;'>65</td> </tr> <tr class='eligibilitytablerow'> <td>10</td> <td>30</td> <td>18</td> <td>55</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"protect_plus",
+                                "name":"Protect Plus",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>Financial Protection for your family</p><p>Guaranteed Cash Back on maturity</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><b>What you will get:</b> <ul> <li> Pure Life Insurance cover at very competitive premiums </li><li> Option to cover your life till 75 years with a unique to age 75 years term </li><li> You receive tax benefits under section 80C and 10(10D)</li></ul> <br> <b>Why chose this plan?</b> <ul> <li> You want comprehensive protection for your loved ones </li><li> You want a single product that can take care of all your Insurance needs</li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "icon":"",
+                                        "content":"<div class='tableContent'><table  class='table'> <tbody><tr class='eligibilitytableheader'> <td> PREMIUMS </td> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td> </td> <td>Minimum</td> <td>Maximum</td> <td>Minimum</td> <td>Maximum</td> <td rowspan='3' style='font-size:16px;'>65</td> </tr> <tr class='eligibilitytablerow'> <td>Single</td> <td>2</td> <td>15</td> <td>18</td> <td>60</td> </tr> <tr class='eligibilitytablerow'> <td>Regular</td> <td>10</td> <td>30</td> <td>18</td> <td>55</td> </tr> </tbody></table>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id":"children_plan",
+                        "name":"Children Plans",
+                        "icon":"icon_children_plan.png",
+                        "link":"features",
+                        "features":[
+                            {
+                                "id":"why_children_plan",
+                                "name":"Why Children Plans?",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":""
+                            },
+                            {
+                                "id":"children_plan",
+                                "name":"Childrens Plan",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"An investment with profit plan with choice of options",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li>Lets you customize an ideal plan for your child and provide invaluable financial support via choice of plan option like Double Benefit Plan , Accelerated Benefit Plan or Maturity Benefit Plan </li><li>The Double Benefit Plan Option helps you secure your childs immediate and future needs. <ul><li>In case of your unfortunate demise, we will pay the Sum Assured to your child (Beneficiary). </li><li>Your family need not pay any further premiums and the policy continues. </li><li>And on maturity of the plan, we will pay you the Sum Assured plus Bonuses Declared </li></ul> </li><li>The Accelerated  Benefit Plan Option <ul> <li>In case of your unfortunate demise, we will pay the Sum Assured to your child (Beneficiary). The policy terminates. <br>Or  </li><li>On survival till maturity of the plan, we will pay you the Sum Assured plus Bonuses Declared </li></ul> </li><li>The Maturity  Benefit Plan Option <ul> <li>In case of your unfortunate demise, need not pay future premiums as the future premiums are waived off </li><li>And on maturity of the plan, we will pay you the Sum Assured plus Bonuses Declared </li></ul> </li><li>You can choose to pay your premium as either Annually, Half-Yearly or Quarterly depending on your convenience. You also have a range of convenient auto premium payment options </li><li>Tax benefits are offered under section 80C and 10(10D) of the Income Tax Act, 1961 </li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '><table class='table'> <tbody><tr class='eligibilitytableheader'> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td>Minimum</td> <td>Maximum</td> <td>Minimum</td> <td>Maximum</td> <td rowspan='2' style='font-size:16px;'>75</td> </tr> <tr class='eligibilitytablerow'> <td>10</td> <td>25</td> <td>18</td> <td>60</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"youngstar_super_2",
+                                "name":"YoungStar Super II",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>A savings cum insurance plan with regular payout after claim.</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li>Option of Life  or Life and Health option </li><li>In case of unfortunate demise or critical illness, <ul><li>Greater of Sum Assured (less partial withdrawals) or Fund Value to child (Beneficiary). </li><li>We will pay 100% of all the future regular premiums to the Beneficiary as and when due, on an annual basis. The policy will terminate. </li></ul> </li><li>Choose the premium along with the Sum Assured, depending on the level of protection required. </li><li>This plan can be taken by filling Short Medical Questionnaire, which may not require you to go for medicals. Kindly refer to the product brochure for details. </li><li>You can change your investment fund choices in two ways: <ul> <li>Switching: You can move your accumulated funds from one fund to another anytime </li><li>Premium Redirection: You can pay your future premiums into a different selection of funds, as per your need </li></ul> </li><li>Tax benefits are offered under section 80C and 10(10D) of the Income Tax Act, 1961</li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='level3text'>different format</div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"youngstar_super_premium",
+                                "name":"YoungStar Super Premium",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>A savings cum insurance plan with choice of benefit option.</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li>Option of Life  or Life and Health option </li><li>In case of unfortunate demise or critical illness, under Save option <ul> <li>Sum Assured (less partial withdrawals) to child (Beneficiary). </li><li> 100% of all the future regular premiums towards the policy, on an annual basis. </li><li>On Maturity , the fund value is paid</li></ul> </li><li>Choose the premium along with the Sum Assured, depending on the level of protection required. </li><li>This plan can be taken by filling Short Medical Questionnaire, which may not require you to go for medicals. Kindly refer to the product brochure for details. </li><li>You can change your investment fund choices in two ways: <ul> <li>Switching: You can move your accumulated funds from one fund to another anytime </li><li>Premium Redirection: You can pay your future premiums into a different selection of funds, as per your need </li></ul> </li><li>Tax benefits are offered under section 80C and 10(10D) of the Income Tax Act, 1961</li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='level3text'>different format</div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id":"retirement_plan",
+                        "name":"Retirement Plans",
+                        "icon":"icon_retirement_plan.png",
+                        "link":"features",
+                        "features":[
+                            {
+                                "id":"why_retirement_plan",
+                                "name":"Why Retirement Plans?",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":""
+                            },
+                            {
+                                "id":"immediate_annuity",
+                                "name":"Immediate Annuity",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>Its a contract that uses your capital to provide you with a guaranteed income throughout your lifetime</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><b>Benefits of Immediate Annuity</b><ul><li>Income is guaranteed and is unaffected by rise or fall in interest rate</li><li>Help to plan life better due to knowledge of guaranteed income throughout life</li></ul><b>Annuity Payment Modes</b><ul><li>Yearly, Half Yearly, Quarterly, Monthly</li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='level3text'><b>Age at entry: </b><ul><li>30 ï¿½ 85 yrs (same for second life in Joint Life cases)</li><li>30 - 70 yrs in case of annuity with return of purchase price</li></ul></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id":"wealth_creation_plans",
+                        "name":"Wealth Creation Plans",
+                        "icon":"icon_saving_plan.png",
+                        "link":"features",
+                        "features":[
+                            {
+                                "id":"why_si_plan",
+                                "name":"Why Savings & Investment Plans?",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":""
+                            },
+                            {
+                                "id":"bright_stars_edge",
+                                "name":"Bright Stars Edge",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>Double Protection Benefits for your loved ones - Sum assured Plus Fund value is paid in case something unfortunate were to happen to you</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><b>What you will get? </b> <ul> <li> Double Protection Benefits for your loved ones - Sum assured Plus Fund value is paid in case something unfortunate were to happen to you </li><li> Receive full fund value at the time of maturity of the policy </li><li> Flexible options like partial withdrawal, premium redirection etc  </li><li> You receive tax benefits under section 80C and 10(10D) </li></ul> <b> Why choose this plan? </b> <ul> <li>If you want a plan that would completely secure an important financial goal of your family (e.g. childs education, marriage etc) </li><li>If you are looking for a flexible investment plan that can adapt to your investment habits </li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '><table class='table'> <tbody><tr class='eligibilitytableheader'> <td colspan='2'> TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td>Premium pay term</td> <td>Policy term</td> <td>Minimum</td> <td>Maximum</td> <td rowspan='2' style='font-size:16px;'>75</td> </tr> <tr class='eligibilitytablerow'> <td>7</td> <td>10, 15 or 20</td> <td>12</td> <td>60</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"power_kid",
+                                "name":"Power Kid",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>Flexibility to choose life insurance benefit <br>Provision of Education Allowance <br>Career Development Allowance <br>Future premium payments in case of death of the life insured</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><b>What you will get? </b> <ul> <li> Double Protection Benefits for your loved ones - Sum assured Plus Fund value is paid in case something unfortunate were to happen to you </li><li> Receive full fund value at the time of maturity of the policy </li><li> Flexible options like partial withdrawal, premium redirection etc  </li><li> You receive tax benefits under section 80C and 10(10D) </li></ul> <b> Why choose this plan? </b> <ul> <li>If you want a plan that would completely secure an important financial goal of your family (e.g. childs education, marriage etc) </li><li>If you are looking for a flexible investment plan that can adapt to your investment habits </li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '><table class='table'><tbody><tr class='eligibilitytableheader'> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td>Minimum</td> <td>Maximum</td> <td>Minimum</td> <td>Maximum</td> <td rowspan='2' style='font-size:16px;'>75</td> </tr> <tr class='eligibilitytablerow'> <td>10</td> <td>30</td> <td>12</td> <td>60</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"monthly_income_plan",
+                                "name":"Monthly Income Plan",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>Guaranteed monthly income that helps fulfill your loved ones desires while protecting them in case of an unfortunate event</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li>This plan is a 'With Profits' savings plan, which offers the following features <ul> <li> The plan receives simple Reversionary Bonuses, which are usually added annually </li><li>At maturity, the plan pays out the basic Sum Assured plus Reversionary Bonuses declared during the policy term. Interim or Terminal Bonus may also be payable, if declared </li></ul> </li><li>The plan can be surrendered for cash value before maturity </li><li>Provides financial support to your family by way of a lump sum payment in case of your unfortunate death within the policy term. The lump sum is the basic Sum Assured plus any bonus additions </li><li>Tax benefit under Section 80C and 10(10D) of Income Tax Act 1961, subject to provisions contained therein</li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '><table class='table'> <tbody><tr class='eligibilitytableheader'> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td>Minimum</td> <td>Maximum</td> <td>Minimum</td> <td>Maximum</td> <td rowspan='2' style='font-size:16px;'>60</td> </tr> <tr class='eligibilitytablerow'> <td>10</td> <td>10</td> <td>18</td> <td>50</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"future_invest",
+                                "name":"Future Invest",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>Flexibility of partial withdrawals <br>Option to stay invested for 5 years post maturity</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li>Ideal way to secure your long-term financial goals and your familys financial independence by giving a lump sum payment (basic Sum Assured plus any Bonus Additions) on survival up to Maturity date</li><li> Provides invaluable protection to your family by way of lump sum payment in case of unfortunate demise within policy term </li><li>Gives you the flexibility to customize your policy according to your needs by adding any one of the 3 benefit options available i.e. ADB , Critical Illness or Waiver of Premium </li><li>You can choose to pay your premium as either Annually, Half-Yearly or Quarterly depending on your convenience. You also have a range of convenient auto premium payment options</li><li>Tax benefits under sections 80C, 80D and 10(10D) of Income Tax Act, 1961 </li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '><table class='table'> <tbody><tr class='eligibilitytableheader'> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td>Minimum</td> <td>Maximum</td> <td>Minimum</td> <td>Maximum</td> <td rowspan='2' style='font-size:16px;'>75</td> </tr> <tr class='eligibilitytablerow'> <td>10</td> <td>30</td> <td>12</td> <td>60</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"ssip",
+                                "name":"Sampoorn Samridhi Insurance Plan",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>An endowment plan with whole of life cover option.</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li>Death Benefit:  Sum assured plus attached bonuses will be paid to the nominee. In case of death due to accident, an additional Sum Assured will be paid. The policy will terminate and no further benefits will be payable. </li><li>Choice of Maturity Benefit Option - on survival till maturity , you can choose maturity benefit option <ul> <li>Enhanced Cash Option: Sum Assured + Reversionary Bonus +any interim bonus + any terminal bonus + Enhanced Terminal Bonus. Policy terminates and no further benefits are payable. </li><li>Enhanced Cover Option: Sum Assured + Reversionary Bonus + any Interim bonus + any Terminal Bonus payable on maturity + Additional Sum Assured on unfortunate death of life assured up to age of 99 years. </li></ul> </li><li>High Sum Assured Discount: For policies with a Sum Assured of Rs 5 Lakh and more, a discount of 5% would be offered on the basic premium (i.e. excluding policy fee and any underwriting extra premium). </li><li>The Reversionary Bonus is guaranteed to be at least equal to 3% p.a. for all bonuses declared till 31 March 2021. </li><li>Tax benefits under sections 80C and 10(10D) of the Income Tax Act, 1961 subject to the provisions contained therein </li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '>Test</div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"saving_assurance_plan",
+                                "name":"Savings Assurance Plan",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>A with Profits savings plan which helps in building long-term savings.</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li>The policy receives simple reversionary bonuses, which are usually added annually. </li><li> At maturity, the policy pays out the basic sum assured plus reversionary bonuses declared during the policy term. Interim or terminal bonus may also be payable. </li><li> Death Benefit : <ul> <li>On death during the first year, a sum equal to 80% of premiums received is payable. </li><li>On death after the first year and during the policy term, all premiums paid to date will be returned with compound interest calculated at 6% per annum, subject to a maximum of the sum assured plus reversionary bonuses declared to date. </li></ul> </li><li>The chosen amount is automatically invested from your bank account into the plan. </li><li> Pay premiums either yearly, half-yearly, quarterly or monthly modes </li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '><table class='table'>  <tbody><tr  class='eligibilitytableheader'> <td colspan='2'> TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'>  <td colspan='2'>  </td> <td>Minimum</td> <td>Maximum</td> <td rowspan='2' style='font-size:16px;'>70</td> </tr> <tr class='eligibilitytablerow'> <td colspan='2'>10</td> <td>18</td> <td>60</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"spwlip",
+                                "name":"Single Premium Whole of Life Insurance Plan",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>A whole of life plan that aims to provide growth for money</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li> This participating plan is a Whole of Life plan aimed at providing long-term real growth for your money </li><li>No medicals! </li><li>By nature, this is a whole life policy where the term extends for the life. However, you can decide on the policy term by using a feature built into it. For a period of 4 weeks, after any one of the 10th, 15th, 20th and subsequent five-year anniversaries, you can choose to receive the Sum Assured plus any attaching bonuses, in full. Once money has been received, your policy will cease or you may also continue the policy for your whole life </li><li>Currently Section 80C benefit is available for the premium paid under the plan to the extent of 20% of the Sum Assured. In the event of a death claim the money paid is exempt as per Section 10(10D), of the Income Tax Act 1961 </li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '><table class='table'> <tbody><tr class='eligibilitytableheader'> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td>Minimum</td> <td>Maximum</td> <td>Minimum</td> <td>Maximum</td> </tr> <tr class='eligibilitytablerow'> <td colspan='2'>Up to 99 years</td> <td>18</td> <td>70</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"crest",
+                                "name":"Crest",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>A limited pay savings and insurance plan with choice of investment options.</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li> Pay premiums only for 5 years. </li><li>Choice of two Investment Options - Highest NAV Guarantee Fund or Free Asset Allocation Option. </li><li> Benefit of minimum guaranteed NAV of Rs. 15 at maturity (with Highest NAV Guarantee Fund) </li><li>Maturity Benefit: Fund value as per the investment option selected. </li><li>Death Benefit:  Higher of Sum Assured (less partial withdrawals) or total fund value to your family. Please refer to product brochure for details. </li><li> Can be taken by filling Short Medical Questionnaire, which may not require you to go for medicals. Kindly refer to the product brochure for details. </li><li> Tax benefits are offered under section 80C and 10(10D) of the Income Tax Act, 1961 </li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '><table class='table'><tbody><tr class='eligibilitytablerow'> <td> Minimum Premium </td> <td> Rs. 50,000 </td> </tr> <tr class='eligibilitytablerow'> <td> Maximum Premium </td> <td> No limit </td> </tr> <tr class='eligibilitytablerow'> <td> Premium Payment Frequency </td> <td> Annual </td> </tr> <tr class='eligibilitytablerow'> <td> Premium Payment Term </td> <td> 5 years </td> </tr> <tr class='eligibilitytablerow'> <td> Minimum Sum Assured </td> <td> 10 x Annual Premium </td> </tr> <tr class='eligibilitytablerow'> <td> Maximum Sum Assured </td> <td> 20 x Annual Premium </td> </tr> </tbody></table></div> <div class='tableContent '><table class='table'> <tbody><tr class='eligibilitytableheader'> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td>Minimum</td> <td>Maximum</td> <td>Minimum</td> <td>Maximum</td> <td rowspan='2' style='font-size:16px;'>65</td> </tr> <tr class='eligibilitytablerow'> <td>10</td> <td>19</td> <td>14</td> <td>55</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"new_money_back_plan",
+                                "name":"New Money Back Plan",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>Get regular cash back at periodic intervals, so that you can fulfill your dreams and aspirations.</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'> <ul> <li> Money Back: On completion of every 4 years, get a percentage of sum assured as cash payout. The payout will be as defined below: &lt; &lt; Table here &gt; &gt; </li><li> Maturity Benefit: On maturity, survival benefit due at that point (as detailed in the above table) along with attaching bonuses on the full Sum Assured will be paid. </li><li> Pay premium as either Annually, Half-Yearly, Monthly or Quarterly depending on your convenience. </li><li> For policies with Sum Assured of Rs 5 Lakh and more, a discount of 5% would be offered on the basic premium (i.e. excluding policy fee). </li><li> Tax benefits under sections 80C and 10(10D) of Income Tax Act, 1961</li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '><table class='table'><tbody><tr class='eligibilitytableheader'> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td colspan='2'>   </td> <td>Minimum</td> <td>Maximum</td> <td rowspan='2' style='font-size:16px;'>65</td> </tr> <tr class='eligibilitytablerow'> <td colspan='2'> 12, 16, 20 or 24 </td> <td>14</td> <td>53</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"proGrowth_flexi",
+                                "name":"ProGrowth Flexi",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>A savings cum insurance plan that builds your savings and offers you unmatched flexibilities.</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li> This plan provides valuable protection to your family in case you are not around. In case of your unfortunate demise during the policy term, we will pay the greater of the Sum Assured or your total fund value to your nominee. </li><li> You can choose any of the following 2 plan options as per your requirement. <ul> <li>Life Option = Death Benefit </li><li> Extra Life Option = Death Benefit + Accidental Death Benefit </li></ul> </li><li> On maturity, you can take the Fund Value at the prevailing unit prices as lump sum or you can opt for settlement option. </li><li> You have flexibility of <ul> <li> Switching: You can move your accumulated funds from one fund to another anytime </li><li> Premium Redirection: You can pay your future premiums into a different selection of funds, as per your need </li><li> Changing your premium paying term, subject to terms and condition. See brochure for details.</li></ul></li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '>No HTML</div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"proGrowth_maximiser",
+                                "name":"ProGrowth Maximiser",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>A single premium plan with choice of investment options.</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li> Choose Investment options as per your need: You can invest into any of the 3 investment option designed to meet different investment and return needs. <ul> <li> Highest NAV Guarantee Fund - offers the Guaranteed NAV applicable at maturity of your policy will be the higher of Rs. 15 or the highest NAV recorded daily during the first 7 years from the launch of the Highest NAV Guarantee Fund. </li><li> Capital Guarantee Fund - This fund guarantees that the Unit Price on maturity of the policy will be at least equal to the Unit Price that was used to allocate units to the single premium invested by you at inception of the policy. </li><li> Free Asset Allocation - This option enables you to invest in any of the 5 non guaranteed fund(s) available under this option. You can make your own investment strategy by switching between the funds as desired. </li></ul> </li><li> Invest additional single premium top- ups as per your convenience anytime. Please refer to the product brochure for details. </li><li> Death benefit: Greater of the Fund value or Sum Assured (less withdrawals as mentioned in sales aid) will be payable to the nominee. </li><li> Maturity benefit: Fund value as per investment option selected. </li><li> This plan can be taken by filling Short Medical Questionnaire, which may not require you to go for medicals. Kindly refer to the product brochure for details. </li><li> Tax benefits as per laws.</li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '><table class='table'> <tbody><tr class='eligibilitytablerow'> <td> Minimum Initial Single Premium </td> <td> Rs. 50,000 </td> </tr> <tr class='eligibilitytablerow'> <td> Maximum Initial Single Premium </td> <td> No limit </td> </tr> <tr class='eligibilitytablerow'> <td> Minimum Single Premium Top-up </td> <td> Rs. 10,000 </td> </tr> <tr class='eligibilitytablerow'> <td> Maximum Single Premium Top-up </td> <td> Free Asset Allocation Option: No limit. <br>Highest NAV Guarantee Fund Option: Equal to the Single Premium paid at inception </td> </tr> </tbody></table></div><div class='tableContent '><table class='table'><tbody><tr class='eligibilitytableheader'> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td>Minimum</td> <td>Maximum</td> <td>Minimum</td> <td>Maximum</td> <td rowspan='2' style='font-size:16px;'>75</td> </tr> <tr class='eligibilitytablerow'> <td> 5 (only in spl policy) / 10</td> <td>10</td> <td>14</td> <td>65</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"proGrowth_super2",
+                                "name":"ProGrowth Super II",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>An comprehensive savings cum investment plan with choice of protection options.</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li> You can choose any of the following 8 plan options as per your requirement. <ul> <li> Life Option = Death Benefit </li><li> Extra Life Option = Death Benefit + Accidental Death Benefit </li><li> Life and Health Option = Death Benefit + Critical Illness Benefit </li><li> Extra Life   Health Option = Death Benefit + Critical Illness Benefit + Accidental Death Benefit </li><li> Life and Disability Option = Death Benefit + Accidental Total   Permanent Disability Benefit </li><li> Extra Life and Disability Option = Death Benefit + Accidental Death Benefit + Accidental Total   Permanent Disability Benefit </li><li> Life   Health   Disability Option = Death Benefit + Critical Illness + Accidental Total   Permanent Disability Benefit </li><li> Extra Life   Health   Disability Option = Death Benefit + Accidental Death Benefit+ Critical Illness + Accidental Total   Permanent Disability Benefit </li></ul> </li><li> Death benefit: Sum Assured and your total fund value is paid to your nominee. </li><li> Maturity benefit: Fund Value. </li><li> This plan can be taken by filling Short Medical Questionnaire, which may not require you to go for medicals. Kindly refer to the product brochure for details. </li><li> In case of any financial exigencies, partial withdrawal can be done to meet the needs. See the brochure for details. </li><li> You can change your investment fund choices in two ways: <ul> <li> Switching: You can move your accumulated funds from one fund to another anytime </li><li> Premium Redirection: You can pay your future premiums into a different selection of funds, as per your need</li></ul></li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '>No HTML</div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id":"health_plan",
+                        "name":"Health Plans",
+                        "icon":"icon_health_plan.png",
+                        "link":"features",
+                        "features":[
+                            {
+                                "id":"why_health_plan",
+                                "name":"Why Health Plans?",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":""
+                            },
+                            {
+                                "id":"triple_health",
+                                "name":"Triple Health",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>Cover for up to three unrelated critical illnesses</p><p>Premium waived after the first claim</p><p>Return of premium option also available</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li>Provides valuable protection on survival post diagnosis of a critical illnesses </li><li>Covers as many as 30 critical illnesses </li><li>Lump sum benefit payment paid irrespective of medical expenses </li><li>The policy continues even after the benefit payment paid on selected illness </li><li>Choice of the level of health cover and premium payment </li><li>Convenient and hassle free claims </li><li>Tax benefits are available under section 80D under Income Tax Act, 1961 </li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '><table class='table'><tbody><tr class='eligibilitytableheader'> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td>Minimum</td> <td>Maximum</td> <td>Minimum</td> <td>Maximum</td> <td rowspan='2' style='font-size:16px;'>65</td> </tr> <tr class='eligibilitytablerow'> <td>5</td> <td>20</td> <td>18</td> <td>55</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            },
+                            {
+                                "id":"easyHealth",
+                                "name":"EasyHealth",
+                                "icon":"icon2.png",
+                                "link":"details",
+                                "description":"<p>Extremely affordable premiums starting as low as Rs 3 per day</p><p>A range of Daily Hospital Cash Benefit options, with additional benefits in case of accidental hospitalisation in an ICU or otherwise</p>",
+                                "details":[
+                                    {
+                                        "id":"features",
+                                        "title":"Features",
+                                        "icon":"",
+                                        "content":"<div class='level3text'><ul> <li>82 major surgical procedures are covered. </li><li>Option to include hospital cash benefit </li><li>Automatic increase in the level of health cover (subject to terms and conditions) ensures that the increasing medical costs are taken care of. </li><li>Lump sum benefits are paid regardless of the actual medical expenses. </li><li>The policy continues even after the after the payment of first or subsequent surgical procedures, subject to terms and conditions as stated in the policy brochure. </li><li>Flexibility to tailor-make the policy by choosing level of health cover, benefit options level and premium payment as per your needs. </li><li>Convenient and hassle free claims with cashless benefits on surgeries and hospitalization in any of the network hospitals. </li><li>Tax benefits can be availed under section 80D of the Income Tax Act, 1961 </li></ul></div>"
+                                    },
+                                    {
+                                        "id":"eligibility",
+                                        "title":"Eligibility",
+                                        "content":"<div class='tableContent '><table class='table'><tbody><tr class='eligibilitytableheader'> <td colspan='2'> POLICY TERM <span>(Years)</span> </td> <td colspan='2'> ENTRY AGE <span>(Years)</span> </td> <td> MAXIMUM MATURITY AGE <span>(Years)</span> </td> </tr> <tr class='eligibilitytablerow'> <td>Minimum</td> <td>Maximum</td> <td>Minimum</td> <td>Maximum</td> <td rowspan='2' style='font-size:16px;'>65</td> </tr> <tr class='eligibilitytablerow'> <td>7</td> <td>20</td> <td>18</td> <td>50</td> </tr> </tbody></table></div>"
+                                    },
+                                    {
+                                        "id":"product_gallery",
+                                        "title":"Product Gallery",
+                                        "content":""
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id":"knowledge_house",
+                "name":"Knowledge House",
+                "icon":"icon_knowledge_base.png",
+                "link":"sub_types",
+                "sub_types":""
+            },
+            {
+                "id":"tools",
+                "name":"Tools",
+                "icon":"icon_tools.png",
+                "link":"sub_types",
+                "sub_types":""
+            },
+            {
+                "id":"fund_performance",
+                "name":"Fund Performance",
+                "icon":"icon_fund_performance.png",
+                "link":"sub_types",
+                "sub_types":""
+            },
+            {
+                "id":"customer_service",
+                "name":"Customer Service",
+                "icon":"icon_customer_service.png",
+                "link":"sub_types",
+                "sub_types":""
+            }
+        ]
+		
+    }
+}

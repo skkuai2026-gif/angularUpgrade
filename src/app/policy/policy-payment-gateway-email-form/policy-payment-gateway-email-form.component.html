@@ -1,0 +1,9 @@
+<form
+  *ngIf="service.responseIO?.data?.InitialPayment?.id"
+  name="paymentGatewayForm"
+  [action]="settingService.getURLValue('PAYMENTGATEWAY')"
+  method="post"
+>
+  <input type="hidden" name="inwardId" id="inwardId" [value]="service.responseIO.data.InitialPayment.id" />
+  <input type="hidden" id="cpagViaLink" name="cpagViaLink" value="INITIATED_CPAGEMAIL" />
+</form>

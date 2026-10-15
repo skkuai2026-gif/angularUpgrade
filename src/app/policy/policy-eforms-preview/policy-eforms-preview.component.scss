@@ -1,0 +1,107 @@
+/*Css for Panel icon starts here*/
+.block .btnToggleBlock.blockCollapse::before {
+  content: '\e907';
+}
+
+.btnToggleBlock {
+  position: relative;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 10px;
+  color: #8f9bba;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 0.6rem;
+}
+.block .btnToggleBlock::before {
+  content: '\e949';
+  font-family: 'icomoon';
+}
+/*Css for Panel icon ends here*/
+
+.documentContent .card > .card-header {
+  background-color: #d6dee7;
+}
+/*Css for buttons inside panel starts here*/
+::ng-deep sym-button > button.btn.btn_eForm {
+  color: #00588b;
+  background-color: #ffcb05;
+  background-image: unset;
+  border-radius: 0.25em;
+  border: none;
+  box-shadow: 0 -0.5em 0.5em transparent, 0 0.5em 0.5em transparent,
+    0 0.25em 0.3em -0.2em hsla(190deg, 50%, 50%, 0.46), 0 0.25em 0.75em hsla(190deg, calc(50% - 10%), 40%, 0.3);
+  font-size: 0.9rem;
+  padding: 0.45rem 1.12rem;
+  font-weight: bold;
+}
+/*Css for buttons inside panel ends here*/
+
+/*Css for ipad air device only starts here*/
+@media only screen and (width: 820px) and (height: 1180px) {
+  .documentContent {
+    margin: 10px 0px 0px 0px;
+  }
+}
+/*Css for ipad air device only ends here*/
+
+.viewIllustrationContainer,
+.viewIllustrationContainer_mobileView {
+  border: 2px solid black;
+  padding: 10px;
+  overflow: auto;
+}
+
+.viewIllustrationContainer_mobileView {
+  overflow-x: scroll;
+}
+
+.viewillustrationHtmlEntry {
+  // padding: 10px;
+  // margin: 10px;
+  overflow-y: auto;
+  max-height: 30rem;
+}
+
+.documentContent .card-body {
+  min-height: 3.5rem;
+}
+.listOfDocs {
+  margin-top: 20px;
+  width: 70%;
+  font-size: 15px;
+}
+.sequenceOfDoc {
+  margin-left: 15px;
+  font-size: 16px;
+}
+.oneSignDeclaration {
+  margin-top: 5px;
+}
+.oneSignDeclaration input[type='checkbox'] {
+  transform: scale(1.5);
+  transform-origin: 1 0;
+  margin-right: 10px;
+}
+.btn_reviewDocs {
+  right: 150px;
+}
+
+.pdf-container {
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+  padding-bottom: 60px;
+}
+.oneSignDeclaration {
+  position: sticky;
+  bottom: 0;
+  background-color: white;
+  padding: 10px;
+  z-index: 10;
+}
+#eAappButtonGUID {
+  display: none;
+}

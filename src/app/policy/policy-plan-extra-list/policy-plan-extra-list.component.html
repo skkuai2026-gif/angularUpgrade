@@ -1,0 +1,24 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else { @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div class="card m-1">
+  <sym-panel [id]="'plan_extra_list_Body'" [name]="'productExtraDetails'">
+    <sym-data-entry-grid
+      [fieldIds]="'extraTypeCd,decisionCd,loadingTypeCd,processingTypeCd'"
+      [responseIO]="service.responseIO"
+      (notifyChange)="onInputChanged($event)"
+      [modelPath]="'BasePlan.PlanExtraList'"
+      [isAddRequired]="false"
+      [isDeleteRequired]="false"
+    ></sym-data-entry-grid>
+  </sym-panel>
+</div>
+} }

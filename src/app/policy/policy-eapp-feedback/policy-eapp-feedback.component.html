@@ -1,0 +1,53 @@
+<div id="header_text">
+  <h5>{{ settingService.getLabelValue('A_FeedbackHeader') }}</h5>
+  <p>{{ settingService.getLabelValue('Advisory_Feedback_Text1') }}</p>
+  <p>{{ settingService.getLabelValue('Advisory_Feedback_Text2') }}</p>
+</div>
+
+<div class="row">
+  <div class="col-sm-12 rating-wrapper">
+    <div class="stars-container">
+      <ul class="list-inline rating-list">
+        @for (star of stars; track star) {
+        <li (click)="countStar(star)" [ngClass]="{ selected: star <= selectedValue }">
+          <i class="fa fa-star star-icon" [style.textShadow]="getStarStyle(star)"></i>
+          @if (selectedValue == star) {
+          <div class="star-label">
+            {{ getLabelForStar(star) }}
+          </div>
+          }
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- <textarea
+class="form-control feedback-textarea"
+[(ngModel)]="commentText"
+(input)="onCommentChange()"
+[ngClass]="{ 'error-border': isCommentMandatory && !commentText }"
+placeholder="Please share your feedback here."
+maxlength="200"
+rows="4"
+></textarea> -->
+<sym-field-group
+  [fieldIds]="'field19'"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  [responseIO]="service.responseIO"
+  [model]="service.responseIO.data.PolicyAdditionalFields"
+  [gridColumnsStr]="'12'"
+  [hideLabel]="true"
+></sym-field-group>
+<div class="char-count">{{ service.responseIO.data.PolicyAdditionalFields?.field19?.length || 0 }} / 200</div>
+
+<sym-pop-up popupID="mandatoryPopup" popupSize="small" headerText="Feedback popup" [hideCloseButton]="false">
+  <p class="popup_content">{{ settingService.getLabelValue('Advisory_Feedback_Popup') }}</p>
+</sym-pop-up>
+
+<div id="bottom_text">
+  <p>{{ settingService.getLabelValue('Advisory_Feedback_Text3') }}</p>
+  <p>{{ settingService.getLabelValue('Advisory_Feedback_Text4') }}</p>
+</div>

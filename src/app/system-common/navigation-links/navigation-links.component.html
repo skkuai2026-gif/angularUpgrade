@@ -1,0 +1,18 @@
+@if (navigationLinkList && navigationLinkList.length >= 1) {
+<div class="rightSideContent scrollDiv quickNavContent">
+  <h4>{{ settingService.getLabelValue('quickNavigation') }}</h4>
+  <ul>
+    @for (item of navigationLinkList; track item; let i = $index) { @if (item != undefined && item != null) {
+    <li>
+      <a
+        data-element-for="quickLinks"
+        [attr.data-target]="'heading_' + item.link"
+        [class.active]="activeIndex === i"
+        (click)="setActive(i)"
+        >{{ settingService.getLabelValue(item.labelKey) }}</a
+      >
+    </li>
+    } }
+  </ul>
+</div>
+}

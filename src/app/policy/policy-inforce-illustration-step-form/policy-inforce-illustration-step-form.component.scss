@@ -1,0 +1,27 @@
+.summary-card {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #837;
+  border-radius: 8px;
+  border-left: 7px solid #837;
+  box-shadow: 4px 5px 6px 1px rgb(136 51 119 / 59%);
+  margin: auto;
+}
+
+.summary-title {
+  border-bottom: 1px solid #837;
+  width: 280px;
+  padding: 4px 0 0px 8px;
+}
+
+.summary-card-container {
+  display: grid;
+  grid-column-gap: 5px;
+  grid-template-columns: 210px auto;
+  padding: 0 12px;
+}
+
+// .search-icon {
+//   margin: 24px 5px 0px;
+//   cursor: pointer;
+// }

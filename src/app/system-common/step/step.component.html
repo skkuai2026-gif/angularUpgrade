@@ -1,0 +1,113 @@
+<ng-container>
+  <div
+    [ngClass]="{ 'tab-pane': true, leadLeftPanel: stepItem.id == 'step_leadDataEntry' }"
+    [id]="stepItem.id"
+    role="tabpanel"
+    [attr.aria-labelledby]="stepItem.id"
+  >
+    <div [ngClass]="contentExcludRightTab == true ? 'stepTabData contentExcludRightTab' : 'stepTabData'">
+      <div [ngClass]="stepItem.tabList.length > 1 ? 'verticalTabContainer' : null">
+        @if (stepItem.tabList.length > 1 && stepItem.getVisibleTabCount() > 1) {
+        <div class="panel_left" [class.menuHidden]="settingService.isMenuHidden()">
+          <i class="icon_menu panel_left_icon"></i>
+          <div class="scrollDiv">
+            <div class="nav flex-column navVertical" aria-orientation="vertical">
+              @for (tab of stepItem.tabList; track tab) {
+              <!--,
+                  completed: tab.isSuccessfullyCompleted-->
+              @if (tab.visible || tab.visible == undefined) {
+              <a
+                [ngClass]="{
+                  'nav-link': true,
+                  active: stepItem.selectedTab != undefined && tab.id == stepItem.selectedTab.id,
+                  completed: tab.isSuccessfullyCompleted,
+                  error: tab.errorCount > 0 && !tab.isSuccessfullyCompleted
+                }"
+                [attr.data-target]="'#' + tab.id"
+                href="javascript:void(0);"
+                data-toggle="pill"
+                role="tab"
+                [attr.aria-controls]="tab.id"
+                aria-selected="false"
+                (click)="onTabChange(tab)"
+              >
+                <span>{{ settingService.getLabelValue(tab.text != undefined ? tab.text : tab.id) }}</span>
+                @if (tab.errorCount > 0 && !tab.isSuccessfullyCompleted) {
+                <i>{{ tab.errorCount }}</i>
+                } @if (tab.isSuccessfullyCompleted) {
+                <i> </i>
+                }
+              </a>
+              } }
+            </div>
+          </div>
+        </div>
+        }
+        <div
+          [ngClass]="
+            stepItem.tabList.length > 1 && stepItem.getVisibleTabCount() > 1
+              ? 'tab-content panel_right'
+              : 'tab-content'
+          "
+        >
+          <div class="box">
+            <ng-content> </ng-content>
+            @if (!tabNavigationOnFooter) {
+            <div>
+              <sym-tab-container
+                [selectedStep]="stepItem"
+                [selectedTab]="stepItem.selectedTab"
+                [isTriggerTabChange]="stepItem.isTriggerTabChange"
+                (tabChange)="onTabChange($event)"
+                [tabNavigationOnFooter]="tabNavigationOnFooter"
+              ></sym-tab-container>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="formFooter" [class.menuHidden]="settingService.isMenuHidden()">
+      @if (tabNavigationOnFooter) {
+      <div>
+        <sym-tab-container
+          [selectedStep]="stepItem"
+          [selectedTab]="stepItem.selectedTab"
+          [isTriggerTabChange]="stepItem.isTriggerTabChange"
+          (tabChange)="onTabChange($event)"
+          [tabNavigationOnFooter]="tabNavigationOnFooter"
+        >
+        </sym-tab-container>
+      </div>
+      }
+      <div [class.btn_right]="tabNavigationOnFooter">
+        @for (button of stepItem.buttonList; track button; let i = $index) {
+        <sym-button
+          [class]="
+            button == 'but_Back' && !tabNavigationOnFooter
+              ? 'btn btn_outline_primary'
+              : button == 'but_Back' && tabNavigationOnFooter
+              ? 'btn btn_outline_primary btn_left'
+              : 'btn btn_primary'
+          "
+          [id]="button"
+          [text]="button"
+          (onClick)="onActionClick(button)"
+          [iconClass]="
+            !stepItem.isLastStep && stepItem.buttonList.length - 1 == i && button == 'but_Continue'
+              ? 'fa fa-arrow-right'
+              : button == 'but_Back'
+              ? 'fa fa-arrow-left'
+              : button == 'but_DraftSave'
+              ? 'fa fa-save'
+              : button
+          "
+          [iconPosition]="button == 'but_Back' ? 'left' : 'right'"
+          [isLoaderRequired]="true"
+          [showTextAlways]="true"
+        ></sym-button>
+        }
+      </div>
+    </div>
+  </div>
+</ng-container>

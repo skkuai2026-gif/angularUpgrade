@@ -1,0 +1,209 @@
+<ng-container *ngIf="xmlDom != undefined; else elseTemplate">
+  <sym-xml-config-ui
+    [xmlDom]="xmlDom"
+    [service]="service"
+    [responseIO]="service.responseIO"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+  >
+  </sym-xml-config-ui>
+</ng-container>
+<ng-template #elseTemplate>
+  <div class="card m-1">
+    <sym-panel [id]="'fund_list_Body'" [name]="'FUNDSINFORMATION'">
+      <div
+        class="container"
+        *ngIf="
+          !service.responseIO.data.BasePlan.FundList || service.responseIO.data.BasePlan.FundList.length === 0
+        "
+      >
+        <div class="row">
+          <div class="col-12" style="color: #ff3d71; font-weight: bold">
+            {{ settingService.getLabelValue('noFundsAvailable') }}
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="
+          service.responseIO.data?.Entity?.productFamilyCd === 'VUL' &&
+          service.responseIO.data?.Entity?.quotAddtnlField7 === 'NOFX'
+        "
+        style="color: red; font-weight: bold"
+      >
+        NOTE: Special Funds Accreditation is required for Peso Global funds.
+      </div>
+      <div class="m-2 p-2">
+        <sym-field-group
+          [fieldIds]="'portfolioModelCd,topUpAllocSameAsPremAllocFl'"
+          [responseIO]="service.responseIO"
+          (notifyChange)="onInputChanged($event)"
+          (notifyFocus)="onInputFocused($event)"
+          [model]="service.responseIO.data.BasePlan"
+        ></sym-field-group>
+      </div>
+      <ng-container *ngIf="service.responseIO['isMetadataHelpReqd'] === true; else elseTemplate">
+        <div class="col-sm-12 col-md-12 co-lg-6 col-xl-6 no-gutters">
+          <sym-data-entry-grid
+            [fieldIds]="'fundCd,allocationPerc,topupAllocationPerc'"
+            [responseIO]="service.responseIO"
+            (notifyChange)="onInputChanged($event)"
+            [columWidthPerc]="[15, 15, 15]"
+            [modelList]="service.responseIO.data.BasePlan.FundList"
+            [isAddRequired]="false"
+            [isDeleteRequired]="false"
+          ></sym-data-entry-grid>
+        </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div
+          class="block"
+          *ngIf="
+            service.responseIO.data['BasePlan'].FundList != undefined &&
+            service.responseIO.data['BasePlan'].FundList.length > 0
+          "
+        >
+          <!-- <h4>Fund allocation: <span class="btnToggleBlock"></span></h4> -->
+          <div class="row">
+            <div [ngClass]="hidePieChart == true ? 'col-sm-12' : 'col-sm-6'">
+              <div class="fundsContent">
+                <div class="indicatorDiv mb5">
+                  <span
+                    class="option1"
+                    *ngIf="
+                      service.getLabelValue(
+                        service.responseIO.data.BasePlan.FundList[0],
+
+                        'allocationPerc'
+                      ) != undefined
+                    "
+                  >
+                    {{
+                      service.getLabelValue(
+                        service.responseIO.data.BasePlan.FundList[0],
+
+                        'allocationPerc'
+                      )
+                    }}
+                    <span *ngIf="totalallocationPerc != 0">
+                      {{ totalallocationPerc != 0 ? totalallocationPerc : '' }}
+                    </span>
+                  </span>
+                  <span
+                    class="option2"
+                    *ngIf="
+                      service.getLabelValue(
+                        service.responseIO.data.BasePlan.FundList[0],
+
+                        'topupAllocationPerc'
+                      ) != undefined
+                    "
+                  >
+                    {{
+                      service.getLabelValue(
+                        service.responseIO.data.BasePlan.FundList[0],
+
+                        'topupAllocationPerc'
+                      )
+                    }}
+                    <span *ngIf="totaltopupAllocationPerc != 0">
+                      {{ totaltopupAllocationPerc != 0 ? totaltopupAllocationPerc : '' }}
+                    </span>
+                  </span>
+                </div>
+                <ul class="blockList">
+                  <li
+                    *ngFor="let fund of service.responseIO.data.BasePlan.FundList; index as i"
+                    [class.validationError_height]="
+                      service.responseIO['validationerrors'] &&
+                      service.responseIO['validationerrors']['tab_plan'] &&
+                      service.responseIO['validationerrors']['tab_plan'][fund.guid] != undefined
+                    "
+                  >
+                    <h5 [ngStyle]="{ color: pieColorArray[i] }">
+                      <a
+                        [class.underLine]="fund.fundMedia != undefined"
+                        [attr.target]="fund.fundMedia != undefined ? '_blank' : null"
+                        [attr.href]="
+                          fund.fundMedia != undefined
+                            ? ('/assets/theme/images/company/' + fund.fundMedia | safeHtml: 'resourceUrl')
+                            : null
+                        "
+                      >
+                        {{ service.getFieldLookupDesc(fund, 'fundCd') }}
+                      </a>
+                      <span *ngIf="fund.fundRiskClassLabel != undefined && fund.fundRiskClassLabel != null">
+                        [{{ fund.fundRiskClassLabel }}]
+                      </span>
+                    </h5>
+                    <a class="fundDesc"> {{ fund.Desc }} </a>
+
+                    <div class="inputActions">
+                      <div class="option1">
+                        <sym-field-group
+                          [fieldIds]="'allocationPerc'"
+                          [responseIO]="service.responseIO"
+                          [hideLabel]="true"
+                          [model]="fund"
+                          [rowIndex]="i"
+                          (notifyChange)="onInputChanged($event)"
+                          [gridColumns]="[2]"
+                        ></sym-field-group>
+                      </div>
+
+                      <div
+                        class="option2"
+                        *ngIf="
+                          service.getLabelValue(
+                            fund,
+
+                            'topupAllocationPerc'
+                          ) != undefined
+                        "
+                      >
+                        <sym-field-group
+                          [fieldIds]="'topupAllocationPerc'"
+                          [responseIO]="service.responseIO"
+                          [hideLabel]="true"
+                          [model]="fund"
+                          [rowIndex]="i"
+                          (notifyChange)="onInputChanged($event)"
+                          [gridColumns]="[2]"
+                        ></sym-field-group>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- <div class="col-sm-6" *ngIf="isPieChartRequired">
+            <div id="pieChart"></div>
+          </div> -->
+            <div class="col-sm-6" *ngIf="isPieChartRequired">
+              <canvas id="pieChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <!-- <sym-data-entry-grid
+            [fieldIds]="'fundCd,allocationPerc,topupAllocationPerc'"
+            [responseIO]="service.responseIO"
+            (notifyChange)="onInputChanged($event)"
+            [modelPath]="'BasePlan.FundList'"
+        ></sym-data-entry-grid> -->
+    </sym-panel>
+  </div>
+  <div
+    class="text-right m-2"
+    *ngIf="
+      service.responseIO.data.Proposer.partyTypeCd != 'ORGANIZATION' &&
+      service.responseIO.data.Entity.leadId != null &&
+      service.responseIO.data.Entity.leadId != '' &&
+      service.responseIO?.data?.Entity?.quoteStatusCd != 'ACCEPTED' &&
+      service.responseIO?.data?.Entity?.quoteStatusCd != 'SYNCDONE'
+    "
+  >
+    <sym-button [id]="'btn_fund'" [text]="'Refresh Fund'" (onClick)="onRefreshFundClick()"> </sym-button>
+  </div>
+</ng-template>

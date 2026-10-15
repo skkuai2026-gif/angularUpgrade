@@ -1,0 +1,24 @@
+<div class="block">
+  <div>
+    @if (blockCollapse) {
+    <span class="sign" (click)="blockCollapse = !blockCollapse">+</span>
+    } @if (!blockCollapse) {
+    <span class="sign" (click)="blockCollapse = !blockCollapse">-</span>
+    }
+    <label (click)="blockCollapse = !blockCollapse"> &#123; </label>
+    @if (!blockCollapse) {
+    <div>
+      <sym-json-tree-editor-item
+        [jsonObject]="jsonObject"
+        [isInitialLoop]="true"
+        [disableInput]="disableInput"
+        [collapseAll]="collapseAll"
+        [responseIO]="responseIO"
+        [service]="service"
+        (updatedJson)="afterInputChange($event)"
+      ></sym-json-tree-editor-item>
+    </div>
+    }
+    <label> &#125; </label>
+  </div>
+</div>

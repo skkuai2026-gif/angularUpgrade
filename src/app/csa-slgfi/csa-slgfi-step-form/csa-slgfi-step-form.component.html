@@ -1,0 +1,75 @@
+<!-- <div class="pgContent pgContentFNA" *ngIf="service.fnaModel != undefined"> -->
+@if (service.responseIO != undefined) {
+<sym-page-container
+  [breadCrumbList]="breadCrumbList"
+  [stepList]="stepList"
+  [responseIO]="service.responseIO"
+  [breakErrorListInPopUp]="false"
+  [currentStepSelected]="selectedStep"
+  (selectedStep)="onStepChanged($event)"
+>
+  @if (service.responseIO && service.responseIO.data && selectedStep != undefined) {
+  <sym-step
+    [stepItem]="selectedStep"
+    (actionClick)="onActionClicked($event)"
+    (tabChange)="onTabChanged($event)"
+    [contentExcludRightTab]="
+      selectedStep.id == 'step_declaration' ||
+      selectedStep.id == 'step_csaPreview' ||
+      selectedStep.selectedTab.id == 'tab_question_details'
+        ? false
+        : true
+    "
+  >
+    <div class="pageData">
+      <div class="box b0 fnaContainer">
+        <div class="fnaScreen {{ 'fnaScreenContent_' + selectedStep.index }}">
+          @if (selectedStep.selectedTab != undefined) {
+          <div class="fnaScreenContent">
+            @if (selectedStep.selectedTab.id == 'tab_fna_input') {
+            <ng-container class="tab_pane">
+              <!-- <sym-fna-dream [selectedTab]="selectedStep.id"></sym-fna-dream> -->
+              <sym-fna-slgfi-data></sym-fna-slgfi-data>
+            </ng-container>
+            } @if (selectedStep.selectedTab.id == 'tab_question_details') {
+            <ng-container class="tab_pane">
+              <!-- <sym-fna-dream [selectedTab]="selectedStep.id"></sym-fna-dream> -->
+              <sym-fna-question-details></sym-fna-question-details>
+            </ng-container>
+            } @if (selectedStep.selectedTab.id == 'tab_riskProfile') {
+            <!-- <sym-fna-risk-profile [selectedTab]="selectedStep.id"></sym-fna-risk-profile> -->
+            <sym-csa-slgfi-risk-profile
+              (computeRiskScoreClick)="computeRiskScoreClick()"
+            ></sym-csa-slgfi-risk-profile>
+            } @if (selectedStep.selectedTab.id == 'tab_declaration') {
+            <!-- <sym-fna-signature [selectedTab]="selectedStep.id"></sym-fna-signature> -->
+            <sym-csa-slgfi-declaration></sym-csa-slgfi-declaration>
+            } @if (selectedStep.selectedTab.id == 'tab_csaPreview') {
+            <!-- <sym-fna-signature [selectedTab]="selectedStep.id"></sym-fna-signature> -->
+            <sym-csa-slgfi-preview></sym-csa-slgfi-preview>
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </sym-step>
+  }
+  <div>
+    @if (service.viewProposalListDisplayed) {
+    <sym-pop-up
+      [headerText]="'viewProposalList'"
+      [popupID]="'viewProposalList'"
+      class="OccupationIndustryDutySearch"
+      (popupClosed)="proposalPopupClosed()"
+    >
+      <sym-view-proposal-list-slgfi
+        [searchCriteriaforProposal]="this.service.responseIO.data.Entity.fnaNum"
+      ></sym-view-proposal-list-slgfi>
+    </sym-pop-up>
+    }
+  </div>
+</sym-page-container>
+}
+<!-- <label id="applicationMode">{{ settingService.mode }}</label> -->
+<!-- </div> -->

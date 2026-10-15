@@ -1,0 +1,190 @@
+input[type='checkbox'] {
+  height: 1.5em !important;
+  width: 1.2em !important;
+  line-height: 0 !important;
+}
+
+.table thead tr th,
+.table tbody tr td {
+  position: relative !important;
+  border: 1px solid #b6bac1 !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+}
+
+.table tbody tr td {
+  padding: 11px 9px 5px !important;
+}
+.table td,
+.table th {
+  position: relative !important;
+  border: 1px solid #edf1f7 !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+}
+.table td {
+  padding: 0.75rem !important;
+}
+.table th {
+  padding: 1rem !important;
+  border: 1px solid #255758 !important;
+  background: #e6efef !important;
+  /* color: #fff !important; */
+}
+
+.table th label,
+.table th label > span {
+  color: black !important;
+}
+.table thead tr th .form-row .form-group {
+  margin-bottom: 0px !important;
+}
+.table thead tr th {
+  padding: 1rem !important;
+  border: 1px solid #255758 !important;
+  background: #369 !important;
+  color: #fff !important;
+}
+
+.table thead tr th label {
+  color: black !important;
+}
+/* # Phone */
+@media only screen and (max-width: 320px) {
+  .overflowX {
+    overflow-x: scroll !important;
+  }
+}
+/* # Tablet */
+@media only screen and (min-width: 321px) and (max-width: 768px) {
+  .overflowX {
+    overflow-x: scroll !important;
+  }
+}
+/*
+Generic Styling, for Desktops/Laptops
+*/
+table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+/* Zebra striping */
+
+/*
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+  /* Force table to not be like tables anymore */
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr {
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+  }
+
+  tr {
+    border: 1px solid #ccc !important;
+  }
+
+  td {
+    /* Behave  like a "row" */
+    border: none !important;
+    border-bottom: 1px solid #eee !important;
+    position: relative !important;
+    padding-left: 50% !important;
+  }
+  .table tbody tr td {
+    text-align: left !important ;
+  }
+
+  td:before {
+    /* Now like a table header */
+    position: absolute; /*Removed the !important mark because it was not letting other CSS properties to override them as necessary */
+    /* Top/left values mimic padding */
+    top: 6px !important;
+    left: 0px !important;
+    white-space: nowrap !important;
+    padding-left: 8px; /*Removed the !important mark because it was not letting other CSS properties to override them as necessary */
+  }
+
+  /*
+	Label the data
+	*/
+  /* table td::before {
+    content: attr(data-label) !important;
+  } */
+  .mob_padding {
+    padding-top: 21px; /*Removed the !important mark because it was not letting other CSS properties to override them as necessary */
+    text-align: inherit !important;
+  }
+}
+
+.tableHeaderActions {
+  min-height: 30px;
+}
+
+.help_header {
+  display: flex;
+  align-items: center;
+}
+
+.help_header i div {
+  position: relative;
+  white-space: normal;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  line-height: 1.5;
+  min-width: 210px;
+  max-width: 100%;
+  display: inline-block;
+  word-break: break-all;
+  font-size: 0.75rem;
+}
+
+.help_header i div > div {
+  display: inline-flex;
+  text-align: left;
+}
+
+.help_header i div > span:first-child {
+  color: #ff3d71;
+  min-width: 120px;
+  max-width: 120px;
+  font-size: 0.7rem;
+}
+
+.help_header i div > span:last-child {
+  color: #3d98ff;
+  font-size: 0.78rem;
+}
+
+.moreCol {
+  width: 10px;
+}
+
+/*
+Added by : Jayshree Salve
+Data entry grid display in mobile view should appear left-to-right rather than top-to-bottom.
+*/
+@media only screen and (max-width: 760px) {
+  table tbody tr td {
+    display: flex;
+  }
+  td:before {
+    position: relative;
+    padding-left: 0px;
+    width: 50%;
+  }
+  .mob_padding {
+    padding-top: 0px;
+    width: 50%;
+    text-wrap: wrap;
+  }
+}
+.table > :not(caption) > * > * {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}

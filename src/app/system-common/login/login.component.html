@@ -1,0 +1,228 @@
+@if (!authService.isUserLoggedIn()) {
+<div class="loginWrapper scrollDiv">
+  <div class="header">
+    <span class="btnLeftNav"></span>
+    <a href="javascript:void(0);" class="logo"
+      ><img src="/assets/theme/images/company/logo_white.png" alt="Logo"
+    /></a>
+  </div>
+  <!--header ends-->
+  <div class="loginContainerParent">
+    <div class="loginContent">
+      <h1>{{ settingService.getLabelValue('Sign In') }}</h1>
+      @if ( settingService.message == undefined || settingService.message == null || settingService.message == '')
+      {
+      <p>
+        {{
+          settingService.getLabelValue('SignInAccount') === 'SignInAccount'
+            ? ''
+            : settingService.getLabelValue('SignInAccount')
+        }}
+      </p>
+      } @else {
+      <p>
+        <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+        {{ settingService.getLabelValue(settingService.message) }}
+      </p>
+      } @if (loginForm != undefined) {
+      <form
+        name="abm_admin_login_form"
+        [formGroup]="loginForm"
+        (ngSubmit)="onLoginClick()"
+        (keyup.enter)="onLoginClick()"
+        autocomplete="off"
+      >
+        <div class="form-group">
+          <label for="userName">
+            {{ settingService.getLabelValue('userName')
+            }}<i class="fa fa-asterisk asterik pl-1" aria-hidden="true"></i
+          ></label>
+          <div>
+            <input
+              autocomplete="off"
+              (copy)="onCopy($event)"
+              ondrag="return false"
+              ondrop="return false"
+              (paste)="onPaste($event)"
+              onfocus="return false"
+              type="text"
+              class="form-control txtusername"
+              id="userName"
+              name="login_username"
+              required
+              formControlName="userId"
+              [ngClass]="{
+                'is-invalid': (submitted && form.userId.errors) || isLoginFailed
+              }"
+              (focus)="isLoginFailed = false"
+              (keypress)="omit_special_char($event)"
+              placeholder="Enter Username"
+            />
+            @if (submitted && form.userId.errors) {
+            <div class="invalid-feedback">
+              @if (form.userId.errors.required) {
+              <div>{{ settingService.getLabelValue('reqUsername') }}</div>
+              }
+            </div>
+            } @if (isLoginFailed) {
+            <div class="invalid-feedback">
+              <div>{{ settingService.getLabelValue('enterValidUsername') }}</div>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">
+            {{ settingService.getLabelValue('password')
+            }}<i class="fa fa-asterisk asterik pl-1" aria-hidden="true"></i
+          ></label>
+          <div>
+            <input
+              autocomplete="off"
+              (copy)="onCopy($event)"
+              ondrag="return false"
+              ondrop="return false"
+              (paste)="onPaste($event)"
+              onfocus="return false"
+              placeholder="Enter Password"
+              type="password"
+              class="form-control txtPassword"
+              name="login_password"
+              id="password"
+              required
+              formControlName="password"
+              [ngClass]="{
+                'is-invalid': (submitted && form.password.errors) || isLoginFailed
+              }"
+              (focus)="isLoginFailed = false"
+            />
+            @if (submitted && form.password.errors) {
+            <div class="invalid-feedback">
+              @if (form.password.errors.required) {
+              <div>{{ settingService.getLabelValue('reqPassword') }}</div>
+              }
+            </div>
+            } @if (isLoginFailed) {
+            <div class="invalid-feedback">
+              @if (form.password.errors.required) {
+              <div>
+                {{ settingService.getLabelValue('enterValidPassword') }}
+              </div>
+              }
+            </div>
+            }
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="language"
+            >{{ settingService.getLabelValue('languageCd')
+            }}<i class="fa fa-asterisk asterik pl-1" aria-hidden="true"></i
+          ></label>
+          <div class="iconA selectGrp">
+            <select
+              class="form-control"
+              id="language"
+              name="language"
+              formControlName="language"
+              (change)="changeLanguage($event)"
+              (focus)="isLoginFailed = false"
+            >
+              <option [ngValue]="'selected'" selected>{{ settingService.getLabelValue('select') }}</option>
+              @for (lang of languageList; track lang) {
+              <option [value]="lang.cd">
+                {{ lang.desc }}
+              </option>
+              }
+            </select>
+            @if (submitted && form.language.errors) {
+            <div class="invalid-feedback">
+              @if (form.language.errors && form.language.errors.required) {
+              <div>
+                {{ settingService.getLabelValue('reqLanguage') }}
+              </div>
+              }
+            </div>
+            } @if (isLoginFailed) {
+            <div class="invalid-feedback">
+              @if (form.language.errors && form.language.errors.required) {
+              <div>
+                {{ settingService.getLabelValue('selectValidLanguage') }}
+              </div>
+              }
+            </div>
+            }
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            @if (!isUseCaseClicked) {
+            <div class="iconA selectGrp" id="useCase">
+              <a href="javascript:void(0)" (click)="showUseCase()">+</a>
+            </div>
+            } @if (isUseCaseClicked) {
+            <div>
+              <a href="javascript:void(0)" (click)="hideUseCase()">-</a>
+              <br />
+              <label for="language">{{ settingService.getLabelValue('Use Case') }}</label>
+              <div class="iconA selectGrp">
+                <select
+                  class="form-control"
+                  id="useCase"
+                  name="useCase"
+                  formControlName="useCase"
+                  (focus)="isLoginFailed = false"
+                >
+                  <option [ngValue]="null">{{ settingService.getLabelValue('select') }}</option>
+                  @for (useCase of useCaseList; track useCase) {
+                  <option [value]="useCase.cd">
+                    {{ useCase.desc }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+        <button
+          class="btn btn_primary btn_submit"
+          type="button"
+          (ngSubmit)="onLoginClick()"
+          (keyup.enter)="onLoginClick()"
+          (click)="onLoginClick()"
+          [disabled]="languageList == undefined || languageList == null || languageList.length == 0"
+        >
+          {{ settingService.getLabelValue('Sign In') }}
+        </button>
+      </form>
+      }
+    </div>
+  </div>
+</div>
+} @if (!settingService.isLabelLoaded && showLoader) {
+<sym-loader></sym-loader>
+} @if (submitted && loginOtpReqd && settingService.isLabelLoaded) {
+<div class="loginOtp">
+  <div class="header">
+    <a href="javascript:void(0);" class="logo"
+      ><img src="/assets/theme/images/company/logo_white.png" alt="Logo"
+    /></a>
+  </div>
+  <sym-otp
+    [displayPopupOnly]="true"
+    [isOtpButtonReq]="false"
+    (otpActionClicked)="onOTPActionClick($event)"
+    (isValidOtp)="onValidateOtp($event)"
+    [getOTP]="false"
+    [otpExpiryTimeInput]="otpExpiryTime"
+  ></sym-otp>
+</div>
+} @if (showDisclaimer && settingService.isLabelLoaded) {
+<div>
+  <sym-disclaimer
+    [displayPopupOnly]="true"
+    (disagreeDisclaimerCLicked)="disagreeDisclaimerClicked($event)"
+    (acceptDisclaimerCLicked)="acceptDisclaimerCLicked($event)"
+  ></sym-disclaimer>
+</div>
+}

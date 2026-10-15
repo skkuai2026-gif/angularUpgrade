@@ -1,0 +1,217 @@
+<div>
+  <sym-panel sym-panel [id]="'rpq_Details_Body'" [name]="'RPQDETAILS'">
+    <label class="marginBottom">{{ settingService.getLabelValue('riskProfileHeaderNote') }}</label>
+    <sym-data-entry-grid
+      id="rpqResponse"
+      [fieldIds]="'score'"
+      [modelList]="service.responseIO.data.LeadRPQ.RPQResponseList"
+      [responseIO]="service.responseIO"
+      (notifyChange)="onInputChanged($event)"
+      [isFormFormatRequired]="true"
+      [formColumnWidth]="'12'"
+      [isDeleteRequired]="false"
+      [isAddRequired]="false"
+    ></sym-data-entry-grid>
+  </sym-panel>
+  <sym-panel sym-panel [id]="'rpq_score'" [name]="'RPQSCORE'">
+    <div id="computeButton" class="fgInline">
+      <sym-field-group
+        [fieldIds]="'rpqScore'"
+        [hideLabel]="'true'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.LeadRPQ"
+      ></sym-field-group>
+      <label class="margin-compute"
+        >{{ settingService.getLabelValue('riskProfile') }}:
+        <sym-button
+          [class]="'btn btn_primary mr-2 text-center'"
+          [id]="'btn_ok'"
+          [isLoaderRequired]="false"
+          [text]="'Compute'"
+          (onClick)="computeRiskScore()"
+        ></sym-button
+        ><br /><br />{{ service.fundRiskClass }} <br />
+        {{ service.fundRiskClassLabel }}
+      </label>
+    </div>
+    <label class="textAlign">{{ settingService.getLabelValue('riskNote') }}</label>
+  </sym-panel>
+
+  <sym-panel sym-panel [id]="'fund_option'" [name]="'FUNDOPTIONS'">
+    <!-- related to package option -->
+    @if (isRiskFundApplicable) { @if (service.responseIO && service.responseIO.data &&
+    service.responseIO.data.length != 0) {
+    <sym-field-group
+      [fieldIds]="'address1'"
+      [hideLabel]="false"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.LeadRPQ"
+    ></sym-field-group
+    >&nbsp; @if (service.responseIO && service.responseIO.data.LeadRPQ.address1=='PACKAGE' ) {
+    <sym-panel sym-panel [id]="'fund_PackageOption'" [name]="'FUNDPACKAGEOPTION'">
+      @if (service.responseIO && service.responseIO.data.LeadRPQ.address1=='PACKAGE') {
+      <sym-field-group
+        id="packageOption"
+        [fieldIds]="'address2'"
+        [hideLabel]="true"
+        (notifyChange)="onInputChanged($event)"
+        (notifyFocus)="onInputFocused($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.LeadRPQ"
+      ></sym-field-group>
+      }&nbsp;
+    </sym-panel>
+    } } } @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) { @if
+    (service.responseIO.data.FNAFundList != undefined && service.responseIO.data.FNAFundList.length > 0) {
+    <div class="block">
+      <!-- <h4>Fund allocation: <span class="btnToggleBlock"></span></h4> -->
+      <div class="row">
+        <div [ngClass]="hidePieChart == true ? 'col-sm-12' : 'col-sm-6'">
+          <div class="fundsContent">
+            <div class="indicatorDiv mb5">
+              @if ( service.getLabelValue( service.responseIO.data.FNAFundList, 'allocationPerc' ) != undefined ) {
+              <span class="option1">
+                {{ service.getLabelValue(service.responseIO.data.FNAFundList, 'allocationPerc') }}
+                @if (totalallocationPerc != 0) {
+                <span>
+                  {{ totalallocationPerc != 0 ? totalallocationPerc : '' }}
+                </span>
+                }
+              </span>
+              } @if ( service.getLabelValue( service.responseIO.data.FNAFundList, 'topupAllocationPerc' ) !=
+              undefined ) {
+              <span class="option2">
+                {{ service.getLabelValue(service.responseIO.data.FNAFundList, 'topupAllocationPerc') }}
+                @if (totaltopupAllocationPerc != 0) {
+                <span>
+                  {{ totaltopupAllocationPerc != 0 ? totaltopupAllocationPerc : '' }}
+                </span>
+                }
+              </span>
+              }
+            </div>
+            <ul class="blockList">
+              @for (fund of service.responseIO.data.FNAFundList; track fund; let i = $index) {
+              <li>
+                <h5 [ngStyle]="{ color: pieColorArray[i] }">
+                  <a
+                    [class.underLine]="fund.fundMedia != undefined"
+                    [attr.target]="fund.fundMedia != undefined ? '_blank' : null"
+                    [attr.href]="
+                      fund.fundMedia != undefined
+                        ? ('/assets/theme/images/company/' + fund.fundMedia | safeHtml: 'resourceUrl')
+                        : null
+                    "
+                  >
+                    {{ service.getFieldLookupDesc(fund, 'fundCd') }}
+                  </a>
+                  @if (fund.fundRiskClassLabel != undefined && fund.fundRiskClassLabel != null) {
+                  <span> [{{ fund.fundRiskClassLabel }}] </span>
+                  }
+                </h5>
+                <a class="fundDesc"> {{ fund.Desc }} </a>
+                <div class="inputActions">
+                  <div class="option1">
+                    <sym-field-group
+                      [fieldIds]="'allocationPerc'"
+                      [responseIO]="service.responseIO"
+                      [hideLabel]="true"
+                      [model]="fund"
+                      (notifyChange)="onInputChanged($event)"
+                      [gridColumns]="[2]"
+                    ></sym-field-group>
+                  </div>
+                  @if ( service.getLabelValue( fund, 'topupAllocationPerc' ) != undefined ) {
+                  <div class="option2">
+                    <sym-field-group
+                      [fieldIds]="'topupAllocationPerc'"
+                      [responseIO]="service.responseIO"
+                      [hideLabel]="true"
+                      [model]="fund"
+                      (notifyChange)="onInputChanged($event)"
+                      [gridColumns]="[2]"
+                    ></sym-field-group>
+                  </div>
+                  }
+                </div>
+              </li>
+              }
+            </ul>
+          </div>
+        </div>
+        @if (isPieChartRequired) {
+        <div class="col-sm-6">
+          <canvas id="pieChart"></canvas>
+        </div>
+        }
+      </div>
+    </div>
+    } }
+  </sym-panel>
+  <h6>
+    <u>{{ settingService.getLabelValue('portfolioDeclaration') }}</u>
+  </h6>
+  <div id="portfolioSlgfi">
+    <sym-field-group
+      [fieldIds]="'alias'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.LeadRPQ"
+      [gridColumns]="[12]"
+    ></sym-field-group>
+  </div>
+  <sym-field-group
+    [fieldIds]="'education,incomeGroup'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.LeadRPQ"
+    [gridColumns]="[12]"
+  ></sym-field-group>
+  <div class="form-row">
+    <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12">
+      <sym-field-group
+        [fieldIds]="'otherTitle'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.LeadRPQ"
+        [gridColumns]="[12]"
+      ></sym-field-group>
+    </div>
+    <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12">
+      @if (service.responseIO.data.LeadRPQ.otherTitle === 'REASONAGGFUNDA') {
+      <sym-field-group
+        id="riskprofile"
+        [fieldIds]="'closureNotes'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.LeadRPQ"
+        [gridColumns]="[12]"
+      ></sym-field-group>
+      }
+    </div>
+  </div>
+  <!-- <ng-container *ngIf="service.responseIO && service.responseIO.data && service.responseIO.data.length != 0">
+      <h6 *ngIf="service.responseIO.data.Entity.isForexAcrreditation == true">
+        {{ settingService.getLabelValue('fundsnote') }}
+      </h6>
+    </ng-container> -->
+  <!-- </div> -->
+  <!-- <div>
+  <sym-pop-up
+    [headerText]="'viewProposalList'"
+    [popupID]="'viewProposalList'"
+    class="OccupationIndustryDutySearch"
+    *ngIf="service.viewProposalListDisplayed"
+    >
+    <sym-view-proposal-list-slgfi
+      [searchCriteriaforProposal]="searchCriteriaforProposal"
+    ></sym-view-proposal-list-slgfi>
+  </sym-pop-up>
+</div> -->
+  <sym-navigation-links [navigationLinkList]="navigationLinkList"></sym-navigation-links>
+  <!-- hello{{navigationLinkList |json}} -->
+</div>

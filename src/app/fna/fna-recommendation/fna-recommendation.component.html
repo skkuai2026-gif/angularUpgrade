@@ -1,0 +1,201 @@
+<h2>Product Recommendation</h2>
+<div class="fnaContent p0">
+  <div class="innerVerticalTab">
+    <div class="ivtLeft">
+      <div class="section sectionCategoryFnA">
+        <div class="sectionHeader">
+          <h4>Product family</h4>
+        </div>
+        <div class="sectionContent">
+          <div class="productCategorySlider">
+            <div
+              class="card"
+              data-card-color="blue"
+              [class.active]="productCategory == 'Traditional'"
+              (click)="onProductClick('Traditional')"
+            >
+              <span class="Traditional"></span>
+              <h5>Traditional</h5>
+            </div>
+            <div
+              class="card"
+              data-card-color="yellow"
+              [class.active]="productCategory == 'UnitLinked'"
+              (click)="onProductClick('UnitLinked')"
+            >
+              <span class="UnitLinked"></span>
+              <h5>Variable Unit Linked</h5>
+            </div>
+            <div
+              class="card"
+              data-card-color="green"
+              [class.active]="productCategory == 'VariableUniversalLife'"
+              (click)="onProductClick('VariableUniversalLife')"
+            >
+              <span class="VariableUniversalLife"></span>
+              <h5>Universal Life</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ivtRight pr15">
+      <div class="section sectionProduct_fna nullState">
+        <div class="sectionHeader">
+          <h4>
+            Choose a product out of 10 products from
+            <span>Traditional family</span>
+          </h4>
+        </div>
+        <div class="sectionContent">
+          <div class="productSlider">
+            <div class="row">
+              @if (productCategory == 'Traditional') {
+              <div class="col-lg-6 col-sm-6">
+                <div class="card" data-plan-id="planContainer2">
+                  <div class="cardImg">
+                    <span class="iconBadge premium"></span>
+                  </div>
+                  <div class="cardContent">
+                    <h5>C2LBIZ Traditional</h5>
+                    <p>Life protect this is dummy text this is dummy text this is dummy text...</p>
+                    <p>
+                      <a href="javascript:void(0)">Learn more</a>
+                    </p>
+                  </div>
+                  <div class="cardFooter">
+                    <a href="javascript:void(0);" class="btn_secondary">Select Product</a>
+                  </div>
+                </div>
+              </div>
+              } @if (productCategory == 'Traditional') {
+              <div class="col-lg-6 col-sm-6">
+                <div class="card" data-plan-id="planContainer2">
+                  <div class="cardImg">
+                    <span class="iconBadge premium"></span>
+                  </div>
+                  <div class="cardContent">
+                    <h5>C2L Protect Term</h5>
+                    <p>Life protect this is dummy text this is dummy text this is dummy text...</p>
+                    <p>
+                      <a href="javascript:void(0)">Learn more</a>
+                    </p>
+                  </div>
+                  <div class="cardFooter">
+                    <a href="javascript:void(0);" class="btn_secondary">Select Product</a>
+                  </div>
+                </div>
+              </div>
+              } @if (productCategory == 'Traditional') {
+              <div class="col-lg-6 col-sm-6">
+                <div class="card" data-plan-id="planContainer2">
+                  <div class="cardImg">
+                    <span class="iconBadge premium"></span>
+                  </div>
+                  <div class="cardContent">
+                    <h5>C2L Life Secure</h5>
+                    <p>Life protect this is dummy text this is dummy text this is dummy text...</p>
+                    <p>
+                      <a href="javascript:void(0)">Learn more</a>
+                    </p>
+                  </div>
+                  <div class="cardFooter">
+                    <a href="javascript:void(0);" class="btn_secondary">Select Product</a>
+                  </div>
+                </div>
+              </div>
+              } @if (productCategory == 'UnitLinked') {
+              <div class="col-lg-6 col-sm-6">
+                <div class="card" data-plan-id="planContainer1">
+                  <div class="cardImg">
+                    <div class="videoBanner">
+                      <span class="videoBtn"></span>
+                      <video class="videoElement" width="320" height="240" controls>
+                        <source src="/assets/theme/images/company/BFLBrandPresentationClip.mp4" type="video/mp4" />
+                        <source src="/assets/theme/images/company/BFLBrandPresentationClip.ogg" type="video/ogg" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                    <span class="iconBadge premium"></span>
+                    <!-- <iframe class="videoElement" type="text/html" src="https://www.youtube.com/embed/nWpQdh7y5n0?showinfo=0&rel=0&enablejsapi=1"
+                    frameborder="0" allowfullscreen></iframe>-->
+                  </div>
+                  <div class="cardContent">
+                    <h5>C2LBIZ Variable UL</h5>
+                    <p>Life protect this is dummy text this is dummy text this is dummy text...</p>
+                    <div class="actionLayer">
+                      <a href="javascript:void(0)" class="btnProductMoreInfo">Learn more</a>
+                      <a
+                        target="_blank"
+                        href="/assets/theme/images/company/BESTVULBrochure.pdf"
+                        class="icon-file-pdf"
+                      ></a>
+                    </div>
+                  </div>
+                  <div class="cardFooter">
+                    <a href="javascript:void(0);" class="btn_secondary">Select Product</a>
+                  </div>
+                </div>
+              </div>
+              } @if (productCategory == 'UnitLinked') {
+              <div class="col-lg-6 col-sm-6">
+                <div class="card" data-plan-id="planContainer3">
+                  <div class="cardImg">
+                    <span class="iconBadge premium"></span>
+                  </div>
+                  <div class="cardContent">
+                    <h5>Best Variable UL</h5>
+                    <p>Life protect this is dummy text this is dummy text this is dummy text...</p>
+                    <p>
+                      <a href="javascript:void(0)">Learn more</a>
+                    </p>
+                  </div>
+                  <div class="cardFooter">
+                    <a href="javascript:void(0);" class="btn_secondary">Select Product</a>
+                  </div>
+                </div>
+              </div>
+              } @if (productCategory == 'UnitLinked') {
+              <div class="col-lg-6 col-sm-6">
+                <div class="card" data-plan-id="planContainer3">
+                  <div class="cardImg">
+                    <span class="iconBadge premium"></span>
+                  </div>
+                  <div class="cardContent">
+                    <h5>Super Variable UL</h5>
+                    <p>Life protect this is dummy text this is dummy text this is dummy text...</p>
+                    <p>
+                      <a href="javascript:void(0)">Learn more</a>
+                    </p>
+                  </div>
+                  <div class="cardFooter">
+                    <a href="javascript:void(0);" class="btn_secondary">Select Product</a>
+                  </div>
+                </div>
+              </div>
+              } @if (productCategory == 'UnitLinked') {
+              <div class="col-lg-6 col-sm-6">
+                <div class="card" data-plan-id="planContainer3">
+                  <div class="cardImg">
+                    <span class="iconBadge premium"></span>
+                  </div>
+                  <div class="cardContent">
+                    <h5>Golden Variable UL</h5>
+                    <p>Life protect this is dummy text this is dummy text this is dummy text...</p>
+                    <p>
+                      <a href="javascript:void(0)">Learn more</a>
+                    </p>
+                  </div>
+                  <div class="cardFooter">
+                    <a href="javascript:void(0);" class="btn_secondary">Select Product</a>
+                  </div>
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

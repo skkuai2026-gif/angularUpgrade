@@ -1,0 +1,70 @@
+<div>
+  <div class="col-sm-12 overflow-auto">
+    <div class="row">
+      <div [ngClass]="'col-sm-12'">
+        <div class="box">
+          <div class="section">
+            <!-- <div class="sectionHeader nav nav-tabs pb">
+            <h4>
+              {{ service.getMultilingualLabel('policyTransferHistory') }}
+            </h4>
+          </div> -->
+            <!-- <div>
+          {{ service.getMultilingualLabel('policyCustomerMsg') }}
+        </div> -->
+
+            @if (policyCustomerTransferHistoryList.length == 0) {
+            <div>
+              <span>{{ service.getMultilingualLabel('zeroRecords') }}</span> <br />
+            </div>
+            } @if ( policyCustomerTransferHistoryList != null && policyCustomerTransferHistoryList != undefined &&
+            policyCustomerTransferHistoryList.length > 0 ) {
+            <div class="sectionContent">
+              <div class="tableContent scrollDiv scrollX client-history-table">
+                <span>{{ service.getMultilingualLabel('Previous_Sent_Notification') }}</span>
+                <table class="symresponsive-table table noBorder tableBlocks m0" id="benefitSummary">
+                  <thead>
+                    <tr>
+                      <th>{{ service.getMultilingualLabel('policyCustomerTranferTo') }}</th>
+                      <th>{{ service.getMultilingualLabel('emailAddressEApp') }}</th>
+                      <th>{{ service.getMultilingualLabel('policyCustomerMobileNum') }}</th>
+                      <th>{{ service.getMultilingualLabel('transferStatus') }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (policyTransferHistory of policyCustomerTransferHistoryList; track policyTransferHistory)
+                    {
+                    <tr>
+                      <td [attr.data-label]="service.getMultilingualLabel('policyCustomerTranferTo')">
+                        {{ policyTransferHistory.userType != null ? policyTransferHistory.userType : '' }}
+                        <br />
+                        {{ policyTransferHistory.userName != null ? policyTransferHistory.userName : '' }}
+                      </td>
+                      <td [attr.data-label]="service.getMultilingualLabel('emailAddressEApp')">
+                        {{ policyTransferHistory.emailId != null ? policyTransferHistory.emailId : '' }}
+                      </td>
+                      <td [attr.data-label]="service.getMultilingualLabel('policyCustomerMobileNum')">
+                        {{ policyTransferHistory.contactNum != null ? policyTransferHistory.contactNum : '' }}
+                      </td>
+                      <td [attr.data-label]="service.getMultilingualLabel('transferStatus')">
+                        {{
+                          policyTransferHistory.transferStatus != null ? policyTransferHistory.transferStatus : ''
+                        }}<br />{{
+                          policyTransferHistory.urlCreatedDt != null
+                            ? service.getDateTimeFormatted(policyTransferHistory.urlCreatedDt)
+                            : ''
+                        }}
+                      </td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,189 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+<sym-pop-up
+  [headerText]="
+    'UPDATED LIST OF NEWLY ACCEPTABLE IDENTIFICATION DOCUMENTS (IDs) FOR ALL BUSINESS TRANSACTIONS (as of 28FEB2025)'
+  "
+  [popupID]="'identityDetailsPopup'"
+  [popupSize]="'large'"
+  [displayPopupAtTop]="true"
+  [hideCloseButton]="false"
+>
+  <div class="border" id="identityDetailsPopup">
+    <div class="textalign border paddignLeftRight" style="border-top: none !important">
+      <strong>A. For Filipino Citizens:</strong>
+    </div>
+    <div class="textalign border paddignLeftRight">
+      <strong><em>1. Primary IDs.</em></strong> A Filipino client must present any one (1) of the following
+      original IDs for verification and submit a clear copy of the same:
+    </div>
+    <table width="100%" class="border">
+      <tr>
+        <td class="paddignLeftRight" width="45%"><strong>With Expiry Date</strong></td>
+        <td class="paddignLeftRight" width="55%"><strong>Without Expiry Date</strong></td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">Passport</td>
+        <td class="paddignLeftRight">GSIS e-Card</td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">Digitized Postal ID</td>
+        <td class="paddignLeftRight">Senior Citizen's Card</td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">Digitized Student Permit</td>
+        <td class="paddignLeftRight">Social Security System (SSS) ID</td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">Digitized Philhealth ID Card</td>
+        <td class="paddignLeftRight">Unified Multipurpose ID (UMID)</td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">PRC ID with birth date</td>
+        <td class="paddignLeftRight">Voter's ID</td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">Driver's License</td>
+        <td class="paddignLeftRight">
+          Other IDs issued by the Government of the Republic of the Philippines, including its political
+          subdivisions, agencies, and instrumentalities
+        </td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">Digitized Driver's License</td>
+        <td class="paddignLeftRight">Seaman's Book</td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">Overseas Filipino Worker (OFW) ID</td>
+        <td class="paddignLeftRight">National ID must be with Proof of Authentication</td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">Overseas Workers Welfare Administration (OWWA) ID</td>
+        <td class="paddignLeftRight">Digitized National ID and Proof of Authentication</td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">Police Clearance Certificate/Police Clearance Data Card</td>
+        <td class="paddignLeftRight">Digitized BIR / TIN ID and Proof of Authentication</td>
+      </tr>
+    </table>
+    <div class="border paddignLeftRight">
+      <em>
+        * Presentation of another valid and signature-bearing ID may be required for signature validation purposes
+        and to update the client’s record on file.</em
+      >
+    </div>
+    <div class="paddignLeftRight">
+      <strong><em>2. Secondary IDs. </em></strong>A Filipino client is unable to provide any of the above IDs must
+      present at least two (2) of the following original IDs and submit a clear copy of the same.
+    </div>
+    <table width="100%" class="border">
+      <tr>
+        <td class="paddignLeftRight" width="45%"><strong>With Expiry Date</strong></td>
+        <td class="paddignLeftRight" width="55%"><strong>Without Expiry Date</strong></td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">Barangay Resident ID Card</td>
+        <td class="paddignLeftRight">Integrated Bar of the Philippines (IBP) ID</td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">
+          Firearm License or License to Own and Possess Firearms or Permit to Carry Firearms Outside of Residence
+        </td>
+        <td class="paddignLeftRight">Philhealth ID Card</td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">National Bureau of Investigation (NBI) Clearance</td>
+        <td class="paddignLeftRight">Bureau of Internal Revenue (BIR) ID</td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">Postal ID</td>
+        <td class="paddignLeftRight">Persons with Disability (PWD) ID</td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">
+          Student/School ID* (signed by the School Principal or Head of the Educational Institution)
+        </td>
+        <td class="paddignLeftRight">
+          Other IDs issued by Government-Owned or-Controlled Corporations (GOCCs) and Covered persons registered
+          with and supervised or regulated by the BSP, SEC or IC
+        </td>
+      </tr>
+      <tr>
+        <td class="paddignLeftRight">Solo Parent's ID</td>
+        <td></td>
+      </tr>
+    </table>
+    <div class="border paddignLeftRight">
+      <em
+        >* A Student/School ID may be considered a primary ID if this is supported by a school certification
+        stating that the student is currently enrolled in the school.</em
+      >
+    </div>
+    <div class="border paddignLeftRight">
+      <em>In cases where only one (1) Secondary ID </em>
+      <span style="text-decoration: underline"><strong>(with photo and signature)</strong></span> can be provided,
+      any one (1) of the following original documents must be presented and a clear copy of the same must be
+      submitted:
+    </div>
+    <div class="border paddignLeftRight">
+      <em>
+        a. Birth Certificate (issued by the Philippines Statistics Authority formerly NSO), or a Certified True
+        Copy of the same;</em
+      >
+    </div>
+    <div class="border paddignLeftRight">
+      <em>
+        b. Marriage Certificate (issued by the Philippines Statistics Authority formerly NSO), or a Certified True
+        Copy of the same;</em
+      >
+    </div>
+    <div class="border paddignLeftRight">
+      <em>
+        c. Utility Billing Statement, such as water, electricity, telephone, cable, internet, which contains the
+        same name and address of the client on the record.</em
+      >
+    </div>
+    <div class="border paddignLeftRight"><strong>B. For Citizens of Other Countries:</strong></div>
+    <div class="border paddignLeftRight">
+      <strong>Original</strong> and a <strong>valid passport</strong> must be presented and a clear copy of the
+      same must be submitted. In addition, any one (1) of the following original IDs issued by the Philippine
+      government to foreign nationals must be presented and a clear copy of the same must be submitted:
+    </div>
+    <div class="border paddignLeftRight"><em>a. Alien Certificate of Registration (ACR) i-Card</em></div>
+    <div class="border paddignLeftRight"><em>b. Alien Employment Permit (AEP)</em></div>
+    <div class="border paddignLeftRight"><em>c. Special Resident Retiree's Visa (SRRV) ID</em></div>
+    <div class="border paddignLeftRight"><em>d. Special Investor's Resident Visa (SIRV) ID</em></div>
+  </div>
+  <div class="border paddignLeftRight"><strong>C. Authentication Process:</strong></div>
+  <img src="/assets/theme/images/company/IDProof1.png" alt="IDProof1" />
+  <div class="border paddignLeftRight">
+    <strong>Sample Copy of ID and Proof of Authentication</strong>
+  </div>
+  <img src="/assets/theme/images/company/IDProof2.png" alt="IDProof@2" class="d-block mb-2" />
+  <img src="/assets/theme/images/company/IDProof3.png" alt="IDProof@3" class="d-block mb-2" />
+  <img src="/assets/theme/images/company/IDProof4.png" alt="IDProof@4" class="d-block mb-2" />
+  <img src="/assets/theme/images/company/IDProof5.png" alt="IDProof@5" class="d-block" />
+</sym-pop-up>
+} @else { @if (partyModel.IdentityList != undefined) {
+<sym-data-entry-grid
+  [fieldIds]="
+    'identityTypeCd,idStatus,identityField1,identityField2,identityField3,identityField4,identityField5,identityNum:issueDt,expiryDt:issuingAuthority,primaryFl'
+  "
+  [modelList]="partyModel.IdentityList"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+  [isFormFormatRequired]="true"
+  [formColumnWidth]="'6,6,6,6,6,6,6,6:6,6:6,6'"
+  [isAddRequired]="!service.responseIO.data.Entity.isCompleted"
+  [isDeleteRequired]="!service.responseIO.data.Entity.isCompleted"
+></sym-data-entry-grid>
+} }

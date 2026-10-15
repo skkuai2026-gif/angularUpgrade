@@ -1,0 +1,199 @@
+<div class="innerVerticalTab">
+  <sym-fna-personal-information></sym-fna-personal-information>
+
+  <div class="ivtRight" [style.width]="!settingService.isMobileViewRendered() ? 'calc(100% - 290px)' : 100 + '%'">
+    <h2>What are your objectives of buying our product?</h2>
+    <h6 class="note">(Choose one or more)</h6>
+    @if (settingService.getApplicationMode() === 'offline') {
+    <sym-carousel>
+      @for (item of fnaSlideScreen; track item; let i = $index) {
+      <div class="card fna-card-con">
+        <div class="fna-card-container">
+          <div class="fnaSlide" [attr.data-slide-no]="i + 1">
+            <div class="fnaSliderContent">
+              <input
+                class=""
+                type="checkbox"
+                name="inputCheckboxSlider"
+                id="inputCheckboxSlider_{{ i }}"
+                value="{{ item.html }}"
+                (click)="onInputChanged($event)"
+              />
+              <div [innerHTML]="item.html | safeHtml: 'html'"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </sym-carousel>
+    } @else {
+    <div class="fnaContentSlider" data-gap="80" data-bfc>
+      <div class="sliderContainer">
+        @for (item of fnaSlideScreen; track item; let i = $index) {
+        <div class="fnaSlide" data-slide-no="i + 1">
+          <div class="fnaSliderContent">
+            <input
+              class=""
+              type="checkbox"
+              name="inputCheckboxSlider"
+              id="inputCheckboxSlider_{{ i }}"
+              value="{{ item.html }}"
+              (click)="onInputChanged($event)"
+            />
+            <div [innerHTML]="item.html | safeHtml: 'html'"></div>
+            <!-- <span>If anything should happen to me, I just don't want to <strong>burden my family</strong></span> -->
+          </div>
+        </div>
+        }
+        <!-- <div class="fnaSlide" data-slide-no="2">
+              <div class="fnaSliderContent">
+                <input
+                  class=""
+                  type="checkbox"
+                  name="inputCheckboxSlider"
+                  id="inputCheckboxSlider_1"
+                  value="I want to make sure my family and children are provided for if I’m gone"
+                  (click)="onInputChanged($event)"
+                  />
+                  <span>I want to make sure my <strong>family and children are provided for</strong> if I’m gone</span>
+                </div>
+              </div>
+              <div class="fnaSlide" data-slide-no="3">
+                <div class="fnaSliderContent">
+                  <input
+                    class=""
+                    type="checkbox"
+                    name="inputCheckboxSlider"
+                    id="inputCheckboxSlider_1"
+                    value="I don’t want to rely on anyone to enjoy a comfortable living"
+                    (click)="onInputChanged($event)"
+                    />
+                    <span>I don’t want to rely on anyone to enjoy a <strong>comfortable living</strong></span>
+                  </div>
+                </div>
+                <div class="fnaSlide" data-slide-no="4">
+                  <div class="fnaSliderContent">
+                    <input
+                      class=""
+                      type="checkbox"
+                      name="inputCheckboxSlider"
+                      id="inputCheckboxSlider_1"
+                      value="I am worried about major health issues like cancer"
+                      (click)="onInputChanged($event)"
+                      />
+                      <span>I am <strong>worried about major health issues</strong> like cancer</span>
+                    </div>
+                  </div>
+                  <div class="fnaSlide" data-slide-no="5">
+                    <div class="fnaSliderContent">
+                      <input
+                        class=""
+                        type="checkbox"
+                        name="inputCheckboxSlider"
+                        id="inputCheckboxSlider_1"
+                        value="My children’s health and safety is what keeps me up at night"
+                        (click)="onInputChanged($event)"
+                        />
+                        <span>My <strong>children’s health and safety</strong> is what keeps me up at night</span>
+                      </div>
+                    </div>
+                    <div class="fnaSlide" data-slide-no="6">
+                      <div class="fnaSliderContent">
+                        <input
+                          class=""
+                          type="checkbox"
+                          name="inputCheckboxSlider"
+                          id="inputCheckboxSlider_1"
+                value="I’m getting older and my health is deteriorating , I want to be
+                able to pay the hospital bills"
+                          (click)="onInputChanged($event)"
+                          />
+                          <span
+                            >I’m getting <strong>older</strong> and <strong>my health is deteriorating</strong>, I want to be
+                            able to pay the <strong>hospital bills</strong></span
+                            >
+                          </div>
+                        </div>
+                        <div class="fnaSlide" data-slide-no="7">
+                          <div class="fnaSliderContent">
+                            <input
+                              class=""
+                              type="checkbox"
+                              name="inputCheckboxSlider"
+                              id="inputCheckboxSlider_1"
+                              value="I don’t know if I will have enough money to take care of my health"
+                              (click)="onInputChanged($event)"
+                              />
+                              <span>I don’t know if I will have <strong>enough money to take care of my health</strong></span>
+                            </div>
+                          </div>
+                          <div class="fnaSlide" data-slide-no="8">
+                            <div class="fnaSliderContent">
+                              <input
+                                class=""
+                                type="checkbox"
+                                name="inputCheckboxSlider"
+                                id="inputCheckboxSlider_1"
+                                value="My interests and hobbies consume my salary, I want to  keep aside some for future"
+                                (click)="onInputChanged($event)"
+                                />
+                                <span
+                                  >My interests and hobbies consume my salary, I want to <strong>keep aside some</strong> for
+                                  future</span
+                                  >
+                                </div>
+                              </div>
+                              <div class="fnaSlide" data-slide-no="9">
+                                <div class="fnaSliderContent">
+                                  <input
+                                    class=""
+                                    type="checkbox"
+                                    name="inputCheckboxSlider"
+                                    id="inputCheckboxSlider_1"
+                                    value="I don’t want to sweat over investments , want to let them run their course"
+                                    (click)="onInputChanged($event)"
+                                    />
+                                    <span
+                                      >I <strong>don’t want to sweat over investments</strong>, want to let them run their course</span
+                                      >
+                                    </div>
+                                  </div>
+                                  <div class="fnaSlide" data-slide-no="10">
+                                    <div class="fnaSliderContent">
+                                      <input
+                                        class=""
+                                        type="checkbox"
+                                        name="inputCheckboxSlider"
+                                        id="inputCheckboxSlider_1"
+                                        value="Pure insurance product"
+                                        />
+                                        <span
+                                          >Need to <strong>plan finances for the future</strong> and prepare to take care of my parents in
+                                          future</span
+                                          >
+                                        </div>
+                                      </div>
+                                      <div class="fnaSlide" data-slide-no="11">
+                                        <div class="fnaSliderContent">
+                                          <input
+                                            class=""
+                                            type="checkbox"
+                                            name="inputCheckboxSlider"
+                                            id="inputCheckboxSlider_1"
+                                            value="Pure insurance product"
+                                            />
+                                            <span
+                                              >Properties are getting expensive, I want to
+                                              <strong>leave some money to help my children</strong></span
+                                              >
+                                            </div>
+                                          </div> -->
+      </div>
+      <nav>
+        <span class="nav prev"></span>
+        <span class="nav next"></span>
+      </nav>
+    </div>
+    }
+  </div>
+</div>

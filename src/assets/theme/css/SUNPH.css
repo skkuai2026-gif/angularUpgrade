@@ -1,0 +1,376 @@
+/* @font-face {
+    font-family: NotoSansCJKRegular;
+    src: url(fonts/NotoSansCJKRegular.ttc);
+}
+
+@font-face {
+    font-family: NotoSansCJKBold;
+    src: url(fonts/NotoSansCJKBold.ttc);
+} */
+
+@font-face {
+  font-family: NotoSansCJKscRegular;
+  src: url(fonts/NotoSansCJKscRegular.otf);
+}
+@font-face {
+  font-family: SunLifeSans-Bold;
+  src: url(fonts/SunLifeSans-Bold.otf);
+}
+@font-face {
+  font-family: SunLifeSans-Regular;
+  src: url(fonts/SunLifeSans-Regular.otf);
+}
+body {
+  font-family: NotoSansCJKscRegular !important;
+  font-weight: 100 !important;
+}
+
+body,
+input,
+select,
+textarea,
+button,
+.ui-btn {
+  font-family: NotoSansCJKscRegular !important;
+  font-weight: 100 !important;
+}
+
+#errorPopup .popup-close-cust .icon-close {
+  line-height: 2;
+}
+/*Title changes*/
+.ui-header .ui-title {
+  color: #000000;
+  text-transform: none !important;
+}
+
+.ui-header .ui-btn {
+  color: #441c0f;
+}
+
+.ui-header .ui-btn:hover {
+  color: #441c0f;
+}
+
+.ui-page-theme-a .ui-btn:hover {
+  color: #000000 !important;
+}
+
+/*Nav Bar Changes*/
+.basictop-navareawrapper {
+  background: #e7ac03;
+}
+
+.basictop-navarea {
+  background: #e7ac03;
+}
+
+.basictop-navarea ul li a.active i {
+  background-color: #ffffff;
+}
+
+.basictop-navarea ul li a i {
+  color: #000000;
+}
+.basictop-navarea ul li a.active span {
+  border-bottom: 2px solid #000000;
+  color: #000000;
+}
+
+.basictop-navarea ul li a {
+  color: #ffffff !important;
+}
+
+.basictop-navarea ul li a:hover {
+  color: #ffffff !important;
+}
+
+/*Sub Tab changes*/
+.subTabs ul.tab-name li .ui-btn:hover {
+  background-color: #edb41a !important;
+  border-color: #ffffff !important;
+  text-shadow: 0 0px 0 #3c1f17 !important;
+  border-bottom: 0;
+  color: #282828 !important;
+}
+
+.subTabs ul.tab-name li .ui-btn-active {
+  background-color: #e7ac03 !important;
+  color: #000000 !important;
+}
+
+.subTabs ul.tab-name li .ui-btn:hover {
+  background-color: #e7ac03 !important;
+  color: #441c0f !important;
+}
+
+.subTabs ul.tab-name li .ui-btn {
+  background-color: #efd48b;
+}
+
+/*Footer*/
+.footer-bg {
+  background: #003946;
+}
+
+.footer-bg a {
+  border-right: 1px solid #e5e5e5;
+  border-radius: 0px;
+  font-weight: 100;
+}
+
+.footer-bg a:hover {
+  color: #fe693d !important;
+}
+
+/*Requirements tab*/
+
+.requirement-content-wrapper
+  .requirement-content-wrapper-left
+  .collapse-panel
+  .ui-collapsible-content
+  .ui-listview
+  .active {
+  background: #cb5432;
+}
+.categorySelector {
+  background: #faeeea;
+}
+
+.requirement-content-wrapper .requirement-content-wrapper-right .proof-left-multi .documentDesc {
+  font-size: 14px;
+  float: left !important;
+  width: 67%;
+}
+
+.requirement-content-wrapper .requirement-content-wrapper-right .proof-bg-multi {
+  border-bottom: 2px solid #ffa46f;
+}
+
+#thumbnailImg {
+  height: 50%;
+  width: 50%;
+  object-fit: contain;
+}
+
+/*Mobile CSS changes*/
+
+/*Nav Bar changes*/
+
+.slider-wrapper-mobile .slider-nav .owner-name p {
+  background: #e7ac03;
+  color: #000000;
+}
+
+@media (max-width: 767px) {
+  .collapse-panel .ui-collapsible-heading a.ui-btn {
+    background: -webkit-linear-gradient(-90deg, #cb5432 0%, #cb5432 100%);
+    color: #ffffff;
+  }
+}
+
+@media (max-width: 767px) {
+  .mobile-baasic-nav {
+    background: #e7ac03;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 990px) {
+  .mobile-baasic-nav {
+    background: #e7ac03;
+  }
+  .reviewtabs {
+    position: relative;
+    left: 0;
+  }
+}
+@media (max-width: 767px) {
+  .mobile-baasic-nav li {
+    border-bottom: 1px solid #ffffff;
+  }
+}
+
+.basictop-navarea .mobile-baasic-nav li a.active i {
+  color: #cb5432 !important;
+}
+
+.basictop-navarea .mobile-baasic-nav li a i {
+  color: #003946 !important;
+}
+
+@media (max-width: 990px) {
+  .paymentContent {
+    padding: 0px 62px 0px 15px !important ;
+  }
+}
+
+@media (max-width: 767px) {
+  .paymentContent {
+    padding: 0px 62px 0px 15px !important ;
+  }
+}
+@media (min-width: 990px) {
+  .paymentContent {
+    padding: 80px 50px !important;
+  }
+}
+/* .btn-back:hover{
+	color : #000000 !important;
+}
+
+.ui-page-theme-a .ui-btn:hover{
+	color : #ffffff !important;
+} */
+
+/*Quicklink*/
+.setting-details,
+.profile-details,
+.quicklink-details,
+.add-illustration-details {
+  background: #4a7295;
+}
+/*Customer Info Page*/
+.labelHeader {
+  color: #000000;
+  background: #e7ac03;
+}
+
+.button-add-section {
+  border: 1px solid #003946;
+  background: #ffffff;
+  color: #000000;
+}
+
+.add-section {
+  border-top: 2px solid #cb5432;
+}
+
+.button-add-section .notification {
+  background: #ca5a31;
+}
+
+/**Delete Confirmation Pop Up**/
+.ui-simpledialog-container {
+  background-color: #ffffff !important;
+  border: 1px solid #000000 !important;
+  color: #000000 !important;
+  width: 26% !important;
+}
+
+@media (max-width: 767px) {
+  .ui-simpledialog-container {
+    height: 18% !important;
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 990px) {
+  .ui-simpledialog-container {
+    height: 24% !important;
+    width: 40% !important;
+    left: 350px !important;
+  }
+}
+
+@media (min-width: 990px) {
+  .ui-simpledialog-container {
+    width: 38% !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .reviewtabs {
+    position: relative;
+    left: 0;
+  }
+}
+/* SUNSS-2180 */
+
+.reviewtabs {
+  position: relative;
+  left: 0;
+}
+
+@media (max-width: 1370px) and (min-width: 1200px) {
+  .reviewtabs {
+    position: relative;
+    left: 0;
+  }
+}
+
+@media (max-width: 640px) and (min-width: 360px) {
+  .reviewtabs {
+    position: relative;
+    left: 0;
+  }
+}
+
+@media (max-width: 560px) and (min-width: 320px) {
+  .reviewtabs {
+    position: relative;
+    left: 0;
+  }
+}
+
+@media (max-width: 667px) and (min-width: 375px) {
+  .reviewtabs {
+    position: relative;
+    left: 0;
+  }
+}
+
+@media (max-width: 736px) and (min-width: 414px) {
+  .reviewtabs {
+    position: relative;
+    left: 0;
+  }
+}
+
+@media (max-width: 736px) and (min-width: 414px) {
+  .reviewtabs {
+    position: relative;
+    left: 0;
+  }
+}
+
+/* SUNSS-2180 */
+
+.ui-simpledialog-container .ui-header.ui-bar-a {
+  margin-top: 10px;
+}
+
+.ui-simpledialog-container p.ui-simpledialog-subtitle {
+  background-color: #ffffff !important;
+}
+
+.ui-simpledialog-controls a {
+  text-align: center;
+  width: 10%;
+  display: table-cell;
+}
+
+.ui-simpledialog-controls .ui-btn {
+  text-shadow: none !important;
+  color: #000000 !important;
+}
+.ui-simpledialog-controls .ui-btn.ui-btn-b {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+.ui-simpledialog-controls .ui-btn.ui-btn-c {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+/*********************SUNSS-1742*************************/
+
+.error-msg .error-text {
+  overflow: visible !important;
+}
+/*********************SUNSS-1742*************************/
+
+/* SUNSS-2180 */
+#OtpGeneration #notabbar {
+  overflow: hidden !important;
+}

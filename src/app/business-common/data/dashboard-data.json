@@ -1,0 +1,54 @@
+{
+  "dashBoard": {
+    "CalendarView": {
+      "data": [
+        {
+          "title": "Lunch with Mark Taylor",
+          "start": "2024-04-03",
+          "constraint": "businessHours"
+        },
+        {
+          "title": "Meeting with Rose Miller",
+          "start": "2024-04-13",
+          "constraint": "availableForMeeting",
+          "color": "#257e4a"
+        },
+        {
+          "title": "Send Documents to Max",
+          "start": "2024-04-18",
+          "end": "2024-04-20"
+        },
+        {
+          "title": "Email to Sam",
+          "start": "2024-04-29"
+        },
+        {
+          "groupId": "availableForMeeting",
+          "start": "2024-04-11",
+          "end": "2024-01-11",
+          "display": "background"
+        },
+        {
+          "groupId": "availableForMeeting",
+          "start": "2024-04-13",
+          "end": "2024-04-13",
+          "display": "background"
+        },
+        {
+          "start": "2024-04-24",
+          "end": "2024-04-28",
+          "overlap": false,
+          "display": "background",
+          "color": "#ff9f89"
+        },
+        {
+          "start": "2024-04-06",
+          "end": "2024-04-08",
+          "overlap": false,
+          "display": "background",
+          "color": "#ff9f89"
+        }
+      ]
+    }
+  }
+}

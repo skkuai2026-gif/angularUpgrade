@@ -1,0 +1,62 @@
+@if ( policyTransferHistoryList != null && policyTransferHistoryList != undefined &&
+policyTransferHistoryList.length > 0 ) {
+<div>
+  <div class="col-sm-12 overflow-auto">
+    <div class="row">
+      <div [ngClass]="'col-sm-12'">
+        <div class="box">
+          <div class="section">
+            <div class="sectionHeader nav nav-tabs pb">
+              <h4>
+                {{ service.getMultilingualLabel('policyTransferHistory') }}
+              </h4>
+            </div>
+            <div class="sectionContent">
+              <div class="tableContent scrollDiv scrollX">
+                <table class="symresponsive-table table noBorder tableBlocks m0" id="benefitSummary">
+                  <thead>
+                    <tr>
+                      <th>{{ service.getMultilingualLabel('userName') }}</th>
+                      <th>{{ service.getMultilingualLabel('contactNum') }}</th>
+                      <th>{{ service.getMultilingualLabel('emailId') }}</th>
+                      <th>{{ service.getMultilingualLabel('urlCreatedDt') }}</th>
+                      <th>{{ service.getMultilingualLabel('transferStatus') }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (policyTransferHistory of policyTransferHistoryList; track policyTransferHistory) {
+                    <tr>
+                      <td [attr.data-label]="service.getMultilingualLabel('userName')">
+                        {{ policyTransferHistory.userName != null ? policyTransferHistory.userName : '' }}
+                      </td>
+                      <td [attr.data-label]="service.getMultilingualLabel('contactNum')">
+                        {{ policyTransferHistory.contactNum != null ? policyTransferHistory.contactNum : '' }}
+                      </td>
+                      <td [attr.data-label]="service.getMultilingualLabel('emailId')">
+                        {{ policyTransferHistory.emailId != null ? policyTransferHistory.emailId : '' }}
+                      </td>
+                      <td [attr.data-label]="service.getMultilingualLabel('urlCreatedDt')">
+                        {{
+                          policyTransferHistory.urlCreatedDt != null
+                            ? service.getDateTimeFormatted(policyTransferHistory.urlCreatedDt)
+                            : ''
+                        }}
+                      </td>
+                      <td [attr.data-label]="service.getMultilingualLabel('transferStatus')">
+                        {{
+                          policyTransferHistory.transferStatus != null ? policyTransferHistory.transferStatus : ''
+                        }}
+                      </td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+}

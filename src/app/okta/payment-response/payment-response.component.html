@@ -1,0 +1,43 @@
+<!-- <p class="text-center">
+  Your transaction is complete.Please close the window !!!.
+</p> -->
+<ng-container *ngIf="userType == 'AGENT'">
+  <ng-container *ngIf="companySUNPH == 'SLOCPI'">
+    <div class="payment-success-container">
+      <div class="success-content">
+        <img src="assets/theme/images/company/logo2.png" alt="Sun Life" class="sunlife-logo" />
+
+        <h3>Thank you!</h3>
+        <div *ngIf="emailTrigger == 'CPAG'">
+          <p>
+            Your payment for life insurance has been completed. We will keep you updated through your Sun Life
+            Financial Advisor.
+          </p>
+        </div>
+        <div *ngIf="emailTrigger == 'ACA'">
+          <p>
+            Your ACA enrollment has been completed. We will keep you updated through your Sun Life Financial
+            Advisor.
+          </p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="companySUNPH == 'SLGFI'">
+    <div class="payment-success-container">
+      <div class="success-content">
+        <img
+          src="assets/theme/images/company/UPPER LEFT LOGO - 2064x499.png"
+          alt="Sun Life"
+          class="sunlife-logo"
+        />
+        <h3>Thank you!</h3>
+
+        <p>
+          Your payment for life insurance has been completed. We will keep you updated through your Sun Life
+          Financial Advisor.
+        </p>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

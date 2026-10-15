@@ -1,0 +1,31 @@
+<sym-page-container [breadCrumbList]="breadCrumbList">
+  <div id="quotaionSearch" class="canvasScroll">
+    <sym-search
+      [moreOptionList]="moreOptionList"
+      [isDeleteRequired]="true"
+      [service]="service"
+      [selectButtonText]="'selectQtn'"
+      [additionalOptionList]="additionalOptionList"
+      (moreOptionClick)="onMoreOptionClicked($event)"
+      (additionalOptionClick)="onAdditionalOptionClicked($event)"
+      (moreButtonClicked)="onMoreButtonClicked($event)"
+    ></sym-search>
+    <!-- [exportDetails]="{ fileName: 'Quotation Search', format: ['pdf', 'excel', 'csv'] }" -->
+  </div>
+  <!-- <sym-bottom-footer [mode]="'default'"></sym-bottom-footer>   -->
+
+  <sym-pop-up [headerText]="'quotationOutputPreferences'" [popupID]="'downloadPDFModal'">
+    <sym-output-preferences></sym-output-preferences>
+    <div class="text-center">
+      <button
+        type="button"
+        (click)="downloadPDF()"
+        class="btn btn_primary"
+        data-dismiss="modal"
+        aria-label="Close"
+      >
+        {{ service.getMultilingualLabel('Ok') }}
+      </button>
+    </div>
+  </sym-pop-up>
+</sym-page-container>

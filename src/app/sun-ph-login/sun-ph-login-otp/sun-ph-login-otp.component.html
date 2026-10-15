@@ -1,0 +1,21 @@
+@if (!authService.isUserLoggedIn() && settingService.urlList != undefined && companyCode) {
+<div class="loginOtp">
+  @if (otpDataLoaded) {
+  <sym-transfer-customer-otp
+    [id]="companyCode"
+    [displayPopupOnly]="true"
+    [isOtpButtonReq]="false"
+    [otpRecipientAddress]="otpRecipientAddress"
+    [otpMobileNumber]="RecipientMobileNumber"
+    [otpRecipientEmailId]="RecipientEmailId"
+    [otpErrorFailed]="otpErrorFailed"
+    (otpActionClicked)="onOTPActionClick($event)"
+    [otpExpiryTimeInput]="otpExpiryTime"
+    [getOTP]="true"
+    [isLoaderRequired]="isOtpLoading"
+  ></sym-transfer-customer-otp>
+  }
+</div>
+} @else {
+<sym-loader></sym-loader>
+}

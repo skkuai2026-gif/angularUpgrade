@@ -1,0 +1,101 @@
+.collapse:not(.show) {
+  display: contents !important;
+}
+
+.picContainer.active .uploadedPicContainer {
+  overflow: hidden;
+}
+.picContainer.active .uploadedPicContainer.scrollX {
+  overflow-x: auto;
+  height: 5.4rem;
+  flex-grow: unset;
+}
+.uploadedPic .btnDelete {
+  left: 6em;
+  transform: translateY(-11px);
+  width: 19px;
+  height: 25px;
+}
+.uploadedPic {
+  min-width: 100px;
+  height: 4.1rem;
+  bottom: 8px;
+  margin-bottom: 1px;
+  border: 1px solid;
+  margin-right: 10px;
+}
+.documentHolder {
+  font-size: 11px;
+  word-break: break-all;
+  position: relative;
+  right: 2rem;
+  left: 0px;
+  top: 0px;
+  margin: 2px;
+}
+a.hyperlink {
+  height: 95%;
+  width: 100%;
+  position: relative;
+  top: 0px;
+}
+.picContainerSize {
+  height: 100px;
+}
+.docUploaded {
+  bottom: 2px;
+  margin-bottom: 0px;
+}
+.picContainer ~ p.note {
+  position: relative;
+  bottom: 1rem;
+  width: 20rem;
+  text-wrap: wrap;
+}
+.uploadPic .fileUploadContent > h6 {
+  text-wrap: wrap;
+}
+@media only screen and (min-width: 390px) and (max-width: 1024px) {
+  .uploadPic .fileUploadContent > h6 {
+    width: 100%;
+  }
+  .uploadPic .fileUploadContent:before {
+    width: 3.5rem;
+  }
+  .uploadedPic {
+    width: auto;
+    min-width: 68px;
+    margin-right: 0.7rem;
+  }
+  .uploadedPic .btnDelete {
+    left: 4rem;
+  }
+}
+@media only screen and (width: 390px), (width: 768px), (width: 820px) {
+  .uploadedPic .btnDelete {
+    left: 3.6rem;
+    top: 5px;
+  }
+}
+@media only screen and (width: 1024px) {
+  .uploadedPic {
+    min-width: 90px;
+  }
+  .uploadedPic .btnDelete {
+    left: 5.5rem;
+  }
+}
+.plusIconContainer {
+  border: 1px solid;
+  padding: 1.2rem 2rem;
+  background-color: #eff0f1;
+}
+.plusIconContainer > i.fa.fa-plus {
+  font-size: 0.85rem;
+}
+.picContainer.active .uploadedPicContainer {
+  margin-left: 0px;
+}
+.picContainer.active ~ p.note {
+  display: none;
+}

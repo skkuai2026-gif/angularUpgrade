@@ -1,0 +1,104 @@
+.block {
+  box-shadow: 12px 2px 10px 9px rgb(1 138 205 / 59%) !important;
+  border-radius: 10px !important;
+  border: 4px solid #018acd;
+}
+.block .card.payment-card > h4,
+.block .card.payment-card .header-block {
+  // box-shadow: 10px 8px 28px 2px rgb(141, 241, 154, 0.59) !important;
+  border-bottom: 1px solid !important;
+  border-image-source: linear-gradient(to left, #5ebae9, #018acd) !important;
+  border-image-slice: 1 !important;
+  border-width: 5px;
+  font-size: 1.39rem;
+}
+
+.card.payment-card {
+  height: 100%;
+  font-weight: 900;
+  font-size: 1.39em;
+  padding: 0 10px;
+}
+
+.payment-card .payment-header {
+  border-bottom: 1px solid !important;
+  border-image-source: linear-gradient(to left, #d53a9d, #743ad5) !important;
+  border-image-slice: 1 !important;
+  border-width: 5px;
+  text-align: left;
+  padding: 8px 0px 8px 0;
+  margin: 5px 0px;
+  font-size: 1.29rem;
+}
+
+.payment-card > .payment-body {
+  margin: 0px 5px 0 0;
+  padding: 0;
+}
+
+.payment-body .grid-layout {
+  display: grid;
+  grid-column-gap: 12px;
+  grid-template-columns: auto auto;
+}
+
+.pending {
+  box-shadow: 12px 2px 10px 9px rgb(232 241 141 / 59%) !important;
+  border: 4px solid #ffc107 !important;
+}
+
+.completed {
+  box-shadow: 12px 2px 10px 9px rgb(141, 241, 154, 0.59) !important;
+  border: 4px solid #198754 !important;
+}
+
+.error {
+  box-shadow: 12px 2px 10px 9px rgb(220 53 69 / 59%) !important;
+  border: 4px solid #dc3545 !important;
+}
+
+.highlight {
+  font-size: 1.29rem;
+}
+.block.pending .card.payment-card > h4,
+.block.pending .card.payment-card .header-block {
+  // box-shadow: 10px 8px 28px 2px rgb(232 241 141 / 59%) !important;
+  border-bottom: 1px solid !important;
+  border-image-source: linear-gradient(to left, #e0d15a, #ffc107) !important;
+  border-image-slice: 1 !important;
+  border-width: 5px;
+}
+
+.block.error .card.payment-card > h4,
+.block.error .card.payment-card .header-block {
+  // box-shadow: 10px 8px 28px 2px rgb(220 53 69 / 59%) !important;
+  border-bottom: 1px solid !important;
+  border-image-source: linear-gradient(to left, #fa5d6c, #dc3545) !important;
+  border-image-slice: 1 !important;
+  border-width: 5px;
+}
+
+.block.completed .card.payment-card > h4,
+.block.completed .card.payment-card .header-block {
+  // box-shadow: 10px 8px 28px 2px rgb(141, 241, 154, 0.59) !important;
+  border-bottom: 1px solid !important;
+  border-image-source: linear-gradient(to left, #6bebaf, #198754) !important;
+  border-image-slice: 1 !important;
+  border-width: 5px;
+}
+
+.header-block {
+  display: block;
+  padding: 0px;
+  margin: 0px 2px 6px 0;
+  font-size: 1.39rem;
+}
+
+.header-block .right {
+  float: right;
+  font-size: 1.39rem;
+}
+.header-block .left {
+  float: left;
+  font-size: 1.39rem;
+}

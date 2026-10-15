@@ -1,0 +1,30 @@
+@if (model != undefined) {
+<sym-field-group
+  [fieldIds]="'industryCd,natureOfDuty,occupationCd'"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  [responseIO]="service.responseIO"
+  (onFieldsCreated)="onIndustryFieldsCreated($event)"
+  [model]="model"
+  [displaySearchForField]="
+    service.responseIO.data.Entity.isCompleted || service.responseIO.data.Entity.isInvalid
+      ? undefined
+      : 'industryCd'
+  "
+  (searchIconClicked)="onOccupationIndustryDutySearchClick($event)"
+  [gridColumns]="[3, 3, 3]"
+></sym-field-group>
+} @if (isOccupationIndustryDutySearchDisplayed && model != undefined) {
+<sym-pop-up
+  [headerText]="'searchOccupation'"
+  [popupID]="'OccupationIndustryDutySearch' + model.guid"
+  (popupClosed)="isOccupationIndustryDutySearchDisplayed = false"
+  class="OccupationIndustryDutySearch"
+>
+  @if (isOccupationIndustryDutySearchDisplayed) {
+  <sym-occupation-industry-duty-search
+    (selectedOptionChanged)="onOccupationIndustrySearchSelected($event)"
+  ></sym-occupation-industry-duty-search>
+  }
+</sym-pop-up>
+}

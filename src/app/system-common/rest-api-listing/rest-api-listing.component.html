@@ -1,0 +1,45 @@
+<div class="card">
+  <div class="m-1">
+    <input
+      [(ngModel)]="filterText"
+      class="form-control mt-3 api-key-filter"
+      id="filterAPISearch"
+      (keyup)="isFilterApplied()"
+      placeholder="Search API"
+    />
+    @if (filterText != undefined) {
+    <i class="fa fa-close close" (click)="onCloseFilter()"></i>
+    }
+  </div>
+  <div class="scrollDiv">
+    @for (item of treeList; track item) {
+    <div class="p-2 m-1">
+      <!--| apiFilter: filterText-->
+      <div class="key-header" [class.blockCollapse]="item.isBlockCollapsed">
+        <div (click)="toggleItem(item)">
+          @if (!item.isBlockCollapsed) {
+          <span class="expand plus key"> +</span>
+          } @if (item.isBlockCollapsed) {
+          <span class="expand key"> -</span>
+          }
+          <label class="key"> {{ item.key }} </label>
+        </div>
+        <div>
+          @if (item.isBlockCollapsed) { @for (val of item.value | apiFilter: filterText; track val) {
+          <div>
+            <div class="row" [class.blockCollapse]="val.isBlockCollapsed" (click)="getRestApi(val.value)">
+              <div class="col-md-1 col-lg-1 col-sm-1 p-0 ml-4" (click)="getRestApi(val.value)">
+                <span class="ml-2" (click)="getRestApi(val.value)">-</span>
+              </div>
+              <div class="col-md-8 col-lg-8 col-sm-6 p-0" (click)="getRestApi(val.value)">
+                <label class="apiLinkKey" (click)="getRestApi(val.value)"> {{ val.key }} </label>
+              </div>
+            </div>
+          </div>
+          } }
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,58 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else {
+<sym-field-group
+  [fieldIds]="'occupationTypeCd'"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+  [gridColumns]="[4]"
+></sym-field-group>
+<sym-field-group
+  [fieldIds]="'employerName,pepCd,annualIncome'"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+  [gridColumns]="[4, 4, 4]"
+></sym-field-group>
+<div class="pl-2">
+  <sym-field-group
+    [fieldIds]="'industryCd,natureOfDuty,occupationCd'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="model"
+    [displaySearchForField]="
+      service.responseIO.data.Entity.isCompleted || service.responseIO.data.Entity.isInvalid
+        ? undefined
+        : 'industryCd'
+    "
+    (searchIconClicked)="onOccupationIndustryDutySearchClick($event)"
+    (onFieldsCreated)="onIndustryFieldsCreated($event)"
+    [gridColumns]="[4, 4, 4]"
+  ></sym-field-group>
+</div>
+@if (model != undefined) {
+<sym-pop-up
+  [headerText]="'searchOccupation'"
+  [popupID]="'OccupationIndustryDutySearch'"
+  class="OccupationIndustryDutySearch"
+  (popupClosed)="onPopupClose()"
+>
+  @if (isOccupationIndustryDutySearchDisplayed) {
+  <sym-occupation-industry-duty-search
+    (selectedOptionChanged)="onOccupationIndustrySearchSelected($event)"
+  ></sym-occupation-industry-duty-search>
+  }
+</sym-pop-up>
+} }

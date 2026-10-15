@@ -1,0 +1,15 @@
+<sym-sub-tab [tabList]="childQuoteTabList" (selectedTab)="setTab($event)">
+  @for (childQuoteTab of childQuoteTabList; track childQuoteTab) {
+  <div
+    [style.display]="
+      selectedChildQuoteTab != undefined && selectedChildQuoteTab.id == childQuoteTab.id ? '' : 'none'
+    "
+  >
+    <sym-quotation-child-combo-product-coverage
+      [quotationId]="childQuoteTab.id"
+      [isDataSaved]="isDataSaved"
+      (notifyChildComboChange)="onChildComboChange($event)"
+    ></sym-quotation-child-combo-product-coverage>
+  </div>
+  }
+</sym-sub-tab>

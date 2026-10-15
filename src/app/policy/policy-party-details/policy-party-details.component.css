@@ -1,0 +1,10 @@
+.flex {
+  display: flex;
+}
+.widthSameas {
+  width: 350px;
+}
+.colorGray {
+  color: #8f9bb3;
+  font-size: 12px;
+}

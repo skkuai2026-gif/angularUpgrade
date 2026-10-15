@@ -1,0 +1,32 @@
+@if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div class="card m-1">
+  <sym-panel [id]="'withdrawalDetails_Body'" [name]="'withdrawalDetails'">
+    <div class="m-2 p-2">
+      <sym-field-group
+        [fieldIds]="
+          this.service.responseIO.data['Entity'] != undefined &&
+          this.service.responseIO.data['Entity'].withdrawalFl == 'YES'
+            ? 'withdrawalFl,solverTypeCd,withdrawalRateTypeCd,payingYears'
+            : 'withdrawalFl'
+        "
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.Entity"
+      ></sym-field-group>
+      @if (this.service.responseIO.data['Entity'].withdrawalFl == 'YES') {
+      <div>
+        <sym-data-entry-grid
+          [fieldIds]="
+            'policyYearFrom,ageFrom,policyYearTo,ageTo,dateFrom,dateTo,withdrawalAmount,frequencyVal,withdrawalPercent'
+          "
+          [responseIO]="service.responseIO"
+          (notifyChange)="onWithdrawalChanged($event)"
+          (onRowAdded)="onWithdrawalRowAdded($event)"
+          [modelPath]="'WithdrawalList'"
+        ></sym-data-entry-grid>
+      </div>
+      }
+    </div>
+  </sym-panel>
+</div>
+}

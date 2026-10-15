@@ -1,0 +1,7 @@
+{
+  "name": "SymbiosysSalesTool",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,18 @@
+<sym-page-container [breadCrumbList]="breadCrumbList">
+  <div>
+    <sym-search
+      [searchText]="'SearchInforceIllustration'"
+      [addRouterLink]="addLink"
+      [moreOptionList]="moreOptionList"
+      [isDeleteRequired]="true"
+      [service]="service"
+      [selectButtonText]="'selectQtn'"
+      [additionalOptionList]="additionalOptionList"
+      (moreOptionClick)="onMoreOptionClicked($event)"
+      (additionalOptionClick)="onAdditionalOptionClicked($event)"
+      (moreButtonClicked)="onMoreButtonClicked($event)"
+    ></sym-search>
+    <!-- [exportDetails]="{ fileName: 'Quotation Search', format: ['pdf', 'excel', 'csv'] }" -->
+  </div>
+  <!-- <sym-bottom-footer [mode]="'default'"></sym-bottom-footer>   -->
+</sym-page-container>

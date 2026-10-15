@@ -1,0 +1,38 @@
+<div class="col-xl-12">
+  @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+  <sym-panel [id]="'csa_Declaration_Body'" [name]="'DECLARATIONS'" class="col-sm-12 col-md-12 co-lg-12 col-xl-12"
+    ><h6 class="datadeletebody">
+      <u>{{ settingService.getLabelValue('clientDeclaration') }}</u>
+    </h6>
+    <div id="declarationPage">
+      <sym-field-group
+        [fieldIds]="'leadSource'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.LeadRPQ"
+        [gridColumns]="[12]"
+      ></sym-field-group>
+      <h6 class="margin-portfolio">
+        <u>{{ settingService.getLabelValue('portfolioDeclaration') }}</u>
+      </h6>
+      <sym-field-group
+        [fieldIds]="'leadSourceOther'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.LeadRPQ"
+        [gridColumns]="[12]"
+      ></sym-field-group>
+    </div>
+  </sym-panel>
+  }
+  <!-- <div>
+<sym-pop-up
+  [headerText]="'viewProposalList'"
+  [popupID]="'viewProposalList'"
+  class="OccupationIndustryDutySearch"
+  *ngIf="service.viewProposalListDisplayed"
+  >
+  <sym-view-proposal-list [searchCriteriaforProposal]="searchCriteriaforProposal"></sym-view-proposal-list>
+</sym-pop-up>
+</div> -->
+</div>

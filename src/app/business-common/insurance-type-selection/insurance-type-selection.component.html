@@ -1,0 +1,19 @@
+<sym-page-container [breadCrumbList]="breadCrumbList">
+  <div class="section sectionInsuraneType scrollDiv">
+    <div class="sectionHeader">
+      <h4>{{ settingService.getLabelValue('selectInsuranceType') }}</h4>
+    </div>
+    @if (respInsuranceTypeList && respInsuranceTypeList.data != undefined) {
+    <div class="row sectionContent">
+      @for (respInsuranceType of respInsuranceTypeList.data['values']; track respInsuranceType; let i = $index) {
+      <div class="col-sm-3" [routerLink]="searchRouterLink">
+        <div class="card" [attr.data-card-color]="'blue'" (click)="onInsuranceTypeClick(respInsuranceType.cd)">
+          <span [ngClass]="respInsuranceType.addtnlFld1"></span>
+          <h5>{{ settingService.getLabelValue(respInsuranceType.cd) }}</h5>
+        </div>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</sym-page-container>

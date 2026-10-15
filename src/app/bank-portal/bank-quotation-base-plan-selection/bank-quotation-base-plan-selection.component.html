@@ -1,0 +1,98 @@
+@if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 && product != undefined
+) {
+<input class="rightItem" type="checkbox" (click)="onSelectedBasePlan($event, product['id'])" />
+@if (product['header'] == undefined) {
+<h4>
+  {{ service.responseIO.data.BasePlan.productId }}
+</h4>
+} @if (product['header'] != undefined && product['header']) {
+<div class="prdHeader" [innerHTML]="product['header'] | safeHtml: 'html'"></div>
+}
+<div class="product-grid-layout">
+  <div class="tbItem product-container">
+    <table>
+      <tr>
+        @if (service.isFieldApplicable(service.responseIO.data['BasePlan'], 'modalPremium')) {
+        <td class="planLbl">
+          <span class="all-lbl">
+            {{ service.getMultilingualLabel('Plan Premium') }}
+          </span>
+        </td>
+        }
+        <td class="planVal">
+          <span class="premium-value">
+            {{
+              service.responseIO.data.BasePlan['modalPremium']
+                | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+            }}
+          </span>
+        </td>
+      </tr>
+      <tr>
+        @if (service.isFieldApplicable(service.responseIO.data['BasePlan'], 'productPlanOptionCd')) {
+        <td>
+          <span class="all-lbl">
+            {{ service.getMultilingualLabel('productPlanOptionCd') }}
+          </span>
+        </td>
+        }
+        <td>
+          <sym-field-group
+            [fieldIds]="'productPlanOptionCd'"
+            (notifyChange)="onInputChanged($event)"
+            (notifyFocus)="onInputFocused($event)"
+            [responseIO]="service.responseIO"
+            [model]="service.responseIO.data.BasePlan"
+            [gridColumns]="[6]"
+            [prefix]="quotationIndex"
+            [inputOnly]="true"
+            [hideLabel]="true"
+          ></sym-field-group>
+        </td>
+        <!-- <td>{{ service.getLabelValue(service.responseIO.data['BasePlan'], 'productPlanOptionCd') }}</td>
+          <td>
+            {{ service.responseIO.data['BasePlan']['productPlanOptionCd'] }}
+          </td> -->
+      </tr>
+    </table>
+  </div>
+  <hr />
+  <ng-container>
+    <div class="tbItem">
+      <table>
+        @if (service.responseIO.data.RiderList != undefined && service.responseIO.data.RiderList.length > 0) {
+        <tr>
+          <th class="all-lbl riderLbl">
+            Riders
+            <i class="fa fa-edit" (click)="onRiderEdit_click()"></i>
+          </th>
+          <th class="all-lbl riderVal">Cover</th>
+        </tr>
+        } @for (rider of service.responseIO.data.RiderList; track rider) { @if (rider.selected == 'YES') {
+        <tr>
+          <td class="rider-value">
+            {{ rider.productLongName }}
+          </td>
+          <td class="cover-value">
+            {{ rider.baseSumAssured | customFormat: service.getFieldMetadata(rider, 'baseSumAssured') }}
+          </td>
+        </tr>
+        } }
+      </table>
+    </div>
+  </ng-container>
+</div>
+@if (service.responseIO.data.RiderList != undefined && service.responseIO.data.RiderList.length > 0) {
+<sym-pop-up [headerText]="'Rider details'" [popupID]="'riderDetail_' + product['id']" [popupSize]="'large'">
+  <sym-rider></sym-rider>
+  <div class="footer text-center">
+    <sym-button
+      [class]="'btn btn_primary ml-2 mr-2 text-center'"
+      [id]="'btn_ok'"
+      [isLoaderRequired]="false"
+      [text]="'Ok'"
+      (onClick)="closePop()"
+    ></sym-button>
+  </div>
+</sym-pop-up>
+} }

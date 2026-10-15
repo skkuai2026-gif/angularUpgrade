@@ -1,0 +1,9 @@
+<sym-page-container [breadCrumbList]="breadCrumbList">
+  <div id="policySearch">
+    <sym-search
+      [moreOptionList]="moreOptionList"
+      [service]="service"
+      (moreOptionClick)="onMoreOptionClicked($event)"
+    ></sym-search>
+  </div>
+</sym-page-container>

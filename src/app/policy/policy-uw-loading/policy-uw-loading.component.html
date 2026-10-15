@@ -1,0 +1,135 @@
+<br /><br />
+@if (service.responseIO.data['BasePlan'] != undefined) {
+<div class="inline-flex">
+  <label class="uwdecisionlabel">{{ service.getMultilingualLabel('totExtraPremium') }}:- </label>
+  <label class="uwdecisionlabel pl-1">
+    {{
+      totalExtraPremium
+        | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+    }}
+  </label>
+  &nbsp;&nbsp;
+  <a href="javascript:void(0);" (click)="showBreakup()">
+    @if (!isShowBreakup) {
+    <label class="breakuplabel">{{ service.getMultilingualLabel('showBreakup') }}</label>
+    } @if (isShowBreakup) {
+    <label class="breakuplabel">{{ service.getMultilingualLabel('showLess') }}</label>
+    }
+  </a>
+</div>
+@if (isShowBreakup) {
+<sym-data-entry-grid
+  [fieldIds]="
+    service.responseIO.data.Entity.insuredSameAsProposer == false || isMultiLifeApplicable
+      ? 'insuredPartyName,productLongName,productPlanOptionCd,baseSumAssured,productTerm,premiumPayingTerm,modalPremium,extraPremium'
+      : 'productLongName,productPlanOptionCd,baseSumAssured,productTerm,premiumPayingTerm,modalPremium,extraPremium'
+  "
+  [modelList]="productList"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  [isMoreRequired]="true"
+  (onMoreSelected)="setSelectedIndexOfProduct($event)"
+  [columWidthPerc]="[20, 15, 15, 10, 5, 15, 15, 15]"
+  [isAddRequired]="false"
+  [isDeleteRequired]="false"
+></sym-data-entry-grid>
+@if ( selectedIndex != undefined && productList != undefined && productList.length > 0 && currExtraList.length > 0
+) {
+<sym-pop-up
+  [headerText]="'Extra details for' + productList[selectedIndex].productLongName"
+  [popupID]="'productExtraDetails'"
+  [popupSize]="'large'"
+  [width]="50"
+  [height]="50"
+>
+  <sym-data-entry-grid
+    [fieldIds]="
+      'extraTypeCd,decisionCd,loadingTypeCd,processingTypeCd,extraFlatAmt,extraFlatDuration,extraPercent,extraPercDuration'
+    "
+    [responseIO]="service.responseIO"
+    (notifyChange)="onInputChanged($event)"
+    [modelList]="currExtraList"
+    [columWidthPerc]="[24, 12, 5, 12, 10, 10, 10, 10]"
+    [isAddRequired]="false"
+    [isDeleteRequired]="false"
+  ></sym-data-entry-grid>
+</sym-pop-up>
+} } }
+
+<br />
+<ng-container>
+  <sym-field-group
+    [fieldIds]="'counterOfferDecisionCd'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.Entity"
+    [inputOnly]="true"
+    [hideLabel]="true"
+  ></sym-field-group>
+  <sym-field-group
+    [fieldIds]="'counterOfferReasonCd'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.Entity"
+  ></sym-field-group>
+  @if (service.responseIO.data.Entity.counterOfferDecisionCd != undefined) {
+  <sym-field-group
+    [fieldIds]="'counterOfferRemarks'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.Entity"
+  ></sym-field-group>
+  }
+</ng-container>
+
+@if (service.responseIO.data.Entity.counterOfferDecisionCd == 'ACCEPT' && okAcceptConfirmation) {
+<div class="p-2 m-1">
+  <div class="block" [class.blockCollapse]="siBlockCollapse" id="panel_siSign">
+    <h4 (click)="panelClick('SI')" [attr.id]="'heading_siSign'" class="h4">
+      <label class="{{ checkSISignCompleted() }}">
+        {{ service.getMultilingualLabel('signRevisedQuotation') }}(
+        <span>{{ service.responseIO.data.Entity.quotationRefNum }}</span
+        >)</label
+      >
+      &nbsp;
+      <img id="siSign" src="../assets/theme/images/icon_signature.png" alt="" class="need legacy" height="20px;" />
+      <span class="btnToggleBlock"></span>
+    </h4>
+    @if (isShowSIPDF) {
+    <sym-quote-illustration></sym-quote-illustration>
+    }
+  </div>
+</div>
+<div class="p-2 m-1">
+  <div class="block" [class.blockCollapse]="eappBlockCollapse" id="panel_eappSign">
+    <h4 (click)="panelClick('EAPP')" [attr.id]="'heading_eappSign'" class="h4">
+      <label class="{{ checkEappSignCompleted() }}">{{
+        service.getMultilingualLabel('signRevisedProposal')
+      }}</label>
+      &nbsp;
+      <img
+        id="eappSign"
+        src="../assets/theme/images/icon_signature.png"
+        alt=""
+        class="need legacy"
+        height="20px;"
+      />
+      <span class="btnToggleBlock"></span>
+    </h4>
+    @if (isShowEappPDF) {
+    <sym-policy-e-app-preview [responseUpdated]="true"></sym-policy-e-app-preview>
+    }
+  </div>
+</div>
+<div class="p-2 m-1">
+  <div id="panel_siSign">
+    <h4 (click)="panelClick('PAY')" [attr.id]="'heading_pay'" class="h4">
+      <label class="{{ checkPaymentCompleted() }}"> {{ service.getMultilingualLabel('proceedToPay') }}</label>
+      &nbsp;<img id="pay" src="../assets/theme/images/icon_pay.svg" alt="" class="need legacy" height="40px;" />
+    </h4>
+  </div>
+</div>
+}

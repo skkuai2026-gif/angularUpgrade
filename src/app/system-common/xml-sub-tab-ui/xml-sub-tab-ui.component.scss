@@ -1,0 +1,16 @@
+.cursor {
+  cursor: pointer;
+}
+
+.subTab-li {
+  display: flex;
+  position: relative;
+}
+
+.subTab-li > i {
+  position: absolute;
+  right: 4px;
+  top: 10px;
+  z-index: 99;
+  cursor: pointer;
+}

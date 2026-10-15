@@ -1,0 +1,120 @@
+@if (service.responseIO && service.responseIO.data && service.productFacets && service.productFacets.data) {
+<div class="p-2" id="quotationPreviewForCompare">
+  <h6 class="header-align-top text-center">
+    <!-- {{
+      this.quotationResponseIO != undefined
+      ? service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productId')
+      : service.responseIO.data.PrimaryInsured.firstname + ' ' + service.responseIO.data.PrimaryInsured.lastname
+      }} -->
+    <span>
+      {{ service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productId') }}
+    </span>
+    <br />
+    <span>
+      {{
+        service.responseIO.data.PrimaryInsured.firstname + ' ' + service.responseIO.data.PrimaryInsured.lastname
+      }}
+    </span>
+  </h6>
+  <div class="row" id="quotatonCompare">
+    <div>
+      <p class="col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
+        <label>Plan Name</label>
+        <span class="text-right" style="margin-inline-start: 26px !important; margin-right: 5px !important">
+          : {{ service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productId') }}
+        </span>
+      </p>
+    </div>
+    <div>
+      @if (service.getLabelValue(service.responseIO.data.BasePlan, 'baseSumAssured') != undefined) {
+      <p class="col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
+        <label>{{ service.getLabelValue(service.responseIO.data.BasePlan, 'baseSumAssured') }}</label>
+        <span class="text-right" style="margin-inline-start: 15px !important"
+          >:
+          {{
+            service.responseIO.data['BasePlan']['baseSumAssured']
+              | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseSumAssured')
+          }}
+        </span>
+      </p>
+      }
+    </div>
+    <div>
+      <div
+        [class]="
+          service.getLabelValue(service.responseIO.data.BasePlan, 'modalPremium') != undefined ||
+          service.getLabelValue(service.responseIO.data.BasePlan, 'riderPremium') != undefined ||
+          service.getLabelValue(service.responseIO.data.BasePlan, 'totalPremium') != undefined
+            ? 'col-md-12 col-lg-12 col-xl-12 p-0 m-0'
+            : 'col-md-12 col-lg-12 col-xl-12 p-0 m-0'
+        "
+      >
+        @if (service.isFieldApplicable(service.responseIO.data['BasePlan'], 'modalPremium')) {
+        <p class="col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
+          <label>{{ settingService.getLabelValue('planPremium') }}</label>
+          <span class="text-right" style="margin-inline-start: 10px !important"
+            >:
+            {{
+              service.responseIO.data['BasePlan']['modalPremium']
+                | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+            }}
+          </span>
+        </p>
+        } @if (service.getLabelValue(service.responseIO.data.BasePlan, 'modalPremium') != undefined) {
+        <p class="col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
+          <label>{{ settingService.getLabelValue('riderPremium') }}</label>
+          <span class="text-right" style="margin-inline-start: 4px !important"
+            >:
+            {{
+              getRiderTotalPremium()
+                | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+            }}</span
+          >
+        </p>
+        } @if (service.getLabelValue(service.responseIO.data.BasePlan, 'modalPremium') != undefined) {
+        <p class="col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
+          <label>{{ settingService.getLabelValue('totalPremium') }}</label>
+          <span class="text-right" class="text-right" style="margin-inline-start: 7px !important"
+            >:
+            {{
+              service.responseIO.data['BasePlan']['modalPremium'] + getRiderTotalPremium()
+                | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+            }}
+          </span>
+        </p>
+        }
+      </div>
+    </div>
+    <div
+      [class]="
+        service.getLabelValue(service.responseIO.data.BasePlan, 'baseSumAssured') != undefined ||
+        service.getLabelValue(service.responseIO.data.BasePlan, 'productTerm') != undefined ||
+        service.getLabelValue(service.responseIO.data.BasePlan, 'premiumPayingTerm') != undefined
+          ? 'col-md-12 col-lg-12 col-xl-12 p-0 m-0'
+          : 'col-md-12 col-lg-12 col-xl-12 p-0 m-0'
+      "
+    >
+      @if (service.isFieldApplicable(service.responseIO.data['BasePlan'], 'productTerm') != undefined) {
+      <p class="col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 marginleft">
+        <label> {{ settingService.getLabelValue('Product Term') }}</label>
+        <span class="text-right" style="margin-inline-start: 12px !important"
+          >: {{ service.responseIO.data['BasePlan']['productTerm'] }}</span
+        >
+      </p>
+      } @if (service.isFieldApplicable(service.responseIO.data['BasePlan'], 'premiumPayingTerm') != undefined) {
+      <p class="col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 marginleft">
+        <label> {{ settingService.getLabelValue('premiumPayingTerm') }}</label>
+        <span style="margin-inline-start: 6px !important"
+          >: {{ service.responseIO.data['BasePlan']['premiumPayingTerm'] }}
+        </span>
+      </p>
+      }
+    </div>
+  </div>
+  <sym-premium-summary
+    [displayBenefitSummary]="false"
+    [isConvertToEappReq]="false"
+    [widthInPX]="380"
+  ></sym-premium-summary>
+</div>
+}

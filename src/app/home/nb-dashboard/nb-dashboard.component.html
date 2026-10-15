@@ -1,0 +1,192 @@
+<div class="dashboardWrapper">
+  <div class="row p-0 m-0" data-height-val="100">
+    <div
+      id="leftSpaceChange"
+      data-height-val="100"
+      [ngClass]="{
+        ' contentLeft for-left-space pl-0 pr-0 mr-0': true,
+        'col-lg-7 col-md-6': !businessCommonService.isMobileViewRendeered(),
+        'col-lg-12': businessCommonService.isMobileViewRendeered()
+      }"
+    >
+      <div class="column for-column-1">
+        @for (pieChartView of pieChartArr; track pieChartView; let i = $index) {
+        <div data-height-val="50">
+          <div class="card" data-height-val="100 - 30px">
+            <div class="card-body p0" data-height-val="100">
+              <h4 #chartTitle class="pth12">{{ this.service.getMultilingualLabel(pieChartView.title) }}</h4>
+              <div data-type="graph" data-height-val="100" class="chart-wrapper">
+                <canvas id="{{ pieChartView.id }}"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+        <!-- <div>lllllllllll
+        <i class="fa fa-commening-o" aria-hidden="true"></i>
+      </div> -->
+        <!-- <ng-container *ngIf="settingService.getApplicationMode() === 'online'">
+      <div class="notification-card">
+        <div class="notification-content">
+          <div class="notification-row" *ngIf="notificationSubject?.trim() && notificationBody?.trim()">
+            <span class="notification-title"> {{ notificationSubject }} </span>&nbsp;
+            <span class="notification-body">
+              {{ notificationBody }}
+            </span>
+          </div>
+          <a (click)="agentNotificationMoreOption_click()" class="notification-more-link">
+            <u> More</u>
+            <div class="custom-bell-wrapper">
+              <i class="fa fa-bell-o" aria-hidden="true"></i>
+              <span class="notification-badge" *ngIf="!isNotificationSeen"
+              ></span>
+            </div>
+          </a>
+        </div>
+      </div></ng-container
+      > -->
+      </div>
+    </div>
+    <div
+      id="rightSpaceChange"
+      data-height-val="100"
+      [ngClass]="{
+        'for-column-3 for-right-space col-lg-5 col-md-6': true,
+        'col-lg-5 col-md-6': !businessCommonService.isMobileViewRendeered(),
+        'col-lg-12': businessCommonService.isMobileViewRendeered()
+      }"
+    >
+      <div class="dashBoard_List">
+        @if (currentSelectedPieChartObj != undefined) {
+        <div class="box">
+          <div class="row for-column-2">
+            <div class="col-lg-12 m-0">
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="onHideStatusList()"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4>
+                {{ currentSelectedPieChartObj.currentLabel + ' ' + currentSelectedPieChartObj.searchTitle }}
+              </h4>
+              <div class="card dashBoardSearch" style="max-height: 400px !important">
+                <div class="cardBodyContent scrollDiv">
+                  <sym-search
+                    [searchName]="currentSelectedPieChartObj.searchDtlResultName"
+                    [isAdvanceSearchDisplayed]="false"
+                    [isAdvanceSearchRequired]="false"
+                    [service]="service"
+                    [searchCriteriaData]="currentSelectedPieChartObj.searchCriteriaData"
+                    [initialResultCount]="5"
+                    [displayResultTableOnly]="false"
+                    [searchResultColumnDisplayList]="currentSelectedPieChartObj.searchResultColumns"
+                  ></sym-search>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+
+      @if (currentSelectedPieChartObj == undefined) {
+      <div class="box_nb">
+        @if (listViewArr != undefined && listViewArr.length > 0) {
+        <div class="row for-column-2">
+          @for (listView of listViewArr; track listView; let i = $index) {
+          <div class="col-lg-6 m-0">
+            <div class="card cardList cardList{{ i + 1 }}">
+              <div class="card-body">
+                <h4 class="fontGray">{{ this.service.getMultilingualLabel(listView.title) }}</h4>
+                <div class="cardBodyContent scrollDiv">
+                  <!-- <sym-loader *ngIf="listView.data == undefined"></sym-loader> -->
+                  @if (listView.data != undefined) {
+                  <ul class="dList">
+                    <li>
+                      @for (h of listView.header; track h) {
+                      <h5 id="NBHEADER">
+                        <b>{{ h }}</b>
+                      </h5>
+                      }
+                    </li>
+                    @for ( listData of listView.data | slice: 0:(businessCommonService.isMobileViewRendeered() ? 5
+                    : listView.data.length) ; track listData) {
+                    <li>
+                      @if (listView.searchName === 'SearchFNARequest') {
+                      <span class="badge success1">
+                        <a class="link" (click)="onLinkClick(listView.action + listData[listView.seqIndex])">{{
+                          listData[listView.refIndex]
+                        }}</a></span
+                      >
+                      } @if (listView.searchName === 'LeadSearchAPI') {
+                      <span class="badge success3">
+                        <a class="link" (click)="onLinkClick(listView.action + listData[listView.seqIndex])">{{
+                          listData[listView.refIndex]
+                        }}</a></span
+                      >
+                      } @if (listView.searchName === 'SearchLifeIllustration') {
+                      <span class="badge success">
+                        <a class="link" (click)="onLinkClick(listView.action + listData[listView.seqIndex])">{{
+                          listData[listView.refIndex]
+                        }}</a></span
+                      >
+                      } @if (listView.searchName === 'SearchPolicy') {
+                      <span class="badge success2">
+                        <a class="link" (click)="onLinkClick(listView.action + listData[listView.seqIndex])">{{
+                          listData[listView.nameIndex]
+                        }}</a></span
+                      >
+                      } @if (listView.searchName === 'SearchPolicy') {
+                      <h5 class="leftMargin7" [style.white-space]="'nowrap'">
+                        {{ listData[listView.refIndex] }}
+                      </h5>
+                      <h5 [style.white-space]="'nowrap'">{{ listData[listView.nameIndex1] }}</h5>
+                      } @if (listView.searchName === 'LeadSearchAPI') {
+                      <h5 class="leftMargin" [style.white-space]="'nowrap'">
+                        {{ listData[listView.nameIndex1] }}
+                      </h5>
+                      <h5 [style.white-space]="'nowrap'">{{ listData[listView.nameIndex] }}</h5>
+                      } @if (listView.searchName === 'SearchLifeIllustration') {
+                      <h5 class="leftMargin" [style.white-space]="'nowrap'">
+                        {{ listData[listView.nameIndex1] }}
+                      </h5>
+                      <h5 [style.white-space]="'nowrap'">{{ listData[listView.nameIndex] }}</h5>
+                      } @if (listView.searchName === 'SearchFNARequest') {
+                      <h5 class="leftMargin7" [style.white-space]="'nowrap'">
+                        {{ listData[listView.nameIndex1] }}
+                      </h5>
+                      <h5 [style.white-space]="'nowrap'">{{ listData[listView.nameIndex] }}</h5>
+                      }
+                    </li>
+                    }
+                  </ul>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</div>
+<!-- <div class="card" data-height-val="100">
+      <div class="card-header">
+        <h4>Quotation Expiry Chart</h4>
+      </div>
+      <div class="card-body" data-height-val="100">
+        <full-calendar [options]="calendarOptions" #fullCalendar></full-calendar>
+      </div>
+    </div> -->
+
+<!--              Agent Notiiicication popup click -->
+<!-- <sym-pop-up [headerText]="'AgentNotification'" [popupID]="'AgentNotification'">
+    <sym-agent-notification-search></sym-agent-notification-search>
+  </sym-pop-up> -->

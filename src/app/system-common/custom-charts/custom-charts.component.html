@@ -1,0 +1,19 @@
+@if (chartLibrary == 'd3') {
+<div class="line_container" (window:resize)="createLineGraph()">
+  <svg [id]="chartID" class="chartSize"></svg>
+  <!-- <svg id="linechart"></svg> -->
+  <!-- <canvas
+    class="quoteCompChartSize"
+    baseChart
+    [datasets]="lineChartData"
+    [labels]="labelOption[0].displayLabels"
+    [options]="labelOption[0].options"
+    [chartType]="'line'"
+    >
+  </canvas> -->
+</div>
+} @if (chartLibrary != 'd3') {
+<div>
+  <canvas [attr.id]="chartID"></canvas>
+</div>
+}

@@ -1,0 +1,23 @@
+<!-- <form name="paymentGatewayForm" [action]="settingService.getURLValue('PAYMENTGATEWAY')" method="post">
+  <input type="hidden" name="inwardId" id="inwardId" [value]="service.responseIO.data.InitialPayment.id" />
+  <input type="hidden" id="cpagViaLink" name="cpagViaLink" value="INITIATED_ACAEMAIL" />
+</form>  -->
+<!-- <form
+  *ngIf="service.responseIO?.data?.InitialPayment?.id"
+  name="paymentGatewayForm1"
+  [action]="settingService.getURLValue('PAYMENTGATEWAY1')"
+  method="post"
+>
+  <input type="hidden" name="inwardId" id="inwardId" [value]="service.responseIO.data.InitialPayment.id" />
+  <input type="hidden" id="cpagViaLink" name="cpagViaLink" value="INITIATED_ACAEMAIL" />
+</form> -->
+<!-- policyId::{{policyId}} -->
+<form
+  *ngIf="service.responseIO?.data?.Entity?.id"
+  name="paymentGatewayForm1"
+  [action]="settingService.getURLValue('PAYMENTGATEWAY1')"
+  method="post"
+>
+  <input type="hidden" name="policyId" id="policyId" [value]="service.responseIO.data.Entity.id" />
+  <input type="hidden" id="acaViaLink" name="acaViaLink" value="INITIATED_ACAEMAIL" />
+</form>

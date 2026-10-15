@@ -1,0 +1,43 @@
+.tooltip-label-info-container {
+  min-width: 250px;
+  width: 100%;
+  max-width: 300px;
+  min-height: 50px;
+  font-size: 0.99rem;
+  line-height: 1.2;
+  text-align: left;
+  padding: 5px;
+  font-weight: 200;
+  white-space: normal;
+  font-style: normal;
+  background: rgb(234 234 79 / 50%);
+}
+
+.tooltip-label-info {
+  font-size: 1.2rem;
+  color: #317d03;
+  position: relative;
+  white-space: normal;
+  font-style: normal;
+  line-height: 0;
+  margin-bottom: 5px;
+}
+
+.tooltip-label-info:before {
+  content: '\f29c';
+  font-family: 'FontAwesome';
+}
+
+.symLabel-wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+.xmlCol {
+  padding-left: 0px !important;
+  padding-right: 10px !important;
+}
+
+.xmlRow {
+  padding-left: 10px !important;
+}

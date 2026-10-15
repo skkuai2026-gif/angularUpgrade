@@ -1,0 +1,18 @@
+#eAappButtonGUID {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.viewIllustrationContainer {
+  height: calc(100vh - 230px);
+  // overflow: hidden;
+  margin-right: -15px;
+  padding-bottom: 50px;
+}
+
+.pr15 {
+  padding-right: 15px !important;
+}

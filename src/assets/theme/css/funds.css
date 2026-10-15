@@ -1,0 +1,183 @@
+/**funds css starts**/
+
+.blockList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  border: 1px solid #e4e9f2;
+  border-radius: 5px;
+}
+.blockList > li {
+  border-bottom: 1px solid #edf1f7;
+  padding: 10px; /*18px*/
+  position: relative;
+}
+.blockList > li:last-child {
+  border-bottom: 0;
+}
+.indicatorDiv {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.indicatorDiv > span {
+  display: inline-block;
+  margin-right: 15px;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: #282828;
+  position: relative;
+  padding-left: 11px;
+}
+.indicatorDiv > span > span {
+  font-weight: bold;
+}
+.indicatorDiv > span > span::after {
+  content: '%';
+}
+.indicatorDiv > span:last-child {
+  margin-right: 0;
+}
+.indicatorDiv > span::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 100%;
+  width: 8px;
+  background-color: #000;
+}
+.indicatorDiv > span.option1::before {
+  background-color: #16697a;
+}
+.indicatorDiv > span.option2::before {
+  background-color: #db6400;
+}
+.fundsContent .blockList > li {
+  padding-right: 120px;
+  min-height: 45px;
+}
+.fundsContent .blockList > li > h5 {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+.fundsContent .blockList > li:first-child > h5 {
+  color: #7cb5ec;
+}
+.fundsContent .blockList > li:nth-child(2) > h5 {
+  color: #434348;
+}
+.fundsContent .blockList > li:nth-child(3) > h5 {
+  color: #90ed7d;
+}
+.fundsContent .blockList > li:nth-child(4) > h5 {
+  color: #f7a35c;
+}
+.fundsContent .blockList > li:nth-child(5) > h5 {
+  color: #8085e9;
+}
+.fundsContent .blockList > li:last-child > h5 {
+  color: #f15c80;
+}
+.fundsContent .blockList > li > h5 a {
+  color: inherit;
+  /* text-decoration: underline; */
+}
+.fundsContent .blockList > li > h5 a.underLine {
+  text-decoration: underline;
+}
+.fundsContent .blockList > li > h5 > span {
+  color: #434348;
+  text-decoration: none;
+}
+.fundsContent .blockList > li > p {
+  font-size: 0.85rem;
+  margin-bottom: 0;
+}
+/* Modified by Monisha Pillai */
+.fundsContent .blockList > li > .inputActions {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  display: flex;
+  justify-content: flex-end;
+  width: 130px;
+  min-height: 3.6rem;
+}
+/* Modified by Monisha Pillai */
+.fundsContent .blockList > li > .inputActions > div {
+  margin-right: 6px;
+  max-width: 62px;
+  position: relative;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  padding-bottom: 12px;
+}
+.fundsContent .blockList > li > .inputActions > div:last-child {
+  margin-right: 0;
+}
+.fundsContent .blockList > li > .inputActions > div > input {
+  padding: 5px;
+  height: 25px;
+}
+.fundsContent .blockList > li > .inputActions > div.option1 > input {
+  border-color: #16697a;
+}
+.fundsContent .blockList > li > .inputActions > div.option2 > input {
+  border-color: #db6400;
+}
+.fundsContent .blockList > li > .inputActions > div > input:focus {
+  border-color: #36f !important;
+}
+/* Modified by Monisha Pillai */
+.fundsContent .blockList > li > .inputActions > div:after {
+  height: 68%;
+  content: '%';
+  position: absolute;
+  top: 32%;
+  right: 1px;
+  transform: translateY(-50%);
+  z-index: 2;
+  background: #000;
+  padding: 0px 3.3px;
+  color: #fff;
+  font-weight: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.85rem;
+  border-radius: 0px 3px 3px 0px;
+}
+.fundsContent .blockList > li > .inputActions > div.option1:after {
+  background: #16697a;
+}
+.fundsContent .blockList > li > .inputActions > div.option2:after {
+  background: #db6400;
+}
+.fundsContent .blockList > li > .inputActions > div.fgError .errorIcon {
+  left: auto;
+  right: 0;
+  background: #fff;
+  z-index: 5;
+  height: 100%;
+  padding: 0 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.85rem;
+  border: 1px solid #ff3d71;
+  border-left: 0;
+  top: 0px;
+  transform: translate(0);
+}
+.fundsContent .blockList > li > .inputActions > div.fgError > input {
+  border-color: #ff3d71 !important;
+}
+
+@media only screen and (max-width: 680px) {
+  .fundsContent .blockList > li > p {
+    display: none;
+  }
+}
+/**funds css ends**/

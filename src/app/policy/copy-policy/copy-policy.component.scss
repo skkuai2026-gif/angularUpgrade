@@ -1,0 +1,100 @@
+.proposal-header {
+  background-color: lightblue !important;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+tr.proposal-header {
+  height: 2.2rem !important;
+}
+
+input[type='checkbox'] {
+  border-radius: 0.25rem;
+}
+
+// .selected-row {
+//   background-color: #004570 !important;
+// }
+.parentHeaderText_copyPolicy {
+  color: black;
+}
+.headerColor {
+  background-color: #e6efef !important;
+}
+.proposalTypeCdOfData {
+  font-weight: bold;
+}
+.fontSizee {
+  font-size: 0.85rem;
+}
+.textSmall {
+  text-transform: unset !important;
+}
+/* Added CSS for column widths */
+.table th.copyPolicySelect-column,
+.table td.copyPolicySelect-column {
+  width: 5% !important;
+}
+
+.table th.copyPolicyDescription-column,
+.table td.copyPolicyDescription-column {
+  width: 25% !important;
+}
+
+.table th.copyPolicyData-column,
+.table td.copyPolicyData-column {
+  width: 45% !important;
+}
+
+.copyProposal-section {
+  margin-bottom: 0 !important;
+}
+
+.copyProposal-section {
+  margin-bottom: 1rem;
+}
+
+/* To Ensure the table has no extra margins that affect layout */
+.table {
+  margin-bottom: 0;
+  width: 99% !important;
+}
+
+.main-container,
+.main-containerMobileLandscapeView {
+  max-height: 40rem !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.main-containerMobileLandscapeView {
+  max-height: 20rem !important;
+}
+
+.proposalInfoDataLine {
+  font-style: italic;
+  font-size: smaller;
+  color: darkgray;
+  margin-bottom: 10px;
+}
+
+.table th.copyPolicySelect-MobileView,
+.table td.copyPolicySelect-MobileView {
+  width: 1% !important;
+}
+
+.copyProposalForm-item {
+  display: flex;
+  align-items: baseline;
+  flex: 1 1 auto;
+  min-width: 200px;
+}
+.copyProposalForm-item label {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+a.link {
+  color: #007bff;
+  cursor: pointer;
+}

@@ -1,0 +1,29 @@
+@if (html != undefined && html.children.length != 0) { @if ( html.getAttribute('symIf') != undefined ?
+service.isApplicable( $safeNavigationMigration(html.getAttribute('symIf')?.replaceAll('symIndex', symIndex)),
+service.responseIO, productFacets, companyFacets ) : true ) {
+<span [innerHTML]="html.outerHTMLDis | safeHtml">
+  @for (child of html.children; track child) { @if ( html.getAttribute('symIf') != undefined ?
+  service.isApplicable( $safeNavigationMigration(html.getAttribute('symIf')?.replaceAll('symIndex', symIndex)),
+  service.responseIO, productFacets, companyFacets ) : true ) {
+  <sym-xml-html-ui [html]="child" [service]="service" [responseIO]="responseIO"></sym-xml-html-ui>
+  } }</span
+>
+} } @else {
+<ng-container>
+  @if ( html.getAttribute('symIf') != undefined ? service.isApplicable(
+  $safeNavigationMigration(html.getAttribute('symIf')?.replaceAll('symIndex', symIndex)), service.responseIO,
+  productFacets, companyFacets ) : true ) {
+  <span [innerHTML]="html.outerHTMLDis | safeHtml"></span>
+  }
+</ng-container>
+}
+<!-- <span
+  *ngIf="
+    html.getAttribute('symIf') != undefined
+      ? service.isApplicable(html.getAttribute('symIf'), service.responseIO)
+      : true
+  "
+  [innerHTML]="html.outerHTML | safeHtml"
+></span> -->
+
+<input type="hidden" id="dynamicElementClick" (click)="onDynamicElemnentClick()" />

@@ -1,0 +1,26 @@
+<div>
+  <sym-pop-up
+    [popupID]="'disclaimerPopup'"
+    [headerText]="settingService.getLabelValue('TERMSANDCONDITIONS')"
+    [headerIcon]="'fa fa-file-o'"
+    [hideCloseButton]="true"
+    [popupSize]="'medium'"
+    [height]="service.isMobileViewRendeered() ? (service.isLandScapeViewRendered() ? 80 : 55) : 80"
+    class="disclaimerPopup"
+  >
+    <span [innerHTML]="settingService.getLabelValue('DISCLAIMER') | safeHtml: 'html'"></span>
+    <div class="disclaimerButtons">
+      <sym-button
+        (onClick)="acceptDisclaimer($event)"
+        [id]="'acceptClick'"
+        [text]="settingService.getLabelValue('accept')"
+        [isDisabled]="settingService.getLabelValue('DISCLAIMER') != 'DISCLAIMER' ? false : true"
+      ></sym-button>
+      <sym-button
+        (onClick)="disagreeDisclaimer($event)"
+        [id]="'disagreeClick'"
+        [text]="settingService.getLabelValue('DONOTAGREE')"
+        [class]="'btn btn_outline_primary ml-2'"
+      ></sym-button></div
+  ></sym-pop-up>
+</div>

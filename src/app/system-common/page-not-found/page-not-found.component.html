@@ -1,0 +1,30 @@
+<div>
+  @if (!authService.isUserLoggedIn()) {
+  <div>
+    <!-- Optional header content here -->
+  </div>
+  }
+
+  <div class="pgContainer">
+    <!-- Use ng-container to online logic -->
+    @if (settingService.getApplicationMode() === 'online') {
+    <div class="pgContent scrollDiv page-error text-center">
+      <h2>This page isn't available</h2>
+      <h4>The link you followed may be broken, or the page may have been removed.</h4>
+    </div>
+    } @else {
+    <div
+      [ngClass]="{
+        'loginWrapper scrollDiv': companySUNPH === 'SLGFI' || companySUNPH === undefined,
+        'loginWrapper2 scrollDiv': companySUNPH === 'SLOCPI' || companySUNPH === undefined
+      }"
+    ></div>
+    <!-- <sym-loader></sym-loader> -->
+    }
+
+    <!-- Loader template for offline mode -->
+    <!-- <ng-template #showLoader>
+    <sym-loader></sym-loader>
+  </ng-template> -->
+  </div>
+</div>

@@ -1,0 +1,563 @@
+@if (showCriteriaInfoFields && showAdvanceFilters) {
+<sym-panel
+  [id]="'advancedSearch_sunhk_Body'"
+  [name]="'advancedSearch'"
+  [blockCollapse]="!this.isAdvancedSearchOption"
+>
+  @if ( service.searchResponseIO != undefined && service.searchResponseIO.data != undefined &&
+  service.searchResponseIO.data.searchCriteriaInfo != undefined &&
+  service.searchResponseIO.data.searchCriteriaInfo.length > 0 && showCriteriaInfoFields && showAdvanceFilters ) {
+  <div class="symSearch" class="mb-3 form-row highlightBox">
+    @for (criteriaList of service.searchResponseIO.data.searchCriteriaInfo; track criteriaList) {
+    <div class="col-sm-10 col-md-10 col-xl-9">
+      <div class="form-row mt-2">
+        @for (criteria of criteriaList; track criteria) { @if (criteria != null && criteria.VISIBILITY != 'NO') {
+        @if ( criteria.INPUTTYPECD == undefined || criteria.INPUTTYPECD == null || criteria.INPUTTYPECD == 'TEXT' )
+        {
+        <div
+          [class]="
+            criteria.WIDTH != undefined
+              ? 'col-sm-' + criteria.WIDTH + '  col-md-' + criteria.WIDTH + ' col-xl-' + criteria.WIDTH
+              : criteria['divClass']
+          "
+        >
+          <div>
+            <label [for]="criteria.header?.replaceAll(' ', '_').trim()">
+              <span>{{ criteria.header }}</span>
+            </label>
+            <div>
+              <input
+                type="text"
+                class="form-control"
+                [id]="criteria.header?.replaceAll(' ', '_').trim()"
+                [(ngModel)]="service.searchResponseIO.data.searchCriteriaData[criteria.metadata]"
+                (change)="onInputChange(criteria)"
+                [attr.placeholder]="
+                  settingService.getLabelValue(criteria.PLACEHOLDER) != ''
+                    ? settingService.getLabelValue(criteria.PLACEHOLDER)
+                    : ''
+                "
+                [attr.maxlength]="criteria.MAXLENGTH"
+              />
+            </div>
+          </div>
+        </div>
+        } @if (criteria.INPUTTYPECD == 'COMBO') {
+        <div
+          [class]="
+            criteria.WIDTH != undefined
+              ? 'col-sm-' + criteria.WIDTH + '  col-md-' + criteria.WIDTH + ' col-xl-' + criteria.WIDTH
+              : criteria['divClass']
+          "
+        >
+          <label [for]="criteria.header?.replaceAll(' ', '_').trim()">
+            <span>{{ criteria.header }}</span>
+          </label>
+          <div>
+            <select
+              [id]="criteria.header?.replaceAll(' ', '_').trim()"
+              class="form-control"
+              [(ngModel)]="service.searchResponseIO.data.searchCriteriaData[criteria.metadata]"
+              (change)="onInputChange(criteria)"
+            >
+              <option value="null">- {{ settingService.getLabelValue('selectFirstOption') }} -</option>
+              @for (opt of service.searchResponseIO.lookups[criteria.LOOKUPCD]; track opt) {
+              <option [value]="opt.cd">
+                {{ opt.desc }}
+              </option>
+              }
+            </select>
+          </div>
+        </div>
+        } @if (criteria.INPUTTYPECD == 'FCOMBO' || criteria.INPUTTYPECD == 'LOOKUPTEXT') {
+        <div
+          [class]="
+            criteria.WIDTH != undefined
+              ? 'col-sm-' + criteria.WIDTH + '  col-md-' + criteria.WIDTH + ' col-xl-' + criteria.WIDTH
+              : criteria['divClass']
+          "
+        >
+          <label [for]="criteria.header?.replaceAll(' ', '_').trim()">
+            <span>{{ criteria.header }}</span>
+          </label>
+          <div>
+            <ng-select
+              [items]="criteria.foptions"
+              [(ngModel)]="service.searchResponseIO.data.searchCriteriaData[criteria.metadata]"
+              [id]="criteria.header?.replaceAll(' ', '_').trim()"
+              placeholder="{{ criteria.header != '' ? criteria.header : '' }}"
+              (change)="onInputChange(criteria)"
+              [notFoundText]="service.getMultilingualLabel('No items found')"
+            >
+            </ng-select>
+          </div>
+        </div>
+        } @if (['DATE', 'DATETIME'].includes(criteria.INPUTTYPECD) ? criteria.INPUTTYPECD : '') {
+        <div
+          [class]="
+            criteria.WIDTH != undefined
+              ? 'col-sm-' + criteria.WIDTH + '  col-md-' + criteria.WIDTH + ' col-xl-' + criteria.WIDTH
+              : criteria['divClass']
+          "
+        >
+          <label [for]="criteria.header?.replaceAll(' ', '_').trim()">
+            <span>{{ criteria.header }}</span>
+          </label>
+          <div>
+            <sym-date-time-picker
+              [fieldType]="criteria.INPUTTYPECD"
+              [fieldID]="criteria.header?.replaceAll(' ', '_').trim()"
+              [fieldCd]="criteria.metadata"
+              [model]="service.searchResponseIO.data.searchCriteriaData"
+              (notifyChange)="onInputChange(criteria)"
+              [placeholder]="
+                settingService.getLabelValue(criteria.PLACEHOLDER) != ''
+                  ? settingService.getLabelValue(criteria.PLACEHOLDER)
+                  : ''
+              "
+              [calendarType]="criteria.CALENDARTYPE != undefined ? criteria.CALENDARTYPE : undefined"
+              [max]="today"
+            ></sym-date-time-picker>
+          </div>
+        </div>
+        } } }
+      </div>
+    </div>
+    }
+    <div class="col-sm-2 col-md-2 col-xl-3 footer mt-2">
+      <sym-button
+        [class]="'btn btn_primary mr-1'"
+        [id]="'btn_sunph_search_criteria'"
+        [text]="'Search'"
+        [isLoaderRequired]="false"
+        (onClick)="updateSearchResponse()"
+        [isDisabled]="false"
+      ></sym-button>
+      <sym-button
+        [class]="'btn btn_outline_primary mr-1'"
+        [id]="'btn_sunph_search_clear'"
+        [text]="'Clear'"
+        [isLoaderRequired]="false"
+        (onClick)="onAdvanceSearchCriteriaClear()"
+      ></sym-button>
+    </div>
+  </div>
+  }
+</sym-panel>
+}
+<div [ngClass]="service.isMobileViewRendered() && isSelectionRequired ? 'wrapperCMobileView' : 'wrapperC'">
+  @if ( addRouterLink != undefined && searchList != undefined && searchList.fields != undefined &&
+  searchList.fields.length > 0 ) {
+  <div class="add thAction">
+    <a
+      href="javascript:void(0);"
+      class="btn btn_primary thAddRow"
+      [routerLink]="addRouterLink"
+      [attr.data-toggle]="'tooltip'"
+      [attr.title]="addTooltip !== undefined ? settingService.getLabelValue(addTooltip) : 'Add'"
+      id="btn_search_save"
+      >{{ settingService.getLabelValue(addTooltip) }}</a
+    >
+  </div>
+  } @if ( addRouterLink != undefined && searchList != undefined && searchList.fields != undefined &&
+  searchList.fields.length > 0 && downloadReq && searchName == 'LeadSearchAPI' ) {
+  <div class="downloadClient_btn">
+    <a
+      href="javascript:void(0);"
+      class="btn btn_primary thAddRow"
+      (click)="navigate_downloadClient()"
+      [attr.data-toggle]="'tooltip'"
+      [attr.title]="settingService.getLabelValue('import_client')"
+      id="btn_search_save"
+      >{{ settingService.getLabelValue('import_client') }}</a
+    >
+  </div>
+  }
+  <div
+    class="delete_tableAction"
+    [ngClass]="{
+      'advance-class':
+        addRouterLink != undefined &&
+        searchList != undefined &&
+        searchList.fields != undefined &&
+        searchList.fields.length > 0,
+      'landing-class': isLandingPage,
+      delete_tableAction_downloadClient: searchName == 'LeadSearchAPI' && downloadReq
+    }"
+  >
+    @if (isAdvanceSearchRequired) { @if ( !isAdvanceSearchVisibile && searchList != undefined && searchList.fields
+    != undefined && searchList.fields.length > 0 ) {
+    <sym-button
+      [class]="'btn btn_primary'"
+      [id]="'btn_Advance_search'"
+      [iconClass]="'fa fa-sort-down'"
+      [isLoaderRequired]="false"
+      [tooltip]="'advancedSearch'"
+      (onClick)="onAdvanceSearchClicked()"
+    ></sym-button>
+    } @if (isAdvanceSearchVisibile && !isAdvanceSearchDialogVisible) {
+    <sym-button
+      [class]="'btn btn_primary'"
+      [id]="'btn_Advance_search'"
+      [iconClass]="'fa fa-sort-down'"
+      [isLoaderRequired]="false"
+      [tooltip]="'advancedSearch'"
+      (onClick)="onAdvanceSearchDialogOpened()"
+    ></sym-button>
+    } @if ( isAdvanceSearchVisibile && searchList != undefined && searchList.fields != undefined &&
+    searchList.fields.length > 0 ) {
+    <sym-button
+      [class]="'btn btn_outline_primary'"
+      [id]="'btn_Cancel'"
+      [iconClass]="'fa fa-close'"
+      [isLoaderRequired]="false"
+      (onClick)="onAdvanceSearchCancel()"
+      [tooltip]="'advancedSearchCancel'"
+    ></sym-button>
+    } }
+
+    <!-- <sym-button
+      *ngIf="
+        ((additionalOptionList && additionalOptionList.length > 0) || isDeleteRequired) &&
+        !displaySelectOption &&
+        searchList != undefined &&
+        searchList.fields != undefined &&
+        searchList.fields.length > 0
+      "
+          [class]="'btn btn_primary'"
+          [id]="'btn_Select_Record'"
+          [text]="selectButtonText != undefined ? selectButtonText : 'Select'"
+          [iconClass]="'fa fa-check-square-o'"
+          [isLoaderRequired]="false"
+          (onClick)="onSelectItemClicked()"
+        ></sym-button> -->
+  </div>
+
+  <div
+    class="delete_tableAction"
+    [ngClass]="{
+      'additiona-Option':
+        searchList != undefined && searchList.fields != undefined && searchList.fields.length > 0,
+      'landing-class': isLandingPage,
+      selectQuoteOpt: isAdvanceSearchVisibile
+    }"
+  >
+    @if (displaySelectOption) { @if (displaySelectOption || isDeleteRequired) {
+    <div class="fgInline">
+      <span class="label">{{ settingService.getLabelValue('all') }} </span>
+      <div class="checkBoxGrp">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="selectall" (click)="selectAll()" />
+          <label class="form-check-label" for="selectall"></label>
+        </div>
+      </div>
+    </div>
+    }
+    <!-- [text]="'delete'" -->
+    @if (displaySelectOption && isDeleteRequired) {
+    <sym-button
+      [class]="'btn bg-danger text-white'"
+      [id]="'btn_Delete'"
+      [iconClass]="'fa fa-trash'"
+      [tooltip]="'deleteRec'"
+      (onClick)="deleteSelectedItems()"
+    ></sym-button>
+    } @for (option of additionalOptionList; track option) {
+    <sym-button
+      [class]="option.class"
+      [id]="option.button_id"
+      [text]="option.text"
+      [isLoaderRequired]="option.isLoaderRequired"
+      [tooltip]="option.tooltipText"
+      [iconClass]="option.iconClass"
+      (onClick)="onAdditionalButtonClicked(option)"
+    ></sym-button>
+    } @if (displaySelectOption || isDeleteRequired) {
+    <sym-button
+      [class]="'btn btn_outline_primary'"
+      [id]="'btn_Cancel'"
+      [iconClass]="'fa fa-close'"
+      [tooltip]="settingService.getLabelValue('CANCEL')"
+      [isLoaderRequired]="false"
+      (onClick)="onAdditionalOptionCloseClick()"
+    ></sym-button>
+    } }
+  </div>
+
+  @if (searchList && searchList.fields && searchList.fields.length != 0) {
+  <div
+    [ngClass]="{
+      sectionContent: !downloadReq,
+      sectionContent_company: downloadReq && searchName == 'LeadSearchAPI',
+      addBtnVisible:
+        addRouterLink == undefined ||
+        searchList == undefined ||
+        searchList.fields == undefined ||
+        searchList.fields.length === 0
+    }"
+  >
+    @if (isAdvanceSearchVisibile && isAdvanceSearchDialogVisible) {
+    <div class="advanceSearch">
+      @if (searchList && searchList.fields && searchList.fields.length != 0) {
+      <div class="m-3 p-2">
+        @for (field of searchList.fields; track field) { @if (field.isVisible) {
+        <div class="mb-2">
+          @if (field.INPUTTYPECD == undefined || field.INPUTTYPECD == null) {
+          <div class="row">
+            <label [for]="field.guid" class="col-sm-4 col-md-4 col-xl-4 col-form-label">
+              <span>{{ field.name }}</span>
+            </label>
+            <div class="col-sm-8 col-md-8 col-xl-8">
+              <input
+                type="text"
+                class="form-control"
+                [id]="field.guid + '_' + field.metadata"
+                [(ngModel)]="service.searchResponseIO.data.searchCriteriaData[field.metadata]"
+                (change)="onInputChange(field)"
+                [attr.placeholder]="field.name != '' ? field.name : ''"
+              />
+            </div>
+          </div>
+          } @if (field.INPUTTYPECD == 'COMBO') {
+          <div class="row">
+            <label [for]="field.guid" class="col-sm-4 col-md-4 col-xl-4 col-form-label">
+              <span>{{ field.name }}</span>
+            </label>
+            <div class="col-sm-8 col-md-8 col-xl-8">
+              <select
+                [id]="field.guid + '_' + field.metadata"
+                class="form-control"
+                [(ngModel)]="service.searchResponseIO.data.searchCriteriaData[field.metadata]"
+                (change)="onInputChange(field)"
+              >
+                <option value="null">- {{ settingService.getLabelValue('selectFirstOption') }} -</option>
+                @for (opt of service.searchResponseIO.lookups[field.LOOKUPCD]; track opt) {
+                <option [value]="opt.cd">
+                  {{ opt.desc }}
+                </option>
+                }
+              </select>
+            </div>
+          </div>
+          } @if (field.INPUTTYPECD == 'FCOMBO' || field.INPUTTYPECD == 'LOOKUPTEXT') {
+          <div class="row">
+            <label [for]="field.guid" class="col-sm-4 col-md-4 col-xl-4 col-form-label">
+              <span>{{ field.name }}</span>
+            </label>
+            <div class="col-sm-8 col-md-8 col-xl-8">
+              <ng-select
+                [items]="field.foptions"
+                [(ngModel)]="field.fValue"
+                [id]="field.guid + '_' + field.metadata"
+                placeholder="{{ field.name != '' ? field.name : '' }}"
+                (change)="onInputChange(field)"
+                [notFoundText]="service.getMultilingualLabel('No items found')"
+              >
+              </ng-select>
+            </div>
+          </div>
+          } @if (['DATE', 'DATETIME'].includes(field.INPUTTYPECD) ? field.INPUTTYPECD : '') {
+          <div class="row">
+            <label [for]="field.guid" class="col-sm-4 col-md-4 col-xl-4 col-form-label">
+              <span>{{ field.name }}</span>
+            </label>
+            <div class="col-sm-8 col-md-8 col-xl-8">
+              <!-- -->
+              <sym-date-time-picker
+                [fieldType]="field.INPUTTYPECD"
+                [fieldID]="field.guid + '_' + field.metadata"
+                [fieldCd]="field.metadata"
+                [model]="service.searchResponseIO.data.searchCriteriaData"
+                (notifyChange)="onInputChange(field)"
+                [placeholder]="field.name != '' ? field.name : ''"
+                [calendarType]="field.CALENDARTYPE != undefined ? field.CALENDARTYPE : undefined"
+              ></sym-date-time-picker>
+            </div>
+          </div>
+          }
+        </div>
+        } }
+        <div class="text-right advanceSearchConfirm">
+          <sym-button
+            [class]="'btn btn_primary mr-1'"
+            [id]="'btn_search'"
+            [iconClass]="'fa fa-search'"
+            [isLoaderRequired]="false"
+            [tooltip]="'search'"
+            (onClick)="updateSearchResponse()"
+            [isDisabled]="isSearchDisabled"
+          ></sym-button>
+          <sym-button
+            [class]="'btn btn_outline_primary mr-1'"
+            [id]="'btn_search'"
+            [iconClass]="'fa fa-close'"
+            [isLoaderRequired]="false"
+            [tooltip]="'close'"
+            (onClick)="onAdvanceSearchDialogClosed()"
+          ></sym-button>
+        </div>
+      </div>
+      }
+    </div>
+    }
+    <div
+      [ngClass]="{
+        'd-block w-100': true,
+        'mt-dataTableTop': displaySelectOption && settingService.isMobileViewRendered()
+      }"
+    >
+      <table
+        datatable
+        [dtOptions]="dtOptions"
+        [dtTrigger]="dtTrigger"
+        [id]="addRouterLink == undefined && !displaySelectOption && !isDeleteRequired ? 'dtb_search' : 'search'"
+        cellspacing="0"
+        width="100%"
+        aria-label="Search results table"
+        [ngClass]="{
+          'table nowrap': true,
+          'mt-displaySelectOption': settingService.isMobileViewRendered() && displaySelectOption
+        }"
+      >
+        <thead>
+          @for (field of searchList.fields; track field; let i = $index) { @if (i == 0) {
+          <tr>
+            <th>Import</th>
+            @for (field of searchList.fields; track field; let j = $index) { @if (isSelectionRequired && j == 0) {
+            <th class="thAction select_th_col">
+              {{ settingService.getLabelValue(selectLabelKey != undefined ? selectLabelKey : 'select') }}
+            </th>
+            } @if (field.isVisible) {
+            <th id="{{ field.metadata }}">
+              {{ field.name }}
+            </th>
+            } }
+          </tr>
+          } }
+        </thead>
+        <tbody>
+          @for (row of searchList.values; track row; let i = $index) {
+          <tr>
+            <td>
+              <input
+                type="checkbox"
+                class="checkBoxSizeChange"
+                (change)="downloadList(row, i, $event)"
+                [checked]="isChecked(i)"
+                [disabled]="isImportDisabled(row) || isCheckboxDisabled(i)"
+                [ngClass]="{ 'limit-reached': isCheckboxDisabled(i) }"
+              />
+            </td>
+            @for (field of searchList.fields; track field; let j = $index) {
+            <ng-container>
+              @if (isSelectionRequired && j == 0) {
+              <td class="text-center tdTableAction">
+                <div class="radioGrp radio">
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="select"
+                      [id]="i"
+                      value="{{ row }}"
+                      (click)="onSelectionChange(row)"
+                    />
+                    <!-- [checked]="
+                                                        selectedOption.id == i
+                                                            ? true
+                                                            : false
+                                                    " -->
+                    <label class="form-check-label" for="radio"> </label>
+                  </div>
+                </div>
+              </td>
+              } @if (field.isVisible) {
+              <td
+                [attr.data-label]="field.name"
+                [attr.data-sort]="field.INPUTTYPECD == 'DATE' ? getDateFormatted(row[field.position - 1]) : null"
+                [class.searchColumn-wrap]="
+                  row[field.position - 1] != undefined && row[field.position - 1].length > 50
+                "
+                class="{{ field.attributeCd }}"
+                [attr.data-val]="row[field.position - 1]"
+              >
+                <!--  [attr.data-sort]="field.INPUTTYPECD == 'DATE' ? getDateFormatted(row[field.position - 1]) : null" [attr.data-order]="getDate(value)" -->
+                @if (field.link != undefined || field.link != null) {
+                <a
+                  [class]="
+                    (field.INPUTTYPECD == 'DOUBLE' ||
+                      field.INPUTTYPECD == 'SHORT' ||
+                      field.INPUTTYPECD == 'NUMBER') &&
+                    field.link != null
+                      ? 'link float-end'
+                      : 'link'
+                  "
+                  (click)="onLinkClick(row, j, field.link, field)"
+                >
+                  {{ row[field.position - 1] }}
+                </a>
+                } @if (field.link == undefined || field.link == null) {
+                <a
+                  [class]="
+                    field.INPUTTYPECD == 'DOUBLE' ||
+                    field.INPUTTYPECD == 'SHORT' ||
+                    field.INPUTTYPECD == 'INT' ||
+                    field.INPUTTYPECD == 'NUMBER'
+                      ? 'float-end'
+                      : ''
+                  "
+                >
+                  @if ( field.INPUTTYPECD == 'IMAGE' || field.INPUTTYPECD == 'IMAGECLASS') { @if (field.INPUTTYPECD
+                  === 'IMAGE') {
+                  <span>
+                    <img [src]="row[field.position - 1]" />
+                  </span>
+                  } @if (field.INPUTTYPECD === 'IMAGECLASS') {
+                  <span [class]="row[field.position - 1]"></span>
+                  } } @else {
+                  {{ row[field.position - 1] }}
+                  }
+                </a>
+                }
+              </td>
+              }
+            </ng-container>
+            }
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  }
+</div>
+
+@if (isSelectionRequired) {
+<div class="formFooter for_footer">
+  <button
+    type="button"
+    class="btn btn_primary mr-1"
+    [attr.data-dismiss]="closeOnSelection && isSelectEmitted ? 'modal' : ''"
+    (click)="onSelectClick()"
+    [disabled]="searchList && searchList.values != null && searchList.values.length > 0 ? false : true"
+  >
+    {{ settingService.getLabelValue('select') }}
+  </button>
+  <button type="button" class="btn btn_outline_primary" data-dismiss="modal" (click)="onCancelClicked()">
+    {{ settingService.getLabelValue('CANCEL') }}
+  </button>
+</div>
+}
+<div class="d-grid gap-2 col-2 mx-auto">
+  @if (showDownloadButton) {
+  <button
+    type="button"
+    class="btn btn_primary mr-1"
+    (click)="onDownloadClick()"
+    [disabled]="downloadIDsList.length === 0"
+    id="downloadClientConfirm"
+  >
+    {{ settingService.getLabelValue('downloadClient_confirm') }}
+  </button>
+  }
+</div>

@@ -1,0 +1,40 @@
+.btn_align {
+  padding: 5px 0;
+  margin: 0;
+  position: relative;
+  z-index: 99;
+  top: -10px; /*p 20*/
+  float: right;
+}
+
+.clear_all {
+  clear: both;
+  float: none;
+  background-color: #fff;
+  padding: 5px;
+  margin: 0;
+  border: 1px solid #000;
+}
+
+.div_border {
+  //border-right: 1px solid #000 !important; /*p 20*/
+  margin: 10px; /*p 20*/
+  margin-right: 15px; /*p 20*/
+  padding: 0.7rem 0 0 1rem;
+  box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; /*p 20*/
+}
+
+.btn_bottom {
+  position: absolute;
+  bottom: 0;
+  right: calc(40% - 1rem);
+  padding: 0;
+  margin: 4px;
+}
+
+/*p 20 below*/
+@media only screen and (max-width: 567px) {
+  .div_border {
+    margin: 10px;
+  }
+}

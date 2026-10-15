@@ -1,0 +1,254 @@
+<!-- <sym-page-container
+[breadCrumbList]="breadCrumbList"
+[stepList]="stepList"
+[responseIO]="service.responseIO"
+[currentStepSelected]="selectedStep"
+(selectedStep)="onStepChanged($event)"
+> -->
+<sym-alert></sym-alert>
+<sym-pop-up
+  [headerText]="'Search Policy'"
+  [popupID]="'policyInforceIllustration'"
+  [popupSize]="'medium'"
+  (popupClosed)="onPopupClosed()"
+>
+  <div>
+    <div class="mb-3 row">
+      <label for="policyNum" class="form-label mt-2">{{ settingService.getLabelValue('policyNum') }}</label>
+      <div class="ml-2">
+        <input type="text" class="form-control" id="policyNum" [(ngModel)]="policyNum" />
+      </div>
+    </div>
+
+    <div class="footer text-center">
+      <sym-button
+        [class]="'btn btn_primary ml-2 mr-2 text-center'"
+        [id]="'btn_ok'"
+        [isLoaderRequired]="false"
+        [text]="'Ok'"
+        (onClick)="onOkButtonClicked()"
+      ></sym-button>
+    </div>
+  </div>
+</sym-pop-up>
+@if (service.responseIO != undefined && !searchOpened) {
+<div class="pageData">
+  <div class="card scrollDiv">
+    <div class="card-body">
+      <!--   <div class="card-title">
+        <div class="">
+          {{ settingService.getLabelValue('policyProposerDetails') }}
+        </div>
+      </div>-->
+      <div class="row">
+        <div
+          class="col-xl-4 col-lg-4 col-md-4 col-sm-4 summary-card mb-3"
+          [class.mr-2]="!service.responseIO.data.Entity.insuredSameAsProposer"
+        >
+          <div class="card-title">
+            <div class="summary-title">
+              {{ settingService.getLabelValue('PROPOSER') }}-
+              {{ settingService.getLabelValue('PartyDetails') }}
+            </div>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('name') }}</label>
+            <span>{{
+              service.getFieldLookupDesc(service.responseIO.data.Proposer, 'titleCd') +
+                ' ' +
+                service.responseIO.data.Proposer.firstName1 +
+                ' ' +
+                service.responseIO.data.Proposer.lastName1
+            }}</span>
+          </div>
+          <!-- <div class="summary-card-container">
+          <label>{{ settingService.getLabelValue('firstName1') }}</label>
+          <span>{{ service.responseIO.data.Proposer.firstName1 }}</span>
+        </div>
+        <div class="summary-card-container">
+          <label>{{ settingService.getLabelValue('lastName1') }}</label>
+          <span>{{ service.responseIO.data.Proposer.lastName1 }}</span>
+        </div> -->
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('birthDt') }}</label>
+            <span>{{
+              service.responseIO.data.Proposer.birthDt | date: service.getApplicationPropertyValue('dateformat')
+            }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('age') }}</label>
+            <span>{{ service.responseIO.data.Proposer.age }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('genderCd') }}</label>
+            <span>{{ service.getFieldLookupDesc(service.responseIO.data.Proposer, 'genderCd') }}</span>
+          </div>
+          <!-- <div class="summary-card-container">
+        <label>{{ settingService.getLabelValue('smoker') }}</label>
+        <span>{{ service.getFieldLookupDesc(service.responseIO.data.Proposer, 'smoker') }}</span>
+      </div> -->
+        </div>
+        @if (!service.responseIO.data.Entity.insuredSameAsProposer) {
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 summary-card ml-2 mb-3">
+          <div class="card-title">
+            <div class="summary-title">
+              {{ settingService.getLabelValue('PRIMARY') }}-
+              {{ settingService.getLabelValue('PartyDetails') }}
+            </div>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('name') }}</label>
+            <span>{{
+              service.getFieldLookupDesc(service.responseIO.data.PrimaryInsured, 'titleCd') +
+                ' ' +
+                service.responseIO.data.PrimaryInsured.firstName1 +
+                ' ' +
+                service.responseIO.data.PrimaryInsured.lastName1
+            }}</span>
+          </div>
+          <!-- <div class="summary-card-container">
+        <label>{{ settingService.getLabelValue('firstName1') }}</label>
+        <span>{{ service.responseIO.data.PrimaryInsured.firstName1 }}</span>
+      </div>
+      <div class="summary-card-container">
+        <label>{{ settingService.getLabelValue('lastName1') }}</label>
+        <span>{{ service.responseIO.data.PrimaryInsured.lastName1 }}</span>
+      </div> -->
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('birthDt') }}</label>
+            <span>{{
+              service.responseIO.data.PrimaryInsured.birthDt
+                | date: service.getApplicationPropertyValue('dateformat')
+            }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('age') }}</label>
+            <span>{{ service.responseIO.data.PrimaryInsured.age }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('genderCd') }}</label>
+            <span>{{ service.getFieldLookupDesc(service.responseIO.data.PrimaryInsured, 'genderCd') }}</span>
+          </div>
+          <!-- <div class="summary-card-container">
+      <label>{{ settingService.getLabelValue('smoker') }}</label>
+      <span>{{ service.getFieldLookupDesc(service.responseIO.data.PrimaryInsured, 'smoker') }}</span>
+    </div> -->
+        </div>
+        }
+      </div>
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 summary-card">
+          <div class="card-title">
+            <div class="summary-title">
+              {{ settingService.getLabelValue('productSummary') }}
+            </div>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('family') }}</label>
+            <span>{{ service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productFamilyCd') }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('name') }}</label>
+            <span>{{ service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productId') }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ service.getLabelValue(service.responseIO.data.BasePlan, 'productPlanOptionCd') }}</label>
+            <span>{{
+              settingService.getLabelValue(service.responseIO.data['BasePlan']['productPlanOptionDesc'])
+            }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ service.getLabelValue(service.responseIO.data.BasePlan, 'baseSumAssured') }}</label>
+            <span>{{
+              service.responseIO.data['BasePlan']['baseSumAssured']
+                | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseSumAssured')
+            }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{
+              settingService.getLabelValue('Policy') + ' ' + settingService.getLabelValue('Term')
+            }}</label>
+            <span>{{ service.responseIO.data['BasePlan']['productTerm'] }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{
+              settingService.getLabelValue('payment') + ' ' + settingService.getLabelValue('Term')
+            }}</label>
+            <span>{{ service.responseIO.data['BasePlan']['premiumPayingTerm'] }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('modalPremium') }}</label>
+            <span>{{
+              service.responseIO.data['BasePlan']['modalPremium']
+                | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+            }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('riderPremium') }}</label>
+            <span>{{
+              getRiderTotalPremium()
+                | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+            }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('totalPremium') }}</label>
+            <span>{{
+              service.responseIO.data['BasePlan']['modalPremium'] + getRiderTotalPremium()
+                | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+            }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('quotAddtnlField1') }}</label>
+            <span>{{ service.responseIO.data['Entity']['quotAddtnlField1'] }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('quotAddtnlField2') }}</label>
+            <span>{{ service.responseIO.data['Entity']['quotAddtnlField2'] }}</span>
+          </div>
+          <div class="summary-card-container">
+            <label>{{ settingService.getLabelValue('quotAddtnlField5') }}</label>
+            <span>{{ service.responseIO.data['Entity']['quotAddtnlField5'] }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="formFooter" [class.menuHidden]="settingService.isMenuHidden()">
+  <sym-button
+    [class]="'btn btn_primary'"
+    [id]="'but_createQuotation'"
+    [text]="'but_createQuotation'"
+    (onClick)="onbut_createQuotationClick()"
+    [isLoaderRequired]="false"
+  ></sym-button>
+  <!-- <button class="btn btn_outline_primary" [id]="'but_search'" (click)="onSearchClick()">
+  Search Policy <i class="search-icon"></i>
+  <i class="fa fa-search" aria-hidden="true"></i>
+</button> -->
+  <sym-button
+    [class]="'btn btn_outline_primary'"
+    [id]="'but_search'"
+    [text]="'Search Policy'"
+    [iconClass]="'fa fa-search'"
+    (onClick)="onSearchClick()"
+    [isLoaderRequired]="true"
+  ></sym-button>
+  <sym-button
+    [class]="'btn btn_outline_primary m-3'"
+    [id]="'but_apiLink'"
+    [text]="'View API'"
+    (onClick)="onRestApiClick()"
+    [isLoaderRequired]="false"
+  ></sym-button>
+</div>
+<sym-api-body-editor
+  [apiRequestData]="apiRequestData.value"
+  [apiResponseData]="apiResponseData"
+  [responseIO]="service.responseIO"
+  [service]="service"
+  [disableReqInput]="true"
+></sym-api-body-editor>
+}
+
+<!-- </sym-page-container> -->

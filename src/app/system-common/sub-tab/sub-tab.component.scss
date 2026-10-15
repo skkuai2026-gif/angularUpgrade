@@ -1,0 +1,132 @@
+#tempLabelDelete {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  padding: 0;
+  margin: 0;
+}
+#tempLabelSelected {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  padding: 0;
+  margin: 0;
+}
+/**subtabs css starts**/
+.innerHorizontalTab .nav-tabs .nav-item {
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+}
+.innerHorizontalTab .nav-tabs .nav-link {
+  border: 0 !important;
+  padding: 12px 15px 12px 10px;
+  color: #8f9bb3;
+  position: relative;
+}
+.innerHorizontalTab .nav-tabs .nav-link.active,
+.innerHorizontalTab .nav-tabs .nav-link:hover {
+  color: #36f;
+}
+.innerHorizontalTab .nav-tabs .nav-link.active:before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #36f;
+}
+.innerHorizontalTab.innerHorizontalTabSmall .nav-tabs .nav-link {
+  padding: 0px 10px 8px 10px; /*Dec 5 to reduce top spacing*/
+  outline: none;
+  cursor: pointer;
+}
+
+.dynamicTabList .scrtabs-tab-container {
+  width: calc(100% - 70px);
+}
+
+/**Modified by Monisha Pillai***/
+
+/**scrolling tabs***/
+.scrtabs-tabs-fixed-container {
+  height: 46px;
+}
+.scrtabs-tab-scroll-arrow {
+  width: 30px;
+  border: 0;
+  padding: 0;
+  position: relative;
+}
+.scrtabs-tab-scroll-arrow:hover {
+  background-color: #fff;
+}
+.scrtabs-tab-scroll-arrow.scrtabs-tab-scroll-arrow-left {
+  left: 0;
+}
+.scrtabs-tab-scroll-arrow.scrtabs-tab-scroll-arrow-right {
+  right: 0;
+}
+.scrtabs-tab-scroll-arrow > span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #222b45;
+  border: 1px solid #edf1f7;
+  border-radius: 50%;
+}
+.scrtabs-tab-scroll-arrow:hover > span {
+  background-color: #edf1f7;
+}
+.scrtabs-tab-scroll-arrow > span:before {
+  content: '\e908';
+  font-family: 'icomoon';
+}
+.scrtabs-tab-scroll-arrow.scrtabs-tab-scroll-arrow-left > span {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+.scrtabs-disable {
+  opacity: 0.3;
+}
+
+/*this is correct one**/
+.innerHorizontalTab .scrolling_tabs.slick-slider .slick-arrow {
+  background-color: #f2f5ff;
+  width: 20px;
+  height: 100%;
+  border-radius: 2px;
+  background-size: auto 50%;
+}
+.innerHorizontalTab .scrolling_tabs.slick-slider .slick-arrow.slick-prev {
+  left: -10px;
+}
+.innerHorizontalTab .scrolling_tabs.slick-slider .slick-arrow.slick-next {
+  right: -10px;
+}
+.innerHorizontalTab .nav-tabs .nav-item.slick-slide {
+  padding-right: 0;
+}
+/**subtabs css ends**/
+.btnAddTab {
+  top: 20%;
+  transform: translateY(-50%);
+}
+
+.closeFrame {
+  cursor: pointer;
+}
+
+.nav-link i {
+  font-size: 1.1rem;
+  padding: 5px;
+  line-height: 0;
+  vertical-align: middle;
+}

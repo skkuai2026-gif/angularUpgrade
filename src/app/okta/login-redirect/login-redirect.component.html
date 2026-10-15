@@ -1,0 +1,11 @@
+@if (settingService.getApplicationMode() === 'offline') { @if (isOktaLogin && !this.settingService.isConnected) {
+<sym-offline-login-with-pin></sym-offline-login-with-pin>
+} @if (isOktaLogin && this.settingService.isConnected) {
+<sym-okta-login></sym-okta-login>
+} @if (!isOktaLogin && isOktaLogin !== undefined) {
+<sym-sun-ph-login></sym-sun-ph-login>
+} } @if (settingService.getApplicationMode() === 'online') { @if (isOktaLogin) {
+<sym-okta-login></sym-okta-login>
+} @if (!isOktaLogin && isOktaLogin !== undefined) {
+<sym-sun-ph-login></sym-sun-ph-login>
+} }

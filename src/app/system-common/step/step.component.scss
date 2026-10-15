@@ -1,0 +1,14 @@
+.fa.fa-spinner.fa-spin {
+  font-size: 1.32rem;
+}
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+  .formFooter .btn {
+    font-size: 0.84em;
+  }
+  .fa.fa-spinner.fa-spin {
+    font-size: inherit;
+  }
+}
+.tab-content {
+  width: 100%;
+}

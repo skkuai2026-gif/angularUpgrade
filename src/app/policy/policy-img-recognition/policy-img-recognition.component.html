@@ -1,0 +1,172 @@
+<sym-pop-up
+  [headerText]="'Verify Image'"
+  [popupID]="'verifyImgPopup'"
+  (popupClosed)="onPopUpClose()"
+  [hideCloseButton]="imageCompiled"
+  [width]="
+    capturedImg != undefined && !service.isMobileViewRendeered() ? 70 : !service.isMobileViewRendeered() ? 50 : 90
+  "
+>
+  @if (!imageCompiled) {
+  <div class="imgContainer">
+    <div
+      [class.option_container]="!service.isMobileViewRendeered()"
+      [class.mob_option_container]="service.isMobileViewRendeered()"
+    >
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Select Document</label>
+        <select class="form-control" id="exampleFormControlSelect1" (change)="onDocSelected($event)">
+          @for (doc of documentImageList; track doc) {
+          <option>
+            {{ doc.fileLocation }}
+          </option>
+          }
+        </select>
+      </div>
+      <div class="uploadPic">
+        <input
+          type="file"
+          [attr.id]="'compareImageAIML'"
+          [attr.name]="'compareImageAIML'"
+          (change)="onFileChange($event.target.files)"
+          ondrop="value = null"
+          class="fileInput"
+          (click)="onInputFileClick($event)"
+          class="fileInput"
+          id="imageDisplayed"
+          capture="user"
+        />
+        <div class="fileUploadContent">
+          <h6>
+            {{ service.getMultilingualLabel('dropImage') }}
+            <!-- <a (click)="onCameraImageClick($event)" class="takepic" data-param="">Browse</a> -->
+          </h6>
+        </div>
+      </div>
+      <div class="row d-flex flex-row">
+        <div class="mt-4" [class.mt-10]="service.isMobileViewRendeered()">
+          @if (!this.isLiveCapture) {
+          <sym-button
+            id="btn-live-capure"
+            [text]="'Take a pic'"
+            [iconClass]="'fa fa-picture-o'"
+            [tooltip]="'Take a pic'"
+            (onClick)="onLiveCapture()"
+          ></sym-button>
+          } @if (this.isLiveCapture) {
+          <sym-button
+            id="btn-live-capture"
+            [iconClass]="'fa fa-camera'"
+            [text]="'Capture'"
+            [tooltip]="'Capture'"
+            (onClick)="capture()"
+          ></sym-button>
+          } @if (this.isLiveCapture) {
+          <sym-button
+            id="btn-live-capure"
+            [iconClass]="'fa fa-close'"
+            [text]="'Close capture'"
+            [tooltip]="'Close capture'"
+            (onClick)="onLiveCapture()"
+          ></sym-button>
+          }
+        </div>
+      </div>
+    </div>
+    <div
+      [class.view_container]="!service.isMobileViewRendeered()"
+      [class.mob_view_container]="service.isMobileViewRendeered()"
+    >
+      @if (comaperedImageSelected != undefined && comaperedImageSelected.fileLocation != null) {
+      <div class="video_container">
+        Captured Image
+        <img
+          [src]="
+            'data:' +
+            getFileDataType(comaperedImageSelected.fileLocation) +
+            ';base64,' +
+            comaperedImageSelected.fileContents
+          "
+          class="video_container"
+          id="imageLoaded"
+        />
+      </div>
+      }
+      <div class="video_container">
+        @if (!this.isLiveCapture && currentUploadedPhoto != undefined) {
+        <span> Selected Image</span>
+        } @if (!this.isLiveCapture && currentUploadedPhoto != undefined) {
+        <img [src]="currentUploadedPhoto" class="video_container" />
+        } @if (this.isLiveCapture) {
+        <div id="app">
+          <div><video #video id="video" class="video_container" autoplay allow="microphone camera "></video></div>
+          <canvas #canvas id="canvas" width="285" height="200"></canvas>
+          <!--   <ul>
+                  <li *ngFor="let c of captures">
+                    <img src="{{ c }}" height="150" />
+                  </li>
+                </ul> -->
+        </div>
+        }
+      </div>
+      <div [class.video_container]="this.isLiveCapture && capturedImg != undefined">
+        @if (this.isLiveCapture && capturedImg != undefined) {
+        <span> Selected Image</span>
+        }
+        <img [src]="capturedImg" class="displayed_img" />
+      </div>
+    </div>
+    <div class="footer col text-center mt-4 pt-4">
+      <sym-button
+        id="btn-compare"
+        [text]="'Compare'"
+        [isDisabled]="uploadedPic == undefined && capturedImg == undefined ? true : false"
+        (onClick)="compareImages()"
+      ></sym-button>
+    </div>
+  </div>
+  } @if (imageCompiled) {
+  <div>
+    @if (comparedImageResponse.error) {
+    <div>
+      @if (comparedImageResponse.message != undefined) {
+      <h4>
+        {{ comparedImageResponse.message }}
+      </h4>
+      } @if (comparedImageResponse.error.message != undefined) {
+      <h4 class="error">
+        {{ comparedImageResponse.error.message }}
+      </h4>
+      } @if ( comparedImageResponse.error.detail != undefined && comparedImageResponse.error.detail[0].msg !=
+      undefined ) {
+      <h4 class="error">
+        {{ comparedImageResponse.error.message }}
+      </h4>
+      }
+    </div>
+    } @else {
+    <h2 class="success">
+      {{ comparedImageResponse.result }}
+    </h2>
+    <div class="form-row">
+      <div class="col-md-5 col-sm-5 col-xl-5 co-lg-5 aiml_img">
+        <img
+          [src]="'data:image/png;base64,' + comparedImageResponse.image1"
+          [style]="'max-width:100%;max-height:100%;'"
+        />
+      </div>
+      <div class="col-md-5 col-sm-5 col-xl-5 co-lg-5 aiml_img">
+        <img
+          [src]="'data:image/png;base64,' + comparedImageResponse.image2"
+          [style]="'max-width:100%;max-height:100%;'"
+        />
+      </div>
+    </div>
+    }
+    <div class="footer col text-center mt-2">
+      <sym-button id="btn-tryAgain" [text]="'Try Again'" (onClick)="onTryAgainClick()"></sym-button>
+      <sym-button id="btn-upload" [text]="'ok'" (onClick)="onPopUpClose()"></sym-button>
+    </div>
+  </div>
+  }
+</sym-pop-up>

@@ -1,0 +1,136 @@
+<div class="blockContainer">
+  @if (!isBasePlanSelected) {
+  <div class="block blockQuotation">
+    <!-- [style.width]="100 / service.responseIO.lookups['PLANOPTION'].length + '%'" -->
+    @if ( service.responseIO.lookups['PLANOPTION'] != undefined && service.responseIO.lookups['PLANOPTION'].length
+    > 0) {
+    <div class="cardContainer rowQCompare">
+      <sym-carousel>
+        @for (opt of service.responseIO.lookups['PLANOPTION']; track opt; let i = $index) {
+        <div
+          class="card"
+          [class.selected]="
+            selectedQuotationCardIndex == i || service.responseIO.data.BasePlan.productPlanOptionCd == opt.cd
+          "
+        >
+          <sym-quotation-base-plan-selection
+            [planOptionCd]="opt.cd"
+            [respApplicableProduct]="respApplicableProducts"
+            [responseIO]="responseIO"
+            (notifyBasePlanSelection)="onBasePlanSelection($event, i)"
+            [quotationIndex]="i + 1"
+          ></sym-quotation-base-plan-selection>
+        </div>
+        }
+      </sym-carousel>
+    </div>
+    } @else {
+    <sym-base-plan></sym-base-plan>
+    <ng-container>
+      <sym-rider [responseUpdated]="responseUpdated"></sym-rider>
+    </ng-container>
+    @if (service.responseIO.data['BasePlan'] && service.responseIO.data['BasePlan'].FundList) {
+    <sym-fund-list [hidePieChart]="false"></sym-fund-list>
+    } }
+  </div>
+  } @if (isBasePlanSelected) {
+  <div class="block blockRider" id="divRider">
+    <div class="headerInfo">
+      <div>
+        @if (service.isFieldApplicable(service.responseIO.data['BasePlan'], 'paymentTypeCd')) {
+        <p>
+          <span class="label">{{ service.getLabelValue(service.responseIO.data.BasePlan, 'paymentTypeCd') }}</span>
+          {{ service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'paymentTypeCd') }}
+        </p>
+        } @if (service.isFieldApplicable(service.responseIO.data['BasePlan'], 'paymentFrequencyCd')) {
+        <p>
+          <span class="label"
+            >{{ service.getLabelValue(service.responseIO.data.BasePlan, 'paymentFrequencyCd') }}
+          </span>
+          {{ service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'paymentFrequencyCd') }}
+        </p>
+        } @if (service.isFieldApplicable(service.responseIO.data['BasePlan'], 'productTerm')) {
+        <p>
+          <span class="label">{{ service.getLabelValue(service.responseIO.data.BasePlan, 'productTerm') }}</span>
+          {{ service.responseIO.data.BasePlan.productTerm }}
+        </p>
+        } @if (service.isFieldApplicable(service.responseIO.data['BasePlan'], 'baseSumAssured')) {
+        <p>
+          <span class="label">{{
+            service.getLabelValue(service.responseIO.data.BasePlan, 'baseSumAssured')
+          }}</span>
+          {{
+            service.responseIO.data.BasePlan.baseSumAssured
+              | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseSumAssured')
+          }}
+        </p>
+        }
+        <!-- <p *ngIf="service.isFieldApplicable(service.responseIO.data['BasePlan'], 'baseAnnualPremium')" class="hideBorder">
+          <span class="label">{{
+            service.getLabelValue(service.responseIO.data.BasePlan, 'baseAnnualPremium')
+          }}</span>
+          {{
+          service.responseIO.data.BasePlan.baseAnnualPremium
+          | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'baseAnnualPremium')
+          }}
+        </p> -->
+        @if (service.isFieldApplicable(service.responseIO.data['BasePlan'], 'modalPremium')) {
+        <p class="hideBorder">
+          <span class="label">{{ service.getMultilingualLabel('Premium') }}</span>
+          {{
+            service.responseIO.data.BasePlan.modalPremium
+              | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+          }}
+        </p>
+        }
+        <div class="separator">
+          <span class="iconEdit" (click)="onBasePlanSelection()"></span>
+        </div>
+        @if (service.responseIO.data['BasePlan']['modalPremium'] + getRiderTotalPremium() != undefined) {
+        <p class="centerTotPremium">
+          <span class="label">{{ service.getMultilingualLabel('totalPremium') }}</span>
+          {{
+            getTotalPremium()
+              | customFormat: service.getFieldMetadata(service.responseIO.data['BasePlan'], 'modalPremium')
+          }}
+        </p>
+        }
+      </div>
+    </div>
+    @if ( service.responseIO.data && service.responseIO.data.RiderList && service.responseIO.data.RiderList.length
+    > 0 ) {
+    <h3>Select Riders</h3>
+    <div class="rowRider">
+      <sym-quotation-rider-card [responseUpdated]="responseUpdated"></sym-quotation-rider-card>
+    </div>
+    } @if (service.responseIO.data['BasePlan'] && service.responseIO.data['BasePlan'].FundList) {
+    <sym-fund-list [hidePieChart]="false"></sym-fund-list>
+    }
+  </div>
+  }
+</div>
+
+<!-- <div *ngIf="!isBasePlanSelected" class="container">
+<div class="row">
+  <div *ngFor="let opt of service.responseIO.lookups['PLANOPTION']; index as i" class="col-sm">
+    <sym-quotation-base-plan-selection
+      [planOptionCd]="opt.cd"
+      [responseIO]="responseIO"
+      (notifyBasePlanSelection)="onBasePlanSelection($event)"
+      [quotationIndex]="i + 1"
+    ></sym-quotation-base-plan-selection>
+  </div>
+</div>
+</div>
+<ng-container *ngIf="isBasePlanSelected">
+  <sym-button [id]="'Back'" [text]="'Back'" (onClick)="onBasePlanSelection()"></sym-button>
+  <sym-panel
+    [id]="'customer_add_rider'"
+    [name]="'Add Rider'"
+    *ngIf="
+      service.responseIO.data && service.responseIO.data.RiderList && service.responseIO.data.RiderList.length > 0
+    "
+    >
+    <sym-quotation-rider-card [responseUpdated]="responseUpdated"></sym-quotation-rider-card>
+  </sym-panel>
+</ng-container> -->

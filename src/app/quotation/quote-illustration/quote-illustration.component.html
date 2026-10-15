@@ -1,0 +1,440 @@
+@if ( (service.responseIO != undefined && service.responseIO.data != undefined
+&& service.productFacets != undefined &&
+service.productFacets.data['ILLUSTRATIONMODEL'] == 'YES') || (service.responseIO
+!= undefined && service.responseIO.data.BasePlan != undefined &&
+service.responseIO.data.BasePlan.productTypeCd == 'COMBO') ) {
+<div class="sectionHeader">
+  <!-- <sym-button
+    *ngIf="nullState && isOutputPreferenceReq"
+    [class]="'btn btn_outline_primary btnSetPreference float-left'"
+    [id]="'btn_Apply_View_Illustration'"
+    [text]="'apply'"
+      (onClick)="
+        settingService.getApplicationMode() === 'online' || settingService.isRhosimulator === true
+          ? displayIllustration()
+          : displayIllustrationOffline()
+      "
+    [isLoaderRequired]="true"
+  ></sym-button> -->
+  <!-- <sym-button
+  *ngIf="nullState && !isOutputPreferenceReq"
+  [class]="'btn btn_outline_primary btnSetPreference float-left'"
+  [id]="'btn_View_Illustration'"
+  [text]="'VIEWILLUSTRATION'"
+  (onClick)="displayIllustration()"
+></sym-button> -->
+  @if (!showOnlyIllustration) {
+  <div class="headerActions previewOptions" id="headerButton">
+    @if ( (!service.responseIO.data.Entity.isInvalid && service.companyFacets &&
+    service.companyFacets.data['SHOWEMAILSIBEFOREACCEPTANCE'] &&
+    service.companyFacets.data['SHOWEMAILSIBEFOREACCEPTANCE'].length > 0 &&
+    service.companyFacets.data['SHOWEMAILSIBEFOREACCEPTANCE'] == 'YES' &&
+    !service.responseIO.data.Entity.isCompleted) ||
+    service.responseIO.data.Entity.isCompleted ) {
+    <sym-button
+      (onClick)="onEmailButtonClick($event)"
+      data-toggle="modal"
+      data-target="#emailModal"
+      [id]="'email'"
+      [text]="service.getMultilingualLabel('Email')"
+      [class]="'previewActions'"
+      class="mr-2"
+    ></sym-button>
+    } @if ( (service.companyFacets &&
+    service.companyFacets.data['SHOWDOWNLOADSIBEFOREACCEPTANCE'] &&
+    service.companyFacets.data['SHOWDOWNLOADSIBEFOREACCEPTANCE'].length > 0 &&
+    service.companyFacets.data['SHOWDOWNLOADSIBEFOREACCEPTANCE'] == 'YES' &&
+    !service.responseIO.data.Entity.isCompleted) ||
+    service.responseIO.data.Entity.isCompleted ) {
+    <sym-button
+      (onClick)="onDownloadPDFClick($event)"
+      [attr.data-toggle]="isOutputPreferenceReq == true ? 'modal' : ''"
+      [attr.data-target]="
+        isOutputPreferenceReq == true ? '#downloadPDFModal' : ''
+      "
+      [id]="'downloadPDF'"
+      [text]="service.getMultilingualLabel('DOWNLOADPDF')"
+      [class]="'previewActions'"
+      class="mr-2"
+    ></sym-button>
+    }@if ( service.responseIO && service.responseIO.data.Entity.isCompleted &&
+    service.responseIO.data.Entity.entityStatus === 'LOCKED' && linkEappRequired
+    ) {
+    <sym-button
+      (onClick)="onRefreshEappClick($event)"
+      [id]="'refreshEapp'"
+      [text]="service.getMultilingualLabel('refreshEapp')"
+      [class]="'previewActions'"
+      class="mr-2"
+    ></sym-button>
+    }
+    <!-- <sym-button
+      (onClick)="onConvertToEappClick($event)"
+        *ngIf="
+          service.responseIO &&
+          !service.responseIO.data.Entity.isInvalid &&
+          service.responseIO.data.Entity.isCompleted &&
+          service.companyFacets &&
+          service.companyFacets.data['EAPPAPPLICABLE'] &&
+          service.companyFacets.data['EAPPAPPLICABLE'].length > 0 &&
+          service.companyFacets.data['EAPPAPPLICABLE'] == 'YES' &&
+          service.responseIO.data.Entity.entityStatus != 'LOCKED' &&
+          linkEappRequired
+        "
+      [id]="'proceedEApp'"
+      [text]="service.getMultilingualLabel('proceedEApp')"
+      [iconClass]="'fa fa-cart-arrow-down'"
+      [class]="'previewActions'"
+      class="mr-2"
+    ></sym-button> -->
+    @if ( service.responseIO && !service.responseIO.data.Entity.isInvalid &&
+    service.responseIO.data.Entity.isCompleted && service.companyFacets &&
+    service.companyFacets.data['EAPPAPPLICABLE'] &&
+    service.companyFacets.data['EAPPAPPLICABLE'].length > 0 &&
+    service.companyFacets.data['EAPPAPPLICABLE'] == 'YES' &&
+    service.responseIO.data.Entity.entityStatus != 'LOCKED' &&
+    service.responseIO.data.Entity.policySeq == null && linkEappRequired &&
+    this.service.responseIO?.data?.Entity.leadId != null &&
+    this.service.responseIO?.data?.Entity.leadId !== '' ) {
+    <sym-button
+      (onClick)="openLinkToEappPopup()"
+      [id]="'proceedEApp'"
+      [text]="service.getMultilingualLabel('proceedEApp')"
+      [class]="'previewActions'"
+      class="mr-2"
+    ></sym-button>
+    } @if ( service.responseIO && !service.responseIO.data.Entity.isInvalid &&
+    service.responseIO.data.Entity.isCompleted && service.companyFacets &&
+    service.responseIO.data.Entity.uploadFlag === 'YES' &&
+    this.service.responseIO?.data?.Entity.leadId != null &&
+    this.service.responseIO?.data?.Entity.leadId !== '' ) {
+    <sym-button
+      (onClick)="onswitchProposalPurpose($event)"
+      data-toggle="modal"
+      data-target="#switchProposalPurpose"
+      [id]="'switchProposalPur'"
+      [text]="'switchProposal'"
+      [class]="'previewActions'"
+      class="mr-2"
+    ></sym-button>
+    } @if ( service.responseIO && !service.responseIO.data.Entity.isInvalid &&
+    service.responseIO.data.Entity.isCompleted && service.companyFacets &&
+    service.companyFacets.data['EAPPAPPLICABLE'] &&
+    service.companyFacets.data['EAPPAPPLICABLE'].length > 0 &&
+    service.companyFacets.data['EAPPAPPLICABLE'] == 'YES' &&
+    service.responseIO.data.Entity.entityStatus != 'LOCKED' &&
+    service.responseIO.data.Entity.policySeq != null && linkEappRequired &&
+    service.responseIO.data.Entity.isViewEappApplicable != 'NO' ) {
+    <sym-button
+      (onClick)="onviewEappClick($event)"
+      [id]="'viewEapp'"
+      [text]="service.getMultilingualLabel('viewEapp')"
+      [class]="'previewActions'"
+      class="mr-2"
+    ></sym-button>
+    }
+  </div>
+  }
+</div>
+<div class="sectionContent" id="quotIllustration">
+  <div [class.box]="nullState && isOutputPreferenceReq" class="fullWidth">
+    <div class="preferenceContainer" [class.active]="!nullState">
+      <div [ngClass]="{ colLeft: isOutputPreferenceReq }">
+        @if (isOutputPreferenceReq) {
+        <div [class.output-preferences-disabled]="showSign === true">
+          <sym-output-preferences
+            [displayLeft]="true"
+            [prefix]="'quoteIllustration'"
+            [model]="htmlOutputPreferenceModel"
+          ></sym-output-preferences>
+        </div>
+        } @if (nullState && isOutputPreferenceReq) {
+        <div class="subFooter">
+          <sym-button
+            [class]="'btn btn_outline_primary btnSetPreference'"
+            [id]="'btn_Apply_View_Illustration_2'"
+            [text]="'apply'"
+            (onClick)="
+              settingService.getApplicationMode() === 'online' ||
+              settingService.isRhosimulator === true
+                ? displayIllustration()
+                : displayIllustrationOffline()
+            "
+          ></sym-button>
+        </div>
+        } @if (isOutputPreferenceReq && !showSign) {
+        <sym-button
+          [class]="
+            settingService.isMobileViewRendered()
+              ? 'edit_preference_btn'
+              : 'btn btn_primary btnEditPreference'
+          "
+          [id]="'btn_edit_Prefernce'"
+          [text]="'editPreference'"
+          (onClick)="onEditPreference()"
+        ></sym-button>
+        }
+      </div>
+      <div class="colRight">
+        @if (illustrationHtmlPagesProperty == undefined && nullState) {
+        <div [class.nullState]="nullState && isOutputPreferenceReq">
+          @if (isOutputPreferenceReq) {
+          <p>
+            {{ service.getMultilingualLabel('applyToViewIllus') }}
+          </p>
+          }
+          <!-- <p *ngIf="!isOutputPreferenceReq">
+            Click on View Illustration to view the illustration
+          </p> -->
+        </div>
+        } @if (illustrationHtmlPagesProperty != undefined) {
+        <div
+          id="viewIllustrationContainer"
+          class="viewIllustrationContainer scrollDiv"
+        >
+          @if ( illustrationHtmlPagesProperty != undefined &&
+          this.illustrationHtmlPages.data.viewIllustration != undefined ) {
+          <div class="m-1 pr15">
+            @if (illustrationHtmlPagesProperty.length == 1) {
+            <div class="card m-1">
+              <div
+                [innerHTML]="
+                  illustrationHtmlPages.data.viewIllustration[1].content
+                    | safeHtml: 'html'
+                "
+              ></div>
+              @if (illustrationHtmlPages.data.viewIllustration[1].signature !=
+              null && showSign) { @if (!newSignatureUIReqd) {
+              <sym-signature
+                [serviceSignature]="
+                  service.responseIO.data.ServiceSignatureList[
+                    signtureObjectIndex.get(1)
+                  ]
+                "
+                [responseIO]="service.responseIO"
+                (isSignatureDone)="onSignatureDone()"
+              ></sym-signature>
+              } @if (newSignatureUIReqd) {
+              <sym-signatureUI
+                [model]="
+                  service.responseIO.data.ServiceSignatureList[
+                    signtureObjectIndex.get(1)
+                  ]
+                "
+                (notifySignatureDone)="onSignatureDone($event)"
+                [responseIO]="service.responseIO"
+                [triggerBtnClick]="triggerBtnClick"
+                [isSignatureButtonReq]="false"
+                [locationEnabled]="false"
+              ></sym-signatureUI>
+              } }
+            </div>
+            } @else { @for (item of illustrationHtmlPagesProperty; track item;
+            let i = $index) {
+            <div class="card m-1">
+              <!-- {{ illustrationHtmlPages.data.viewIllustration[item].name }} -->
+              <sym-panel
+                [id]="
+                  'quote-illustration_' +
+                  illustrationHtmlPages.data.viewIllustration[item].name +
+                  '_Body'
+                "
+                [name]="illustrationHtmlPages.data.viewIllustration[item].name"
+              >
+                <div
+                  [innerHTML]="
+                    illustrationHtmlPages.data.viewIllustration[item].content
+                      | safeHtml: 'html'
+                  "
+                ></div>
+                @if (illustrationHtmlPages.data.viewIllustration[item].signature
+                != null && showSign) { @if (!newSignatureUIReqd) {
+                <sym-signature
+                  [serviceSignature]="
+                    service.responseIO.data.ServiceSignatureList[
+                      signtureObjectIndex.get(item)
+                    ]
+                  "
+                  [responseIO]="service.responseIO"
+                  (isSignatureDone)="onSignatureDone()"
+                ></sym-signature>
+                } @if (newSignatureUIReqd) {
+                <sym-signatureUI
+                  [model]="currServiceSignature"
+                  (notifySignatureDone)="onSignatureDone($event)"
+                  [responseIO]="service.responseIO"
+                  [triggerBtnClick]="triggerBtnClick"
+                  [isSignatureButtonReq]="false"
+                  [locationEnabled]="false"
+                ></sym-signatureUI>
+                } }
+              </sym-panel>
+            </div>
+            } }
+          </div>
+          } @if ( illustrationHtmlPagesProperty != undefined &&
+          this.illustrationHtmlPages.data.viewHtmlIllustration != undefined ) {
+          <div class="m-1 pr15">
+            <ng-container>
+              <div class="card m-1">
+                <div
+                  [innerHTML]="
+                    illustrationHtmlPages.data.viewHtmlIllustration
+                      | safeHtml: 'html'
+                  "
+                ></div>
+                @if (currServiceSignature != undefined) { @if
+                (!newSignatureUIReqd) {
+                <sym-signature
+                  [isSignatureButtonReq]="false"
+                  [serviceSignature]="currServiceSignature"
+                  [responseIO]="service.responseIO"
+                  [triggerBtnClick]="triggerBtnClick"
+                  (isSignatureDone)="onSignatureDone()"
+                ></sym-signature>
+                } @if (newSignatureUIReqd) {
+                <sym-signatureUI
+                  [triggerBtnClick]="triggerBtnClick"
+                  [model]="currServiceSignature"
+                  (notifySignatureDone)="onSignatureDone($event)"
+                  [responseIO]="service.responseIO"
+                  [locationEnabled]="false"
+                ></sym-signatureUI>
+                } }
+              </div>
+            </ng-container>
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+<sym-pop-up [headerText]="'downloadProposal'" [popupID]="'downloadPDFModal'">
+  <sym-output-preferences
+    [prefix]="'downloadPDF'"
+    id="downloadPdfOp"
+  ></sym-output-preferences>
+  <div class="text-center">
+    <button
+      type="button"
+      (click)="downloadPDF()"
+      class="btn btn_primary"
+      data-dismiss="modal"
+      aria-label="Close"
+    >
+      {{ service.getMultilingualLabel('Ok') }}
+    </button>
+  </div>
+</sym-pop-up>
+<sym-pop-up [headerText]="'emailProposal'" [popupID]="'emailModal'">
+  <sym-email-request></sym-email-request>
+  <div class="text-center select_radio_container_email">
+    <button
+      type="button"
+      class="btn btn_primary mr-1"
+      [attr.data-dismiss]="shouldSendEmail ? 'modal' : ''"
+      (click)="sendEmail()"
+      [disabled]="isSendingEmail"
+    >
+      {{ service.getMultilingualLabel('Ok') }}
+    </button>
+    <!-- <button type="button" class="btn btn_outline_primary" data-dismiss="modal">
+    {{ service.getMultilingualLabel('CANCEL') }}
+  </button> -->
+  </div>
+</sym-pop-up>
+}
+<label id="buttonGUID" (click)="getElement()"></label>
+@if ( service.responseIO != undefined && service.responseIO.data != undefined &&
+service.productFacets != undefined &&
+service.productFacets.data['ILLUSTRATIONMODEL'] == undefined ) { @if
+(!service.responseIO.data.Entity.isCompleted) {
+<div align="center">{{ service.getMultilingualLabel('acceptClick') }}</div>
+} @if (service.responseIO.data.Entity.isCompleted) {
+<div class="sectionHeader">
+  @if (!service.responseIO.data.Entity.isInvalid) {
+  <div class="headerActions previewOptions">
+    <!-- <sym-button
+          (onClick)="onConvertToEappClick($event)"
+          *ngIf="
+            service.responseIO &&
+            service.responseIO.data.Entity.isCompleted &&
+            service.companyFacets &&
+            service.companyFacets.data['EAPPAPPLICABLE'] &&
+            service.companyFacets.data['EAPPAPPLICABLE'].length > 0 &&
+            service.companyFacets.data['EAPPAPPLICABLE'] == 'YES'
+          "
+          [id]="'proceedEApp'"
+          [text]="service.getMultilingualLabel('proceedEApp')"
+          [iconClass]="'fa fa-cart-arrow-down'"
+          [class]="'previewActions'"
+          class="mr-2"
+        ></sym-button> -->
+    @if ( service.responseIO && service.responseIO.data.Entity.isCompleted &&
+    service.companyFacets && service.companyFacets.data['EAPPAPPLICABLE'] &&
+    service.companyFacets.data['EAPPAPPLICABLE'].length > 0 &&
+    service.companyFacets.data['EAPPAPPLICABLE'] == 'YES' && linkEappRequired &&
+    this.service.responseIO?.data?.Entity.leadId != null &&
+    this.service.responseIO?.data?.Entity.leadId !== '' ) {
+    <sym-button
+      (onClick)="openLinkToEappPopup()"
+      [id]="'proceedEApp'"
+      [text]="service.getMultilingualLabel('proceedEApp')"
+      [class]="'previewActions'"
+      class="mr-2"
+    ></sym-button>
+    }
+  </div>
+  }
+</div>
+} }
+<sym-pop-up
+  [popupID]="'submitPolicyModal'"
+  [popupSize]="'small'"
+  [displayPopupAtTop]="true"
+  [hideCloseButton]="true"
+>
+  <div class="successModalHeader">
+    <div class="textalign">
+      Ensure that the client's name, birthday and product details are accurate
+      and final. Editing such details is not possible after proceeding.
+    </div>
+    <div class="mt-3 d-flex justify-content-center">
+      <button
+        class="btn btn_primary me-3"
+        (click)="onConvertToEappClick($event)"
+      >
+        {{ service.getMultilingualLabel('Proceed') }}
+      </button>
+
+      <button class="btn btn_primary" (click)="closeSubmitPolicyModal()">
+        {{ service.getMultilingualLabel('Back') }}
+      </button>
+    </div>
+  </div>
+</sym-pop-up>
+<sym-pop-up
+  [headerText]="'switchProposal'"
+  [popupID]="'switchProposalPurpose'"
+  [popupSize]="'small'"
+>
+  <div style="margin: 10px">
+    <span> {{ service.getMultilingualLabel('switchProposalMsg') }}</span>
+  </div>
+
+  <div class="text-center">
+    <button
+      type="button"
+      id="swivg"
+      class="btn btn_primary mr-1"
+      (click)="onSwitckProposalOk()"
+    >
+      {{ service.getMultilingualLabel('Ok') }}
+    </button>
+    <button type="button" class="btn btn_outline_primary" data-dismiss="modal">
+      {{ service.getMultilingualLabel('CANCEL') }}
+    </button>
+  </div>
+</sym-pop-up>

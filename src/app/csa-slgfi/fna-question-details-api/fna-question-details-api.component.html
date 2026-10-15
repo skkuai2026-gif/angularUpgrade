@@ -1,0 +1,43 @@
+@if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) { @if (
+service.responseIO.data.FNARequestAdditionalAllList != null && service.responseIO.data.FNARequestAdditionalAllList
+!= undefined ) {
+<div id="discussionArea">
+  <sym-data-entry-grid
+    [fieldIds]="'field1,field2,field11,field12,field13,field3'"
+    [responseIO]="service.responseIO"
+    [modelList]="service.responseIO.data.FNARequestAdditionalAllList"
+    [isAddRequired]="false"
+    [isDeleteRequired]="false"
+    (notifyFocus)="onDataFieldFocus($event)"
+    (notifyChange)="onInputChanged($event)"
+    [columWidthPerc]="[30, 15, 15, 15, 25]"
+  ></sym-data-entry-grid>
+  @for (fnaReqAdditionalDO of service.responseIO.data.FNARequestAdditionalAllList; track fnaReqAdditionalDO; let i
+  = $index) { @if ( fnaReqAdditionalDO.field1 != null && fnaReqAdditionalDO.field1 == 'FNA_Q1PartA_option8' &&
+  fnaReqAdditionalDO.field2 != null && fnaReqAdditionalDO.field2 != '' ) {
+  <div>
+    <sym-field-group
+      [fieldIds]="'field4'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="fnaReqAdditionalDO"
+      [gridColumns]="[6]"
+    ></sym-field-group>
+  </div>
+  } }
+  <sym-field-group
+    [fieldIds]="'reasonForRecoCd'"
+    (notifyFocus)="onInputFocused($event)"
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.Entity"
+  ></sym-field-group>
+  <sym-field-group
+    [fieldIds]="'reasonForRecommendation'"
+    (notifyFocus)="onInputFocused($event)"
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.Entity"
+  ></sym-field-group>
+</div>
+} }

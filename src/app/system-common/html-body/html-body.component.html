@@ -1,0 +1,33 @@
+<div class="preLoader">
+  <div class="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+<div class="loadersmall"></div>
+@if (settingService.getFreezePane()) {
+<div class="freezeoverlay">
+  <div class="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+}
+<span class="aiml-img-loader"></span>
+@if ( authService.isUserLoggedIn() && settingService.urlList != undefined && settingService.isLabelLoaded) {
+<div class="wrapper">
+  <sym-top-header></sym-top-header>
+  <div class="pgContainer">
+    <sym-menu></sym-menu>
+    <div class="pgContent scrollDiv" onScroll="pgContentOnScroll(this);">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+} @else {
+<router-outlet></router-outlet>
+}

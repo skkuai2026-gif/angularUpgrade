@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'montserratregular';
+  src: url('../jazz/css/fonts/montserrat-regular.eot');
+  src: url('../jazz/css/fonts/montserrat-regular.eot?#iefix') format('embedded-opentype'),
+    url('../jazz/css/fonts/montserrat-regular.woff2') format('woff2'),
+    url('../jazz/css/fonts/montserrat-regular.woff') format('woff'),
+    url('../jazz/css/fonts/montserrat-regular.ttf') format('truetype'),
+    url('../jazz/css/fonts/montserrat-regular.svg#ubunturegular') format('svg');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'montserratbold';
+  src: url('../jazz/css/fonts/montserrat-bold.eot');
+  src: url('../jazz/css/fonts/montserrat-bold.eot?#iefix') format('embedded-opentype'),
+    url('../jazz/css/fonts/montserrat-bold.woff2') format('woff2'),
+    url('../jazz/css/fonts/montserrat-bold.woff') format('woff'),
+    url('../jazz/css/fonts/montserrat-bold.ttf') format('truetype'),
+    url('../jazz/css/fonts/montserrat-bold.svg#ubuntubold') format('svg');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'montserratlight';
+  src: url('../jazz/css/fonts/montserrat-light.woff2') format('woff2'),
+    url('../jazz/css/fonts/montserrat-light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

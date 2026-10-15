@@ -1,0 +1,303 @@
+<div class="innerVerticalTab">
+  <div class="fnaScreenContent">
+    <div class="fnaContent">
+      @if ( !settingService.isMobileViewRendered() && service.responseIO != undefined && service.responseIO.data !=
+      undefined && service.responseIO.data.FNAParty != undefined ) {
+      <div class="ivtLeft">
+        <h2>
+          Personal information:
+          <br />
+          <span class="fnaLeftPanelFontSize">
+            {{ service.responseIO.data.FNAParty.firstName1 }}
+            {{ service.responseIO.data.FNAParty.lastName1 }}
+          </span>
+        </h2>
+        <label id="applicationMode">{{ settingService.getApplicationMode() }}</label>
+        <span class="fnaLeftPadding">
+          <h3>You are</h3>
+          <p>{{ service.responseIO.data.FNAParty.age }} Years</p>
+        </span>
+      </div>
+      }
+    </div>
+    <!-- <h2>Personal Information</h2>
+
+    <sym-panel [id]="'heading_personal_details'" [name]="'Information of  Applicant'">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="">First name</label>
+            <div>
+              <input
+                type="text"
+                class="form-control"
+                id="applicantFirstname"
+                name="applicantFirstname"
+                placeholder="Enter First name"
+                [(ngModel)]="service.fnaModel.FirstName"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="">Last name</label>
+              <div>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="applicantLastName"
+                  name="applicantLastName"
+                  placeholder="Enter Last name"
+                  [(ngModel)]="service.fnaModel.LastName"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="">Date of Birth</label>
+                <div>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id=" applicantDOB"
+                    name=" applicantDOB"
+                    placeholder="Enter Date of Birth"
+                    value="26/11/1980"
+                    [(ngModel)]="service.fnaModel.DOB"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="">Age</label>
+                  <div>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="applicantAge"
+                      name="applicantAge"
+                      placeholder="Enter Age"
+                      [(ngModel)]="service.fnaModel.Age"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <span class="label">Gender</span>
+                    <div class="radioGrp radioGrpBox">
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions1"
+                          id="inlineRadio11"
+                          value="Female"
+                          [checked]="service.fnaModel.Gender == 'Male' ? true : false"
+                          />
+                          <label class="form-check-label withicon iconFemale" for="inlineRadio11">Female</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="inlineRadioOptions1"
+                            id="inlineRadio12"
+                            value="Male"
+                            [checked]="service.fnaModel.Gender == 'Male' ? true : false"
+                            />
+                            <label class="form-check-label withicon iconMale" for="inlineRadio12">Male</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="">Occupation</label>
+                        <div class="iconA selectGrp">
+                          <select class="form-control" id="" name="">
+                            <option value="">Select</option>
+                            <option value="Option1">Option1</option>
+                            <option value="Option2">Option2</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="">Mobile number</label>
+                        <div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id=""
+                            name=""
+                            placeholder="Enter Mobile number"
+                            value=""
+                            [(ngModel)]="service.fnaModel.Mobile"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label for="">Email address</label>
+                          <div>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id=""
+                              name=""
+                              placeholder="Enter Email address"
+                              value=""
+                              [(ngModel)]="service.fnaModel.Email"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </sym-panel>
+
+                    <sym-panel [id]="'heading_Insured_personal_details'" [name]="'Information of Insured'">
+                      <div class="row pb-3">
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <label for="">First name</label>
+                            <div>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id=""
+                                name=""
+                                value="Vimal"
+                                placeholder="Enter First name"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="">Last name</label>
+                              <div>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id=""
+                                  name=""
+                                  value="Khurana"
+                                  placeholder="Enter Last name"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="form-group">
+                                <label for="">Date of Birth</label>
+                                <div>
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    id=""
+                                    name=""
+                                    placeholder="Enter Date of Birth"
+                                    value="1980-10-26"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <div class="form-group">
+                                  <label for="">Age</label>
+                                  <div>
+                                    <input
+                                      type="number"
+                                      class="form-control"
+                                      id=""
+                                      name=""
+                                      placeholder="Enter Age"
+                                      value="42"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <span class="label">Gender</span>
+                                    <div class="radioGrp radioGrpBox">
+                                      <div class="form-check form-check-inline">
+                                        <input
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="inlineRadioOptions1"
+                                          id="inlineRadio11"
+                                          value="option11"
+                                          />
+                                          <label class="form-check-label" for="inlineRadio11">Female</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="inlineRadioOptions1"
+                                            id="inlineRadio12"
+                                            value="option12"
+                                            checked="true"
+                                            />
+                                            <label class="form-check-label" for="inlineRadio12">Male</label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <div class="form-group">
+                                        <label for="">Occupation</label>
+                                        <div class="iconA selectGrp">
+                                          <select class="form-control" id="" name="">
+                                            <option value="">Select</option>
+                                            <option value="Option1">Option1</option>
+                                            <option value="Option2">Option2</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <div class="form-group">
+                                        <label for="">Mobile number</label>
+                                        <div>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id=""
+                                            name=""
+                                            placeholder="Enter Mobile number"
+                                            value="9870851000"
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-6">
+                                        <div class="form-group">
+                                          <label for="">Email address</label>
+                                          <div>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                              id=""
+                                              name=""
+                                              placeholder="Enter Email address"
+                                              value="vimalk@gmail.com"
+                                              />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </sym-panel> -->
+
+    <!-- <div class="formFooter">
+                                    <button type="button" class="btn btn_primary nextStep" id="next_btn_1">Next</button>
+                                  </div> -->
+  </div>
+</div>

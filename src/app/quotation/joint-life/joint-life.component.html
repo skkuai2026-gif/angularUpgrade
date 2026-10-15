@@ -1,0 +1,29 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else { @if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 &&
+service.responseIO.data.JointLife != null && service.responseIO.data.JointLife != undefined ) {
+<div>
+  <!--class="card m-1"-->
+  <sym-field-group
+    [fieldIds]="'jointLife'"
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.Entity"
+  ></sym-field-group>
+  @if (service.responseIO.data['Entity'].jointLife == 'YES' ? true : false) {
+  <sym-panel [id]="'joint_life_Details_Body'" [name]="'jointLifeDetails'">
+    <div>
+      <sym-quotation-party [model]="service.responseIO.data.JointLife" [contactReqd]="true"></sym-quotation-party>
+    </div>
+  </sym-panel>
+  }
+</div>
+} }

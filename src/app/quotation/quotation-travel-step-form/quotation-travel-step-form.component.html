@@ -1,0 +1,84 @@
+<sym-page-container
+  [breadCrumbList]="breadCrumbList"
+  [stepList]="stepList"
+  [responseIO]="service.responseIO"
+  [currentStepSelected]="selectedStep"
+  (selectedStep)="onStepChanged($event)"
+>
+  <!--  -->
+  @if (service.responseIO && service.responseIO.data && selectedStep != undefined) {
+  <sym-step
+    [stepItem]="selectedStep"
+    (actionClick)="onActionClicked($event)"
+    (tabChange)="onTabChanged($event)"
+    [contentExcludRightTab]="
+      selectedStep.id == 'step_yourDetails' || selectedStep.id == 'step_coverageDet' ? true : false
+    "
+  >
+    @if (selectedStep.selectedTab != undefined) { @if (selectedStep.selectedTab.id == 'tab_basic') {
+    <sym-basic-detail></sym-basic-detail>
+    <sym-proposer></sym-proposer>
+    } @if (selectedStep.selectedTab.id == 'tab_selProduct') {
+    <sym-product-selection> </sym-product-selection>
+    } @if (selectedStep.selectedTab.id == 'tab_plan') {
+    <ng-container class="tab-pane">
+      <sym-base-plan></sym-base-plan>
+    </ng-container>
+    } @if (selectedStep.selectedTab.id == 'tab_rider') {
+    <ng-container class="tab-pane">
+      <sym-rider [responseUpdated]="responseUpdated"></sym-rider>
+    </ng-container>
+    } @if (selectedStep.selectedTab.id == 'tab_plan' || selectedStep.selectedTab.id == 'tab_rider') {
+    <sym-coverage-summary></sym-coverage-summary>
+    } @if (selectedStep.selectedTab.id == 'tab_premiumSummary') { @if (service.productFacets != undefined) {
+    <sym-premium-summary></sym-premium-summary>
+    } } }
+  </sym-step>
+  }
+</sym-page-container>
+<!--modal for congratulation message start -->
+<div
+  class="modal fade modalSuccess"
+  id="acceptIllustrationModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeAcceptIllustrationModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="successModalHeader">
+          <span class="iconSuccess"></span>
+          <h2>
+            {{ settingService.getLabelValue('quotationAcceptSuccessMsg') }}
+          </h2>
+        </div>
+        <div class="successModalContent">
+          <p>
+            {{ settingService.getLabelValue('downloadPdfClickMsg') }}
+          </p>
+          <p>
+            {{ settingService.getLabelValue('emailIllusClickMsg') }}
+          </p>
+          @if ( service.companyFacets && service.companyFacets.data['EAPPAPPLICABLE'] &&
+          service.companyFacets.data['EAPPAPPLICABLE'].length > 0 && service.companyFacets.data['EAPPAPPLICABLE']
+          == 'YES' ) {
+          <p>
+            {{ settingService.getLabelValue('proceedEAppClickMsg') }}
+          </p>
+          }
+        </div>
+        <div class="mt-3 d-flex justify-content-center">
+          <button class="btn btn_primary" (click)="closeAcceptIllustrationModal()">
+            {{ settingService.getLabelValue('Ok') }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--modal for congratulation message ends -->

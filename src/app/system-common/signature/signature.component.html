@@ -1,0 +1,155 @@
+@if (serviceSignature && serviceSignature != undefined && serviceSignature != null) {
+<div>
+  @if (!isPopView) {
+  <div class="signature_border">
+    @if (!displaySignatureDiv) {
+    <div class="signatureDiv">
+      <img class="signatureDiv" [id]="'signature' + serviceSignature.guid + '_img'" />
+    </div>
+    } @else {
+    <signature-pad
+      [id]="serviceSignature != undefined ? serviceSignature.guid : 'signature'"
+      [options]="signaturePadOptions"
+      (onBeginEvent)="drawStart()"
+      (onEndEvent)="drawComplete()"
+      class="bg-none"
+    ></signature-pad>
+    <!-- <signature-pad #signature [options]="signaturePadOptions" (drawStart)="drawStart($event)" (drawEnd)="drawComplete($event)"></signature-pad> -->
+    }
+  </div>
+  <sym-field-group
+    [fieldIds]="'placeOfSignature'"
+    [responseIO]="responseIO"
+    [model]="serviceSignature"
+    (notifyChange)="onInputChanged($event)"
+  ></sym-field-group>
+  <div class="text-center">
+    @if (!displaySignatureDiv) {
+    <sym-button
+      [class]="'btn btn_outline_primary m-2'"
+      [isLoaderRequired]="false"
+      [text]="'edit_signature'"
+      (onClick)="onEditClick()"
+    ></sym-button>
+    } @if (displaySignatureDiv) {
+    <sym-button
+      [class]="'btn btn_outline_primary m-2'"
+      [isLoaderRequired]="false"
+      [text]="'ok'"
+      [isDisabled]="!isSignatureDrawn && signatureNotPresent"
+      (onClick)="onClickOKbutton()"
+    ></sym-button>
+    }
+    <sym-button
+      [class]="'btn btn_outline_primary m-2'"
+      [isLoaderRequired]="false"
+      [text]="'clear'"
+      (onClick)="clear()"
+    ></sym-button>
+  </div>
+  } @if (isPopView) { @if (hideSignatureBlock) {
+  <div>
+    @if (displaySignatureImage) {
+    <img
+      class="signatureDiv img_loaded signature_border"
+      [id]="'signature' + serviceSignature.guid + '_img'"
+      width="245"
+      height="60"
+      [attr.src]="serviceSignature.signature != undefined ? serviceSignature.signature : null"
+    />
+    }
+    <div class="text-center">
+      <input
+        class="d-none"
+        type="file"
+        ondrop="value = null"
+        (click)="onInputFileClick($event)"
+        (change)="onFileChange($event.target.files)"
+        #fileInput
+      />
+      <sym-button
+        [class.hidden]="!isSignatureButtonReq"
+        [class]="'btn btn_primary'"
+        [isLoaderRequired]="false"
+        [disabled]="
+          responseIO != undefined &&
+          serviceSignature.guid != undefined &&
+          responseIO.metadata[serviceSignature.guid] != undefined &&
+          responseIO.metadata[serviceSignature.guid]['signature']['ENABLED'] === 'NO'
+            ? true
+            : false
+        "
+        [text]="'captureSign'"
+        [attr.id]="'signatureButton_' + serviceSignature.guid"
+        (click)="onCaptureSignClick($event)"
+      ></sym-button>
+    </div>
+    @if (hideSignatureBlock) {
+    <sym-pop-up
+      [popupID]="'signaturePad_' + serviceSignature.guid"
+      [headerText]="
+        service.getMultilingualMessage('captureSignHeader', [
+          serviceSignature.roleCd,
+          serviceSignature.signatureTypeCd,
+          serviceSignature.signatureTypeCd + '_' + serviceSignature.roleCd
+        ])
+      "
+      (popupClosed)="closeSignaturePopup()"
+    >
+      <div class="signature_border">
+        <div>
+          @if (!isSignatureUploadClicked) {
+          <signature-pad
+            #signature
+            [id]="serviceSignature != undefined ? serviceSignature.guid : 'signature'"
+            [options]="signaturePadOptions"
+            (drawStart)="drawStart()"
+            (drawComplete)="drawComplete()"
+            class="bg-none"
+          ></signature-pad>
+          } @if (isSignatureUploadClicked) {
+          <img [src]="signatureUploadPic" class="signatureImageUpload" />
+          }
+        </div>
+      </div>
+      <sym-field-group
+        [fieldIds]="'placeOfSignature'"
+        [responseIO]="responseIO"
+        [model]="serviceSignature"
+        (notifyChange)="onInputChanged($event)"
+      ></sym-field-group>
+      <div class="text-center">
+        <sym-button
+          [class]="'btn btn_primary m-2'"
+          [isLoaderRequired]="false"
+          [text]="'OK'"
+          [isDisabled]="!isSignatureDrawn && signatureNotPresent"
+          (onClick)="onClickOKbutton()"
+        ></sym-button>
+        <sym-button
+          [class]="'btn btn_outline_primary m-2'"
+          [isLoaderRequired]="false"
+          [text]="'CLEAR'"
+          (onClick)="clear()"
+        ></sym-button>
+        @if (showUploadSignatureOption) {
+        {{ settingService.getLabelValue('OR') }}
+        <sym-button
+          [class]="'btn btn_primary m-2'"
+          [isLoaderRequired]="false"
+          [text]="'UPLOAD'"
+          (onClick)="fileInput.click()"
+        ></sym-button>
+        <p class="supportNote">
+          ({{ service.getMultilingualLabel('supports') }}: {{ allowed_FileTypes?.toString() }}
+          <br />
+          {{ service.getMultilingualLabel('maxSignFileSize') }}: {{ max_FileSize?.toString() }} kb)
+        </p>
+        }
+      </div>
+    </sym-pop-up>
+    }
+  </div>
+  } }
+</div>
+}

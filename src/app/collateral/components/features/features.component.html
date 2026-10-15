@@ -1,0 +1,51 @@
+<div class="pgContainer scrollDiv">
+  <div class="headerBanner hbProtectionPlan"></div>
+  <div class="pgContent">
+    <div class="pageHeader">
+      <sym-breadcrum-collateral [breadCrumbList]="breadCrumbList"></sym-breadcrum-collateral>
+      <!-- breadcrum ends-->
+    </div>
+    <div class="pageData">
+      <div class="collateralScreen" data-screen-no="1">
+        <div class="collateralScreenContent">
+          <div class="sectionCC">
+            <div class="container-fluid">
+              @if (arrType) {
+              <div class="row m0" id="row_subModuleDetails">
+                @for (cModule of arrType; track cModule) {
+                <div class="col-sm-4 p0 cardContainer">
+                  <div class="box text-center p30 m0">
+                    <div class="cardContent1">
+                      <img [src]="'app/collateral/assets/images/' + cModule.icon" alt="" class="width70" />
+                      <h4 class="m0">{{ cModule.name }}</h4>
+                    </div>
+                    <div class="cardContent2">
+                      <div [innerHTML]="cModule.description"></div>
+                      <a
+                        [routerLink]="
+                          '/collateral/' +
+                          cModule.link +
+                          '/' +
+                          selectedModule +
+                          '/' +
+                          '/' +
+                          selectedId +
+                          '/' +
+                          cModule.id
+                        "
+                        >View Details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                }
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- step data container ends-->
+  </div>
+</div>

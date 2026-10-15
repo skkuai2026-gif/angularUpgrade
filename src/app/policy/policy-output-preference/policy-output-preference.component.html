@@ -1,0 +1,16 @@
+@if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div [class.setPreferenceContainer]="displayLeft">
+  <h4>{{ service.getMultilingualLabel('enterPreference') }}</h4>
+  <ng-container>
+    <sym-field-group
+      [fieldIds]="'languageCd,field1,field2,field3,field4,field5,field6,field7'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.OutputPreferences"
+      [gridColumns]="displayLeft ? [12, 12, 12, 12, 12, 12, 12, 12] : undefined"
+      [prefix]="prefix"
+      [isFormDirtyCheckReq]="false"
+    ></sym-field-group>
+  </ng-container>
+</div>
+}

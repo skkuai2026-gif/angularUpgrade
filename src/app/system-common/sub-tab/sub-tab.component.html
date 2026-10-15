@@ -1,0 +1,96 @@
+<div class="innerHorizontalTab innerHorizontalTabSmall">
+  <div class="dynamicTabList" [ngClass]="{ 'mtb-3  p-2': !isContentDisplayed }" *ngIf="isTabsReqd">
+    <button
+      *ngIf="isAddRequired"
+      type="button"
+      class="btn btn_outline_primary btnAddTab"
+      (click)="onAddClick($event)"
+      id="btn_subTab_{{ addBtnId }}"
+    >
+      {{
+        customAddBtnKey != undefined
+          ? settingService.getLabelValue(customAddBtnKey)
+          : settingService.getLabelValue('add')
+      }}
+    </button>
+    <ul *ngIf="tabList" [ngClass]="{ 'nav nav-tabs': isContentDisplayed }" role="tablist">
+      <ng-container *ngFor="let tab of tabList; index as i">
+        <li
+          class="nav-item"
+          *ngIf="tab.visible == undefined || tab.visible == true ? true : false"
+          [hidden]="!tab.visible"
+        >
+          <a
+            class="nav-link"
+            [class.active]="tab.isSelected === true"
+            data-toggle="tab"
+            [attr.data-target]="'#body' + tab.id"
+            role="tab"
+            [attr.aria-controls]="'body_' + tab.id"
+            [attr.aria-selected]="tab.isSelected"
+            (click)="setTab(tab)"
+          >
+            <i *ngIf="tab.imageSrc != undefined && tab.imageSrc != null" [class]="tab.imageSrc"></i>
+
+            <ng-container
+              *ngIf="
+                settingService.isMobileViewRendered() &&
+                  !settingService.isLandScapeViewRendered() &&
+                  currentTextLength >= maxLength;
+                else displayFullText
+              "
+            >
+              <ng-container *ngIf="currentTextLength <= maxTextLength && !isAddRequired; else shortTextTemplate">
+                <ng-container *ngIf="tab.imageSrc == undefined && tab.imageSrc == null">
+                  <span *ngIf="tab.text != null && tab.text != undefined; else displayID">{{
+                    settingService.getLabelValue(tab.text)
+                  }}</span>
+                  <ng-template #displayID>
+                    {{ settingService.getLabelValue(tab.id) }}
+                  </ng-template>
+                </ng-container>
+              </ng-container>
+              <ng-template #shortTextTemplate>
+                <span *ngIf="tab.imageSrc == undefined && tab.imageSrc == null">{{
+                  tab.shortText | uppercase
+                }}</span>
+              </ng-template>
+            </ng-container>
+            <ng-template #displayFullText>
+              <ng-container>
+                <span *ngIf="tab.text != null && tab.text != undefined; else displayID">{{
+                  settingService.getLabelValue(tab.text)
+                }}</span>
+                <ng-template #displayID>
+                  <span class="subTabText">
+                    {{ settingService.getLabelValue(tab.id) }}
+                  </span>
+                </ng-template>
+              </ng-container>
+            </ng-template>
+          </a>
+          <ng-container *ngIf="isDeleteRequired"
+            ><i class="icon-close closeFrame" (click)="onDeleteClick(tab)"></i
+          ></ng-container>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+  <div
+    [ngClass]="{
+      'tab-content': true,
+      scrollDiv: heightSubTab != null
+    }"
+    [style.max-height.px]="heightSubTab"
+  >
+    <div
+      class="tab-pane fade show active"
+      role="tabpanel"
+      *ngFor="let tab of tabList"
+      id="body_{{ tab.id }}"
+      [attr.aria-labelledby]="'body_' + tab.id"
+    >
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

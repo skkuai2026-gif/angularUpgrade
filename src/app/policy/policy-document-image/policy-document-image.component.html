@@ -1,0 +1,124 @@
+<ng-container>
+  <div
+    [attr.id]="'data' + document.guid"
+    class="collapse show"
+    [attr.aria-labelledby]="'data' + document.guid + 'Heading'"
+    data-parent="#accordion"
+  >
+    <div [class]="{ 'card-body': true, picContainerSize: uiImageModelList.length > 0 }">
+      @if (settingService.getApplicationMode() === 'offline') {
+      <div class="uploadOptions">
+        <!-- <a (click)="onCameraClick($event)" class="link_camera"> {{ service.getMultilingualLabel('capture') }}</a>
+          <span>{{ service.getMultilingualLabel('or') }}</span> -->
+        <a (click)="onBrowseClick($event)" class="link_browse">{{ service.getMultilingualLabel('browse') }}</a>
+      </div>
+      }
+      <div
+        [ngClass]="{
+          picContainer: true,
+          active: uiImageModelList.length > 0
+        }"
+      >
+        @if (document['isEnabled']) {
+        <div [ngClass]="{ uploadPic: true, 'border-0 order-2': uiImageModelList.length >= 1 }">
+          @if (document['isEnabled']) {
+          <input
+            type="file"
+            multiple="1"
+            [attr.id]="'serviceDocUploadFiles_' + document.guid"
+            [attr.name]="'serviceDocUploadFiles_' + document.guid"
+            (change)="onFileChange($event)"
+            ondrop="value = null"
+            class="fileInput"
+            (click)="onInputFileClick($event)"
+            [attr.title]="
+              uiImageModelList.length >= 1
+                ? service.getMultilingualLabel('supports') + ' : ' + allowed_FileTypes.toString()
+                : ''
+            "
+            [attr.accept]="acceptExtensionType"
+            [attr.capture]="captureCameraValue"
+          />
+          } @if (uiImageModelList.length >= 1) {
+          <div class="plusIconContainer">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </div>
+          } @if (uiImageModelList.length == 0) {
+          <div class="fileUploadContent">
+            @if (document['isEnabled']) {
+            <h6>
+              {{ service.getMultilingualLabel('dropImage') }}
+              <!-- <a (click)="onCameraImageClick($event)" class="takepic" data-param="">Browse</a> -->
+            </h6>
+            }
+          </div>
+          }
+        </div>
+        }
+        <div class="uploadedPicContainer scrollX">
+          @for (imageModel of uiImageModelList; track imageModel; let index = $index) {
+          <div
+            [class]="{
+              uploadedPic: true,
+              docUploaded: uiImageModelList.length >= 4
+            }"
+          >
+            <span class="picBgImage">
+              @if (isImageExtension(imageModel.fileLocation)) {
+              <a
+                class="hyperlink mb-0"
+                [attr.data-toggle]="'modal'"
+                [attr.data-target]="'#viewImage_' + imageModel.guid"
+              >
+                <!-- [src]="
+                        'data:' + getFileDataType(imageModel.fileLocation) + ';base64,' + imageModel.fileContents
+                      " -->
+                <img
+                  [src]="'data:' + getFileDataType(imageModel.fileLocation) + ';base64,' + imageModel.fileContents"
+                  height="100%"
+                  width="100%"
+                  (click)="onClickImage($event, imageModel)"
+                />
+              </a>
+              } @if (!isImageExtension(imageModel.fileLocation)) {
+              <a
+                class="documentHolder"
+                href="#"
+                (click)="viewFile(imageModel.fileContents, imageModel.fileLocation)"
+                target="_blank"
+              >
+                {{ imageModel.fileLocation }}
+              </a>
+              }
+            </span>
+            @if (document['isEnabled']) {
+            <span class="btnDelete" (click)="onDeleteImageClick(index, imageModel)"></span>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      @if (document['isEnabled'] && this.allowed_FileTypes.length != 0) {
+      <p [class]="{ note: true, 'bottom-0': uiImageModelList.length == 0 }">
+        {{ service.getMultilingualLabel('supports') }}: {{ supportsFileExtMsg }}
+      </p>
+      }
+    </div>
+  </div>
+</ng-container>
+@if (currViewImageModel != null && currViewImageModel != undefined) {
+<sym-pop-up
+  [headerText]="service.getFieldLookupDesc(document, 'documentCd')"
+  [popupID]="'viewImage_' + currViewImageModel.guid"
+>
+  <div align="center">
+    <img
+      [src]="
+        'data:' + getFileDataType(currViewImageModel.fileLocation) + ';base64,' + currViewImageModel.fileContents
+      "
+      [style]="'max-width:100%;max-height:100%;'"
+      (error)="onImageViewError(currViewImageModel)"
+    />
+  </div>
+</sym-pop-up>
+}

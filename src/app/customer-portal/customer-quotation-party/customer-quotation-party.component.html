@@ -1,0 +1,27 @@
+<sym-field-group
+  [fieldIds]="'firstname,lastname'"
+  (notifyChange)="onInputChanged($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+></sym-field-group>
+<sym-field-group
+  [fieldIds]="'dob,age'"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+></sym-field-group>
+<sym-field-group
+  [fieldIds]="'genderCd,smoker'"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+></sym-field-group>
+<sym-field-group
+  [fieldIds]="'contactNum,emailAddress'"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+></sym-field-group>

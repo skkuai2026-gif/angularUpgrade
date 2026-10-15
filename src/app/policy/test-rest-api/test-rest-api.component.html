@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
+    <div class="row p-0 m-0">
+      <div class="col-md-3 col-lg-2 col-xl-2 col-sm-3 p-0 m-0 list">
+        <sym-rest-api-listing (restApiDataInfo)="onRestApiDataInfo($event)"></sym-rest-api-listing>
+      </div>
+      <div class="col-md-9 col-lg-10 col-xl-10 col-sm-9 scrollDiv">
+        @if (restApiDataInfo != undefined) { @if (restApiDataInfo.module == 'quotations') {
+        <sym-quotation-test-api-step-form [restApiDataInfo]="restApiDataInfo"></sym-quotation-test-api-step-form>
+        } @if (restApiDataInfo.module == 'policies') {
+        <sym-policy-test-api-step-form [restApiDataInfo]="restApiDataInfo"></sym-policy-test-api-step-form>
+        } @if (restApiDataInfo.module == 'leads') {
+        <sym-lead-test-api-step-form [restApiDataInfo]="restApiDataInfo"></sym-lead-test-api-step-form>
+        } @if (restApiDataInfo.module == 'csa') {
+        <sym-csa-test-api-step-form [restApiDataInfo]="restApiDataInfo"></sym-csa-test-api-step-form>
+        } @if (restApiDataInfo.module == 'csaslgfi') {
+        <sym-csa-slgfi-test-api-step-form [restApiDataInfo]="restApiDataInfo"></sym-csa-slgfi-test-api-step-form>
+        } }
+      </div>
+    </div>
+  </div>
+</div>

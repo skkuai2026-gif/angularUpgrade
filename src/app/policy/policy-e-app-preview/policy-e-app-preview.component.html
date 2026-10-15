@@ -1,0 +1,241 @@
+<ng-container
+  class="m-1"
+  *ngIf="
+    service.responseIO != undefined &&
+    service.responseIO.data != undefined &&
+    eAppPreviewHtmlPagesProperty != undefined
+  "
+>
+  <div class="previewContent_container">
+    <div class="sectionHeader">
+      <sym-button
+        *ngIf="nullState && isOutputPreferenceReq"
+        [class]="'btn btn_outline_primary btnSetPreference float-left'"
+        [id]="'btn_Apply_View_Illustration'"
+        [text]="'apply'"
+        (onClick)="displayIllustration()"
+        [isLoaderRequired]="true"
+      ></sym-button>
+      <!-- <div class="headerActions previewOptions" *ngIf="!service.responseIO.data.Entity.isInvalid">
+        <sym-button
+          (onClick)="onDownloadPDFClick($event)"
+          [id]="'downloadPDF'"
+          [text]="service.getMultilingualLabel('DOWNLOADPDF')"
+          [iconClass]="'fa fa-download'"
+          [class]="'previewActions'"
+          class="mr-2"
+        ></sym-button>
+      </div> -->
+    </div>
+    <div class="sectionContent">
+      <div [class.box]="nullState && isOutputPreferenceReq" class="fullWidth">
+        <div class="preferenceContainer" [class.active]="!nullState">
+          <div [ngClass]="{ colLeft: isOutputPreferenceReq }">
+            <sym-policy-output-preference
+              *ngIf="isOutputPreferenceReq"
+              [displayLeft]="true"
+              [prefix]="'quoteIllustration'"
+            ></sym-policy-output-preference>
+            <div class="subFooter" *ngIf="nullState && isOutputPreferenceReq">
+              <sym-button
+                [class]="'btn btn_outline_primary btnSetPreference'"
+                [id]="'btn_Apply_View_Illustration_2'"
+                [text]="'apply'"
+                [isLoaderRequired]="true"
+                (onClick)="displayIllustration()"
+              ></sym-button>
+            </div>
+
+            <sym-button
+              *ngIf="isOutputPreferenceReq"
+              [class]="
+                settingService.isMobileViewRendered() ? 'edit_preference_btn' : 'btn btn_primary btnEditPreference'
+              "
+              [id]="'btn_edit_Prefernce'"
+              [text]="'editPreference'"
+              (onClick)="onEditPreference()"
+              [iconClass]="'fa fas fa-edit'"
+            ></sym-button>
+          </div>
+
+          <div class="colRight eappPreview">
+            <div
+              [class.nullState]="nullState && isOutputPreferenceReq"
+              *ngIf="eAppPreviewHtmlPagesProperty == undefined && nullState"
+            >
+              <p *ngIf="isOutputPreferenceReq">
+                {{ service.getMultilingualLabel('applyToPreviewEapp') }}
+              </p>
+              <!-- <p *ngIf="!isOutputPreferenceReq">
+                        Click on View Illustration to view the illustration
+                    </p> -->
+            </div>
+            <div id="viewIllustrationContainer" class="viewIllustrationContainer scrollDiv">
+              <div class="m-1 pr15" *ngIf="eAppPreviewHtmlPagesProperty != undefined">
+                <ng-container *ngIf="eAppPreviewHtmlPages.data.EappPreview != null">
+                  <ng-container *ngIf="eAppPreviewHtmlPagesProperty.length == 1; else elseTemplate">
+                    <ng-container *ngIf="eAppPreviewHtmlPages.data.EappPreview != null">
+                      <div
+                        [innerHTML]="
+                          eAppPreviewHtmlPages.data.EappPreview[eAppPreviewHtmlPagesProperty[0]].content | safeHtml
+                        "
+                      ></div>
+                      <ng-container
+                        *ngIf="
+                          eAppPreviewHtmlPages.data.EappPreview[eAppPreviewHtmlPagesProperty[0]].signature != null
+                        "
+                      >
+                        <ng-container *ngFor="let sign of signatureKey; index as j">
+                          <ng-container
+                            *ngIf="
+                              service.responseIO.data.ServiceSignatureList[j] != undefined &&
+                                service.responseIO.data.ServiceSignatureList[j].constructor === [].constructor;
+                              else singleObject
+                            "
+                          >
+                            <ng-container *ngIf="service.responseIO.data.ServiceSignatureList[j].length > 0">
+                              <ng-container
+                                *ngFor="
+                                  let childSign of service.responseIO.data.ServiceSignatureList[sign];
+                                  index as i
+                                "
+                              >
+                                <sym-signature
+                                  *ngIf="!newSignatureUIReqd"
+                                  [isSignatureButtonReq]="false"
+                                  [serviceSignature]="service.responseIO.data.ServiceSignatureList[i]"
+                                  [triggerBtnID]="triggerBtnID"
+                                  [responseIO]="service.responseIO"
+                                ></sym-signature>
+                                <sym-signatureUI
+                                  *ngIf="newSignatureUIReqd"
+                                  [model]="service.responseIO.data.ServiceSignatureList[i]"
+                                  (notifySignatureDone)="onSignatureDone($event)"
+                                  [responseIO]="service.responseIO"
+                                  [canvasWidth]="625"
+                                  [triggerBtnClick]="triggerBtnClick"
+                                ></sym-signatureUI>
+                              </ng-container>
+                            </ng-container>
+                          </ng-container>
+                          <ng-template #singleObject>
+                            <sym-signature
+                              *ngIf="
+                                service.responseIO.data.ServiceSignatureList[j] != undefined && !newSignatureUIReqd
+                              "
+                              [isSignatureButtonReq]="false"
+                              [serviceSignature]="service.responseIO.data.ServiceSignatureList[j]"
+                              [triggerBtnID]="triggerBtnID"
+                              [responseIO]="service.responseIO"
+                            ></sym-signature>
+                          </ng-template>
+                        </ng-container>
+                        <sym-signatureUI
+                          *ngIf="currServiceSignature != undefined && newSignatureUIReqd"
+                          [model]="currServiceSignature"
+                          (notifySignatureDone)="onSignatureDone($event)"
+                          [responseIO]="service.responseIO"
+                          [canvasWidth]="625"
+                          [triggerBtnClick]="triggerBtnClick"
+                        ></sym-signatureUI>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #elseTemplate>
+                    <ng-container *ngFor="let item of eAppPreviewHtmlPagesProperty; index as i">
+                      <div class="card m-1">
+                        <!-- {{ eAppPreviewHtmlPages.data.EappPreview[item].name }} -->
+                        <sym-panel
+                          [id]="'quote-illustration_' + eAppPreviewHtmlPages.data.EappPreview[item].name + '_Body'"
+                          [name]="eAppPreviewHtmlPages.data.EappPreview[item].name"
+                        >
+                          <div [innerHTML]="eAppPreviewHtmlPages.data.EappPreview[item].content | safeHtml"></div>
+                          <ng-container *ngIf="eAppPreviewHtmlPages.data.EappPreview[item].signature != null">
+                            <ng-container *ngFor="let sign of signatureKey; index as j">
+                              <ng-container
+                                *ngIf="
+                                  service.responseIO.data.ServiceSignatureList[sign] &&
+                                    service.responseIO.data.ServiceSignatureList[sign] != undefined &&
+                                    service.responseIO.data.ServiceSignatureList[sign].length &&
+                                    service.responseIO.data.ServiceSignatureList[sign].length > 1;
+                                  else singleObject
+                                "
+                              >
+                                <ng-container
+                                  *ngFor="
+                                    let childSign of service.responseIO.data.ServiceSignatureList[sign];
+                                    index as i
+                                  "
+                                >
+                                  <sym-signature
+                                    *ngIf="!newSignatureUIReqd"
+                                    [isSignatureButtonReq]="false"
+                                    [serviceSignature]="service.responseIO.data.ServiceSignatureList[i]"
+                                    [triggerBtnID]="triggerBtnID"
+                                    [responseIO]="service.responseIO"
+                                  ></sym-signature>
+                                  <sym-signatureUI
+                                    *ngIf="newSignatureUIReqd"
+                                    [model]="service.responseIO.data.ServiceSignatureList[i]"
+                                    (notifySignatureDone)="onSignatureDone($event)"
+                                    [responseIO]="service.responseIO"
+                                    [canvasWidth]="625"
+                                    [triggerBtnClick]="triggerBtnClick"
+                                  ></sym-signatureUI>
+                                </ng-container>
+                              </ng-container>
+                              <ng-template #singleObject>
+                                <sym-signature
+                                  *ngIf="!newSignatureUIReqd"
+                                  [isSignatureButtonReq]="false"
+                                  [serviceSignature]="service.responseIO.data.ServiceSignatureList[j]"
+                                  [triggerBtnID]="triggerBtnID"
+                                  [responseIO]="service.responseIO"
+                                ></sym-signature>
+                              </ng-template>
+                            </ng-container>
+                            <sym-signatureUI
+                              *ngIf="currServiceSignature != undefined && newSignatureUIReqd"
+                              [model]="currServiceSignature"
+                              (notifySignatureDone)="onSignatureDone($event)"
+                              [responseIO]="service.responseIO"
+                              [canvasWidth]="625"
+                              [triggerBtnClick]="triggerBtnClick"
+                            ></sym-signatureUI>
+                          </ng-container>
+                        </sym-panel>
+                      </div>
+                    </ng-container>
+                  </ng-template>
+                </ng-container>
+                <!-- HTML Logic for rendering output using New Template EappHTMLPreview -->
+                <ng-container *ngIf="eAppPreviewHtmlPages.data.EappHTMLPreview != null">
+                  <div [innerHTML]="eAppPreviewHtmlPages.data.EappHTMLPreview | safeHtml: 'html'"></div>
+                  <ng-container *ngIf="currServiceSignature != undefined">
+                    <sym-signature
+                      *ngIf="!newSignatureUIReqd"
+                      [isSignatureButtonReq]="false"
+                      [serviceSignature]="currServiceSignature"
+                      [responseIO]="service.responseIO"
+                      [triggerBtnClick]="triggerBtnClick"
+                      (isSignatureDone)="onSignatureDone($event)"
+                    ></sym-signature>
+                    <sym-signatureUI
+                      *ngIf="newSignatureUIReqd"
+                      [triggerBtnClick]="triggerBtnClick"
+                      [model]="currServiceSignature"
+                      [canvasWidth]="625"
+                      (notifySignatureDone)="onSignatureDone($event)"
+                      [responseIO]="service.responseIO"
+                    ></sym-signatureUI>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <label id="eAappButtonGUID" (click)="getElement()"></label>
+  </div>
+</ng-container>

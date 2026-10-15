@@ -1,0 +1,44 @@
+.row {
+  display: flex;
+  white-space: nowrap;
+  margin-left: 10px;
+  background-color: gainsboro;
+}
+.ui-grid-d {
+  margin-left: 10px;
+  margin-top: 30px;
+}
+// h4 {
+//   margin-left: 10%;
+// }
+.ok {
+  margin-top: 10px !important;
+}
+
+/* ipad mini */
+@media only screen and (min-device-width: 744px) and (max-device-width: 768px) and (min-device-height: 1024px) and (max-device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
+  .ui-grid-d {
+    width: 96% !important;
+  }
+  #uwStatusApproved {
+    white-space: pre-line !important;
+  }
+}
+/* ipad air */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+  .ui-grid-d {
+    width: 96% !important;
+  }
+  #uwStatusApproved {
+    white-space: pre-line !important;
+  }
+}
+/* ipad pro */
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+  .ui-grid-d {
+    width: 96% !important;
+  }
+  #uwStatusApproved {
+    white-space: pre-line !important;
+  }
+}

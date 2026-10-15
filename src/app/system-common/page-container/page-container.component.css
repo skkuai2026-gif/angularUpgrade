@@ -1,0 +1,137 @@
+.error {
+  color: #ff3d71;
+}
+
+.headerActions > div > a,
+.dropdownContainer > .dropdown-toggle {
+  padding: 0 10px 0;
+}
+
+.errorIcon::before {
+  font-family: 'icomoon';
+  content: '\e93e';
+}
+
+.errorStepText {
+  border-color: #ff3d71;
+  color: #ff3d71;
+  font-size: 1.5rem;
+  cursor: pointer;
+  font-style: normal;
+  font-family: 'montserratbold';
+  padding: 0 0.5rem !important;
+  margin: 0.61rem 2rem 0;
+  /* line-height: 2; */
+  position: absolute;
+  right: 0;
+  z-index: 1;
+}
+
+.toastPosition {
+  z-index: 11 !important;
+  right: 0;
+  top: 45px;
+  width: 5rem;
+  height: 28px;
+}
+
+.errorToastPosition {
+  z-index: 11 !important;
+  right: 0;
+  top: 75%;
+}
+
+.toast-close {
+  position: absolute;
+  right: 10px;
+}
+
+.toast-body {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 900px) and (min-width: 600px) {
+  .errorToastPosition {
+    top: 82%;
+  }
+}
+
+@media only screen and (max-width: 1025px) and (min-width: 800px) {
+  .errorToastPosition {
+    top: 88%;
+  }
+}
+@media only screen and (max-width: 500px) and (min-width: 341px) {
+  .errorToastPosition {
+    top: 78%;
+  }
+}
+@media only screen and (max-width: 340px) and (min-width: 300px) {
+  .errorToastPosition {
+    top: 65%;
+  }
+}
+@media only screen and (max-width: 300px) {
+  .errorToastPosition {
+    top: 45%;
+  }
+}
+/***** Progress bar of StepsList should wrap Css starts here - Modified by Snehal Jadhav *****/
+/* .nextStep {
+  width: 44px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} */
+/***** Progress bar of StepsList should wrap Css ends here - Modified by Snehal Jadhav *****/
+
+/***** Tooltip for displaying info starts here *****/
+/* .tooltip-label-info-container {
+  min-width: 250px;
+  width: 100%;
+  max-width: 300px;
+  min-height: 50px;
+  font-size: 0.99rem;
+  line-height: 1.2;
+  text-align: left;
+  padding: 5px;
+  font-weight: 200;
+  white-space: normal;
+  font-style: normal;
+  background: rgb(234 234 79 / 50%);
+}
+
+.tooltip-label-info {
+  font-size: 1.2rem;
+  color: #317d03;
+  position: relative;
+  white-space: normal;
+  font-style: normal;
+  line-height: 0;
+  margin-left: 9px;
+}
+
+.tooltip-label-info:before {
+  content: '\f29c';
+  font-family: 'FontAwesome';
+} */
+/***** Tooltip for displaying info ends here *****/
+
+.nav-tabs-max-width {
+  max-width: 80%;
+}
+
+/* Added by Emmanuel Pinto */
+/* StepList center alignment start here */
+.stepHeader {
+  display: flex;
+  justify-content: center; /* Center the contents horizontally */
+  align-items: center; /* Vertically align items if needed */
+  width: 100%; /*stepHeader takes full width */
+}
+
+.stepHeader .nav {
+  flex-grow: 1; /* This ensures stepList takes only the space it needs */
+  text-align: center; /* Center align stepList */
+}
+/* StepList center alignment end here */

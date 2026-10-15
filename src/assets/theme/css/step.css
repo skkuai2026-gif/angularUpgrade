@@ -1,0 +1,529 @@
+/**step css starts**/
+.stepHeader {
+  border: 0 !important;
+  padding-bottom: 5px;
+}
+.stepdata .card-header.stepHeader .nav-tabs {
+  border: 0;
+  margin: 0;
+}
+.stepdata .card-header.stepHeader .nav-tabs .nav-item {
+  margin: 0;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li {
+  flex-grow: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li:last-child {
+  margin-left: auto;
+  flex-grow: initial;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li > a {
+  border: 0;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #8f9bb3;
+  font-family: 'montserratregular', Arial, Helvetica, sans-serif;
+  padding: 0 1rem;
+  /*
+  This is used to break the word after space.
+   inline-size: 150px;
+  overflow-wrap: break-word;
+   */
+}
+.stepdata .card-header.stepHeader .nav-tabs > li > a:hover {
+  color: #36f;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li > a > span:first-child {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #e4e9f2;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li > a:hover > span:first-child {
+  color: #8f9bb3;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li.completed > a > span:first-child {
+  background-color: #00d68f;
+  border-color: #00b887;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li.error > a > span:first-child {
+  border-color: #ff3d71;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li.completed > a > span:first-child::before {
+  content: '\e93c';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  line-height: normal;
+  z-index: 2;
+  font-family: 'icomoon';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #00d68f;
+  color: #fff;
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li > i {
+  height: 2px;
+  background-color: #edf1f7;
+  flex: auto;
+  position: relative;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li:last-child > i {
+  display: none;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li.error > i {
+  background-color: #ff3d71;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li.error > i:before {
+  content: '';
+  background-image: url(../images/icon_resistance.svg);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 20px;
+  background-color: #fff;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li:last-child.error > i {
+  display: inline-block;
+  font-style: normal;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li:last-child.error > i:before {
+  content: '\e93e';
+  font-family: 'icomoon';
+  background: none;
+  width: auto;
+  height: auto;
+  color: #ff3d71;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li:last-child.error > i > span {
+  top: -20px;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li.error > a > i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #ff3d71;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  left: 33px;
+  top: -8px;
+  font-size: 0.6rem;
+  line-height: normal;
+  font-style: normal;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li.error > i span {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-color: #ff3d71;
+  color: #ff3d71;
+  font-size: 0.8rem;
+  cursor: pointer;
+  font-style: normal;
+  font-family: 'montserratbold';
+}
+.stepdata .card-header.stepHeader .nav-tabs > li.completed > i {
+  background-color: #00b887;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li > a.active {
+  color: #36f;
+  font-size: 1rem;
+}
+.stepdata .card-header.stepHeader .nav-tabs > li > a.active > span:first-child {
+  width: 35px;
+  height: 35px;
+  background-color: #36f;
+  border-color: #0d3491;
+  color: #fff;
+}
+
+/**css for quick navigation for stepper**/
+.stepHeader .headerActions .dropdown-menu > a {
+  display: flex;
+  align-items: center;
+}
+.stepHeader .headerActions .dropdown-menu > a > span {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #6c757d;
+  border-radius: 50%;
+  margin-right: 5px;
+  font-size: 0.8rem;
+  position: relative;
+  overflow: hidden;
+}
+.stepHeader .headerActions .dropdownContainer .dropdown-menu > a:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+.stepHeader .headerActions .dropdown-menu > a.active {
+  color: #36f;
+  background-color: #fff;
+}
+.stepHeader .headerActions .dropdown-menu > a.active > span {
+  color: #fff;
+  background-color: #36f;
+  border-color: #36f;
+}
+
+.stepHeader .headerActions .dropdown-menu > a.completed > span {
+  color: #fff;
+  background-color: #fff;
+  border-color: #00b887;
+}
+.stepHeader .headerActions .dropdown-menu > a.completed > span::before {
+  content: '\e93c';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  line-height: normal;
+  z-index: 2;
+  font-family: 'icomoon';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #00d68f;
+  color: #fff;
+  font-weight: normal;
+  font-size: 0.7rem;
+}
+
+.pageData > .card > .card-header.stepHeader {
+  height: 55px;
+}
+
+.stepdata .card-header.stepHeader {
+  position: relative;
+  padding-right: 55px;
+}
+.stepdata .card-header.stepHeader > .headerActions {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 55px;
+  height: 55px;
+  z-index: 9;
+  display: none;
+}
+
+.pgContent.isScrolling .stepdata > .card > .card-header.stepHeader {
+  position: fixed;
+  width: calc(100% - 265px);
+  top: 50px;
+  left: 265px;
+  background-color: #fff;
+  z-index: 99;
+  box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
+}
+
+.menuClosed .pgContent.isScrolling .stepdata > .card > .card-header.stepHeader {
+  width: 100%;
+  left: 0;
+}
+
+@media only screen and (max-width: 1024px) {
+  @media only screen and (max-width: 768px) {
+    .pageData .card > .card-header.stepHeader .nav-tabs {
+      position: relative;
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .pageData .card > .card-header.stepHeader .nav-tabs .nav-item {
+      display: none;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li:last-child {
+      margin-left: 0;
+      flex-grow: 1;
+    }
+    .pageData .card > .card-header.stepHeader .nav-tabs .nav-item.currentTab,
+    .pageData .card > .card-header.stepHeader .nav-tabs .nav-item.upcomingTab {
+      display: flex;
+    }
+    .pageData .card > .card-header.stepHeader .nav-tabs .nav-item.upcomingTab {
+      flex-grow: unset;
+    }
+    .pageData .card > .card-header.stepHeader .nav-tabs .nav-item.upcomingTab > i {
+      display: none;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li > a {
+      pointer-events: none;
+      font-size: 1.1rem;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li > a > span {
+      width: 40px;
+      height: 40px;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li > a > span.stepName {
+      width: auto;
+      height: auto;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li > i {
+      flex: unset;
+      font-style: normal;
+      background-color: transparent !important;
+      height: 20px;
+      width: 20px;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li.error > i:before {
+      content: '\e93e';
+      font-family: 'icomoon';
+      background: none;
+      width: auto;
+      height: auto;
+      color: #ff3d71;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li.error i span,
+    .stepdata .card-header.stepHeader .nav-tabs > li:last-child.error i > span {
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      padding-left: 20px;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li > a.active {
+      color: #000;
+      padding-left: 54px;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li.upcomingTab > a {
+      font-size: 0.8rem;
+      font-weight: normal;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li.upcomingTab > a > span {
+      display: none;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li.upcomingTab > a > span.stepName {
+      display: block;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li.upcomingTab > a:before {
+      content: 'Next:';
+      display: inline-block;
+      margin-right: 5px;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li > a .progressRadial {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      z-index: 8;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li > a.active .progressRadial {
+      display: block;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li > a.active > span {
+      display: none;
+    }
+    .stepdata .card-header.stepHeader .nav-tabs > li > a.active > span.stepName {
+      display: block;
+    }
+    .stepdata .card-header.stepHeader {
+      padding-right: 40px;
+    }
+    .stepdata .card-header.stepHeader > .headerActions {
+      width: 40px;
+      display: block;
+    }
+
+    @media only screen and (max-width: 680px) {
+      @media only screen and (max-width: 576px) {
+        .stepdata .card-header.stepHeader {
+          padding-right: 34px;
+          position: fixed;
+          z-index: 11;
+          width: 100%;
+          top: 50px;
+          left: 0;
+          background-color: #fff;
+          box-shadow: 0 0.1rem 0.8rem 0 rgba(44, 51, 73, 0.1);
+        }
+        .stepdata .card-header.stepHeader > .headerActions {
+          width: 34px;
+        }
+        .stepdata .card-header.stepHeader > .headerActions > div {
+          padding: 0 7px;
+        }
+        .pageData .card > .card-header.stepHeader .nav-tabs .nav-item.upcomingTab {
+          position: absolute;
+          bottom: 0;
+          left: 40px;
+        }
+        .stepdata .card-header.stepHeader .nav-tabs > li > a.active {
+          align-items: flex-start;
+          height: 100%;
+        }
+        .card-header.stepHeader .nav-tabs .nav-item.currentTab {
+          align-items: flex-start;
+        }
+        .stepdata .card-header.stepHeader .nav-tabs > li:last-child,
+        .stepdata .card-header.stepHeader .nav-tabs > li:last-child > a {
+          align-items: center !important;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: landscape) {
+  .stepdata .card-header.stepHeader .nav-tabs > li > a > span:first-child {
+    width: 20px;
+    height: 20px;
+  }
+  .stepdata .card-header.stepHeader .nav-tabs > li > a.active > span:first-child {
+    width: 26px;
+    height: 26px;
+  }
+  .stepdata .card-header.stepHeader .nav-tabs > li > a {
+    font-size: 0.75rem;
+    padding: 0 0.79rem;
+  }
+  .stepdata .card-header.stepHeader .nav-tabs > li > a.active {
+    font-size: 0.8rem;
+  }
+}
+/**step css ends**/
+
+/* Three dots */
+/* .headerActions > div > a:hover {
+    color: #fff;
+}
+.headerActions > div > a > i {
+    font-size: 1.8rem;
+}
+.stepdata .card-header.stepHeader {
+    position: relative;
+    padding-right: 15px;
+}
+.stepdata .card-header.stepHeader > .headerActions {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 55px;
+    height: 55px;
+    z-index: 9;
+    display: none;
+}
+.stepHeader .headerActions .dropdown-menu > a {
+    display: flex;
+    align-items: center;
+}
+.stepHeader .headerActions .dropdown-menu > a > span {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #6c757d;
+    border-radius: 50%;
+    margin-right: 5px;
+    font-size: 0.8rem;
+    position: relative;
+    overflow: hidden;
+}
+.stepHeader .headerActions .dropdownContainer .dropdown-menu > a:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+}
+.stepHeader .headerActions .dropdown-menu > a.active {
+    color: #36f;
+    background-color: #fff;
+}
+.stepHeader .headerActions .dropdown-menu > a.active > span {
+    color: #fff;
+    background-color: #36f;
+    border-color: #36f;
+}
+
+.stepHeader .headerActions .dropdown-menu > a.completed > span {
+    color: #fff;
+    background-color: #fff;
+    border-color: #00b887;
+}
+.stepHeader .headerActions .dropdown-menu > a.completed > span::before {
+    content: '\e93c';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    line-height: normal;
+    z-index: 2;
+    font-family: 'icomoon';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00d68f;
+    color: #fff;
+    font-weight: normal;
+    font-size: 0.7rem;
+}
+
+@media only screen and (max-width: 768px) {
+    .headerActions > div {
+        padding: 0 10px;
+    }
+    .stepdata .card-header.stepHeader {
+        padding-right: 40px;
+    }
+    .stepdata .card-header.stepHeader > .headerActions {
+        width: 40px;
+        display: flex;
+    }
+
+    @media only screen and (max-width: 576px) {
+        .stepdata .card-header.stepHeader > .headerActions {
+            width: 34px;
+        }
+        .stepdata .card-header.stepHeader > .headerActions > div {
+            padding: 0 7px;
+        }
+    }
+} */
+
+/* Below css is for when steps are less than equal to 4.
+If you want steps in center then override the below commented css.
+*/
+/* .lowStepLength {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+} */
+
+.lowStepLength .nav-tabs {
+  width: 72%;
+}

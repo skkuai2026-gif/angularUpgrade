@@ -1,0 +1,41 @@
+/****** AIML Loader related CSS starts here ***************/
+
+.aiml-img-loader {
+  width: 110px;
+  height: 110px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 9999999;
+  display: none;
+}
+.aiml-img-loader:before,
+.aiml-img-loader:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: #36f;
+  animation: push 1s infinite linear alternate;
+}
+.aiml-img-loader:after {
+  top: auto;
+  bottom: 0;
+  left: 0;
+  background: #0d3491;
+  animation-direction: alternate-reverse;
+}
+@keyframes push {
+  0% {
+    width: 14px;
+    height: 14px;
+  }
+  100% {
+    width: 110px;
+    height: 110px;
+  }
+}
+/****** AIML Loader related CSS ends here ***************/

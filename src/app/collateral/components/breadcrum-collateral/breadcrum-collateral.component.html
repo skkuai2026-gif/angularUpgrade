@@ -1,0 +1,12 @@
+<!-- <ul class="breadcrum">
+<li><a href="javascript:void(0);">Home</a></li>
+<li class="inactive"><a href="javascript:void(0);">Collateral</a></li>
+</ul> -->
+
+<ul class="breadcrum">
+  @for (breadCrumb of breadCrumbList; track breadCrumb) {
+  <li [ngClass]="breadCrumb.link == undefined ? 'inactive' : null">
+    <a [routerLink]="breadCrumb.link">{{ breadCrumb.id }} </a>
+  </li>
+  }
+</ul>

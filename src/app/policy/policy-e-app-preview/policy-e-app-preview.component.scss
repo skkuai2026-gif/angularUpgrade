@@ -1,0 +1,29 @@
+#eAappButtonGUID {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+}
+
+.preferenceContainer .viewIllustrationContainer,
+.preferenceContainer.active .viewIllustrationContainer {
+  height: calc(100vh - 230px);
+  // overflow: hidden;
+  margin-right: -11px;
+  padding-bottom: 80px;
+}
+
+// .preferenceContainer .viewIllustrationContainer {
+//   height: calc(100dvh - 250px);
+//   margin-right: -11px;
+//   overflow-y: auto;
+//   overflow-x: hidden;
+//   -webkit-overflow-scrolling: touch;
+// }
+
+.pr15 {
+  padding-right: 15px !important;
+}

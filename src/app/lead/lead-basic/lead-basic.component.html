@@ -1,0 +1,13 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else { @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<sym-lead-party-details [model]="service.responseIO.data.LeadParty"></sym-lead-party-details>
+} }

@@ -1,0 +1,162 @@
+@if (currentSubStepSelected != undefined) {
+<div class="step_container" [class.vertical_container]="verticalAlignment">
+  <div class="stepper-wrapper" [class.vertical]="verticalAlignment">
+    @for (step of subStepList; track step; let i = $index) {
+    <div
+      class="stepper-item"
+      [class.completed]="step.status == 'completed'"
+      [class.active]="step.status == 'active' || step.status == 'pending' || step.status === 'selected'"
+      [class.substep]="step.status == undefined"
+    >
+      <div class="step-counter" (click)="onSubStepClick(step)">
+        <i [class]="step.status == 'completed' ? 'fa fa-check' : 'fa fa-bullseye'" aria-hidden="true"></i>
+        <div class="radial_container">
+          <span class="title_count">{{ i }}</span>
+        </div>
+      </div>
+      <div class="step-name">
+        <div class="step_nameContainer">
+          {{ settingService.getLabelValue(step.id) }}
+          @if ( (errorOccuredAtStep?.id === step.id && selectedStep.selectedTab.errorCount > 0) || step.status ==
+          'error' ) {
+          <div class="error_container" (click)="openErrorModal()">
+            <i
+              class="fa fa-exclamation-triangle mr-1"
+              aria-hidden="true"
+              [class.errorCount]="selectedStep.selectedTab.errorCount > 0 || step.status == 'error'"
+            >
+            </i>
+            <span> {{ selectedStep.selectedTab.errorCount }}</span>
+          </div>
+          }
+        </div>
+        <div class="step-name-container">
+          @if ( (errorOccuredAtStep?.id === step.id && selectedStep.selectedTab.errorCount > 0) || step.status ==
+          'error' ) {
+          <div class="error_container" (click)="openErrorModal()">
+            <i
+              class="fa fa-exclamation-triangle mr-1"
+              aria-hidden="true"
+              [class.errorCount]="selectedStep.selectedTab.errorCount > 0 || step.status == 'error'"
+            >
+            </i>
+            <span> {{ selectedStep.selectedTab.errorCount }}</span>
+          </div>
+          }
+          <span class="current-step">
+            {{ settingService.getLabelValue(step.id) }}
+          </span>
+          @if (currentSubStepSelected?.index != subStepList.length - 1) {
+          <span class="next-step">
+            {{ settingService.getLabelValue('next') }} :
+            {{ settingService.getLabelValue(subStepList[currentSubStepSelected?.index + 1].id) }}
+          </span>
+          }
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  <div class="body_container">
+    <div class="card-body">
+      @for (step of subStepList; track step) {
+      <div
+        [ngClass]="subStepList != undefined ? 'tab-content' : null"
+        id="body_{{ step.id }}"
+        [attr.aria-labelledby]="'body_' + step.id"
+      >
+        <ng-content></ng-content>
+      </div>
+      }
+    </div>
+    @if (!isSubStepReadOnly) {
+    <div [class]="'tabNavigationBottomFooter'">
+      @if (currentSubStepSelected?.index > 0) {
+      <button type="button" class="btn_icon btn_icon_prev mr-10" (click)="setPreviousSubStep()">
+        <div class="btn-arrow">
+          <i class="fa fa-chevron-left"></i>
+          {{ settingService.getLabelValue('PREVIOUS_SUBSTEP') }}
+        </div>
+      </button>
+      } @if (currentSubStepSelected?.index <= subStepList.length - 2) {
+      <button type="button" (click)="setNextSubStep()" class="btn_icon btn_icon_next">
+        <div class="btn-arrow">
+          <i class="fa fa-chevron-right"></i>
+          {{ settingService.getLabelValue('NEXT_SUBSTEP') }}
+        </div>
+      </button>
+      } @if (currentSubStepSelected?.index == subStepList.length - 1) {
+      <button type="button" (click)="setNextSubStep()" class="btn_icon btn_icon_next">
+        <div class="btn-arrow">
+          <i class="fa fa fa-check"></i>
+          {{ settingService.getLabelValue('sub_complete') }}
+        </div>
+      </button>
+      }
+      <div class="clear"></div>
+    </div>
+    }
+  </div>
+</div>
+}
+
+<sym-pop-up
+  [popupID]="'subStepErrorModal'"
+  [headerText]="settingService.getLabelValue('errorList')"
+  [headerIcon]="'fa fa-exclamation-triangle error error-icon-pop-up'"
+  [popUpClass]="'modal-dialog error-dialog modal-dialog-scrollable modal-dialog-centered'"
+  tabindex="-1"
+  class="subStepErrorPop"
+>
+  <div>
+    @for (validationError of pageContainerErrorList; track validationError) {
+    <h6>{{ validationError.name + ' :' }}</h6>
+    <ul class="list mb20">
+      @for (error of validationError.errors; track error) {
+      <li>
+        <span [innerHTML]="error.replaceAll(';', ' & ') | safeHtml: 'html'"> </span>
+      </li>
+      }
+    </ul>
+    }
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" (click)="closeErrorModal()" class="btn btn_primary mx-auto" data-dismiss="modal">
+      {{ settingService.getLabelValue('CLOSE_CONFIRMATION') }}
+    </button>
+  </div>
+</sym-pop-up>
+
+@if (currentSubStepSelected != undefined) {
+<div class="position-fixed p-3 errorToastPosition">
+  <div
+    id="liveToast"
+    class="toast"
+    [class.show]="currentSubStepSelected.displayErrorToast"
+    [class.hide]="!currentSubStepSelected.displayErrorToast"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="toast-header">
+      <strong class="me-auto error">
+        <i class="fa fa-exclamation-triangle error" aria-hidden="true"></i>
+        <span [innerHTML]="settingService.getLabelValue('errorList') | safeHtml: 'html'"> </span>
+      </strong>
+      <button
+        type="button"
+        class="close toast-close"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+        (click)="selectedStep.displayErrorToast = false"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body error" (click)="openErrorModal()">
+      {{ settingService.getLabelValue('ERR_CONTINUE') }}
+    </div>
+  </div>
+</div>
+}

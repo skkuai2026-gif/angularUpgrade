@@ -1,0 +1,25 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else {
+<sym-field-group
+  [fieldIds]="'jointLife'"
+  (notifyChange)="onInputChanged($event)"
+  [responseIO]="service.responseIO"
+  [model]="service.responseIO.data.Entity"
+></sym-field-group>
+@if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 &&
+service.responseIO.data.JointLife != null && service.responseIO.data.JointLife.length != 0 ) {
+<div class="card m-2 p-2">
+  <!-- else noDataAvailable-->
+  <sym-policy-party-details [model]="service.responseIO.data.JointLife"></sym-policy-party-details>
+</div>
+} }
+<!-- <ng-template #noDataAvailable> No Data to display! </ng-template> -->

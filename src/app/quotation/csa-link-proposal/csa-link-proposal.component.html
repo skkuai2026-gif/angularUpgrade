@@ -1,0 +1,20 @@
+<!-- <div id="mirrorSISearch">
+  <sym-search
+    [searchResponseIO]="service.searchResponseIO"
+    [isAdvanceSearchDisplayed]="true"
+    [service]="service"
+    [isSelectionRequired]="true"
+    (selectedOptionClick)="onSelectedOptionClick($event)"
+  ></sym-search>
+</div> -->
+<div id="mirrorSISearch">
+  <sym-search
+    [isAdvanceSearchRequired]="false"
+    [searchName]="'CSALinkProposal'"
+    [service]="service"
+    [isSelectionRequired]="true"
+    (selectedOptionClick)="onSelectedOptionClick($event)"
+    [ExecuteSearchName]="true"
+    [searchCriteriaData]="searchCriteriaData"
+  ></sym-search>
+</div>

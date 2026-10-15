@@ -1,0 +1,118 @@
+<div class="pgContainer scrollDiv">
+  <div class="headerBanner"></div>
+  <div class="pgContent">
+    <div class="pageHeader">
+      <sym-breadcrum-collateral [breadCrumbList]="breadCrumbList"></sym-breadcrum-collateral>
+      <!-- breadcrum ends-->
+    </div>
+    <div class="pageData">
+      <div class="collateralScreen" data-screen-no="1">
+        <div class="collateralScreenContent detailsContent">
+          <div class="verticalTabContainer">
+            <div class="panel_left active">
+              <i class="panel_left_icon"></i>
+              <div class="scrollDiv">
+                @if (arrType) {
+                <div class="nav flex-column navVertical" aria-orientation="vertical">
+                  @for (cModule of arrType; track cModule; let i = $index) { @if (i == 0) {
+                  <a
+                    class="nav-link active"
+                    attr.data-target="#tab_{{ cModule.id }}"
+                    href="javascript:void(0);"
+                    data-toggle="pill"
+                    role="tab"
+                    attr.aria-controls="tab_{{ cModule.id }}"
+                    aria-selected="false"
+                    ><span>{{ cModule.title }}</span></a
+                  >
+                  } @if (i > 0) {
+                  <a
+                    class="nav-link"
+                    attr.data-target="#tab_{{ cModule.id }}"
+                    href="javascript:void(0);"
+                    data-toggle="pill"
+                    role="tab"
+                    attr.aria-controls="tab_{{ cModule.id }}"
+                    aria-selected="false"
+                    ><span>{{ cModule.title }}</span></a
+                  >
+                  } }
+                </div>
+                }
+              </div>
+            </div>
+            @if (arrType) {
+            <div class="tab-content panel_right">
+              <!-- <div class="tab-pane fade show active" id="tab_features" role="tabpanel"
+                    aria-labelledby="tab_features-tab">
+                    <div class="box">
+                      <div class="boxHeader">
+                        <h4>eProtect Features</h4>
+                      </div>
+                      <div class="boxArea">
+                        <p>Affordable life insurance premium rates: You can get yourself insured at affordable premium rates
+                        with this life insurance term policy</p>
+                        <p>Life Insurance Benefit: The life insurance coverage that you get ensures that incase of an
+                          unfortunate death of the Life Insured, an amount equal to sum assured will be paid as a life
+                        insurance benefit to the nominee</p>
+                        <p>Family Care Benefit as part of the life insurance benefit: Unfortunate events in life come
+                          unannounced and during this time of distress your family could require contingency support. Family
+                          Care Benefit, is a unique proposition by way of which, a part of the life insurance benefit i.e.
+                          Rs 100,000 is paid as a lumpsum to the nominee in case of death of the life insured, within 48
+                          hours** of submission of all relevant claim documents. This term life insurance benefit is paid
+                          subject to the policy being inforce and the premiums for 2 consecutive term insurance policy years
+                        from the date of issuance or the date of latest reinstatement have been paid.</p>
+                        <p>Reward for non-smokers, premium discounts on the term insurance policy: You will be eligible for
+                          special rates if you are a non-smoker and you have applied for a life insurance benefit (sum
+                          assured) in excess of Rs 5,000,000. This gives better value for money for non-smokers when it
+                        comes to the life insurance premium that they pay.</p>
+                        <p>Hassle Free process of buying a term insurance policy: Now get the advantage of Life Insurance
+                          cover at the click of a button. eProtect offers you convenience at your finger tips, as you can
+                          buy this term insurance plan online to save the time and effort that would have been required
+                        otherwise.</p>
+                        <p>Tax benefits along with life insurance: Apart from the life insurance benefit with this term
+                          insurance plan, you can avail the tax benefits on the premiums paid and the benefits received
+                          subject to the prevailing provisions under Income Tax Act, 1961. The tax benefits are subject to
+                          change as per change in Tax laws from time to time. So in addition to the life insurance coverage
+                        you also get to save tax.</p>
+                      </div>
+                    </div>
+                  </div> -->
+              @for (cModule of arrType; track cModule; let i = $index) { @if (i == 0) {
+              <div
+                class="tab-pane fade show active"
+                attr.id="tab_{{ cModule.id }}"
+                role="tabpanel"
+                attr.aria-labelledby="tab_{{ cModule.id }}-tab"
+              >
+                <div class="box">
+                  <div class="boxHeader">
+                    <h4>{{ selectedId }} {{ cModule.title }}</h4>
+                  </div>
+                  <div class="boxArea" [innerHTML]="cModule.content"></div>
+                </div>
+              </div>
+              } @if (i > 0) {
+              <div
+                class="tab-pane fade"
+                attr.id="tab_{{ cModule.id }}"
+                role="tabpanel"
+                attr.aria-labelledby="tab_{{ cModule.id }}-tab"
+              >
+                <div class="box">
+                  <div class="boxHeader">
+                    <h4>{{ selectedId }} {{ cModule.title }}</h4>
+                  </div>
+                  <div class="boxArea" [innerHTML]="cModule.content"></div>
+                </div>
+              </div>
+              } }
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- step data container ends-->
+  </div>
+</div>

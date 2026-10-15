@@ -1,0 +1,465 @@
+@if (service.responseIO && service.responseIO.data) { @if (service.getSessionStorageValue('insuranceTypeCd') !=
+undefined) { @if (!isProductFamilySelected) {
+<sym-product-selection (notifyPrdSelection)="onProductFamilySelection()"> </sym-product-selection>
+} @if (isProductFamilySelected) {
+<sym-page-container
+  [breadCrumbList]="breadCrumbList"
+  [stepList]="stepList"
+  [responseIO]="service.responseIO"
+  [currentStepSelected]="selectedStep"
+  (selectedStep)="onStepChanged($event)"
+>
+  @if (service.responseIO && service.responseIO.data && selectedStep != undefined) {
+  <sym-step [stepItem]="selectedStep" (actionClick)="onActionClicked($event)" (tabChange)="onTabChanged($event)">
+    <div class="card-body">
+      <div class="bankLeftDisplay">
+        <h4>
+          Insurance Type :
+          <span class="bankFieldsDisplay">{{ service.responseIO.data.Entity.insuranceTypeCd }}</span>
+        </h4>
+        <h4>
+          Product Family:
+          <span class="bankFieldsDisplay">{{
+            service.getFieldLookupDesc(service.responseIO.data.BasePlan, 'productFamilyCd')
+          }}</span>
+        </h4>
+        @if ( service.responseIO.data.PrimaryInsured != undefined &&
+        service.responseIO.data.PrimaryInsured.genderCd != null && service.responseIO.data.PrimaryInsured.genderCd
+        != undefined ) {
+        <h4>
+          Gender:
+          <span class="bankFieldsDisplay">{{
+            service.getFieldLookupDesc(service.responseIO.data.PrimaryInsured, 'genderCd')
+          }}</span>
+          , Age:
+          <span class="bankFieldsDisplay">{{ service.responseIO.data.PrimaryInsured.age }}</span>
+        </h4>
+        } @if ( selectedStep != undefined && selectedStep.selectedTab != undefined && selectedStep.selectedTab.id
+        == 'tab_plan' ) {
+        <div>
+          <strong><h3>Filters</h3></strong>
+          <sym-field-group
+            [fieldIds]="'baseSumAssured'"
+            (notifyChange)="onInputChanged($event)"
+            (notifyFocus)="onInputFocused($event)"
+            [responseIO]="service.responseIO"
+            [model]="service.responseIO.data.BasePlan"
+          ></sym-field-group>
+          <sym-field-group
+            [fieldIds]="'productTerm'"
+            (notifyChange)="onInputChanged($event)"
+            (notifyFocus)="onInputFocused($event)"
+            [responseIO]="service.responseIO"
+            [model]="service.responseIO.data.BasePlan"
+          ></sym-field-group>
+          <sym-field-group
+            [fieldIds]="'paymentFrequencyCd'"
+            (notifyChange)="onInputChanged($event)"
+            (notifyFocus)="onInputFocused($event)"
+            [responseIO]="service.responseIO"
+            [model]="service.responseIO.data.BasePlan"
+            [gridColumns]="[12]"
+          ></sym-field-group>
+        </div>
+        }
+      </div>
+      @if (service.responseIO != undefined) {
+      <div
+        class="blockContainer"
+        [class.blockSm]="selectedStep.selectedTab != undefined && selectedStep.selectedTab.id != 'tab_plan'"
+      >
+        @if (selectedStep != undefined && selectedStep.selectedTab != undefined) { @if (selectedStep.selectedTab.id
+        == 'tab_basic') {
+        <div>
+          @if (service.responseIO.data.PrimaryInsured != undefined) {
+          <div class="block">
+            <h4>Insured</h4>
+            <div class="grid-layout">
+              <sym-field-group
+                [fieldIds]="'genderCd'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.PrimaryInsured"
+                [labelOnly]="true"
+                [isRowRequired]="false"
+                class="pt-4"
+              ></sym-field-group>
+              <sym-field-group
+                [fieldIds]="'genderCd'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.PrimaryInsured"
+                [inputOnly]="true"
+                [hideLabel]="true"
+                [isRowRequired]="false"
+                [gridColumns]="[6]"
+              ></sym-field-group>
+            </div>
+            <div class="grid-layout">
+              <sym-field-group
+                [fieldIds]="'dob'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.PrimaryInsured"
+                [labelOnly]="true"
+                [isRowRequired]="false"
+                class="pt-4"
+              ></sym-field-group>
+              <sym-field-group
+                [fieldIds]="'dob'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.PrimaryInsured"
+                [inputOnly]="true"
+                [hideLabel]="true"
+                [isRowRequired]="false"
+                [gridColumns]="[6]"
+              ></sym-field-group>
+            </div>
+            <div class="grid-layout">
+              <sym-field-group
+                [fieldIds]="'smoker'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.PrimaryInsured"
+                [labelOnly]="true"
+                [isRowRequired]="false"
+                class="pt-4"
+              ></sym-field-group>
+              <sym-field-group
+                [fieldIds]="'smoker'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.PrimaryInsured"
+                [inputOnly]="true"
+                [hideLabel]="true"
+                [isRowRequired]="false"
+                [gridColumns]="[6]"
+              ></sym-field-group>
+            </div>
+            <div class="grid-layout">
+              <sym-field-group
+                [fieldIds]="'baseSumAssured'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.BasePlan"
+                [labelOnly]="true"
+                [isRowRequired]="false"
+                class="pt-4"
+              ></sym-field-group>
+              <sym-field-group
+                [fieldIds]="'baseSumAssured'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.BasePlan"
+                [inputOnly]="true"
+                [hideLabel]="true"
+                [isRowRequired]="false"
+                [gridColumns]="[6]"
+              ></sym-field-group>
+            </div>
+            <div class="grid-layout">
+              <sym-field-group
+                [fieldIds]="'productTerm'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.BasePlan"
+                [labelOnly]="true"
+                [isRowRequired]="false"
+                class="pt-4"
+              ></sym-field-group>
+              <sym-field-group
+                [fieldIds]="'productTerm'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.BasePlan"
+                [inputOnly]="true"
+                [hideLabel]="true"
+                [isRowRequired]="false"
+                [gridColumns]="[6]"
+              ></sym-field-group>
+            </div>
+            <div class="grid-layout">
+              <sym-field-group
+                [fieldIds]="'annualIncome'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.BasePlan"
+                [labelOnly]="true"
+                [isRowRequired]="false"
+                class="pt-4"
+              ></sym-field-group>
+              <sym-field-group
+                [fieldIds]="'annualIncome'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.BasePlan"
+                [inputOnly]="true"
+                [hideLabel]="true"
+                [isRowRequired]="false"
+                [gridColumns]="[6]"
+              ></sym-field-group>
+            </div>
+            <div class="grid-layout">
+              <sym-field-group
+                [fieldIds]="'paymentFrequencyCd'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.BasePlan"
+                [labelOnly]="true"
+                [isRowRequired]="false"
+                class="pt-4"
+              ></sym-field-group>
+              <sym-field-group
+                [fieldIds]="'paymentFrequencyCd'"
+                (notifyChange)="onInputChanged($event)"
+                (notifyFocus)="onInputFocused($event)"
+                [responseIO]="service.responseIO"
+                [model]="service.responseIO.data.BasePlan"
+                [hideLabel]="true"
+                [isRowRequired]="false"
+                [gridColumns]="[6]"
+              ></sym-field-group>
+            </div>
+          </div>
+          }
+        </div>
+        } @if (selectedStep.selectedTab.id == 'tab_plan') {
+        <sym-bank-quotation-coverage
+          [responseIO]="service.responseIO"
+          [responseUpdated]="responseUpdated"
+          (notifyApplicableProducts)="onSetApplicableProducts($event)"
+        ></sym-bank-quotation-coverage>
+        } @if (selectedStep.selectedTab.id == 'tab_quoteComparison') {
+        <sym-bank-quotation-comparison></sym-bank-quotation-comparison>
+        } @if (selectedStep.selectedTab.id == 'tab_premiumSummary') {
+        <div class="sectionHeader">
+          @if (!service.responseIO.data.Entity.isInvalid) {
+          <div class="headerActions previewOptions">
+            @if ( (service.companyFacets && service.companyFacets.data['SHOWDOWNLOADSIBEFOREACCEPTANCE'] &&
+            service.companyFacets.data['SHOWDOWNLOADSIBEFOREACCEPTANCE'].length > 0 &&
+            service.companyFacets.data['SHOWDOWNLOADSIBEFOREACCEPTANCE'] == 'YES' &&
+            !service.responseIO.data.Entity.isCompleted) || service.responseIO.data.Entity.isComplete ) {
+            <sym-button
+              (onClick)="onDownloadPDFClick($event)"
+              [id]="'downloadPDF'"
+              [text]="service.getMultilingualLabel('DOWNLOADIllus')"
+              [iconClass]="'fa fa-download'"
+              [class]="'previewActions'"
+              class="mr-2"
+            ></sym-button>
+            }
+          </div>
+          }
+        </div>
+        <sym-premium-summary
+          [displayBenefitChart]="true"
+          [displayLastBenefitChartValues]="true"
+        ></sym-premium-summary>
+        } @if (selectedStep.selectedTab.id == 'tab_owner') {
+        <!-- <div class="row"> -->
+        <div>
+          <div class="personalInfoCard">
+            @if (policyService.responseIO == undefined) {
+            <div>
+              <sym-panel [id]="'personalInfo'" [name]="'Personal Details'" [blockCollapse]="false">
+                <sym-field-group
+                  [fieldIds]="'firstname,middlename,lastname'"
+                  (notifyChange)="onInputChanged($event)"
+                  (notifyFocus)="onInputFocused($event)"
+                  [responseIO]="service.responseIO"
+                  [model]="service.responseIO.data.PrimaryInsured"
+                ></sym-field-group>
+                <sym-field-group
+                  [fieldIds]="'contactNum,emailAddress'"
+                  (notifyChange)="onInputChanged($event)"
+                  [responseIO]="service.responseIO"
+                  [model]="service.responseIO.data.PrimaryInsured"
+                  [gridColumns]="[4, 8]"
+                ></sym-field-group>
+                <div style="text-align: center; padding-bottom: 1rem">
+                  <sym-button
+                    [class]="'btn btn_secondary'"
+                    [id]="'btn_Buy'"
+                    [isLoaderRequired]="true"
+                    [text]="'Proceed to Buy'"
+                    (onClick)="but_confirm_click()"
+                  >
+                  </sym-button>
+                </div>
+              </sym-panel>
+            </div>
+            }
+          </div>
+          @if (policyService.responseIO && policyService.responseIO.data) { @if (service.responseIO.data &&
+          service.responseIO.data.PrimaryInsured) {
+          <span class="fontSize font-italic pr-2 header"> Insured Name:</span>
+          <span class="fontSize font-italic pr-2 details">
+            {{ service.responseIO.data.PrimaryInsured.fullName }},
+          </span>
+          @if (service.responseIO.data && service.responseIO.data.PrimaryInsured.MobileContact) {
+          <span class="fontSize font-italic pr-2 header">Mobile #:</span>
+          <span class="fontSize font-italic pr-2 details">
+            {{ service.responseIO.data.PrimaryInsured.MobileContact.contactNum }},</span
+          >
+          } @if (service.responseIO.data && service.responseIO.data.PrimaryInsured.PersonalEmail) {
+          <span class="fontSize font-italic pr-2 header">Email Id: </span>
+          <span class="fontSize font-italic pr-2 details">
+            {{ service.responseIO.data.PrimaryInsured.PersonalEmail.emailAddress }}</span
+          >
+          } }
+          <div class="block">
+            <div class="row">
+              <div class="col-sm-4">
+                <sym-field-group
+                  [fieldIds]="'identityNum'"
+                  (notifyChange)="onInputChanged($event)"
+                  [responseIO]="policyService.responseIO"
+                  [model]="policyService.responseIO.data.Proposer.IdentityList[0]"
+                  [isRowRequired]="false"
+                ></sym-field-group>
+              </div>
+              <div class="col-sm-4">
+                <sym-button
+                  [class]="'btn btn_secondary'"
+                  [id]="'btn_verifyIdentity'"
+                  [isLoaderRequired]="true"
+                  [text]="'Verify'"
+                  (onClick)="onVerifyButtonClick()"
+                >
+                </sym-button>
+                <sym-otp
+                  [triggerOTPGeneration]="isTriggerAadharOtpBtn"
+                  [isOtpButtonReq]="false"
+                  [service]="service"
+                  [otpType]="'CUSTOMERVERIFICATION'"
+                  [entityGuid]="service.responseIO.data.Entity.guid"
+                  (isValidOtp)="onValidateAadharOtp($event)"
+                ></sym-otp>
+              </div>
+            </div>
+          </div>
+          <sym-panel [id]="'address_Details_Body'" [name]="'Mailing Address'">
+            <sym-field-group
+              [fieldIds]="
+                'addressTypeCd,addressLine1Lang1,addressLine2Lang1,addressLine3Lang1,addressLine4Lang1,addressSubTypeCd,countryCd,pinCode,stateCd,cityCd,districtCd,poBox,status,talukaCd,villageCd'
+              "
+              (notifyChange)="onInputChanged($event)"
+              (notifyFocus)="onInputFocused($event)"
+              [responseIO]="policyService.responseIO"
+              [model]="policyService.responseIO.data.Proposer.ResidentalAddress"
+            ></sym-field-group>
+            <!-- <sym-field-group
+                                [fieldIds]="'copyFromAddr2'"
+                                (notifyChange)="onInputChanged($event)"
+                                [responseIO]="policyService.responseIO"
+                                [model]="policyService.responseIO.data.Proposer"
+                              ></sym-field-group> -->
+            @if (policyService.responseIO.data.Proposer.copyFromAddr2 == 'NONRESIDENTIAL') {
+            <sym-field-group
+              [fieldIds]="
+                'addressTypeCd,addressLine1Lang1,addressLine2Lang1,addressLine3Lang1,addressLine4Lang1,addressSubTypeCd,countryCd,pinCode,stateCd,cityCd,districtCd,poBox,status,talukaCd,villageCd'
+              "
+              (notifyChange)="onInputChanged($event)"
+              (notifyFocus)="onInputFocused($event)"
+              [responseIO]="policyService.responseIO"
+              [model]="policyService.responseIO.data.Proposer.PermanentAddress"
+            ></sym-field-group>
+            }
+          </sym-panel>
+          <sym-panel [id]="'Educational_Occupation'" [name]="'Occupation'">
+            <sym-field-group
+              [fieldIds]="'occupationTypeCd'"
+              (notifyChange)="onInputChanged($event)"
+              (notifyFocus)="onInputFocused($event)"
+              [responseIO]="policyService.responseIO"
+              [model]="policyService.responseIO.data.Proposer.Employment"
+              [gridColumns]="[4]"
+            ></sym-field-group>
+            <sym-field-group
+              [fieldIds]="'industryCd,natureOfDuty,occupationCd'"
+              (notifyChange)="onInputChanged($event)"
+              (notifyFocus)="onInputFocused($event)"
+              [responseIO]="policyService.responseIO"
+              [model]="policyService.responseIO.data.Proposer.Employment"
+              [gridColumns]="[3, 3, 3]"
+            ></sym-field-group>
+          </sym-panel>
+          @if (policyService.responseIO.data.NomineeList != undefined) {
+          <sym-panel [id]="'Nominee_details'" [name]="'Nominee details'">
+            <sym-data-entry-grid
+              [fieldIds]="'titleCd,firstName1,lastName1,birthDt,relationCd,percentage'"
+              [modelList]="policyService.responseIO.data.NomineeList"
+              [responseIO]="policyService.responseIO"
+              (notifyChange)="onInputChanged($event)"
+              (onRowAdded)="onAddNominee($event)"
+              [isFormFormatRequired]="true"
+              [formColumnWidth]="'3,4,4,3,4,4'"
+            ></sym-data-entry-grid>
+          </sym-panel>
+          } }
+        </div>
+        <!-- </div> -->
+        } @if (selectedStep.selectedTab.id == 'tab_questionnaire') {
+        <div class="tab-pane">
+          <sym-policy-party-questionnaire></sym-policy-party-questionnaire>
+        </div>
+        } @if (selectedStep.id == 'step_requirement') { @if (selectedStep.selectedTab.id == 'tab_requirement') {
+        <div class="tab-pane">
+          <sym-policy-document></sym-policy-document>
+        </div>
+        } } @if (selectedStep.selectedTab.id == 'tab_paymentsummary') {
+        <div class="tab-pane">
+          <!-- <sym-policy-payment-summary></sym-policy-payment-summary> -->
+          <sym-customer-payment-summary> </sym-customer-payment-summary>
+        </div>
+        } }
+      </div>
+      }
+    </div>
+  </sym-step>
+  }
+</sym-page-container>
+} } }
+<!--modal for Acceptance message start -->
+@if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 && policyService != null
+&& policyService != undefined && policyService.responseIO != null && policyService.responseIO != undefined ) {
+<sym-pop-up
+  [popupID]="'submitPolicyModal'"
+  [popupSize]="'small'"
+  [displayPopupAtTop]="true"
+  [hideCloseButton]="true"
+>
+  <div class="successModalHeader">
+    <span class="iconSuccess"></span>
+    @if ( policyService.responseIO.data.Entity.uwDecisionValue != null &&
+    policyService.responseIO.data.Entity.uwDecisionValue != undefined ) {
+    <div [innerHTML]="policyService.responseIO.data.Entity.uwDecisionValue | safeHtml: 'html'"></div>
+    } @if ( policyService.responseIO.data.Entity.uwDecisionValue == null ||
+    policyService.responseIO.data.Entity.uwDecisionValue == undefined ) {
+    <h2>
+      {{ policyService.getMultilingualLabel('policySubmitMesg') }}
+    </h2>
+    }
+    <div class="mt-3 d-flex justify-content-center">
+      <button class="btn btn_primary" (click)="closeSubmitPolicyModal()">
+        {{ service.getMultilingualLabel('Back') }}
+      </button>
+    </div>
+  </div>
+</sym-pop-up>
+}
+<!--modal for congratulation message ends -->

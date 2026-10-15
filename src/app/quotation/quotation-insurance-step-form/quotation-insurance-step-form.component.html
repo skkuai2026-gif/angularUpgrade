@@ -1,0 +1,75 @@
+<!-- <sym-quotation-step-form></sym-quotation-step-form> -->
+
+<sym-page-container
+  [breadCrumbList]="breadCrumbList"
+  [stepList]="stepList"
+  [responseIO]="service.responseIO"
+  [currentStepSelected]="selectedStep"
+  (selectedStep)="onStepChanged($event)"
+>
+  @if ( service.responseIO != undefined && selectedStep != undefined && selectedStep.id != undefined &&
+  selectedStep.selectedTab != undefined && selectedStep.selectedTab.id != undefined ) { @if (selectedStep !=
+  undefined) {
+  <sym-step
+    [stepItem]="selectedStep"
+    (actionClick)="onActionClicked($event)"
+    (tabChange)="onTabChanged($event)"
+    [contentExcludRightTab]="selectedStep.isRightContentAdded"
+  >
+    @for (tab of selectedStep.tabList; track tab) { @if (selectedStep.selectedTab != undefined &&
+    selectedStep.selectedTab.id == tab.id) {
+    <sym-xml-config-ui
+      [xmlDom]="tab.xmlDom"
+      [service]="service"
+      [responseIO]="service.responseIO"
+      [productFacets]="service.productFacets"
+      [companyFacets]="service.companyFacets"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      (onRowAdded)="onGridRowAdded($event)"
+      (searchIconClicked)="onInputSearchClick($event)"
+      (onElementClicked)="onHTMLElementClick($event)"
+      (notifyReloadStepOutput)="mergeStepList()"
+    >
+    </sym-xml-config-ui>
+    } }
+  </sym-step>
+  } }
+</sym-page-container>
+
+<sym-pop-up [popupID]="'acceptIllustrationModal'" [popupSize]="'small'" [displayPopupAtTop]="true">
+  <div class="successModalHeader">
+    <span class="iconSuccess"></span>
+    <h2>
+      {{ settingService.getLabelValue('quotationAcceptSuccessMsg') }}
+    </h2>
+  </div>
+  <div class="successModalContent">
+    <p>
+      {{ settingService.getLabelValue('downloadPdfClickMsg') }}
+    </p>
+    <p>
+      {{ settingService.getLabelValue('emailIllusClickMsg') }}
+    </p>
+    @if ( service.companyFacets && service.companyFacets.data['EAPPAPPLICABLE'] &&
+    service.companyFacets.data['EAPPAPPLICABLE'].length > 0 && service.companyFacets.data['EAPPAPPLICABLE'] ==
+    'YES' && service.responseIO?.data?.Entity?.entityStatus != 'LOCKED' ) {
+    <p>
+      {{ settingService.getLabelValue('proceedEAppClickMsg') }}
+    </p>
+    } @if (service.responseIO?.data?.Entity?.entityStatus == 'LOCKED') {
+    <p>
+      {{ settingService.getLabelValue('refreshEAppClickMsg') }}
+    </p>
+    }
+  </div>
+  <br />
+  <div class="footer text-center">
+    <sym-button
+      [id]="'btn_ok'"
+      [isLoaderRequired]="false"
+      [text]="'Ok'"
+      (onClick)="closeAcceptIllustrationModal()"
+    ></sym-button>
+  </div>
+</sym-pop-up>

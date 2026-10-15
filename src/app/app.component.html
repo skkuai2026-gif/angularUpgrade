@@ -1,0 +1,7 @@
+@if (appReady) { @if (companySUNPH === 'SLGFI' || (companySUNPH === undefined && company === 'SLGFI')) {
+<sym-html-body id="SLGFI"></sym-html-body>
+} @if (companySUNPH === 'SLOCPI' || (companySUNPH === undefined && company === 'SLOCPI')) {
+<sym-html-body id="SLOCPI"></sym-html-body>
+} @if (companySUNPH === undefined && company === undefined) {
+<sym-html-body></sym-html-body>
+} }

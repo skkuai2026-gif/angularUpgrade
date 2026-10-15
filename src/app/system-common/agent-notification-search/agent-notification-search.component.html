@@ -1,0 +1,14 @@
+<div id="mirrorSISearch">
+  <div class="refreshButton">
+    <button class="refresh-btn" (click)="onRefreshClick()"><i class="fa fa-refresh"></i> Refresh</button>
+  </div>
+
+  @if (showSearchComponent) {
+  <sym-search
+    [searchName]="searchName"
+    [service]="service"
+    [searchPlaceholder]="'Agent Notification'"
+    [ExecuteSearchName]="false"
+  ></sym-search>
+  }
+</div>

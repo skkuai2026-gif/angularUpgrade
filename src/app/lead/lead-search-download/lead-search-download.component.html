@@ -1,0 +1,17 @@
+<sym-page-container [breadCrumbList]="breadCrumbList" id="leadSearchDownloadAlert">
+  <div id="leadSearchDownload">
+    <sym-sunph-search
+      [moreOptionList]="moreOptionList"
+      [isDeleteRequired]="true"
+      [service]="service"
+      (moreOptionClick)="onMoreOptionClicked($event)"
+      [searchName]="'DownloadClientAPI'"
+      [isAdvanceSearchRequired]="false"
+      (onDownloadButtonClick)="onDownloadButtonClick()"
+      (downloadIdList)="onDownloadListUpdated($event)"
+      (updateSearchResponseClick)="updateSearchResponseClick($event)"
+      (errorList)="showModal($event)"
+      [ExecuteSearchName]="IsExecuteSearchName"
+    ></sym-sunph-search>
+  </div>
+</sym-page-container>

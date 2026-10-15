@@ -1,0 +1,31 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else {
+<sym-field-group
+  [fieldIds]="'OTHER' == model.citizenshipCd ? 'citizenshipCd,otherCitizenship' : 'citizenshipCd'"
+  (notifyChange)="onInputChanged($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+></sym-field-group>
+<sym-field-group
+  [fieldIds]="'field8,field9'"
+  (notifyChange)="onInputChanged($event)"
+  [responseIO]="service.responseIO"
+  [model]="this.model.AdditionalFieldsList[0]"
+  [hideLabel]="true"
+></sym-field-group>
+<sym-field-group
+  [fieldIds]="'religionCd,raceCd,nonResidentFl'"
+  (notifyChange)="onInputChanged($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+></sym-field-group>
+}

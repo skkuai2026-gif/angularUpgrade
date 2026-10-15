@@ -1,0 +1,81 @@
+<sym-panel [id]="'fund_list_Body'" [name]="'fundDetails'">
+  <div class="m-2 p-2">
+    <sym-field-group
+      [fieldIds]="'portfolioModelCd,topUpAllocSameAsPremAllocFl'"
+      [responseIO]="service.responseIO"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [model]="service.responseIO.data.BasePlan"
+    ></sym-field-group>
+  </div>
+
+  <!-- <sym-data-entry-grid
+  id="fundAlignment"
+  [fieldIds]="'fundCd,allocationPerc,topupAllocationPerc'"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  [modelPath]="'BasePlan.FundList'"
+  [isAddRequired]="false"
+  [isDeleteRequired]="false"
+></sym-data-entry-grid> -->
+
+  @if ( service.responseIO.data['BasePlan'].FundList != undefined &&
+  service.responseIO.data['BasePlan'].FundList.length > 0 ) {
+  <div class="block">
+    <!-- <h4>Fund allocation: <span class="btnToggleBlock"></span></h4> -->
+    <div class="row">
+      <div [ngClass]="'col-sm-12'">
+        <div class="fundsContent">
+          <div class="indicatorDiv mb5">
+            @if ( service.getLabelValue( service.responseIO.data.BasePlan.FundList[0], 'allocationPerc' ) !=
+            undefined ) {
+            <span class="option1">
+              {{ service.getLabelValue(service.responseIO.data.BasePlan.FundList[0], 'allocationPerc') }}
+            </span>
+            } @if ( service.getLabelValue( service.responseIO.data.BasePlan.FundList[0], 'topupAllocationPerc' ) !=
+            undefined ) {
+            <span class="option2">
+              {{ service.getLabelValue(service.responseIO.data.BasePlan.FundList[0], 'topupAllocationPerc') }}
+            </span>
+            }
+          </div>
+          <ul class="blockList">
+            @for (fund of service.responseIO.data.BasePlan.FundList; track fund; let i = $index) {
+            <li>
+              <span>{{ service.getFieldLookupDesc(fund, 'fundCd') }}</span>
+              @if (fund.fundTypeCd != undefined && fund.fundTypeCd != null) {
+              <span> [{{ fund.fundTypeCd }}] </span>
+              }
+              <div class="inputActions">
+                <div class="option1">
+                  <sym-field-group
+                    [fieldIds]="'allocationPerc'"
+                    [responseIO]="service.responseIO"
+                    [hideLabel]="true"
+                    [model]="fund"
+                    (notifyChange)="onInputChanged($event)"
+                    [gridColumns]="[2]"
+                  ></sym-field-group>
+                </div>
+                @if ( service.getLabelValue( fund, 'topupAllocationPerc' ) != undefined ) {
+                <div class="option2">
+                  <sym-field-group
+                    [fieldIds]="'topupAllocationPerc'"
+                    [responseIO]="service.responseIO"
+                    [hideLabel]="true"
+                    [model]="fund"
+                    (notifyChange)="onInputChanged($event)"
+                    [gridColumns]="[2]"
+                  ></sym-field-group>
+                </div>
+                }
+              </div>
+            </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</sym-panel>

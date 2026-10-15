@@ -1,0 +1,893 @@
+<div
+  [class.box]="
+    respApplicableProducts &&
+    respApplicableProducts != undefined &&
+    respApplicableProducts.productFamilyList &&
+    respApplicableProducts.productFamilyList.length > 0
+  "
+  *ngIf="
+    respApplicableProducts &&
+    respApplicableProducts != undefined &&
+    service.responseIO &&
+    service.responseIO != undefined &&
+    service.responseIO.data.BasePlan
+  "
+>
+  <h4 *ngIf="isNoLaunchedProduct()">
+    {{ settingService.getLabelValue('ERR_NOLAUNCHEDPRD') }}
+  </h4>
+  <h4 *ngIf="respApplicableProducts.productFamilyList && respApplicableProducts.productFamilyList.length == 0">
+    {{ settingService.getLabelValue('ERR_NOLAUNCHEDPRD') }}
+  </h4>
+  <div class="section sectionCategory" *ngIf="!displayPlanSelected">
+    <div class="sectionHeader">
+      <h4 *ngIf="respApplicableProducts.productFamilyList && respApplicableProducts.productFamilyList.length > 0">
+        <!-- {{ settingService.getLabelValue('productFamilyCd') }} -->
+        <small>
+          {{
+            service.getMultilingualMessage('selectProductFamily', [
+              respApplicableProducts.productFamilyList.length
+            ])
+          }}
+        </small>
+      </h4>
+      <div
+        class="filter"
+        *ngIf="
+          familyCardPerRow != undefined || productCardPerRow != undefined || planOptionCardPerRow != undefined
+        "
+      >
+        <input type="text" id="familyFilter" class="filterText" [(ngModel)]="searchFilterText" name="family" />
+      </div>
+    </div>
+    <ng-container
+      *ngIf="
+        familyCardPerRow != undefined || productCardPerRow != undefined || planOptionCardPerRow != undefined;
+        else familyCategorySliderTemplate
+      "
+    >
+      <div class="product-selection-card pt-3">
+        <div class="row">
+          <ng-container
+            *ngFor="
+              let productFamily of respApplicableProducts.productFamilyList
+                | productSelectionFilter: searchFilterText
+            "
+          >
+            <div
+              [class]="
+                familyCardPerRow == 2 || familyCardPerRow === 1
+                  ? 'col-sm-6  col-md-6 co-lg-6 col-xl-6'
+                  : familyCardPerRow == 3
+                  ? 'col-sm-4 col-md-4 co-lg-4 col-xl-4'
+                  : familyCardPerRow == 4
+                  ? 'col-sm-3 col-md-3 co-lg-4 col-xl-3'
+                  : familyCardPerRow >= 5 && familyCardPerRow <= 12
+                  ? 'col-sm-2 col-md-2 co-lg-2 col-xl-2'
+                  : familyCardPerRow >= 10 && familyCardPerRow <= 11
+                  ? 'col-sm-2 col-md-2 co-lg-4 col-xl-2'
+                  : familyCardPerRow === 12
+                  ? 'col-sm-1 col-md-1 co-lg-4 col-xl-1'
+                  : 'col-sm-4 col-md-4 co-lg-4 col-xl-4'
+              "
+              (click)="onProductFamilySelection(productFamily.cd)"
+              class="c-pointer"
+            >
+              <div
+                [id]="productFamily.cd"
+                [ngClass]="{
+                  'card cardProductSelection card_prod_alignment': true,
+                  validated: productFamily.cd == service.responseIO.data.BasePlan.productFamilyCd,
+                }"
+              >
+                <div class="card-header">
+                  <h5 *ngIf="productFamily.desc != undefined">
+                    {{ settingService.extractHTML(productFamily.desc) }}
+                  </h5>
+
+                  <div class="headerActions">
+                    <ul>
+                      <li>
+                        <div>
+                          <a
+                            *ngIf="productFamily.cd != service.responseIO.data.BasePlan.productFamilyCd"
+                            class="editCardDetails"
+                            (click)="onProductFamilySelection(productFamily.cd)"
+                          ></a>
+                          <a
+                            *ngIf="productFamily.cd == service.responseIO.data.BasePlan.productFamilyCd"
+                            class="selectedCard"
+                            (click)="onProductFamilySelection(productFamily.cd)"
+                          ></a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="cardLeftContent_ps">
+                    <span
+                      [style.background-image]="
+                        productFamily.image != undefined
+                          ? 'url(/assets/theme/images/company/' + productFamily.image + ')'
+                          : ''
+                      "
+                      class="product_image"
+                    ></span>
+                  </div>
+                  <p *ngIf="productFamily.text != undefined">
+                    {{ settingService.extractHTML(productFamily.text) }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #familyCategorySliderTemplate>
+      <div class="sectionContent">
+        <div class="productCategorySlider">
+          <div *ngFor="let productFamily of respApplicableProducts.productFamilyList">
+            <div
+              class="card"
+              [attr.data-card-color]="'blue'"
+              [ngClass]="
+                productFamily.cd == service.responseIO.data.BasePlan.productFamilyCd ? 'card active' : 'card'
+              "
+              [id]="productFamily.cd"
+              [attr.data-card-color]="'blue'"
+              (click)="onProductFamilySelection(productFamily.cd)"
+            >
+              <span
+                [style.background-image]="
+                  productFamily.image != undefined
+                    ? 'url(/assets/theme/images/company/' + productFamily.image + ')'
+                    : ''
+                "
+              ></span>
+              <h5 *ngIf="productFamily.desc != undefined">
+                {{ settingService.extractHTML(productFamily.desc) }}
+              </h5>
+              <p *ngIf="productFamily.text != undefined">{{ settingService.extractHTML(productFamily.text) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <sym-component-load-emitter (componentLoaded)="initializeProductFamilySlider()"></sym-component-load-emitter>
+    </ng-template>
+  </div>
+  <!--section category ends *ngIf="!displayPlanOptionList"-->
+  <div
+    [ngClass]="{
+      show: !displayPlanOptionList,
+      hide: displayPlanOptionList
+    }"
+  >
+    <ng-container *ngFor="let productFamily of respApplicableProducts.productFamilyList">
+      <div
+        class="section sectionProduct"
+        *ngIf="displayPlanSelected && productFamily.cd == service.responseIO.data.BasePlan.productFamilyCd"
+        [id]="'product_' + productFamily.cd"
+      >
+        <div class="sectionHeader">
+          <h4
+            *ngIf="
+              respApplicableProducts &&
+              respApplicableProducts != undefined &&
+              respApplicableProducts.productList &&
+              respApplicableProducts.productList != undefined &&
+              respApplicableProducts.productList[productFamily.cd] &&
+              respApplicableProducts.productList[productFamily.cd] != undefined &&
+              respApplicableProducts.productList[productFamily.cd].length >= 0 &&
+              !isNoLaunchedProduct()
+            "
+          >
+            <ng-container
+              *ngIf="
+                !(companySUNPH === 'SLGFI' && service.responseIO.data.Proposer.partyTypeCd === 'INDIVIDUAL') ||
+                this.service.responseIO.data.Entity.leadId == null ||
+                this.service.responseIO.data.Entity.leadId == ''
+              "
+            >
+              {{
+                service.getMultilingualMessage('chooseProduct', [
+                  respApplicableProducts.productList[productFamily.cd].length
+                ])
+              }}
+
+              <span class="selectedProductFamily" (click)="onDeselectProductFamily()">
+                <span [innerHTML]="productFamily.desc | safeHtml: 'html'"></span>
+                <i
+                  *ngIf="
+                    this.service.responseIO.data.Entity.isCompleted ||
+                    this.service.responseIO.data.Entity.isInvalid ||
+                    service.getFieldMetadataPropertyValue(
+                      service.responseIO.data.BasePlan,
+                      'productId',
+                      'VISIBILITY'
+                    ) == 'NO'
+                      ? false
+                      : true
+                  "
+                ></i
+              ></span>
+            </ng-container>
+            <span
+              *ngIf="
+                !(
+                  this.service.responseIO.data.Entity.isCompleted || this.service.responseIO.data.Entity.isInvalid
+                ) &&
+                isAllApplicableProductsReq &&
+                service.responseIO.data.Proposer.partyTypeCd !== 'INDIVIDUAL'
+              "
+              class="viewAllProducts"
+            >
+              <input type="checkbox" class="form-check-input" (click)="viewProducts($event)" />
+              <span>{{ service.getMultilingualLabel('viewAllProducts') }} </span>
+            </span>
+          </h4>
+          <div
+            class="filter"
+            *ngIf="
+              (familyCardPerRow != undefined ||
+                productCardPerRow != undefined ||
+                planOptionCardPerRow != undefined) &&
+              !(companySUNPH === 'SLGFI' && service.responseIO.data.Proposer.partyTypeCd === 'INDIVIDUAL')
+            "
+          >
+            <input
+              type="text"
+              id="productFilter"
+              class="filterText"
+              [(ngModel)]="searchFilterText"
+              name="product"
+              [placeholder]="service.getMultilingualLabel('filterProduct')"
+            />
+          </div>
+          <div
+            class="filter"
+            *ngIf="
+              (familyCardPerRow != undefined ||
+                productCardPerRow != undefined ||
+                planOptionCardPerRow != undefined) &&
+              (this.service.responseIO.data.Entity.leadId == null ||
+                this.service.responseIO.data.Entity.leadId == '')
+            "
+          >
+            <input
+              type="text"
+              id="productFilter"
+              class="filterText"
+              [(ngModel)]="searchFilterText"
+              name="product"
+              [placeholder]="service.getMultilingualLabel('filterProduct')"
+            />
+          </div>
+        </div>
+        <ng-container
+          *ngIf="
+            familyCardPerRow != undefined || productCardPerRow != undefined || planOptionCardPerRow != undefined;
+            else productCategorySliderTemplate
+          "
+        >
+          <div class="product-selection-card pt-3">
+            <div class="row">
+              <ng-container
+                *ngFor="
+                  let product of respApplicableProducts.productList[productFamily.cd]
+                    | productSelectionFilter: searchFilterText;
+                  index as i
+                "
+              >
+                <div
+                  [class]="
+                    productCardPerRow == 2 ||
+                    productCardPerRow === 1 ||
+                    (productCardPerRow >= 7 && productCardPerRow <= 12)
+                      ? 'col-sm-6  col-md-6 co-lg-6 col-xl-6'
+                      : productCardPerRow == 3
+                      ? 'col-sm-4 col-md-4 co-lg-4 col-xl-4'
+                      : productCardPerRow == 4
+                      ? 'col-sm-3 col-md-3 co-lg-3 col-xl-3'
+                      : productCardPerRow == 5 || productCardPerRow == 6
+                      ? 'col-sm-2 col-md-2 co-lg-2 col-xl-2'
+                      : productCardPerRow >= 10 && productCardPerRow <= 11
+                      ? 'col-sm-2 col-md-2 co-lg-2 col-xl-2'
+                      : productCardPerRow === 12
+                      ? 'col-sm-1 col-md-1 co-lg-1 col-xl-1'
+                      : 'col-sm-4 col-md-4 co-lg-4 col-xl-4'
+                  "
+                  *ngIf="productFamily.cd == service.responseIO.data.BasePlan.productFamilyCd"
+                >
+                  <div
+                    [id]="product.id"
+                    [ngClass]="{
+                      'card cardProductSelection card_prod_alignment': true,
+                      validated: product.id == service.responseIO.data.BasePlan.productSeq,
+                      validated_not: product.id == service.responseIO.data.BasePlan.productSeq
+                    }"
+                  >
+                    <div class="card-header">
+                      <h5>
+                        <span [innerHTML]="product.desc | safeHtml: 'html'"></span>
+                        <!-- <ng-container *ngIf="app_environment != undefined && app_environment != 'PRODUCTION'">
+                          (
+                          {{ settingService.getLabelValue('ver') }}: {{ product.version }})
+                        </ng-container> -->
+
+                        <ng-container
+                          *ngIf="
+                            service.responseIO &&
+                              service.responseIO != undefined &&
+                              service.responseIO.data &&
+                              service.responseIO.data != undefined &&
+                              service.responseIO.data.BasePlan &&
+                              service.responseIO.data.BasePlan != undefined &&
+                              service.responseIO.data.BasePlan.productPlanOptionCd != undefined &&
+                              product.id == service.responseIO.data.BasePlan.productSeq;
+                            else elseTemplate
+                          "
+                        >
+                          <span *ngIf="selectedProductPlanOptionDesc != undefined" class="planOptionFSize">
+                            | {{ selectedProductPlanOptionDesc }}</span
+                          >
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                          <ng-container
+                            *ngIf="displayPlan && product.id == service.responseIO.data.BasePlan.productSeq"
+                          >
+                            <span *ngIf="selectedProductPlanOptionDesc != undefined" class="planOptionFSize">
+                              |
+                              {{ selectedProductPlanOptionDesc }}</span
+                            >
+                          </ng-container>
+                        </ng-template>
+                      </h5>
+
+                      <div class="headerActions">
+                        <ul>
+                          <li>
+                            <div>
+                              <!-- class="editCardDetails" -->
+                              <a
+                                *ngIf="product.id != service.responseIO.data.BasePlan.productSeq"
+                                (click)="
+                                  onProductSelection(product.id, product.cd, product.desc, product.version, $event)
+                                "
+                              ></a>
+                              <a
+                                *ngIf="product.id == service.responseIO.data.BasePlan.productSeq"
+                                class="selectedCard"
+                                (click)="
+                                  onProductSelection(product.id, product.cd, product.desc, product.version, $event)
+                                "
+                              ></a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="card-body" [ngClass]="{ 'p-1': product.productCardBodyHTML != undefined }">
+                      <ng-container *ngIf="product.productCardBodyHTML; else productBodyTemplate">
+                        <div [innerHTML]="product.productCardBodyHTML | safeHtml: 'html'"></div>
+                      </ng-container>
+                      <ng-template #productBodyTemplate>
+                        <div id="ProductImage">
+                          <div class="cardLeftContent_ps">
+                            <div class="cardImg">
+                              <div
+                                class="videoBanner productvideoBanner card-product"
+                                [class.no-cursor]="product.media == undefined"
+                                [style.background-image]="
+                                  product.image != undefined
+                                    ? 'url(/assets/theme/images/company/' + product.image + ')'
+                                    : ''
+                                "
+                              >
+                                <span class="videoBtn" *ngIf="product.media != undefined"></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="cardContent card_prod_alignment">
+                          <p>
+                            {{ product.text }}
+                          </p>
+                          <div class="actionLayer">
+                            <a
+                              href="javascript:void(0)"
+                              *ngIf="product.learnHtmlText != undefined"
+                              class="btnProductMoreInfo"
+                            >
+                              {{ settingService.getLabelValue('learnMore') }}</a
+                            >
+                            <a
+                              target="_blank"
+                              *ngIf="product.footer != undefined"
+                              [href]="'/assets/theme/images/company/' + product.pdf | safeHtml: 'resourceUrl'"
+                            >
+                              <span [innerHTML]="product.footer | safeHtml: 'html'"> </span
+                            ></a>
+                          </div>
+                        </div>
+                      </ng-template>
+
+                      <div
+                        class="cardFooter prd_card card_prod_alignment c-pointer"
+                        [id]="product.id"
+                        *ngIf="
+                          product.id != service.responseIO.data.BasePlan.productSeq &&
+                          (this.service.responseIO.data.Entity.isCompleted ||
+                            this.service.responseIO.data.Entity.isInvalid ||
+                            service.getFieldMetadataPropertyValue(
+                              service.responseIO.data.BasePlan,
+                              'productId',
+                              'VISIBILITY'
+                            ) == 'NO')
+                            ? false
+                            : true
+                        "
+                      >
+                        <a
+                          class="btn_secondary"
+                          [ngStyle]="{
+                            'pointer-events':
+                              service.responseIO.data.Entity.isCompleted ||
+                              service.responseIO.data.Entity.isInvalid ||
+                              service.getFieldMetadataPropertyValue(
+                                service.responseIO.data.BasePlan,
+                                'productId',
+                                'VISIBILITY'
+                              ) == 'NO'
+                                ? 'none'
+                                : ''
+                          }"
+                          (click)="
+                            onProductSelection(product.id, product.cd, product.desc, product.version, $event)
+                          "
+                        >
+                          <ng-container *ngIf="product.id != service.responseIO.data.BasePlan.productSeq">
+                            <ng-container *ngIf="isCustomerPortal; else elseTemplate">
+                              {{ settingService.getLabelValue('Buy Online') }}
+                            </ng-container>
+                            <ng-template #elseTemplate>
+                              {{ settingService.getLabelValue('selectProduct') }}
+                            </ng-template>
+                          </ng-container>
+                          <ng-container
+                            *ngIf="product.id == service.responseIO.data.BasePlan.productSeq"
+                            [class.active]="product.id == service.responseIO.data.BasePlan.productSeq"
+                          >
+                            {{ settingService.getLabelValue('productSelected') }}</ng-container
+                          ></a
+                        >
+                      </div>
+                    </div>
+                    <div class="cardOverlay" data-content="cardOverlayVideo">
+                      <div class="cardOverlayContent">
+                        <i class="fa fa-close"></i>
+
+                        <video class="videoElement" *ngIf="product?.media" width="320" height="240" controls>
+                          <source
+                            [src]="
+                              '/assets/theme/images/company/' + product.media + '?autoplay=0'
+                                | safeHtml: 'resourceUrl'
+                            "
+                            type="video/mp4"
+                          />
+                          <source
+                            [src]="
+                              '/assets/theme/images/company/' + product.media + '?autoplay=0'
+                                | safeHtml: 'resourceUrl'
+                            "
+                            type="video/ogg"
+                          />
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #productCategorySliderTemplate>
+          <div class="sectionContent">
+            <div class="productSlider">
+              <div
+                class="card"
+                *ngFor="let product of respApplicableProducts.productList[productFamily.cd]; index as i"
+                [attr.data-plan-id]="product.id"
+                [ngClass]="product.id == service.responseIO.data.BasePlan.productSeq ? 'card active' : 'card'"
+              >
+                <ng-container *ngIf="productFamily.cd == service.responseIO.data.BasePlan.productFamilyCd">
+                  <div
+                    class="cardImg"
+                    [style.background-image]="
+                      product.image != undefined ? 'url(/assets/theme/images/company/' + product.image + ')' : ''
+                    "
+                  >
+                    <div
+                      class="videoBanner"
+                      *ngIf="product.media != undefined"
+                      [style.background-image]="
+                        product.image != undefined ? 'url(/assets/theme/images/company/' + product.image + ')' : ''
+                      "
+                    >
+                      <span class="videoBtn"></span>
+                      <video
+                        class="videoElement"
+                        *ngIf="product?.media"
+                        width="320"
+                        height="240"
+                        controls
+                        preload="none"
+                      >
+                        <source
+                          [src]="
+                            '/assets/theme/images/company/' + product.media + '?autoplay=0'
+                              | safeHtml: 'resourceUrl'
+                          "
+                          type="video/mp4"
+                        />
+                        <source
+                          [src]="
+                            '/assets/theme/images/company/' + product.media + '?autoplay=0'
+                              | safeHtml: 'resourceUrl'
+                          "
+                          type="video/ogg"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                    <span class="iconBadge premium" *ngIf="product.media != undefined"></span>
+                  </div>
+                  <div class="cardContent">
+                    <h5>
+                      <span [innerHTML]="product.desc | safeHtml: 'html'"></span>
+                      <ng-container *ngIf="app_environment != undefined && app_environment != 'PRODUCTION'">
+                        (
+                        {{ settingService.getLabelValue('ver') }}: {{ product.version }})
+                      </ng-container>
+
+                      <ng-container
+                        *ngIf="
+                          service.responseIO &&
+                            service.responseIO != undefined &&
+                            service.responseIO.data &&
+                            service.responseIO.data != undefined &&
+                            service.responseIO.data.BasePlan &&
+                            service.responseIO.data.BasePlan != undefined &&
+                            service.responseIO.data.BasePlan.productPlanOptionCd != undefined &&
+                            product.id == service.responseIO.data.BasePlan.productSeq;
+                          else elseTemplate
+                        "
+                      >
+                        <span *ngIf="selectedProductPlanOptionDesc != undefined">
+                          {{ settingService.getLabelValue('plan') }}: {{ selectedProductPlanOptionDesc }}</span
+                        >
+                      </ng-container>
+                      <ng-template #elseTemplate>
+                        <ng-container
+                          *ngIf="displayPlan && product.id == service.responseIO.data.BasePlan.productSeq"
+                        >
+                          <span *ngIf="selectedProductPlanOptionDesc != undefined">
+                            {{ settingService.getLabelValue('plan') }}
+                            :
+                            {{ selectedProductPlanOptionDesc }}</span
+                          >
+                        </ng-container>
+                      </ng-template>
+                    </h5>
+                    <p>
+                      {{ product.text }}
+                    </p>
+                    <div class="actionLayer">
+                      <a
+                        href="javascript:void(0)"
+                        *ngIf="product.learnHtmlText != undefined"
+                        class="btnProductMoreInfo"
+                      >
+                        {{ settingService.getLabelValue('learnMore') }}</a
+                      >
+                      <a
+                        target="_blank"
+                        *ngIf="product.footer != undefined"
+                        [href]="'/assets/theme/images/company/' + product.pdf | safeHtml: 'resourceUrl'"
+                      >
+                        <span [innerHTML]="product.footer | safeHtml: 'html'"> </span
+                      ></a>
+                    </div>
+                  </div>
+                  <div
+                    class="cardFooter"
+                    [id]="product.id"
+                    *ngIf="
+                      product.id != service.responseIO.data.BasePlan.productSeq &&
+                      (this.service.responseIO.data.Entity.isCompleted ||
+                        this.service.responseIO.data.Entity.isInvalid ||
+                        service.getFieldMetadataPropertyValue(
+                          service.responseIO.data.BasePlan,
+                          'productId',
+                          'VISIBILITY'
+                        ) == 'NO')
+                        ? false
+                        : true
+                    "
+                  >
+                    <a
+                      href="javascript:void(0);"
+                      class="btn_secondary"
+                      [ngStyle]="{
+                        'pointer-events':
+                          service.responseIO.data.Entity.isCompleted ||
+                          service.responseIO.data.Entity.isInvalid ||
+                          service.getFieldMetadataPropertyValue(
+                            service.responseIO.data.BasePlan,
+                            'productId',
+                            'VISIBILITY'
+                          ) == 'NO'
+                            ? 'none'
+                            : ''
+                      }"
+                      (click)="onProductSelection(product.id, product.cd, product.desc, product.version, $event)"
+                    >
+                      <ng-container *ngIf="product.id != service.responseIO.data.BasePlan.productSeq">
+                        <ng-container *ngIf="isCustomerPortal; else elseTemplate">
+                          {{ settingService.getLabelValue('Buy Online') }}
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                          {{ settingService.getLabelValue('selectProduct') }}
+                        </ng-template>
+                      </ng-container>
+                      <ng-container
+                        *ngIf="product.id == service.responseIO.data.BasePlan.productSeq"
+                        [class.active]="product.id == service.responseIO.data.BasePlan.productSeq"
+                      >
+                        {{ settingService.getLabelValue('productSelected') }}</ng-container
+                      ></a
+                    >
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <sym-component-load-emitter (componentLoaded)="initializeSectionSlider()"></sym-component-load-emitter>
+        </ng-template>
+      </div>
+    </ng-container>
+  </div>
+
+  <!--section product ends-->
+
+  <!--section planoption ends-->
+  <div
+    *ngIf="
+      service.responseIO.data.BasePlan.productSeq != undefined &&
+      respApplicableProducts.planOptionList[service.responseIO.data.BasePlan.productSeq] &&
+      respApplicableProducts.planOptionList[service.responseIO.data.BasePlan.productSeq] != undefined &&
+      respApplicableProducts.planOptionList[service.responseIO.data.BasePlan.productSeq].length > 0
+    "
+    [ngClass]="{
+      hide: !displayPlanOptionList,
+      show: displayPlanOptionList
+    }"
+  >
+    <ng-container
+      *ngFor="let product of respApplicableProducts.productList[service.responseIO.data.BasePlan.productFamilyCd]"
+    >
+      <div
+        [ngClass]="{
+          'section sectionProduct planOption': true,
+          TravelPlanOpt: service.responseIO.data.Entity.insuranceTypeCd == 'TRAVEL'
+        }"
+        *ngIf="displayPlanOptionList && product.cd == service.responseIO.data.BasePlan.productId"
+        [id]="'product_' + product.cd"
+      >
+        <div class="sectionHeader">
+          <h4
+            *ngIf="
+              respApplicableProducts &&
+              respApplicableProducts != undefined &&
+              respApplicableProducts.productList &&
+              respApplicableProducts.productList != undefined
+            "
+          >
+            {{ settingService.getLabelValue('selectPlanFromOptions') }}
+
+            <span class="selectedProductFamily" (click)="onDeselectProductFamily()"
+              >{{ settingService.getLabelValue(service.responseIO.data.BasePlan.productFamilyCd) }}
+              <i
+                *ngIf="
+                  this.service.responseIO.data.Entity.isCompleted ||
+                  this.service.responseIO.data.Entity.isInvalid ||
+                  service.getFieldMetadataPropertyValue(
+                    service.responseIO.data.BasePlan,
+                    'productId',
+                    'VISIBILITY'
+                  ) == 'NO'
+                    ? false
+                    : true
+                "
+              ></i
+            ></span>
+
+            <span class="selectedProductFamily" (click)="onDeselectPlanOption()"
+              >{{ selectedProductDesc }}
+              <i
+                *ngIf="
+                  this.service.responseIO.data.Entity.isCompleted ||
+                  this.service.responseIO.data.Entity.isInvalid ||
+                  service.getFieldMetadataPropertyValue(
+                    service.responseIO.data.BasePlan,
+                    'productId',
+                    'VISIBILITY'
+                  ) == 'NO'
+                    ? false
+                    : true
+                "
+              ></i
+            ></span>
+          </h4>
+          <div
+            class="filter"
+            *ngIf="
+              familyCardPerRow != undefined || productCardPerRow != undefined || planOptionCardPerRow != undefined
+            "
+          >
+            <input
+              type="text"
+              id="planOptionFilter"
+              class="filterText"
+              [(ngModel)]="searchFilterText"
+              name="planOption"
+            /><br /><br />
+          </div>
+        </div>
+        <ng-container
+          *ngIf="
+            familyCardPerRow != undefined || productCardPerRow != undefined || planOptionCardPerRow != undefined;
+            else planOptionSliderTemplate
+          "
+        >
+          <div class="product-selection-card pt-3">
+            <div class="row">
+              <ng-container
+                *ngFor="
+                  let planOption of respApplicableProducts.planOptionList[
+                    service.responseIO.data.BasePlan.productSeq
+                  ] | productSelectionFilter: searchFilterText;
+                  index as i
+                "
+              >
+                <div
+                  [class]="
+                    planOptionCardPerRow == 2 || planOptionCardPerRow === 1
+                      ? 'col-sm-6  col-md-6 co-lg-6 col-xl-6'
+                      : planOptionCardPerRow == 3
+                      ? 'col-sm-4 col-md-4 co-lg-4 col-xl-4'
+                      : planOptionCardPerRow == 4
+                      ? 'col-sm-3 col-md-3 co-lg-3 col-xl-3'
+                      : planOptionCardPerRow >= 5 && planOptionCardPerRow <= 12
+                      ? 'col-sm-2 col-md-2 co-lg-2 col-xl-2'
+                      : planOptionCardPerRow >= 10 && planOptionCardPerRow <= 11
+                      ? 'col-sm-2 col-md-2 co-lg-2 col-xl-2'
+                      : planOptionCardPerRow === 12
+                      ? 'col-sm-1 col-md-1 co-lg-1 col-xl-1'
+                      : 'col-sm-3 col-md-3 co-lg-3 col-xl-3'
+                  "
+                >
+                  <div
+                    [id]="product.id"
+                    [ngClass]="{
+                  'card cardProductSelection card_prod_alignment': true,
+                  validated: planOption.cd == service.responseIO.data.BasePlan.productPlanOptionCd ,
+                }"
+                    (click)="onPlanOptionSelect(planOption.cd, planOption.desc)"
+                  >
+                    <div class="card-header">
+                      <h5 *ngIf="planOption.desc != undefined">
+                        {{ planOption.desc }}
+                      </h5>
+
+                      <div class="headerActions">
+                        <ul>
+                          <li>
+                            <div>
+                              <a
+                                *ngIf="planOption.cd != service.responseIO.data.BasePlan.productPlanOptionCd"
+                                class="editCardDetails"
+                              ></a>
+                              <a
+                                *ngIf="planOption.cd == service.responseIO.data.BasePlan.productPlanOptionCd"
+                                class="selectedCard"
+                              ></a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="card-body planoption_body p-0 c-pointer">
+                      <div class="cardContent card_prod_alignment">
+                        <div
+                          *ngIf="planOption.html != undefined"
+                          class="plan-option-desc p-3 scrollDiv"
+                          [innerHTML]="planOption.html | safeHtml: 'html'"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #planOptionSliderTemplate>
+          <div class="planOptionSectionContent sectionContent">
+            <div class="productSlider">
+              <ng-container
+                *ngFor="
+                  let planOption of respApplicableProducts.planOptionList[
+                    service.responseIO.data.BasePlan.productSeq
+                  ];
+                  index as i
+                "
+              >
+                <div
+                  [attr.data-plan-id]="planOption.cd"
+                  [ngClass]="{
+                    'card planoption-card': true,
+                    active: planOption.desc == selectedProductPlanOptionDesc
+                  }"
+                  (click)="onPlanOptionSelect(planOption.cd, planOption.desc)"
+                >
+                  <div>
+                    <!--  class="flipper" <div class="front">
+                    <i
+                      class="fa fa-check-circle selected-option-icon"
+                      aria-hidden="true"
+                      *ngIf="planOption.desc == selectedProductPlanOptionDesc"
+                    ></i>
+                  </div>
+                  <div class="back"> -->
+                    <i
+                      *ngIf="planOption.desc == selectedProductPlanOptionDesc"
+                      class="fa fa-times-circle selected-option-icon"
+                      aria-hidden="true"
+                    ></i>
+                    <i
+                      class="fa fa-check-circle-o selected-option-icon"
+                      aria-hidden="true"
+                      *ngIf="planOption.desc != selectedProductPlanOptionDesc"
+                    ></i>
+                    <!-- </div> -->
+                  </div>
+                  <ng-container>
+                    <div class="cardContent">
+                      <h5>
+                        {{ planOption.desc }}
+                        <hr />
+                      </h5>
+
+                      <div
+                        *ngIf="planOption.html != undefined"
+                        class="plan-option-desc p-3 scrollDiv"
+                        [innerHTML]="planOption.html | safeHtml: 'html'"
+                      ></div>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <sym-component-load-emitter
+            (componentLoaded)="initializePlanOptionSlider()"
+          ></sym-component-load-emitter>
+        </ng-template>
+      </div>
+    </ng-container>
+  </div>
+  <!--section planoptions ends-->
+</div>

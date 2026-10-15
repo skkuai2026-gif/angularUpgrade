@@ -1,0 +1,16 @@
+{
+  "appId": "com.c2lbiz.symbiosysalestool",
+  "appName": "SymbiosysSalesTool",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist/symbiosys-app",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 20000
+    }
+  },
+  "cordova": {},
+  "ios": {
+    "contentInset": "always"
+  }
+}

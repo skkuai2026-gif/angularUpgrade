@@ -1,0 +1,46 @@
+@if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div>
+  <!--class="card m-1" -->
+  <!-- <sym-panel  [id]="'basic_Details_Body'" [name]="'basicDetails'"> -->
+  <sym-field-group
+    [fieldIds]="'quotationRefNum,quotationDt,quotAddtnlField2,uploadFlag'"
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.Entity"
+    [gridColumns]="[4, 4, 4]"
+  ></sym-field-group>
+  @if (service.getSessionStorageValue('userType') == 'INTERNAL') {
+  <sym-field-group
+    [fieldIds]="'agentId,agentName'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.Entity"
+    [displaySearchForField]="
+      !service.responseIO.data.Entity.isCompleted &&
+      !service.responseIO.data.Entity.isInvalid &&
+      service.getSessionStorageValue('userType') === 'INTERNAL'
+        ? 'agentId'
+        : undefined
+    "
+    (searchIconClicked)="onAgentSearchClick($event)"
+    [gridColumns]="[3, 3]"
+  ></sym-field-group>
+  } @if (isAgentSearchOpened) { @if ( (service.responseIO.data.Entity.isCompleted ||
+  service.responseIO.data.Entity.isInvalid) && service.getSessionStorageValue('userType') !== 'INTERNAL' ? false :
+  true ) {
+  <sym-pop-up [headerText]="'searchAgent'" [popupID]="'AgentSearch'" class="agentSearch">
+    <sym-agent-search (selectedOptionChanged)="onAgentSearchSelected($event)"></sym-agent-search>
+  </sym-pop-up>
+  } } @if ( this.service.responseIO.data.Entity != null && this.service.responseIO.data.Entity['quotAddtnlField1']
+  != null && this.service.responseIO.data.Entity['quotAddtnlField1'] != undefined ) {
+  <sym-field-group
+    [fieldIds]="'quotAddtnlField1,quotAddtnlField2,quotAddtnlField3,quotAddtnlField4,quotAddtnlField5'"
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.Entity"
+  ></sym-field-group>
+  }
+  <!-- </sym-panel> -->
+</div>
+}

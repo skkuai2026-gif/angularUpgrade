@@ -1,0 +1,352 @@
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.grid-layout .fgMaterial {
+  padding-top: 9px;
+  margin-bottom: 9px;
+}
+
+.card.cardRider.validated .card-header .headerActions ul > li .fgMaterial {
+  padding-top: 0px;
+}
+
+.prdHeader {
+  height: 30px;
+  vertical-align: top;
+}
+
+.planLbl {
+  width: 20%;
+}
+.planVal {
+  width: 35%;
+  height: 36px; /*p 1*/
+  text-align: center; /*p 1*/
+}
+
+.riderLbl {
+  width: 65%;
+}
+.riderVal {
+  width: 35%;
+}
+
+.bankLeftDisplay {
+  width: 20%;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  /*width: 35%;*/
+  height: calc(100% - 100px);
+  padding: 30px;
+  z-index: 9;
+  display: flex;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-size: 200% auto;
+  background-position: center;
+  mix-blend-mode: color-burn;
+}
+
+.bankFieldsDisplay {
+  font-weight: bold;
+}
+
+.customerPageData > .card {
+  width: 80%;
+}
+
+.customerPageData .card .card-header.stepHeader {
+  width: 80%;
+}
+
+.pgContent .formFooter,
+.pgContent .menuHidden.formFooter {
+  width: 80%;
+}
+
+.sectionCategory .sectionContent .card > h5 {
+  font-size: 1.4rem !important;
+  margin-top: 5px;
+  color: #fb7c04;
+  font-weight: bold;
+}
+
+.sectionCategory .sectionContent .card > p {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #334d9c;
+}
+
+.sectionHeader {
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.sectionCategory .sectionHeader small {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fb7c04;
+  margin-bottom: 5px;
+  font-style: normal;
+}
+
+.sectionCategory .sectionContent .card {
+  border: 1px solid #fb7c04 !important;
+  opacity: 0.8 !important;
+}
+
+.sectionCategory .sectionContent .card:hover {
+  border: 1px solid #334d9c !important;
+}
+
+.sectionCategory .sectionContent .card::before {
+  background-color: #334d9c !important;
+}
+
+.sectionCategory .sectionContent .card:hover > h5 {
+  color: #fb7c04 !important;
+}
+
+.bankLeftDisplay h4 {
+  font-weight: bold;
+  color: #919191;
+  font-size: 1rem !important;
+  margin-bottom: 20px;
+}
+
+.bankLeftDisplay h4 > span {
+  color: #fb7c04;
+  font-size: 1.1rem;
+}
+
+.bankLeftDisplay h3 {
+  margin-top: 20px;
+  margin-bottom: 15px;
+  color: #334d9c;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.fgMaterial .form-control:focus ~ label,
+.fgMaterial .form-group:focus ~ label,
+.form-group .ng-select ~ label,
+.form-control:not(:placeholder-shown) ~ label,
+.form-group:not(:placeholder-shown) ~ label,
+.form-control[placeholder='DD/MM/YYYY'] ~ label,
+.form-control[placeholder='xxxx-xxxx-xxxx'] ~ label {
+  color: #919191;
+}
+
+label,
+.label {
+  color: #919191;
+}
+
+.form-control:focus {
+  border-color: #334d9c;
+}
+
+.customerPageData .card-header.stepHeader .nav-tabs > li.completed > a > span:first-child:before {
+  background-color: #4cbb17;
+  border-color: #4cbb17;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li.completed i {
+  background-color: #4cbb17;
+}
+.customerPageData .card-header.stepHeader .nav-tabs > li > a.active > span:first-child,
+.customerPageData .card-header.stepHeader .nav-tabs > li.currentTab > a > span:first-child {
+  background-color: #fb7c04 !important;
+  box-shadow: 0 0 0 rgba(251, 123, 4, 0.4);
+}
+
+.fgMaterial {
+  padding-top: 20px;
+  margin-bottom: 10px;
+}
+
+.fgMaterial .form-control {
+  margin-bottom: 10px;
+}
+
+.additionalIconBtn {
+  color: #334d9c;
+  border-right: 2px solid #334d9c !important;
+}
+
+.additionalIconBtn:hover {
+  color: #fb7c04;
+  border-right: 1.7px solid #fb7c04 !important;
+}
+
+.block > h4 {
+  color: #334d9c;
+  font-weight: bold;
+  border-bottom: unset;
+}
+
+.block > h4:before {
+  /* background: #fb7c04; */
+  background: (51, 102, 255, 0.24);
+  height: 0px;
+}
+
+#but_Proceed {
+  background-color: #334d9c;
+}
+
+#but_Proceed:hover {
+  background-color: #fb7c04;
+  border: 1px solid #fb7c04;
+}
+
+.premium-value {
+  font-weight: bold;
+  font-size: 24px;
+  color: #44763f;
+}
+
+.all-lbl {
+  color: #919191;
+  font-weight: bold;
+  font-size: 13px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.cover-value {
+  font-weight: bold;
+  font-size: 11px;
+  color: #44763f;
+}
+
+.rider-value {
+  font-weight: normal;
+  font-size: 12px;
+  color: #334d9c;
+  width: 100%;
+}
+
+.rowQCompare .card {
+  z-index: inherit;
+}
+
+.rightItem {
+  margin: 5px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  z-index: 99;
+}
+
+.card.selected {
+  box-shadow: 4px 4px 10px 0px rgb(51 102 255 / 32%) !important;
+  left: -1px;
+  top: -9px;
+  /*background: #c4d1f9;*/
+  border: 2px solid #597de9 !important;
+  color: #fff;
+}
+
+.card.selected label,
+.card.selected .label,
+.card.selected p {
+  color: #000;
+}
+
+hr {
+  border-top: 0.5px #cdcecf;
+  border-style: solid;
+  margin: 0;
+}
+
+.product-container {
+  grid-row: span 2;
+}
+
+.product-grid-layout {
+  display: grid;
+  grid-template-rows: 3.5rem 4em;
+}
+
+/* .rowQCompare .card .radioGrpBox.radioGrpText,
+.radioButton .radioGrpBox.radioGrpText {
+  display: flex;
+  flex-flow: wrap;
+} */
+
+.bankLeftDisplay .radioButton .radioGrpBox.radioGrpText {
+  flex-flow: wrap;
+}
+
+.rowQCompare .card {
+  margin: 10px 0px 10px 0px;
+  height: 100%;
+}
+
+.btnSelectCard {
+  height: 15px !important;
+}
+
+.rowQCompare .card:before {
+  height: 15px !important;
+}
+
+.rowQCompare .card .radioGrpBox.radioGrpText .form-check,
+.radioButton .radioGrpBox.radioGrpText .form-check {
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
+  width: max-content;
+}
+
+.radioButton .radioGrpBox.radioGrpText .form-check > label {
+  border: 1.5px solid #018acd;
+  border-radius: 4px;
+}
+
+.rowQCompare .card:before {
+  background: #d7e8e9 !important;
+}
+
+.rowQCompare .card:focus,
+.rowQCompare .card:hover {
+  top: 0;
+  left: 0;
+}
+
+.quoteSelectionRadio label {
+  color: #106464 !important;
+}
+
+.quoteSelectionRadio p > span {
+  font-weight: bold;
+}
+
+.quoteSelectionRadio .row p > label {
+  width: 100%;
+}
+
+.quoteSelectionRadio .innerHorizontalTab.innerHorizontalTabSmall .nav-tabs .nav-link {
+  padding: 8px 3px 8px 3px !important;
+}
+
+.quoteSelectionRadio .innerHorizontalTab .nav-tabs .nav-item {
+  padding-right: 5px !important;
+}
+
+.quoteSelectionRadio .innerHorizontalTab.innerHorizontalTabSmall .nav-tabs .nav-link {
+  padding: 8px 5px 8px 5px !important;
+}
+
+.quoteSelectionRadio .innerHorizontalTab .nav-tabs .nav-item {
+  padding-right: 8px !important;
+}
+
+.personalInfoCard {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+}

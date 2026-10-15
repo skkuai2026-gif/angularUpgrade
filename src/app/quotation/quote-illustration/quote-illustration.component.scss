@@ -1,0 +1,44 @@
+#emailButton,
+#downloadPDFButton {
+  opacity: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+}
+.viewIllustrationContainer {
+  height: calc(100vh - 230px);
+  // overflow: hidden;
+  margin-right: -15px;
+  padding-bottom: 80px;
+}
+.btn_sendemail {
+  color: #004570;
+  background-color: #ffcb05;
+  box-shadow: none;
+  min-height: 34px;
+}
+
+.pr15 {
+  padding-right: 15px !important;
+}
+
+#buttonGUID {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+}
+.disabled {
+  pointer-events: none;
+}
+.textalign {
+  text-align: center;
+}
+.output-preferences-disabled {
+  pointer-events: none;
+  opacity: 0.65;
+}

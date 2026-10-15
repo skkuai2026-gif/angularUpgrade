@@ -1,0 +1,320 @@
+@if ( questionSet && questionSet != undefined && questionSet.uiLayoutXMLFormat != undefined && uiLayoutXMLFormat !=
+undefined) {
+<sym-policy-xml-question-set
+  [xmlDom]="uiLayoutXMLFormat"
+  [questionSet]="questionSet"
+  [partyGuid]="partyGuid"
+  [isUpperCaseReq]="isUpperCaseSet"
+  (notifyChange)="onQuestionChanged($event)"
+></sym-policy-xml-question-set>
+@if (questionSet.questionSets?.length > 0) {
+<div>
+  @for (innerQuestionSet of questionSet.questionSets; track innerQuestionSet; let i = $index) {
+  <div>
+    <sym-policy-question-set
+      [questionSet]="innerQuestionSet"
+      [partyGuid]="partyGuid"
+      [policyService]="policyService"
+    ></sym-policy-question-set>
+  </div>
+  }
+</div>
+} } @else { @if (questionSet && questionSet != undefined) {
+<div class="questionnaireContent">
+  @if ( questionSet.questionSets != undefined && questionSet.questionSets.length != 0 && questionSet.headerText !==
+  null) {
+  <sym-panel
+    [id]="questionSet.headerText !== null ? questionSet.questionSetCd : ''"
+    [name]="
+      questionSet.displayNum != undefined && questionSet.displayNum != null && questionSet.displayNum != ''
+        ? questionSet.displayNum + ':' + questionSet.headerText
+          ? ''
+          : ''
+        : questionSet.headerText
+    "
+    [isSubPanel]="!isParentPanel"
+    [isHidden]="!isParentPanel"
+  >
+    @if ( questionSet.headerText != undefined && questionSet.headerText != null && questionSet.headerText != '' &&
+    !isParentPanel ) {
+    <div class="LeafHeader">
+      {{
+        questionSet.displayNum != undefined && questionSet.displayNum != null && questionSet.displayNum != ''
+          ? questionSet.displayNum + ':' + questionSet.headerText
+            ? ''
+            : ''
+          : questionSet.headerText
+      }}
+    </div>
+    }
+    <div [class.pb-3]="!isParentPanel" [class.pl-3]="!isParentPanel">
+      @if (questionSet.questions != undefined && questionSet.questions.length > 0) { @for (question of
+      questionSet.questions; track question) { @if (question.inputTypeCd != null && question.inputTypeCd !=
+      undefined) { @if ('NO' != question.visibility) {
+      <sym-policy-question-item
+        [question]="question"
+        [partyGuid]="partyGuid"
+        [questionSetCd]="questionSet.questionSetCd"
+        [parentReferencePath]="questionSet.parentReferencePath"
+        [isUpperCaseReq]="isUpperCaseSet"
+        [policyService]="policyService"
+        (notifyChange)="onQuestionChanged($event)"
+      ></sym-policy-question-item>
+      } } } } @if (questionSet.gridReflexiveQuestion != undefined && questionSet.gridReflexiveQuestion != null) {
+      <div>
+        <sym-policy-question-item
+          [question]="questionSet.gridReflexiveQuestion"
+          [partyGuid]="partyGuid"
+          [questionSetCd]="questionSet.questionSetCd"
+          [parentReferencePath]="questionSet.parentReferencePath"
+          [isUpperCaseReq]="isUpperCaseSet"
+          [policyService]="policyService"
+          (notifyChange)="onQuestionChanged($event)"
+        ></sym-policy-question-item>
+      </div>
+      } @if (questionSet.isGridBasedFl) {
+      <div [class.pl-3]="questionSet.isGridBasedFl" [class.mb-6]="questionSet.isGridBasedFl">
+        @if (questionSet.questions.length > 0 && questionSet.questions[0].length > 0) {
+        <div>
+          @for (questions of questionSet.questions; track questions; let i = $index) {
+          <div class="card m-2 p-2">
+            @if (i != 0) {
+            <div>
+              @if (questionSet.questions != null && questionSet.questions.length > 0 && i >= 1) {
+              <button class="btn float-right" (click)="removeGridBasedQuestion(i)">
+                <i class="fa fa-trash"></i>
+              </button>
+              }
+            </div>
+            }
+            <div class="float-none"></div>
+            @if (questionSet.questions != undefined && questionSet.questions.length > 0) { @for (question of
+            questions; track question) { @if ('NO' != question.visibility) {
+            <div [class.pl-3]="question.isGridBasedFl || question.isReflexiveFl">
+              <sym-policy-question-item
+                [question]="question"
+                [partyGuid]="partyGuid"
+                [questionSetCd]="questionSet.questionSetCd"
+                [parentReferencePath]="questionSet.parentReferencePath"
+                [isUpperCaseReq]="isUpperCaseSet"
+                [policyService]="policyService"
+                (notifyChange)="onQuestionChanged($event)"
+              ></sym-policy-question-item>
+            </div>
+            } } }
+          </div>
+          <hr />
+          } @if ( questionSet.questions != null && questionSet.questions.length > 0 && questionSet.questions.length
+          < (questionSet.gridReflexiveQuestion != undefined && questionSet.gridReflexiveQuestion != null &&
+          questionSet.gridReflexiveQuestion.MAXRESPONSES != undefined ?
+          questionSet.gridReflexiveQuestion.MAXRESPONSES : questionSet.questions.length + 1) ) {
+          <sym-button
+            [class]="'btn btn_outline_primary btnAddTab mr-5'"
+            [id]="'btn_Add'"
+            [text]="'Add'"
+            (onClick)="onAddGridBasedQuestion($event)"
+            [isLoaderRequired]="false"
+          ></sym-button>
+          }
+        </div>
+        }
+      </div>
+      } @for (innerQuestionSet of questionSet.questionSets; track innerQuestionSet; let i = $index) { @if (
+      questionSet.questionSets != undefined && questionSet.questionSets.length != 0 &&
+      questionSet.questionSets.length >= 1 ) {
+      <div [class.pl-3]="innerQuestionSet.isReflexiveFl">
+        <sym-policy-question-set
+          [questionSet]="innerQuestionSet"
+          [partyGuid]="partyGuid"
+          [policyService]="policyService"
+        ></sym-policy-question-set>
+      </div>
+      } }
+    </div>
+  </sym-panel>
+  } @else { @if (questionSet.questions != undefined && questionSet.questions.length > 0) {
+  <div>
+    @if ( questionSet.headerText != undefined && questionSet.headerText != null && questionSet.headerText != '' &&
+    questionSet.gridReflexiveQuestion == undefined && questionSet.gridReflexiveQuestion == null ) {
+    <div class="LeafHeader">
+      {{ questionSet.headerText }}
+    </div>
+    } @for (question of questionSet.questions; track question) { @if (question.inputTypeCd != null &&
+    question.inputTypeCd != undefined) { @if ('NO' != question.visibility) {
+    <div class="pb-3 pl-3">
+      <sym-policy-question-item
+        [question]="question"
+        [partyGuid]="partyGuid"
+        [questionSetCd]="questionSet.questionSetCd"
+        [parentReferencePath]="questionSet.parentReferencePath"
+        [isUpperCaseReq]="isUpperCaseSet"
+        [policyService]="policyService"
+        (notifyChange)="onQuestionChanged($event)"
+      ></sym-policy-question-item>
+    </div>
+    } } }
+  </div>
+  } @if (questionSet.gridReflexiveQuestion != undefined && questionSet.gridReflexiveQuestion != null) {
+  <div class="pb-3 pl-3">
+    @if ( questionSet.headerText != undefined && questionSet.headerText != null && questionSet.headerText != '' ) {
+    <div class="LeafHeader">
+      {{ questionSet.headerText }}
+    </div>
+    }
+    <sym-policy-question-item
+      [question]="questionSet.gridReflexiveQuestion"
+      [partyGuid]="partyGuid"
+      [questionSetCd]="questionSet.questionSetCd"
+      [parentReferencePath]="questionSet.parentReferencePath"
+      [isUpperCaseReq]="isUpperCaseSet"
+      [policyService]="policyService"
+      (notifyChange)="onQuestionChanged($event)"
+    ></sym-policy-question-item>
+  </div>
+  } @if (questionSet.isGridBasedFl) {
+  <div>
+    @if (questionSet.questions.length > 0 && questionSet.questions[0].length > 0) {
+    <div [class.pl-3]="questionSet.isGridBasedFl" [class.mb-6]="questionSet.isGridBasedFl">
+      @for (questions of questionSet.questions; track questions; let i = $index) {
+      <div class="card m-2 p-2">
+        @if (questionSet.questions != null && questionSet.questions.length > 0 && i >= 1) {
+        <div>
+          <button class="btn float-right" (click)="removeGridBasedQuestion(i)">
+            <i class="fa fa-trash"></i>
+          </button>
+        </div>
+        }
+        <div class="float-none"></div>
+        @if (questionSet.questions != undefined && questionSet.questions.length > 0) { @for (question of questions;
+        track question) { @if ('NO' != question.visibility) {
+        <div [class.pl-3]="question.isGridBasedFl || question.isReflexiveFl">
+          <sym-policy-question-item
+            [question]="question"
+            [partyGuid]="partyGuid"
+            [questionSetCd]="questionSet.questionSetCd"
+            [parentReferencePath]="questionSet.parentReferencePath"
+            [isUpperCaseReq]="isUpperCaseSet"
+            [policyService]="policyService"
+            (notifyChange)="onQuestionChanged($event)"
+          ></sym-policy-question-item>
+        </div>
+        } } }
+      </div>
+      <hr />
+      } @if ( questionSet.questions != null && questionSet.questions.length > 0 && questionSet.questions.length <
+      (questionSet.gridReflexiveQuestion != undefined && questionSet.gridReflexiveQuestion != null &&
+      questionSet.gridReflexiveQuestion.MAXRESPONSES != undefined ? questionSet.gridReflexiveQuestion.MAXRESPONSES
+      : questionSet.questions.length + 1) ) {
+      <sym-button
+        [class]="'btn btn_outline_primary btnAddTab mr-5'"
+        [id]="'btn_Add'"
+        [text]="'Add'"
+        (onClick)="onAddGridBasedQuestion($event)"
+        [isLoaderRequired]="false"
+      ></sym-button>
+      }
+    </div>
+    }
+  </div>
+  } @if ( questionSet.questionSets != undefined && questionSet.questionSets.length != 0 &&
+  questionSet.questionSets.length >= 1 ) {
+  <div>
+    @for (innerQuestionSet of questionSet.questionSets; track innerQuestionSet; let i = $index) {
+    <sym-policy-question-set
+      [questionSet]="innerQuestionSet"
+      [partyGuid]="partyGuid"
+      [policyService]="policyService"
+    ></sym-policy-question-set>
+    }
+  </div>
+  } }
+</div>
+} }
+<sym-pop-up
+  [headerText]="companySUNPH === 'SLOCPI' ? 'SLOCPI' : 'SLGFI'"
+  [popupID]="'specialPaymentArrangementPopup'"
+  [popupSize]="'large'"
+  [displayPopupAtTop]="true"
+  [hideCloseButton]="false"
+>
+  <div class="border" id="specialPaymentArrangementPopup">
+    <div class="table-wrapper">
+      <!-- SLOCPI Section -->
+      @if (companySUNPH === 'SLOCPI') {
+      <div class="column">
+        <!-- <h4><strong>SLOCPI</strong></h4> -->
+        <p>
+          <strong>{{ settingService.getLabelValue('NoteReminder') }}</strong>
+        </p>
+        <!-- <p><strong>ADA Forms:&nbsp;</strong>{{ settingService.getLabelValue('AccService') }}</p> -->
+        <p><strong>ACA Enrollment:</strong> {{ settingService.getLabelValue('CardHolder') }}:</p>
+        <ul>
+          <li>{{ settingService.getLabelValue('ACA_Enrollment_Label1') }}</li>
+          <li>{{ settingService.getLabelValue('ACA_Enrollment_Label2') }}</li>
+          <li>{{ settingService.getLabelValue('ACA_Enrollment_Label3') }}</li>
+          <li>{{ settingService.getLabelValue('ACA_Enrollment_Label4') }}</li>
+        </ul>
+        <p><strong>BDO and BPI ADA Enrollment:</strong> The following is required:</p>
+        <ul>
+          <li [innerHTML]="settingService.getLabelValue('BDO_ADA_text1')"></li>
+          <li [innerHTML]="settingService.getLabelValue('BDO_ADA_text2')"></li>
+          <li [innerHTML]="settingService.getLabelValue('BDO_ADA_text3')"></li>
+          <li [innerHTML]="settingService.getLabelValue('BDO_ADA_text4')"></li>
+          <li [innerHTML]="settingService.getLabelValue('BDO_ADA_text5')"></li>
+        </ul>
+        <p>
+          <span>{{ settingService.getLabelValue('Email_text') }}</span
+          ><br />
+          <span>
+            <a
+              href="mailto:PHIL_AccountServices&#45;SLGFI&#64;sunlife.com"
+              style="color: blue; text-decoration: underline"
+            >
+              sunlink&#64;sunlife.com</a
+            >
+          </span>
+        </p>
+      </div>
+      }
+
+      <!-- SLGFI Section -->
+      @if (companySUNPH === 'SLGFI') {
+      <div class="column">
+        <!-- <h4><strong>SLGFI</strong></h4> -->
+        <p>
+          <strong>{{ settingService.getLabelValue('NoteReminder') }}</strong>
+        </p>
+        <!-- <p><strong>ADA Forms:</strong>{{ settingService.getLabelValue('AccService') }}</p> -->
+        <p><strong>ACA Enrollment:</strong> {{ settingService.getLabelValue('CardHolder') }}:</p>
+        <ul>
+          <li>{{ settingService.getLabelValue('ACA_Enrollment_Label1') }}</li>
+          <li>{{ settingService.getLabelValue('ACA_Enrollment_Label2') }}</li>
+          <li>{{ settingService.getLabelValue('ACA_Enrollment_Label3') }}</li>
+        </ul>
+        <p><strong>BDO ADA Enrollment:</strong> The following is required:</p>
+        <ul>
+          <li [innerHTML]="settingService.getLabelValue('BDO_ADA_text2')"></li>
+          <li [innerHTML]="settingService.getLabelValue('BDO_ADA_text1')"></li>
+          <li [innerHTML]="settingService.getLabelValue('BDO_ADA_text3')"></li>
+        </ul>
+        <p><strong>RCBC ADA Enrollment:</strong></p>
+        <ul>
+          <li [innerHTML]="settingService.getLabelValue('HardCopy')"></li>
+          <li [innerHTML]="settingService.getLabelValue('DigiCopy')"></li>
+        </ul>
+        <p>
+          <span>{{ settingService.getLabelValue('Email_text') }}</span
+          ><br />
+          <span
+            ><a
+              href="mailto:PHIL_AccountServices&#45;SLGFI&#64;sunlife.com"
+              style="color: blue; text-decoration: underline"
+              >PHIL_AccountServices&#45;SLGFI&#64;sunlife.com</a
+            ></span
+          >
+        </p>
+      </div>
+      }
+    </div>
+  </div>
+</sym-pop-up>

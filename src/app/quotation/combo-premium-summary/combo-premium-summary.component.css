@@ -1,0 +1,62 @@
+.small,
+small {
+  font-size: 70%;
+  font-weight: 400;
+}
+
+.pb {
+  padding-bottom: 0.65rem;
+}
+
+#illustrationtable.table tbody tr td {
+  padding: 0.35rem 0.24rem 0.35rem 0.59rem;
+}
+
+#illustrationtable.table thead tr th {
+  padding: 0.35rem 0.24rem 0.35rem 0.59rem;
+  white-space: pre-wrap;
+}
+
+.roleCd {
+  font-size: 0.85rem;
+}
+
+.grid-layout {
+  display: grid;
+  grid-column-gap: 12px;
+  grid-template-columns: auto auto;
+  color: #36f;
+  border-bottom: 1px solid #33e3ff;
+  padding: 2px 5px;
+  margin: 4px 0px;
+}
+
+.pd-f {
+  padding: 0.75rem 1.09rem 0 1.75rem;
+}
+
+.proposerRole {
+  color: #f7a35c !important;
+  padding-top: 15px !important;
+}
+
+.jointLife {
+  color: #90ed7d !important;
+  padding-top: 15px !important;
+}
+
+.supplementaryTitle {
+  color: rgb(231, 133, 231) !important;
+  padding-top: 15px !important;
+}
+
+.summaryLabel {
+  font-weight: lighter;
+}
+.summaryContent {
+  font-weight: bold;
+  color: black;
+}
+.hide_bg {
+  background-color: white;
+}

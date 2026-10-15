@@ -1,0 +1,123 @@
+<sym-page-container
+  [breadCrumbList]="breadCrumbList"
+  [stepList]="stepList"
+  [responseIO]="service.responseIO"
+  [breakErrorListInPopUp]="false"
+  [currentStepSelected]="selectedStep"
+  (selectedStep)="onStepChanged($event)"
+>
+  <!--  -->
+  @if (service.responseIO && service.responseIO.data && selectedStep != undefined) {
+  <sym-step
+    [stepItem]="selectedStep"
+    (actionClick)="onActionClicked($event)"
+    (tabChange)="onTabChanged($event)"
+    [contentExcludRightTab]="
+      selectedStep.id == 'step_yourDetails' || selectedStep.id == 'step_coverageDet' ? true : false
+    "
+  >
+    @if (selectedStep.selectedTab != undefined) { @if (selectedStep.selectedTab.id == 'tab_basic') {
+    <sym-basic-detail></sym-basic-detail>
+    @if (!isProposerCopiedFromLA) {
+    <sym-proposer [isProposerLASameDisplay]="false"></sym-proposer>
+    <sym-primary-insured [isProposerLASameDisplay]="true"></sym-primary-insured>
+    } @if (isProposerCopiedFromLA) {
+    <sym-primary-insured [isProposerLASameDisplay]="false"></sym-primary-insured>
+    <sym-proposer [isProposerLASameDisplay]="true"></sym-proposer>
+    }
+    <sym-joint-life></sym-joint-life>
+    <sym-field-group
+      [fieldIds]="'supplementaryLives'"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.Entity"
+      (notifyChange)="onInputChanged($event)"
+    >
+    </sym-field-group>
+    <!--  (notifyChange)="onInputChanged($event)" -->
+    } @if (selectedStep.selectedTab.id == 'tab_selProduct') {
+    <!--  [familyCardPerRow]="3" [productCardPerRow]="3" [planOptionCardPerRow]="4" -->
+    <sym-product-selection> </sym-product-selection>
+    } @if ( selectedStep.selectedTab.id == 'tab_plan' && service.responseIO.data.BasePlan != undefined &&
+    service.responseIO.data.BasePlan.productTypeCd == 'PLAN' ) {
+    <ng-container class="tab-pane">
+      <sym-base-plan (notifyReloadStep)="reloadStep()"></sym-base-plan>
+      @if (service.responseIO.data['BasePlan'] && service.responseIO.data['BasePlan'].FundList) {
+      <sym-fund-list></sym-fund-list>
+      }
+      <sym-base-plan-other></sym-base-plan-other>
+      <sym-topup></sym-topup>
+      @if (service.responseIO.data['BasePlan'] && service.responseIO.data['BasePlan'].PlanExtraList) {
+      <sym-plan-extra-list></sym-plan-extra-list>
+      } @if ( service.responseIO.data['WithdrawalList'] && service.responseIO.data['WithdrawalList'].length > 0 ) {
+      <sym-withdrawal [selectedTab]="selectedStep.selectedTab"></sym-withdrawal>
+      }
+    </ng-container>
+    } @if ( selectedStep.selectedTab.id == 'tab_plan' && service.responseIO.data.BasePlan != undefined &&
+    service.responseIO.data.BasePlan.productTypeCd == 'COMBO' ) {
+    <sym-quotation-parent-combo-product-coverage
+      [isDataSaved]="isDataSaved"
+      (notifyChildComboChange)="onChildComboChange($event)"
+    ></sym-quotation-parent-combo-product-coverage>
+    } @if (selectedStep.selectedTab.id == 'tab_rider') {
+    <ng-container class="tab-pane">
+      <!-- <sym-rider [responseUpdated]="responseUpdated"></sym-rider> -->
+      <sym-quotation-rider-card [responseUpdated]="responseUpdated"></sym-quotation-rider-card>
+    </ng-container>
+    } @if (selectedStep.selectedTab.id == 'tab_supplementary') {
+    <ng-container class="tab-pane">
+      <sym-supplementary [responseUpdated]="responseUpdated"></sym-supplementary>
+    </ng-container>
+    } @if ( (selectedStep.selectedTab.id == 'tab_plan' || selectedStep.selectedTab.id == 'tab_rider') &&
+    service.responseIO.data.BasePlan != undefined && service.responseIO.data.BasePlan.productTypeCd == 'PLAN' ) {
+    <sym-coverage-summary></sym-coverage-summary>
+    } @if ( selectedStep.selectedTab.id == 'tab_premiumSummary' && service.responseIO.data.BasePlan != undefined &&
+    service.responseIO.data.BasePlan.productTypeCd == 'PLAN' && service.responseIO.data.Entity.parentQuotationSeq
+    == undefined ) { @if (service.productFacets != undefined) {
+    <sym-premium-summary [newPremiumLayout]="false"></sym-premium-summary>
+    } } @if ( selectedStep.selectedTab.id == 'tab_premiumSummary' && service.responseIO.data.BasePlan != undefined
+    && service.responseIO.data.BasePlan.productTypeCd == 'COMBO' ) { @if (service.productFacets != undefined) {
+    <sym-combo-premium-summary></sym-combo-premium-summary>
+    } } @if (selectedStep.selectedTab.id == 'tab_illustration') {
+    <sym-quote-illustration></sym-quote-illustration>
+    } }
+  </sym-step>
+  }
+</sym-page-container>
+<!--modal for congratulation message start -->
+<sym-pop-up [popupID]="'acceptIllustrationModal'" [popupSize]="'small'" [displayPopupAtTop]="true">
+  <div class="successModalHeader">
+    <span class="iconSuccess"></span>
+    <h2>
+      {{ settingService.getLabelValue('quotationAcceptSuccessMsg') }}
+    </h2>
+  </div>
+  <div class="successModalContent">
+    <p>
+      {{ settingService.getLabelValue('downloadPdfClickMsg') }}
+    </p>
+    <p>
+      {{ settingService.getLabelValue('emailIllusClickMsg') }}
+    </p>
+    @if ( service.companyFacets && service.companyFacets.data['EAPPAPPLICABLE'] &&
+    service.companyFacets.data['EAPPAPPLICABLE'].length > 0 && service.companyFacets.data['EAPPAPPLICABLE'] ==
+    'YES' && service.responseIO?.data?.Entity?.entityStatus != 'LOCKED' ) {
+    <p>
+      {{ settingService.getLabelValue('proceedEAppClickMsg') }}
+    </p>
+    } @if (service.responseIO?.data?.Entity?.entityStatus == 'LOCKED') {
+    <p>
+      {{ settingService.getLabelValue('refreshEAppClickMsg') }}
+    </p>
+    }
+  </div>
+  <br />
+  <div class="footer text-center">
+    <sym-button
+      [id]="'btn_ok'"
+      [isLoaderRequired]="false"
+      [text]="'Ok'"
+      (onClick)="closeAcceptIllustrationModal()"
+    ></sym-button>
+  </div>
+</sym-pop-up>
+<!--modal for congratulation message ends -->

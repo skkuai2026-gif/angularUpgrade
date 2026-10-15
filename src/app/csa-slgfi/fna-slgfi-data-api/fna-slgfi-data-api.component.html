@@ -1,0 +1,63 @@
+<div>
+  @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+  <sym-panel sym-panel [id]="'fna_Details_Body'" [name]="'PERSONALDETAILS'">
+    <sym-field-group
+      [fieldIds]="'firstName1,middleName1,lastName1,educationLevelCd'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.FNAParty"
+    ></sym-field-group>
+    <sym-field-group
+      [fieldIds]="'birthDt,maritalStatusCd,noOfDependents'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.FNAParty"
+    ></sym-field-group>
+  </sym-panel>
+  }
+  <!-- <div>
+  <sym-panel sym-panel [id]="'financial_Details_Body'" [name]="'FINANCIALDETAILS'">
+    <sym-data-entry-grid
+      [fieldIds]="'field1,field2'"
+      [responseIO]="service.responseIO"
+      [modelList]="service.responseIO.data.FNARequestAdditionalAllList"
+      [isAddRequired]="false"
+      (notifyChange)="onInputChanged($event)"
+      [isDeleteRequired]="false"
+      [columWidthPerc]="[50, 50]"
+    ></sym-data-entry-grid>
+  </sym-panel>
+</div>
+<ng-container *ngFor="let fnaReqAdditionalDO of service.responseIO.data.FNARequestAdditionalAllList; index as i">
+  <div
+      *ngIf="
+        fnaReqAdditionalDO.field1 != null &&
+        fnaReqAdditionalDO.field1 == 'FNA_Q1PartA_option8' &&
+        fnaReqAdditionalDO.field2 != null &&
+        fnaReqAdditionalDO.field2 != ''
+      "
+    >
+    <sym-field-group
+      [fieldIds]="'field4'"
+      (notifyChange)="onInputChanged($event)"
+      [responseIO]="service.responseIO"
+      [model]="fnaReqAdditionalDO"
+      [gridColumns]="[6]"
+    ></sym-field-group>
+  </div>
+</ng-container> -->
+  <!-- <div>
+<sym-pop-up
+  [headerText]="'viewProposalList'"
+  [popupID]="'viewProposalList'"
+  class="OccupationIndustryDutySearch"
+  *ngIf="service.viewProposalListDisplayed"
+  >
+  <sym-view-proposal-list-slgfi
+    [searchCriteriaforProposal]="searchCriteriaforProposal"
+  ></sym-view-proposal-list-slgfi>
+</sym-pop-up>
+</div> -->
+  <sym-navigation-links [navigationLinkList]="navigationLinkList"></sym-navigation-links>
+</div>
+<!-- hello{{navigationLinkList |json}} -->

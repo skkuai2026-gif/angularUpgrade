@@ -1,0 +1,41 @@
+@if (uiFormatXmFacetlValue == 'XMLBASED') {
+<sym-page-container [stepList]="stepList" [responseIO]="service.responseIO" [currentStepSelected]="selectedStep">
+  @if (selectedStep != undefined) {
+  <sym-step
+    [stepItem]="selectedStep"
+    (actionClick)="onActionClicked($event)"
+    (tabChange)="onTabChanged($event)"
+    [contentExcludRightTab]="selectedStep.isRightContentAdded"
+  >
+    @for (tab of selectedStep.tabList; track tab) { @if (selectedStep.selectedTab != undefined &&
+    selectedStep.selectedTab.id == tab.id) {
+    <sym-xml-config-ui
+      [xmlDom]="tab.xmlDom"
+      [service]="service"
+      [responseUpdated]="responseUpdated"
+      [responseIO]="service.responseIO"
+      [productFacets]="service.productFacets"
+      [companyFacets]="service.companyFacets"
+    >
+    </sym-xml-config-ui>
+    } }
+  </sym-step>
+  }
+</sym-page-container>
+} @if (uiFormatXmFacetlValue == 'STATIC') {
+<sym-page-container [stepList]="stepList" [responseIO]="service.responseIO" [currentStepSelected]="selectedStep">
+  @if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 && selectedStep !=
+  undefined ) {
+  <sym-step
+    [stepItem]="selectedStep"
+    (actionClick)="onActionClicked($event)"
+    (tabChange)="onTabChanged($event)"
+    [contentExcludRightTab]="false"
+  >
+    @if (selectedStep.selectedTab != undefined) { @if (selectedStep.id == 'step_previewEApp') {
+    <sym-policy-e-app-preview [responseUpdated]="responseUpdated"></sym-policy-e-app-preview>
+    } }
+  </sym-step>
+  }
+</sym-page-container>
+}

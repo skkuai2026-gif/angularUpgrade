@@ -1,0 +1,91 @@
+@if ( genericXMLPanelList != undefined && genericXMLPanelList.length > 0 && service != undefined &&
+service.responseIO != undefined ) { @for (panel of genericXMLPanelList; track panel; let i = $index) { @if
+(panel.symIfVal) {
+<sym-panel
+  [id]="panel.panelID + '_' + i"
+  [name]="panel.panelID"
+  [isHidden]="panel.panelID == '#none' ? true : false"
+>
+  @if (panel.panelRows != undefined) {
+  <div>
+    @for (row of panel.panelRows; track row) { @if (row.symIfVal) {
+    <div class="form-row">
+      @for (column of row.columns; track column; let j = $index) { @if (column.symIfVal) { @if (column.text !=
+      undefined) {
+      <div
+        class="{{
+          service.responseIO['isMetadataHelpReqd'] === true
+            ? 'col-sm-12 col-md-12 co-lg-12 col-xl-12 no-gutters'
+            : column.className
+        }}"
+        [innerHTML]="service.getMultilingualLabel(column.text) | safeHtml: 'html'"
+      ></div>
+      } @if (column.grid != undefined) {
+      <div class="col-sm-12 col-md-12 co-lg-12 col-xl-12 no-gutters">
+        <sym-data-entry-grid
+          [fieldIds]="column.grid"
+          [responseIO]="service.responseIO"
+          (notifyChange)="onInputChanged($event)"
+          [modelList]="column.model"
+          [columWidthPerc]="column.gridWidth"
+          [isMoreRequired]="column.gridOptions.isMoreRequired"
+          [isDeleteRequired]="column.gridOptions.isDeleteRequired"
+          [isAddRequired]="column.gridOptions.isAddRequired"
+          [isFormFormatRequired]="column.gridOptions.isFormFormatRequired"
+          [formColumnWidth]="column.gridWidth"
+          [modelPath]="column.modelname"
+          (onRowAdded)="onRowAddedClicked($event)"
+          (notifyChange)="onNotifyChanges($event)"
+          (notifyFocus)="onNotifyFocus($event)"
+          (onMoreSelected)="onMoreSelectedClicked($event)"
+        ></sym-data-entry-grid>
+      </div>
+      } @if (column.field != undefined) { @if (column.isVisible) {
+      <div
+        class="{{
+          service.responseIO['isMetadataHelpReqd'] === true
+            ? 'col-sm-12 col-md-12 co-lg-12 col-xl-12 no-gutters'
+            : column.className
+        }}"
+      >
+        <sym-field-group
+          [fieldIds]="column.field"
+          [isRowRequired]="service.responseIO['isMetadataHelpReqd'] === true ? true : false"
+          [responseIO]="service.responseIO"
+          [model]="column.model"
+          (notifyChange)="onInputChanged($event)"
+          (notifyFocus)="onInputFocused($event)"
+        ></sym-field-group>
+      </div>
+      } } } }
+    </div>
+    } }
+  </div>
+  } @if (panel['component'] || panel['xmlcomponent']) {
+  <div>
+    <sym-xml-config-ui
+      [xmlDom]="panel['component'] != undefined ? panel['component'] : panel['xmlcomponent']"
+      [service]="service"
+      [responseIO]="service.responseIO"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      (onRowAdded)="onRowAddedClicked($event)"
+      (notifyFocus)="onNotifyFocus($event)"
+      (onMoreSelected)="onMoreSelectedClicked($event)"
+      (searchIconClicked)="onSearchIconClick($event)"
+    >
+    </sym-xml-config-ui>
+  </div>
+  } @if (panel['component']) {
+  <div>
+    @for (component of panel['component']; track component) {
+    <sym-dynamic-component
+      [componentToRender]="service.componentListToDisplay[component.getAttribute('name')]"
+      [inputOptions]="component.attributes"
+      [service]="service"
+    ></sym-dynamic-component>
+    }
+  </div>
+  }
+</sym-panel>
+} } }

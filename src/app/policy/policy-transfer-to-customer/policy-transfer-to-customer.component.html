@@ -1,0 +1,86 @@
+@if (service.responseIO != undefined) {
+<div>
+  @if (!isViewMode) {
+  <sym-field-group
+    [fieldIds]="'allocationPartyGuidList'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.Entity"
+    [gridColumns]="[12]"
+  ></sym-field-group>
+  <!-- <div class="box">
+      <div class="section"> -->
+  <!-- <div class="sectionHeader nav nav-tabs pb">
+        <h4>
+          {{ service.getMultilingualLabel('policyTransferHistory') }}
+        </h4>
+      </div> -->
+  <div>
+    {{ service.getMultilingualLabel('policyCustomerMsg') }}
+  </div>
+  <!-- </div> -->
+  <!-- </div> -->
+  } @if (isViewMode) {
+  <sym-policy-customer-transfer-history></sym-policy-customer-transfer-history>
+  } @if (messageDisplayed.isMessageDisplayed) {
+  <div class="message">
+    @if (messageDisplayed.successMessage != '') {
+    <strong class="me-auto success">
+      <i aria-hidden="true"></i>
+      {{ messageDisplayed.successMessage }}
+    </strong>
+    } @else {
+    <strong class="me-auto error">
+      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+      <span [innerHTML]="messageDisplayed.errorMessage"></span>
+      <!-- {{ messageDisplayed.errorMessage }} -->
+    </strong>
+    }
+  </div>
+  }
+</div>
+<!-- <div style="padding-left: 20px">
+By Clicking on Proceed, you confirm that the client/s will affix their signatures digitally, Remote Selling
+requirements will apply.
+</div> -->
+@if (!isViewMode) {
+<div class="text-center">
+  @if (service.responseIO.data.Entity.allocatedToRole === 'AGENT') {
+  <sym-button
+    [class]="'btn btn_primary mr-3 mt-3'"
+    [id]="'btn_Transfer'"
+    [text]="'Proceed'"
+    (onClick)="onTransferClick()"
+    [isLoaderRequired]="false"
+    [isDisabled]="
+      messageDisplayed.isMessageDisplayed &&
+      (messageDisplayed.successMessage != '' || messageDisplayed.errorMessage != '')
+        ? true
+        : false
+    "
+  ></sym-button>
+  } @if (service.responseIO.data.Entity.allocatedToRole !== 'AGENT') {
+  <sym-button
+    [class]="'btn btn_primary mr-3 mt-3'"
+    [id]="'btn_Revoke'"
+    [text]="'Revoke'"
+    (onClick)="onRevokeClick()"
+    [isLoaderRequired]="false"
+    [isDisabled]="
+      messageDisplayed.isMessageDisplayed &&
+      (messageDisplayed.successMessage != '' || messageDisplayed.errorMessage != '')
+        ? true
+        : false
+    "
+  ></sym-button>
+  }
+  <sym-button
+    [class]="'btn btn_outline_primary  mr-5 mt-3'"
+    [id]="'btn_Cancel'"
+    [text]="'CANCEL'"
+    (onClick)="onCancelClick()"
+    [isLoaderRequired]="false"
+  ></sym-button>
+</div>
+} }

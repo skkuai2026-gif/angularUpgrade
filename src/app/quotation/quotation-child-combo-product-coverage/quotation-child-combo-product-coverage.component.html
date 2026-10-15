@@ -1,0 +1,24 @@
+<ng-container>
+  @if (stepList != undefined) {
+  <sym-step [stepItem]="stepList[0]" (actionClick)="onActionClicked($event)" (tabChange)="onTabChanged($event)">
+    @if (service.responseIO && service.responseIO.data) { @if (this.selectedStep.selectedTab != undefined) { @if
+    (this.selectedStep.selectedTab.id == 'tab_plan') {
+    <sym-base-plan (notifyInputModify)="onInputModify($event)"></sym-base-plan>
+    @if (service.responseIO.data['BasePlan'] && service.responseIO.data['BasePlan'].FundList) {
+    <sym-fund-list></sym-fund-list>
+    }
+    <sym-base-plan-other></sym-base-plan-other>
+    <sym-topup></sym-topup>
+    @if (service.responseIO.data['BasePlan'] && service.responseIO.data['BasePlan'].PlanExtraList) {
+    <sym-plan-extra-list></sym-plan-extra-list>
+    }
+    <sym-withdrawal [selectedTab]="selectedStep.selectedTab"></sym-withdrawal>
+    } @if (this.selectedStep.selectedTab.id == 'tab_rider') {
+    <!-- <sym-rider></sym-rider> -->
+    <sym-quotation-rider-card [responseUpdated]="responseUpdated"></sym-quotation-rider-card>
+    } @if (selectedStep.selectedTab.id == 'tab_plan' || selectedStep.selectedTab.id == 'tab_rider') {
+    <sym-coverage-summary></sym-coverage-summary>
+    } } }
+  </sym-step>
+  }
+</ng-container>

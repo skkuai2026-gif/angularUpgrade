@@ -1,0 +1,353 @@
+/* Chrome, Safari, Edge, Opera */
+// input::-webkit-outer-spin-button,
+// input::-webkit-inner-spin-button {
+//     -webkit-appearance: none;
+//     margin: 0;
+// }
+
+// /* Firefox */
+// input[type='number'] {
+//     -moz-appearance: textfield;
+// }
+.error {
+  color: red;
+}
+.fcombo {
+  border: none !important;
+}
+
+.labelCombo {
+  color: inherit;
+  background: transparent;
+  border: 0;
+}
+.errorText .errorIcon {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  font-size: 0.821rem;
+  font-weight: 600;
+  transform: translateY(-50%);
+  color: #ff3d71;
+  font-style: normal;
+}
+
+.fgError .errorText {
+  padding: 4px 15px 4px;
+}
+
+.asterik {
+  font-size: 0.5em;
+  padding: 0 5px;
+  position: absolute;
+}
+select {
+  background-image: linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%);
+  background-position: calc(100% - 10px) calc(1em + 2px), calc(100% - 5px) calc(1em + 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding: 8px 16px 5px 6px;
+  border-radius: 0.295em;
+}
+
+select:focus {
+  background-image: linear-gradient(45deg, #333 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, #333 50%);
+  background-position: calc(100% - 5px) 1em, calc(100% - 10px) 1em;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding: 8px 16px 5px 6px;
+  border-radius: 0.295em;
+  outline: 0;
+}
+
+select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+}
+
+.item {
+  // padding: 0 0 1.93em 0 !important;
+  margin-bottom: 15px;
+}
+.form-group {
+  margin-bottom: 0 !important;
+}
+.errorText {
+  position: absolute;
+  top: calc(100% + 1px);
+  // left: 0;
+  margin: 0;
+  color: #ff3d71;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  // width: 180%;
+  // left: 2px;
+  max-height: 22px;
+}
+
+/***** Help API section css starts here *****/
+.help_container {
+  align-items: flex-end;
+  display: flex;
+}
+.help_section {
+  display: inline-block;
+  width: 100%;
+}
+.help_section > div {
+  display: inline-flex;
+}
+.help_section div > div:last-child {
+  position: relative;
+  white-space: normal;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  display: inline-block;
+  line-height: 1.5;
+  word-break: break-word;
+  /* min-width: 285px; */
+  max-width: 100%;
+}
+
+.help_section div > div:last-child div {
+  min-width: 345px;
+  width: 100%;
+  text-align: left;
+  padding: 4px 0px 2px 10px;
+  display: flex;
+}
+/* .help_section div > div:first-child {
+  text-align: left;
+} */
+/* .help_section div > div:last-child {
+  text-align: right;
+} */
+/* .help_section div > div:last-child div > div {
+  text-align: left;
+} */
+/* .help_section span:last-child span {
+  min-width: 280px;
+  max-width: 100%;
+  display: inline-block;
+} */
+
+/* .help_section span:last-child span div {
+  text-align: left;
+  display: flex;
+} */
+.help_section div:last-child div > div {
+  display: flex;
+}
+
+.help_section div > div:last-child div > span:first-child {
+  color: #ff3d71;
+  min-width: 120px;
+  max-width: 120px;
+  font-size: 0.7rem;
+}
+.help_section div > div:last-child div > span:last-child {
+  color: #3d98ff;
+  font-size: 0.78rem;
+}
+
+.help_div .form-group {
+  padding: 0 !important;
+  font-size: 0.766rem;
+  font-weight: 100;
+  margin-bottom: 1px;
+}
+
+.help_div .help_section.form-group {
+  height: 23px;
+  display: flex;
+  align-items: center;
+}
+.help_div .help_section.form-group div {
+  margin-bottom: 0;
+}
+
+.help_div .form-control {
+  height: 23px;
+  padding: 0.2rem 0.33rem !important;
+  font-size: 0.79rem;
+  font-weight: 100;
+  line-height: 1;
+}
+
+.help_div .ng-select.ng-select-single .ng-select-container {
+  height: 26px !important;
+}
+
+.help_div label,
+.help_div .label {
+  font-size: 0.725rem;
+  margin: 0;
+  padding-top: 0.2rem;
+}
+
+.help_div select {
+  background-position: calc(100% - 13px) calc(1em + -5px), calc(100% - 8px) calc(1em + -5px) !important;
+}
+
+.help_div select:focus {
+  background-position: calc(100% - 5px) calc(1rem + -7px), calc(100% - 10px) calc(1rem + -7px) !important;
+}
+
+.help_div .input-group > .input-group-append > .btn,
+.help_div .input-group > .input-group-append > .input-group-text,
+.help_div .input-group > .input-group-prepend:first-child > .btn:not(:first-child),
+.help_div .input-group > .input-group-prepend:first-child > .input-group-text:not(:first-child),
+.help_div .input-group > .input-group-prepend:not(:first-child) > .btn,
+.help_div .input-group > .input-group-prepend:not(:first-child) > .input-group-text {
+  min-height: 15px !important;
+  height: 21px !important;
+  max-height: 21px !important;
+}
+
+.help_div .checkBoxGrp .form-check > .form-check-input ~ label::before {
+  width: 12px;
+  height: 12px;
+}
+/***** Help API section css ends here *****/
+.toggle-button-text {
+  display: flex;
+}
+.btn-toggle {
+  margin: 0 0rem;
+  padding: 0;
+  position: relative;
+  border: none;
+  min-height: 1.65rem;
+  width: 3rem;
+  border-radius: 1.5rem;
+  color: #6b7381;
+  background: #bdc1c8;
+  top: -7px;
+  left: -6px;
+}
+.btn-toggle:focus,
+.btn-toggle.focus,
+.btn-toggle:focus.active,
+.btn-toggle.focus.active {
+  outline: none;
+}
+.btn-toggle:before,
+.btn-toggle:after,
+.switchBtn .switchBtn-left,
+.switchBtn .switchBtn-right {
+  line-height: 1rem;
+  /* width: 4rem; */
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.75rem;
+  /* text-transform: uppercase; */
+  letter-spacing: 1px;
+  /* position: absolute; */
+  /* bottom: 0; */
+  transition: opacity 0.25s;
+  color: #8f9bb3;
+  position: relative;
+  font-family: 'montserratregular', Arial, Helvetica, sans-serif;
+  white-space: normal;
+  margin-top: 5px;
+}
+
+.btn-toggle > .handle {
+  position: absolute;
+  top: 0.2575rem;
+  left: 0.1875rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 1.125rem;
+  background: #fff;
+  transition: left 0.25s;
+}
+.btn-toggle.active {
+  transition: background-color 0.25s;
+}
+.btn-toggle.active > .handle {
+  left: 1.6875rem;
+  transition: left 0.25s;
+}
+.btn-toggle.active:before,
+.switchBtn .switchBtn-left > .btn-toggle.active {
+  opacity: 0.5;
+}
+.btn-toggle.active:after,
+.switchBtn .switchBtn-right {
+  opacity: 1;
+}
+.btn-toggle:before,
+.btn-toggle:after {
+  color: #6b7381;
+}
+.btn-toggle.active {
+  background-color: #36f;
+}
+
+.switchBtn-right {
+  line-height: 1.8;
+}
+.toggle-button-text-on,
+.toggle-button-text-off {
+  float: left;
+  width: 50%;
+  height: 100%;
+  line-height: 25px;
+  font-family: Lato, sans-serif;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  font-size: 0.7rem;
+}
+
+.btn-toggle > .handle {
+  width: 2rem;
+  height: 1.29rem;
+  top: 0.2511rem;
+}
+
+.btn-toggle.active > .handle {
+  left: 1.85rem !important;
+}
+
+/***** Tooltip for displaying info starts here *****/
+.tooltip-label-info-container {
+  min-width: 250px;
+  width: 100%;
+  max-width: 300px;
+  min-height: 50px;
+  font-size: 0.99rem;
+  line-height: 1.2;
+  text-align: left;
+  padding: 5px;
+  font-weight: 200;
+  white-space: normal;
+  font-style: normal;
+  background: rgb(234 234 79 / 50%);
+}
+
+.tooltip-label-info {
+  font-size: 1.2rem;
+  color: #317d03;
+  position: relative;
+  white-space: normal;
+  font-style: normal;
+  line-height: 0;
+  margin-left: 9px;
+}
+
+.tooltip-label-info:before {
+  content: '\f29c';
+  font-family: 'FontAwesome';
+}
+/***** Tooltip for displaying info ends here *****/
+
+.xmlQuestionPadding {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}

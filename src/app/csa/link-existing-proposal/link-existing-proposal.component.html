@@ -1,0 +1,11 @@
+<div id="SISearch">
+  <sym-search
+    [searchResponseIO]="service.searchResponseIO"
+    [moreOptionList]="moreOptionList"
+    [isAdvanceSearchDisplayed]="true"
+    [service]="service"
+    [isSelectionRequired]="true"
+    (moreOptionClick)="onMoreOptionClicked($event)"
+    (selectedOptionClick)="onSelectedOptionClick($event)"
+  ></sym-search>
+</div>

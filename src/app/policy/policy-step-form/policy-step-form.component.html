@@ -1,0 +1,130 @@
+<sym-page-container
+  [breadCrumbList]="breadCrumbList"
+  [stepList]="stepList"
+  [responseIO]="service.responseIO"
+  [currentStepSelected]="selectedStep"
+  (selectedStep)="onStepChanged($event)"
+>
+  @if (service.responseIO && service.responseIO.data && selectedStep != undefined) {
+  <sym-step
+    [stepItem]="selectedStep"
+    (actionClick)="onActionClicked($event)"
+    (tabChange)="onTabChanged($event)"
+    [contentExcludRightTab]="selectedStep.id == 'step_previewEApp' ? false : true"
+  >
+    @if (selectedStep.selectedTab != undefined) { @if (selectedStep.selectedTab.id == 'tab_basic') {
+    <div class="tab-pane">
+      <sym-policy-basic-detail></sym-policy-basic-detail>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_owner') {
+    <div class="tab-pane">
+      <sym-policy-proposer></sym-policy-proposer>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_primary') {
+    <div class="tab-pane">
+      <sym-policy-primary-insured></sym-policy-primary-insured>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_joint') {
+    <div class="tab-pane">
+      <sym-policy-joint-life></sym-policy-joint-life>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_supplementary') {
+    <div class="tab-pane">
+      <sym-policy-supplementary></sym-policy-supplementary>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_nominee') {
+    <div class="tab-pane">
+      <sym-policy-beneficiary [responseUpdated]="responseUpdated"></sym-policy-beneficiary>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_payment') {
+    <div class="tab-pane">
+      <sym-policy-payment [responseUpdated]="responseUpdated"></sym-policy-payment>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_questionnaire') {
+    <div class="tab-pane">
+      <sym-policy-party-questionnaire></sym-policy-party-questionnaire>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_requirement') {
+    <div class="tab-pane">
+      <sym-policy-document [responseUpdated]="responseUpdated"></sym-policy-document>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_siIllustration') {
+    <div>
+      <sym-policy-quote-illustration></sym-policy-quote-illustration>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_illustration') {
+    <div>
+      <sym-policy-e-app-preview [responseUpdated]="responseUpdated"></sym-policy-e-app-preview>
+    </div>
+    }
+    <!-- <ng-container *ngIf="selectedStep.id == 'step_underwriting'">
+        <p>Work in Progress</p>
+      </ng-container> -->
+    @if (selectedStep.id == 'step_payment') {
+    <sym-policy-payment-summary></sym-policy-payment-summary>
+    } @if (selectedStep.id == 'step_agentDeclaration') { @if (selectedStep.selectedTab.id == 'tab_agentSharing') {
+    <div class="tab-pane">
+      <sym-policy-agent-sharing></sym-policy-agent-sharing>
+    </div>
+    } @if (selectedStep.selectedTab.id == 'tab_agentDeclaration') {
+    <div class="tab-pane">
+      <sym-policy-agent-declaration></sym-policy-agent-declaration>
+    </div>
+    } } @if (selectedStep.selectedTab.id == 'tab_uwCustomerInput') {
+    <sym-policy-uw-result></sym-policy-uw-result>
+    } }
+  </sym-step>
+  }
+</sym-page-container>
+
+<!-- <div *ngIf="service.responseIO && service.responseIO.data && selectedStep != undefined">
+<sym-pop-up
+  [headerText]="'transferToCustomer'"
+  [popupID]="'policytransferToCustomer'"
+  [popupSize]="'large'"
+  (popupClosed)="setTransferToCustomerPopup()"
+  >
+  <sym-policy-transfer-to-customer
+    *ngIf="getTransferToCustomerPopup()"
+    (isChangeAllocationSuccess)="onSuccessChangeAllocation($event)"
+  ></sym-policy-transfer-to-customer>
+</sym-pop-up>
+</div> -->
+
+@if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div>
+  <sym-pop-up [popupID]="'submitPolicyModal'" [popupSize]="'small'" [width]="50" [height]="30">
+    <div class="successModalHeader">
+      <span class="iconSuccess"></span>
+      @if ( service.responseIO.data.Entity.uwDecisionValue != null &&
+      service.responseIO.data.Entity.uwDecisionValue != undefined ) {
+      <h4>
+        {{ service.responseIO.data.Entity.uwDecisionValue }}
+      </h4>
+      } @if ( service.responseIO.data.Entity.uwDecisionValue == null ||
+      service.responseIO.data.Entity.uwDecisionValue == undefined ) {
+      <h4>
+        {{ service.getMultilingualLabel('policySubmitMesg') }}
+      </h4>
+      }
+    </div>
+  </sym-pop-up>
+</div>
+} @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div>
+  <sym-pop-up
+    [popupID]="'copyPolicyModal'"
+    [headerText]="'copyProposalData'"
+    [popupSize]="'large'"
+    (popupClosed)="setCopyPolicyPopup()"
+  >
+    @if (getCopyPolicyPopup()) {
+    <sym-copy-policy
+      [showDataDesc]="copyProposalDataDisplay"
+      [currentProposalService]="service"
+      (copyPolicyDataArray)="copyPolicyDataArray($event)"
+    ></sym-copy-policy>
+    }
+  </sym-pop-up>
+</div>
+}

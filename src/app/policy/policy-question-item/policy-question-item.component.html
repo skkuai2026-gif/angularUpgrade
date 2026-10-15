@@ -1,0 +1,1102 @@
+<div
+  [ngClass]="{
+    'list-group item': true,
+    'mb-2': isCustomerPortal || settingService.isNewUIDisplayed
+  }"
+  *ngIf="question != undefined"
+>
+  <ng-container
+    *ngIf="'NO' != question.visibility"
+    class="list-group-item list-group-item-action flex-column align-items-start active"
+  >
+    <ng-container *ngIf="!isCustomerPortal && !settingService.isNewUIDisplayed">
+      <div
+        class="d-flex w-100 justify-content-between"
+        *ngIf="
+          question.questionLabelKey &&
+          question.questionLabelKey != undefined &&
+          (displayLabelOnly == undefined || displayLabelOnly == true || displayLabelOnly === 'true') &&
+          (question.inputTypeCd !== 'CHECKBOX' ||
+            (question.inputTypeCd === 'CHECKBOX' &&
+              service.responseIO.lookups[question.lookupKey][0].desc != undefined &&
+              service.responseIO.lookups[question.lookupKey][0].desc != '' &&
+              service.responseIO.lookups[question.lookupKey][0].desc != null))
+        "
+        [class.mb-1]="displayItemOnly != undefined && (displayItemOnly == true || displayItemOnly === 'true')"
+      >
+        <h5 class="mb-1">
+          <div class="inline-block" *ngIf="question.questionLabelKey && question.questionLabelKey != undefined">
+            <label>
+              <span
+                *ngIf="displayItemOnly == undefined || displayItemOnly == false || displayLabelOnly === 'false'"
+              >
+                {{ question.displayNum }}<span *ngIf="question.displayNum != undefined">: </span>
+                <!-- {{ question.headerText }} -->
+                <span [innerHTML]="settingService.getLabelValue(question.questionLabelKey) | safeHtml: 'html'">
+                  {{ settingService.getLabelValue(question.questionLabelKey) | safeHtml: 'html' }}
+                </span>
+                <i
+                  class="fa fa-asterisk asterik"
+                  aria-hidden="true"
+                  *ngIf="question.minOccurs === 1 && settingService.getApplicationMode() !== 'offline'"
+                ></i>
+                <ng-container *ngIf="question.minOccurs === 1 && settingService.getApplicationMode() === 'offline'"
+                  >*</ng-container
+                >
+                <i
+                  [ngClass]="{
+                    'tooltip-label-info customtooltip pl-2': true,
+                    'pl-3': question.MINOCCURS === '1' ? true : false
+                  }"
+                  *ngIf="question.questionToolTip !== undefined"
+                  aria-hidden="true"
+                >
+                  <sym-tooltip [placement]="'right'">
+                    <div
+                      class="tooltip-label-info-container"
+                      [innerHTML]="question.questionToolTip | safeHtml: 'html'"
+                    ></div
+                  ></sym-tooltip>
+                </i>
+              </span>
+            </label>
+          </div>
+        </h5>
+        <!-- <small>3 days ago</small> -->
+      </div></ng-container
+    >
+
+    <div
+      *ngIf="
+        (question != null &&
+          (displayLabelOnly == undefined || displayLabelOnly == false || displayLabelOnly === 'false')) ||
+        (displayItemOnly != undefined && (displayItemOnly == true || displayItemOnly === 'true'))
+      "
+      [class]="service.responseIO['isMetadataHelpReqd'] === true ? 'help_div form-row' : ''"
+    >
+      <ng-container [ngSwitch]="question.inputTypeCd">
+        <div class="row">
+          <ng-container *ngSwitchCase="'TEXT'">
+            <div
+              [ngClass]="{
+                'fgMaterial questionnaire': isCustomerPortal || settingService.isNewUIDisplayed,
+                fgError: question.error != undefined,
+              }"
+              [class]="
+                question.className != undefined
+                  ? question.className + ' form-group'
+                  : 'col-sm-6 col-md-6 col-xl-6 form-group'
+              "
+            >
+              <!--[disabled]="question.enabled" (change)="
+                                                onInputChange(field, $event)
+                                            "-->
+              <input
+                [ngClass]="{
+                  'form-group col-sm-12 col-md-12 col-xl-12 p-0':
+                    question.dataTypeCd === 'DOUBLE' ||
+                    question.dataTypeCd === 'SHORT' ||
+                    question.dataTypeCd === 'INT' ||
+                    question.dataTypeCd === 'NUMBER',
+                  'text-uppercase':
+                    (question.CASEVALUE != undefined && question.CASEVALUE == 'UPPER') || isFieldUpperCaseReq
+                }"
+                [type]="
+                  (question.dataTypeCd == 'DOUBLE' ||
+                    question.dataTypeCd == 'SHORT' ||
+                    question.dataTypeCd == 'INT' ||
+                    question.dataTypeCd == 'NUMBER') &&
+                  question.MASK == undefined
+                    ? question.maxLength == undefined
+                      ? 'number'
+                      : 'text'
+                    : 'text'
+                "
+                class="form-control"
+                [id]="questionSetCd + '_' + question.dataElementCd + '_' + question.guid"
+                [ngModel]="question.MASK != undefined ? question['responseValue_mk'] : question.responseValue"
+                (ngModelChange)="
+                  question.MASK != undefined ? unMaskValue(question, $event) : (question.responseValue = $event)
+                "
+                [attr.min]="question.minValue"
+                [attr.max]="question.maxValue"
+                [attr.maxlength]="question.maxLength"
+                [attr.name]="question.fieldUnName"
+                (change)="onInputChange($event)"
+                [disabled]="question.enabled == 'NO' ? true : false"
+                [pattern]="
+                  question.FORMAT != undefined
+                    ? question.FORMAT
+                    : question['MASK'] != undefined
+                    ? null
+                    : question.dataTypeCd == 'DOUBLE'
+                    ? '^[0-9]\\d*(\\.\\d+)?$'
+                    : question.dataTypeCd == 'SHORT' || question.dataTypeCd == 'INTEGER'
+                    ? '^[0-9]\\d*$'
+                    : null
+                "
+                (keypress)="numberOnly($event, question.dataTypeCd)"
+                [attr.placeholder]="
+                  question.PLACEHOLDER != undefined
+                    ? settingService.getLabelValue(question.PLACEHOLDER)
+                    : question.PLACEHOLDERREQD === 'YES'
+                    ? settingService.getLabelValue(question.questionLabelKey)
+                    : ' '
+                "
+                (keydown)="numberOnly($event, question)"
+                (compositionend)="numberOnly($event, question)"
+                (paste)="question.MASK != undefined ? numberOnly($event, question) : ''"
+              />
+              <ng-container *ngIf="isCustomerPortal || settingService.isNewUIDisplayed"
+                ><label
+                  [for]="questionSetCd + '_' + question.dataElementCd"
+                  [class.required]="question.minOccurs === 1 ? true : false"
+                  class="inline-block"
+                  *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+                >
+                  <label>
+                    {{ question.displayNum }}<span *ngIf="question.displayNum != undefined">: </span>
+                    <!-- {{ question.headerText }} -->
+                    {{ settingService.getLabelValue(question.questionLabelKey) }}
+                  </label>
+                </label></ng-container
+              >
+              <p *ngIf="question.error != undefined" class="errorText">
+                <i
+                  class="errorIcon"
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  [title]="settingService.extractHTML(question.error)"
+                ></i>
+                <span [innerHTML]="question.error | safeHtml: 'html'">
+                  {{ question.error | safeHtml: 'html' }}
+                </span>
+              </p>
+            </div>
+          </ng-container>
+        </div>
+        <ng-container *ngSwitchCase="'TEXTAREA'">
+          <div
+            [ngClass]="{
+              'form-group  p-0': service.responseIO['isMetadataHelpReqd'] != true,
+              'fgMaterial questionnaire': isCustomerPortal || settingService.isNewUIDisplayed,
+              fgError: question.error != undefined,
+              'form-group p-0 col-sm-3 col-md-3 col-xl-3': service.responseIO['isMetadataHelpReqd'] === true
+            }"
+            [class]="question.className != undefined ? question.className : 'col-sm-6 col-md-6 col-xl-6'"
+          >
+            <textarea
+              rows="4"
+              cols="50"
+              class="form-control"
+              [id]="questionSetCd + '_' + question.dataElementCd"
+              [(ngModel)]="question.responseValue"
+              [attr.min]="question.minValue"
+              [attr.max]="question.maxValue"
+              [attr.required]="question.minOccurs === 1"
+              [attr.maxlength]="question.maxLength"
+              (change)="onInputChange($event)"
+              [disabled]="question.enabled == 'NO' ? true : false"
+              [class.text-uppercase]="isFieldUpperCaseReq"
+              [attr.name]="question.fieldUnName"
+              [attr.placeholder]="
+                question.PLACEHOLDER != undefined
+                  ? settingService.getLabelValue(question.PLACEHOLDER)
+                  : question.PLACEHOLDERREQD === 'YES'
+                  ? settingService.getLabelValue(question.questionLabelKey)
+                  : ' '
+              "
+            ></textarea>
+            <ng-container *ngIf="isCustomerPortal || settingService.isNewUIDisplayed"
+              ><label
+                [for]="questionSetCd + '_' + question.dataElementCd"
+                [class.required]="question.minOccurs === 1 ? true : false"
+                class="inline-block"
+                *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+              >
+                <label>
+                  {{ question.displayNum }}<span *ngIf="question.displayNum != undefined">: </span>
+                  <!-- {{ question.headerText }} -->
+                  {{ settingService.getLabelValue(question.questionLabelKey) }}
+                </label>
+              </label></ng-container
+            >
+            <p *ngIf="question.error != undefined" class="errorText">
+              <i
+                class="errorIcon"
+                data-toggle="tooltip"
+                data-placement="right"
+                [title]="settingService.extractHTML(question.error)"
+              ></i>
+              <span [innerHTML]="question.error | safeHtml: 'html'">
+                {{ question.error | safeHtml: 'html' }}
+              </span>
+            </p>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'RADIO'">
+          <!-- (click)="
+                                                field.model[field.fieldCd] =
+                                                    opt.cd;
+                                                onInputChange(field, $event)
+                                            " -->
+          <div class="row">
+            <ng-container *ngIf="isCustomerPortal || settingService.isNewUIDisplayed">
+              <div
+                class="d-flex w-100 justify-content-between"
+                *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+              >
+                <h5 class="mb-1">
+                  <div
+                    class="inline-block"
+                    *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+                  >
+                    <label>
+                      {{ question.displayNum }}<span *ngIf="question.displayNum != undefined">: </span>
+                      <!-- {{ question.headerText }} -->
+                      {{ settingService.getLabelValue(question.questionLabelKey) }}
+                      <i class="fa fa-asterisk asterik" aria-hidden="true" *ngIf="question.minOccurs === 1"></i>
+                    </label>
+                  </div>
+                </h5>
+                <!-- <small>3 days ago</small> -->
+              </div></ng-container
+            >
+            <div
+              [class.fgError]="question.error != undefined"
+              [ngClass]="{
+                'form-group p-0 col-sm-3 col-md-3 col-xl-3': service.responseIO['isMetadataHelpReqd'] === true
+              }"
+              [class]="question.className != undefined ? question.className : 'col-sm-6 col-md-6 col-xl-6'"
+            >
+              <div class="radioGrp radio">
+                <ng-container *ngFor="let opt of service.responseIO.lookups[question.lookupKey]">
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [attr.name]="question.fieldUnName + '_' + opt.cd"
+                      id="{{ questionSetCd + '_' + question.dataElementCd + '_' + opt.cd + '_' + question.guid }}"
+                      value="{{ opt.cd }}"
+                      (click)="question.responseValue = opt.cd; onInputChange($event)"
+                      [disabled]="question.enabled == 'NO' ? true : false"
+                      [attr.required]="question.minOccurs === 1 ? true : false"
+                      [checked]="
+                        question.responseValue != undefined && question.responseValue == opt.cd ? true : false
+                      "
+                    />
+                    <label
+                      class="form-check-label"
+                      [attr.for]="question.dataElementCd + '_' + opt.cd + '_' + question.guid"
+                      [innerHTML]="opt.desc | safeHtml: 'html'"
+                      >{{ opt.desc | safeHtml: 'html' }}</label
+                    >
+                  </div>
+                </ng-container>
+                <!-- <input
+                                class="form-check-input"
+                                type="radio"
+                                [name]="
+                                    questionSetCd + '_' + question.dataElementCd
+                                "
+                                [id]="question.dataElementCd + '_' + opt.cd"
+                                [value]="opt.cd"
+                                [attr.required]="question.minOccurs === 1"
+                                [(ngModel)]="question.responseValue"
+                                (click)="
+                                    question.responseValue = opt.cd;
+                                    onInputChange($event)
+                                "
+                                [disabled]="
+                                    question.enabled == 'NO' ? true : false
+                                "
+                            />
+                            <label
+                                class="form-check-label"
+                                [for]="question.dataElementCd + '_' + opt.cd"
+                                >{{ opt.desc }}</label
+                            > -->
+              </div>
+              <div *ngIf="question.error != undefined" class="questionError">
+                <p *ngIf="question.error != undefined" class="errorText">
+                  <i
+                    class="errorIcon"
+                    data-toggle="tooltip"
+                    data-placement="right"
+                    [title]="settingService.extractHTML(question.error)"
+                  ></i>
+                  <span [innerHTML]="question.error | safeHtml: 'html'">
+                    {{ question.error | safeHtml: 'html' }}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'COMBO'">
+          <!-- (change)="onInputChange(field, $event)"
+                                        (focus)="onInputFocus(field, $event)"
+                                        [disabled]="field.enabled" -->
+          <ng-container *ngIf="isCustomerPortal || settingService.isNewUIDisplayed">
+            <div
+              class="d-flex w-100 justify-content-between"
+              *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+            >
+              <h5 class="mb-1">
+                <div
+                  class="inline-block"
+                  *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+                >
+                  <label>
+                    {{ question.displayNum }}<span *ngIf="question.displayNum != undefined">: </span>
+                    <!-- {{ question.headerText }} -->
+                    {{ settingService.getLabelValue(question.questionLabelKey) }}
+                    <i class="fa fa-asterisk asterik" aria-hidden="true" *ngIf="question.minOccurs === 1"></i>
+                  </label>
+                </div>
+              </h5>
+              <!-- <small>3 days ago</small> -->
+            </div></ng-container
+          >
+          <div
+            [class.fgError]="question.error != undefined"
+            [ngClass]="{
+              'form-group p-0 col-sm-3 col-md-3 col-xl-3': service.responseIO['isMetadataHelpReqd'] === true,
+              'fgMaterial questionnaire': isCustomerPortal || settingService.isNewUIDisplayed,
+              ' xmlQuestionPadding': isXMLRendered
+            }"
+            [class]="question.className != undefined ? question.className : 'col-sm-6 col-md-6 pl-0 pr-0'"
+          >
+            <select
+              [id]="questionSetCd + '_' + question.dataElementCd"
+              [ngClass]="{
+                'form-control p-0': service.responseIO['isMetadataHelpReqd'] != true,
+                'form-group p-0 col-sm-12 col-md-12 col-xl-12': service.responseIO['isMetadataHelpReqd'] === true
+              }"
+              [class]="question.className != undefined ? question.className : 'col-sm-6 col-md-6 col-xl-6'"
+              [(ngModel)]="question.responseValue"
+              [attr.required]="question.minOccurs === 1 ? true : false"
+              [attr.name]="question.fieldUnName"
+              (change)="onInputChange($event)"
+              [disabled]="question.enabled == 'NO' ? true : false"
+              [class.text-right]="
+                question.dataTypeCd == 'DOUBLE' ||
+                question.dataTypeCd == 'SHORT' ||
+                question.dataTypeCd == 'INT' ||
+                question.dataTypeCd == 'NUMBER'
+              "
+            >
+              <option value="null">- Select -</option>
+              <option
+                *ngFor="let opt of service.responseIO.lookups[question.lookupKey]"
+                [ngValue]="opt.cd"
+                [class.text-right]="
+                  question.dataTypeCd == 'DOUBLE' ||
+                  question.dataTypeCd == 'SHORT' ||
+                  question.dataTypeCd == 'INT' ||
+                  question.dataTypeCd == 'NUMBER'
+                "
+              >
+                {{ opt.desc }}
+              </option>
+            </select>
+            <p *ngIf="question.error != undefined" class="errorText">
+              <i
+                class="errorIcon"
+                data-toggle="tooltip"
+                data-placement="right"
+                [title]="settingService.extractHTML(question.error)"
+              ></i>
+              <span [innerHTML]="question.error | safeHtml: 'html'">
+                {{ question.error | safeHtml: 'html' }}
+              </span>
+            </p>
+          </div>
+        </ng-container>
+        <ng-container
+          *ngSwitchCase="['DATE', 'DATETIME'].includes(question.inputTypeCd) ? question.inputTypeCd : ''"
+        >
+          <div class="row">
+            <ng-container *ngIf="isCustomerPortal || settingService.isNewUIDisplayed">
+              <div
+                class="d-flex w-100 justify-content-between"
+                *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+              >
+                <h5 class="mb-1">
+                  <div
+                    class="inline-block"
+                    *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+                  >
+                    <label>
+                      {{ question.displayNum }}<span *ngIf="question.displayNum != undefined">: </span>
+                      <!-- {{ question.headerText }} -->
+                      {{ settingService.getLabelValue(question.questionLabelKey) }}
+                      <i class="fa fa-asterisk asterik" aria-hidden="true" *ngIf="question.minOccurs === 1"></i>
+                    </label>
+                  </div>
+                </h5>
+                <!-- <small>3 days ago</small> -->
+              </div></ng-container
+            >
+            <div
+              [class.fgError]="question.error != undefined"
+              [ngClass]="{
+                'form-group p-0': service.responseIO['isMetadataHelpReqd'] != true,
+                'form-group p-0 col-sm-12 col-md-12 col-xl-12': service.responseIO['isMetadataHelpReqd'] === true,
+                'fgMaterial questionnaire': isCustomerPortal || settingService.isNewUIDisplayed
+              }"
+              [class]="question.className != undefined ? question.className : 'col-sm-6 col-md-6 col-xl-6'"
+            >
+              <sym-date-time-picker
+                [fieldType]="question.inputTypeCd"
+                [fieldID]="questionSetCd + '_' + question.dataElementCd"
+                [fieldCd]="'responseValue'"
+                [model]="question"
+                (notifyChange)="onInputChange($event)"
+                [isDisabled]="question.enabled == 'NO' ? true : false"
+                [placeholder]="
+                  question.PLACEHOLDER != undefined
+                    ? settingService.getLabelValue(question.PLACEHOLDER)
+                    : question.PLACEHOLDERREQD === 'YES'
+                    ? settingService.getLabelValue(question.questionLabelKey)
+                    : undefined
+                "
+              ></sym-date-time-picker>
+
+              <p *ngIf="question.error != undefined" class="errorText">
+                <i
+                  class="errorIcon"
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  [title]="settingService.extractHTML(question.error)"
+                ></i>
+                <span [innerHTML]="question.error | safeHtml: 'html'">
+                  {{ question.error | safeHtml: 'html' }}
+                </span>
+              </p>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'CHECKBOX'">
+          <ng-container *ngIf="isCustomerPortal || settingService.isNewUIDisplayed">
+            <div
+              class="d-flex w-100 justify-content-between"
+              *ngIf="
+                question.questionLabelKey &&
+                question.questionLabelKey != undefined &&
+                service.responseIO.lookups[question.lookupKey][0].desc != undefined &&
+                service.responseIO.lookups[question.lookupKey][0].desc != '' &&
+                service.responseIO.lookups[question.lookupKey][0].desc != null
+              "
+            >
+              <h5 class="mb-1">
+                <div
+                  class="inline-block"
+                  *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+                >
+                  <label>
+                    {{ question.displayNum }}<span *ngIf="question.displayNum != undefined">: </span>
+                    <!-- {{ question.headerText }} -->
+                    {{ settingService.getLabelValue(question.questionLabelKey) }}
+                    <i class="fa fa-asterisk asterik" aria-hidden="true" *ngIf="question.minOccurs === 1"></i>
+                  </label>
+                </div>
+              </h5>
+              <!-- <small>3 days ago</small> -->
+            </div></ng-container
+          >
+          <div
+            [class.fgError]="question.error != undefined"
+            [ngClass]="{
+              'form-check p-0': service.responseIO['isMetadataHelpReqd'] != true,
+              'form-group p-0 col-sm-12 col-md-12 col-xl-12': service.responseIO['isMetadataHelpReqd'] === true,
+              'fgMaterial questionnaire': isCustomerPortal || settingService.isNewUIDisplayed
+            }"
+            [class]="question.className != undefined ? question.className : 'col-sm-6 col-md-6 col-xl-6'"
+          >
+            <!--[value]="field.value" (click)="
+                                                onInputChange(field, $event) [disabled]="field.enabled"
+                                            "-->
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [checked]="
+                question.responseValue == 'YES' ||
+                question.responseValue == service.responseIO.lookups[question.lookupKey][0].cd
+                  ? true
+                  : false
+              "
+              [id]="questionSetCd + '_' + question.dataElementCd"
+              [attr.name]="question.fieldUnName"
+              (click)="
+                this.question['responseValue'] = service.responseIO.lookups[question.lookupKey][0].cd;
+                onInputChange($event, service.responseIO.lookups[question.lookupKey][0])
+              "
+              [disabled]="question.enabled == 'NO' ? true : false"
+            />
+            <label
+              class="form-check-label"
+              [for]="question.dataElementCd"
+              [innerHTML]="
+                service.responseIO.lookups[question.lookupKey][0].desc != undefined &&
+                service.responseIO.lookups[question.lookupKey][0].desc != '' &&
+                service.responseIO.lookups[question.lookupKey][0].desc != null
+                  ? service.getValueFromLookup(
+                      question.lookupKey,
+                      service.responseIO.lookups[question.lookupKey][0].cd
+                    )
+                  : (service.getMultilingualLabel(question.questionLabelKey) | safeHtml: 'html')
+              "
+            >
+            </label>
+
+            <p *ngIf="question.error != undefined" class="errorText">
+              <i
+                class="errorIcon"
+                data-toggle="tooltip"
+                data-placement="right"
+                [title]="settingService.extractHTML(question.error)"
+              ></i>
+              <span [innerHTML]="question.error | safeHtml: 'html'">
+                {{ question.error | safeHtml: 'html' }}
+              </span>
+            </p>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'NUMERICSTRING'">
+          <ng-container *ngIf="isCustomerPortal || settingService.isNewUIDisplayed">
+            <div
+              class="d-flex w-100 justify-content-between"
+              *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+            >
+              <h5 class="mb-1">
+                <div
+                  class="inline-block"
+                  *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+                >
+                  <label>
+                    {{ question.displayNum }}<span *ngIf="question.displayNum != undefined">: </span>
+                    <!-- {{ question.headerText }} -->
+                    {{ settingService.getLabelValue(question.questionLabelKey) }}
+                    <i class="fa fa-asterisk asterik" aria-hidden="true" *ngIf="question.minOccurs === 1"></i>
+                  </label>
+                </div>
+              </h5>
+              <!-- <small>3 days ago</small> -->
+            </div></ng-container
+          >
+          <div
+            [ngClass]="{
+              'form-group p-0': service.responseIO['isMetadataHelpReqd'] != true,
+              'fgMaterial questionnaire': isCustomerPortal || settingService.isNewUIDisplayed,
+              fgError: question.error != undefined,
+              'form-group p-0 col-sm-12 col-md-12 col-xl-12': service.responseIO['isMetadataHelpReqd'] === true
+            }"
+            [class]="question.className != undefined ? question.className : 'col-sm-6 col-md-6 col-xl-6'"
+          >
+            <!--[disabled]="field.enabled" (keypress)="numberOnly($event)"
+                                            (change)="
+                                                onInputChange(field, $event)
+                                            "-->
+            <input
+              type="text"
+              class="form-control"
+              [id]="questionSetCd + '_' + question.dataElementCd"
+              [(ngModel)]="question.responseValue"
+              [attr.min]="question.minValue"
+              [attr.name]="question.fieldUnName"
+              [attr.max]="question.maxValue"
+              [attr.required]="question.minOccurs === 1 ? true : false"
+              [attr.maxlength]="question.maxLength"
+              pattern="\d{10}"
+              (keypress)="numberOnly($event)"
+              (change)="onInputChange($event)"
+              [disabled]="question.enabled == 'NO' ? true : false"
+              [class.text-right]="
+                question.dataTypeCd == 'DOUBLE' ||
+                question.dataTypeCd == 'SHORT' ||
+                question.dataTypeCd == 'INT' ||
+                question.dataTypeCd == 'NUMBER'
+              "
+              [attr.placeholder]="
+                question.PLACEHOLDER != undefined
+                  ? settingService.getLabelValue(question.PLACEHOLDER)
+                  : question.PLACEHOLDERREQD === 'YES'
+                  ? settingService.getLabelValue(question.questionLabelKey)
+                  : ' '
+              "
+            />
+            <ng-container *ngIf="isCustomerPortal || settingService.isNewUIDisplayed"
+              ><label
+                [for]="questionSetCd + '_' + question.dataElementCd"
+                [class.required]="question.minOccurs === 1 ? true : false"
+                class="inline-block"
+                *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+              >
+                <label>
+                  {{ question.displayNum }}<span *ngIf="question.displayNum != undefined">: </span>
+                  <!-- {{ question.headerText }} -->
+                  {{ settingService.getLabelValue(question.questionLabelKey) }}
+                </label>
+              </label></ng-container
+            >
+            <p *ngIf="question.error != undefined" class="errorText">
+              <i
+                class="errorIcon"
+                data-toggle="tooltip"
+                data-placement="right"
+                [title]="settingService.extractHTML(question.error)"
+              ></i>
+              <span [innerHTML]="question.error | safeHtml: 'html'">
+                {{ question.error | safeHtml: 'html' }}
+              </span>
+            </p>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'EMAIL'">
+          <ng-container *ngIf="isCustomerPortal || settingService.isNewUIDisplayed">
+            <div
+              class="d-flex w-100 justify-content-between"
+              *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+            >
+              <h5 class="mb-1">
+                <div
+                  class="inline-block"
+                  *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+                >
+                  <label>
+                    {{ question.displayNum }}<span *ngIf="question.displayNum != undefined">: </span>
+                    <!-- {{ question.headerText }} -->
+                    {{ settingService.getLabelValue(question.questionLabelKey) }}
+                    <i class="fa fa-asterisk asterik" aria-hidden="true" *ngIf="question.minOccurs === 1"></i>
+                  </label>
+                </div>
+              </h5>
+              <!-- <small>3 days ago</small> -->
+            </div></ng-container
+          >
+          <div
+            [ngClass]="{
+              'form-group p-0': service.responseIO['isMetadataHelpReqd'] != true,
+              'fgMaterial questionnaire': isCustomerPortal || settingService.isNewUIDisplayed,
+              fgError: question.error != undefined,
+              'form-group p-0 col-sm-12 col-md-12 col-xl-12': service.responseIO['isMetadataHelpReqd'] === true
+            }"
+            [class]="question.className != undefined ? question.className : 'col-sm-6 col-md-6 col-xl-6'"
+          >
+            <!--  (change)="
+                                                onInputChange(field, $event)
+                                                 [disabled]="field.enabled"
+                                            " -->
+
+            <input
+              type="email"
+              class="form-control"
+              [attr.name]="question.fieldUnName"
+              [id]="questionSetCd + '_' + question.dataElementCd"
+              [(ngModel)]="question.responseValue"
+              [attr.aria-describedby]="'emailHelp' + question.dataElementCd"
+              [attr.required]="question.minOccurs === 1 ? true : false"
+              (change)="onInputChange($event)"
+              [disabled]="question.enabled == 'NO' ? true : false"
+              [attr.placeholder]="
+                question.PLACEHOLDER != undefined
+                  ? settingService.getLabelValue(question.PLACEHOLDER)
+                  : question.PLACEHOLDERREQD === 'YES'
+                  ? settingService.getLabelValue(question.questionLabelKey)
+                  : ' '
+              "
+            />
+            <ng-container *ngIf="isCustomerPortal || settingService.isNewUIDisplayed"
+              ><label
+                [for]="questionSetCd + '_' + question.dataElementCd"
+                [class.required]="question.minOccurs === 1 ? true : false"
+                class="inline-block"
+                *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+              >
+                <label>
+                  {{ question.displayNum }}<span *ngIf="question.displayNum != undefined">: </span>
+                  <!-- {{ question.headerText }} -->
+                  {{ settingService.getLabelValue(question.questionLabelKey) }}
+                </label>
+              </label></ng-container
+            >
+            <p *ngIf="question.error != undefined" class="errorText">
+              <i
+                class="errorIcon"
+                data-toggle="tooltip"
+                data-placement="right"
+                [title]="settingService.extractHTML(question.error)"
+              ></i>
+              <span [innerHTML]="question.error | safeHtml: 'html'">
+                {{ question.error | safeHtml: 'html' }}
+              </span>
+            </p>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'HIDDEN'">
+          <input
+            type="hidden"
+            [id]="questionSetCd + '_' + question.dataElementCd"
+            [attr.name]="question.fieldUnName"
+            [(ngModel)]="question.responseValue"
+            [name]="question.dataElementCd"
+            [disabled]="question.enabled == 'NO' ? true : false"
+          />
+        </ng-container>
+        <ng-container *ngSwitchCase="'LABEL'">
+          <label
+            *ngIf="
+              question.responseValue != null && question.responseValue != undefined && question.responseValue != ''
+            "
+            [class.fgError]="question.error != undefined"
+            class="form-check-label"
+            [for]="question.dataElementCd"
+          >
+            {{ question.responseValue }}
+          </label>
+          <p *ngIf="question.error != undefined" class="errorText">
+            <i
+              class="errorIcon"
+              data-toggle="tooltip"
+              data-placement="right"
+              [title]="settingService.extractHTML(question.error)"
+            ></i>
+            <span [innerHTML]="question.error | safeHtml: 'html'">
+              {{ question.error | safeHtml: 'html' }}
+            </span>
+          </p>
+        </ng-container>
+        <ng-container *ngSwitchCase="'LABELCOMBO'">
+          <!--  (change)="onInputChange(field, $event)"
+                                        (focus)="onInputFocus(field, $event)"
+                                        [disabled]="field.enabled" -->
+          <div
+            [class.fgError]="question.error != undefined"
+            [ngClass]="{
+              'form-group p-0 col-sm-12 col-md-12 col-xl-12': service.responseIO['isMetadataHelpReqd'] === true,
+              'fgMaterial questionnaire': isCustomerPortal || settingService.isNewUIDisplayed,
+              ' xmlQuestionPadding': isXMLRendered
+            }"
+          >
+            <select
+              [id]="questionSetCd + '_' + question.dataElementCd"
+              class="labelCombo form-control"
+              [attr.name]="question.fieldUnName"
+              [class]="question.className != undefined ? question.className : 'col-sm-6 col-md-6 col-xl-6'"
+              [(ngModel)]="question.responseValue"
+              [attr.required]="question.minOccurs === 1"
+              (change)="onInputChange($event)"
+              [disabled]="question.enabled == 'NO' ? true : false"
+            >
+              <option value="">- Select -</option>
+              <option
+                *ngFor="let opt of service.responseIO.lookups[question.lookupKey]"
+                [value]="opt.cd"
+                [class.text-right]="
+                  question.dataTypeCd == 'DOUBLE' ||
+                  question.dataTypeCd == 'SHORT' ||
+                  question.dataTypeCd == 'INT' ||
+                  question.dataTypeCd == 'NUMBER'
+                "
+              >
+                {{ opt.desc }}
+              </option>
+            </select>
+            <p *ngIf="question.error != undefined" class="errorText">
+              <i
+                class="errorIcon"
+                data-toggle="tooltip"
+                data-placement="right"
+                [title]="settingService.extractHTML(question.error)"
+              ></i>
+              <span [innerHTML]="question.error | safeHtml: 'html'">
+                {{ question.error | safeHtml: 'html' }}
+              </span>
+            </p>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'SWITCHBUTTON'">
+          <div>
+            <div
+              [class.fgError]="question.error != undefined"
+              [ngClass]="{
+                'form-group p-0 ': service.responseIO['isMetadataHelpReqd'] === true,
+                'fgMaterial questionnaire': isCustomerPortal || settingService.isNewUIDisplayed
+              }"
+              [class]="question.className != undefined ? question.className : 'col-sm-12 col-md-12 col-xl-12'"
+              class="fgInline"
+            >
+              <div>
+                <ng-container
+                  *ngIf="
+                    service.responseIO.lookups[question.lookupKey] != undefined &&
+                    service.responseIO.lookups[question.lookupKey].length > 0
+                  "
+                >
+                  <div class="form-check form-check-inline switchBtn">
+                    <button
+                      type="button"
+                      [ngClass]="{
+                        'btn btn-toggle': true,
+                        active:
+                          (question.responseValue == 'YES' || question.responseValue == true) &&
+                          question.responseValue != null &&
+                          question.responseValue != undefined
+                            ? true
+                            : false
+                      }"
+                      data-toggle="button"
+                      aria-pressed="true"
+                      autocomplete="off"
+                      class="form-check-input"
+                      type="radio"
+                      [attr.name]="question.fieldUnName"
+                      [id]="questionSetCd + '_' + question.dataElementCd"
+                      (click)="
+                        question.responseValue =
+                          (question.responseValue == 'YES' || question.responseValue == true) &&
+                          question.responseValue != null &&
+                          question.responseValue != undefined
+                            ? 'NO'
+                            : 'YES';
+                        onInputChange(question)
+                      "
+                      [disabled]="question.enabled == 'NO' ? true : false"
+                    >
+                      <!-- *ngIf="i == 0" -->
+                      <div class="handle"></div>
+                      <div class="toggle-button-text">
+                        <div class="toggle-button-text-on">
+                          {{ settingService.getLabelValue('YES') | uppercase }}
+                        </div>
+                        <div class="toggle-button-text-off">
+                          {{ settingService.getLabelValue('NO') | uppercase }}
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </ng-container>
+              </div>
+              <p *ngIf="question.error != undefined" class="errorText">
+                <i
+                  class="errorIcon"
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  [title]="settingService.extractHTML(question.error)"
+                ></i>
+                <span [innerHTML]="question.error | safeHtml: 'html'">
+                  {{ question.error | safeHtml: 'html' }}
+                </span>
+              </p>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'RADIOIMAGE'">
+          <div class="row">
+            <ng-container *ngIf="isCustomerPortal || settingService.isNewUIDisplayed">
+              <div
+                class="d-flex w-100 justify-content-between"
+                *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+              >
+                <h5 class="mb-1">
+                  <div
+                    class="inline-block"
+                    *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+                  >
+                    <label>
+                      {{ question.displayNum }}<span *ngIf="question.displayNum != undefined">: </span>
+                      <!-- {{ question.headerText }} -->
+                      {{ settingService.getLabelValue(question.questionLabelKey) }}
+                      <i class="fa fa-asterisk asterik" aria-hidden="true" *ngIf="question.minOccurs === 1"></i>
+                    </label>
+                  </div>
+                </h5>
+                <!-- <small>3 days ago</small> -->
+              </div></ng-container
+            >
+            <div
+              [class.fgError]="question.error != undefined"
+              [ngClass]="{
+                'form-group p-0 col-sm-3 col-md-3 col-xl-3': service.responseIO['isMetadataHelpReqd'] === true
+              }"
+              [class]="question.className != undefined ? question.className : 'col-sm-6 col-md-6 col-xl-6'"
+            >
+              <div class="radioGrp radioGrpBox">
+                <ng-container>
+                  <div
+                    class="form-check form-check-inline"
+                    *ngFor="let opt of service.responseIO.lookups[question.lookupKey]"
+                  >
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [attr.name]="question.fieldUnName + '_' + opt.cd"
+                      id="{{ questionSetCd + '_' + question.dataElementCd + '_' + opt.cd }}"
+                      value="{{ opt.cd }}"
+                      (click)="question.responseValue = opt.cd; onInputChange($event)"
+                      [disabled]="question.enabled == 'NO' ? true : false"
+                      [attr.required]="question.minOccurs === 1 ? true : false"
+                      [checked]="
+                        question.responseValue != undefined && question.responseValue == opt.cd ? true : false
+                      "
+                    />
+                    <label
+                      [attr.for]="question.dataElementCd + '_' + opt.cd"
+                      class="form-check-label withicon"
+                      [class]="opt.addtnlFld2 != undefined ? opt.addtnlFld2 : 'pl-2'"
+                      >{{ opt.desc }}</label
+                    >
+                  </div>
+                </ng-container>
+              </div>
+              <div *ngIf="question.error != undefined" class="questionError">
+                <p *ngIf="question.error != undefined" class="errorText">
+                  <i
+                    class="errorIcon"
+                    data-toggle="tooltip"
+                    data-placement="right"
+                    [title]="settingService.extractHTML(question.error)"
+                  ></i>
+                  <span [innerHTML]="question.error | safeHtml: 'html'">
+                    {{ question.error | safeHtml: 'html' }}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container
+          *ngSwitchCase="
+            ['FCOMBO', 'LOOKUPTEXT', 'NCOMBO'].includes(question.inputTypeCd) ? question.inputTypeCd : ''
+          "
+        >
+          <div
+            [class.fgError]="question.error != undefined"
+            [ngClass]="{
+              'form-group p-0 ': service.responseIO['isMetadataHelpReqd'] === true,
+              'fgMaterial questionnaire': isCustomerPortal || settingService.isNewUIDisplayed,
+              'col-sm-6 col-md-6 col-xl-6 p-0 xmlQuestionPadding': isXMLRendered
+            }"
+            [class]="question.className != undefined ? question.className : 'col-sm-6 col-md-6 col-xl-6'"
+          >
+            <ng-container *ngIf="isCustomerPortal || settingService.isNewUIDisplayed">
+              <div
+                class="d-flex w-100 justify-content-between"
+                *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+              >
+                <h5 class="mb-1">
+                  <div
+                    class="inline-block"
+                    *ngIf="question.questionLabelKey && question.questionLabelKey != undefined"
+                  >
+                    <label>
+                      {{ question.displayNum }}<span *ngIf="question.displayNum != undefined">: </span>
+                      <!-- {{ question.headerText }} -->
+                      {{ settingService.getLabelValue(question.questionLabelKey) }}
+                      <i class="fa fa-asterisk asterik" aria-hidden="true" *ngIf="question.minOccurs === 1"></i>
+                    </label>
+                  </div>
+                </h5></div
+            ></ng-container>
+
+            <ng-select
+              *ngIf="
+                service.responseIO != undefined &&
+                service.responseIO.lookupkeyFOptionList != undefined &&
+                service.responseIO.lookupkeyFOptionList[question.lookupKey] != undefined
+              "
+              [class]="
+                question.className != undefined
+                  ? question.className + 'm-0 p-0'
+                  : 'p-0 m-0 col-sm-6 col-md-6 col-xl-6'
+              "
+              [(ngModel)]="question['responseValue_fc']"
+              [attr.required]="question.minOccurs === 1 ? true : false"
+              [disabled]="question.enabled == 'NO' ? true : false"
+              [class.text-right]="
+                question.dataTypeCd == 'DOUBLE' ||
+                question.dataTypeCd == 'SHORT' ||
+                question.dataTypeCd == 'INT' ||
+                question.dataTypeCd == 'NUMBER'
+              "
+              [items]="service.responseIO.lookupkeyFOptionList[question.lookupKey]"
+              [id]="questionSetCd + '_' + question.dataElementCd"
+              [attr.name]="question.fieldUnName"
+              (change)="question.inputTypeCd != 'NCOMBO' ? onInputChange($event) : undefined"
+              (close)="question.inputTypeCd == 'NCOMBO' ? onInputChange($event) : undefined"
+              (clear)="onInputChange($event)"
+              (remove)="onInputChange($event)"
+              (focus)="onInputFocus($event)"
+              [multiple]="question.inputTypeCd == 'NCOMBO' ? true : false"
+              [closeOnSelect]="question.inputTypeCd == 'NCOMBO' ? false : true"
+              [virtualScroll]="'true'"
+              [dropdownPosition]="'auto'"
+              [placeholder]="
+                question.PLACEHOLDERREQD === 'YES'
+                  ? settingService.getLabelValue(question.questionLabelKey)
+                  : ' - ' + settingService.getLabelValue('selectFirstOption') + ' - '
+              "
+              [notFoundText]="service.getMultilingualLabel('No items found')"
+            >
+            </ng-select>
+            <!-- appendTo="body" field.type == 'NCOMBO' ? 'body' : null needs to be changed-->
+            <p *ngIf="question.error != undefined" class="errorText">
+              <i
+                class="errorIcon"
+                data-toggle="tooltip"
+                data-placement="right"
+                [title]="settingService.extractHTML(question.error)"
+              ></i>
+              <span [innerHTML]="question.error | safeHtml: 'html'">
+                {{ question.error | safeHtml: 'html' }}
+              </span>
+            </p>
+          </div>
+        </ng-container>
+        <div
+          *ngIf="service.responseIO['isMetadataHelpReqd'] === true"
+          [ngClass]="{
+            'col-sm-9 col-md-9 co-lg-9 col-xl-9 help_container': service.responseIO['isMetadataHelpReqd'] === true
+          }"
+        >
+          <div class="help_section form-group no-gutters">
+            <div class="col-sm-3 col-md-3 co-lg-3 col-xl-3 no-gutters">
+              {{ questionSetCd + '.' + question.dataElementCd }}
+            </div>
+            <div class="col-sm-1 col-md-1 co-lg-1 col-xl-1 no-gutters">
+              {{ question.dataTypeCd }}
+            </div>
+            <div class="col-sm-7 col-md-7 co-lg-7 col-xl-7 no-gutters">
+              <div>
+                <i class="fa fa-info-circle customtooltip" aria-hidden="true">
+                  <sym-tooltip>
+                    <ng-container *ngFor="let key of metadataKeyList">
+                      <div *ngIf="question[key] != undefined">
+                        <span>{{ key }}:</span>
+                        <span>{{ question[key] }}</span>
+                      </div>
+                    </ng-container>
+                    <!-- <div *ngIf="question['LOOKUPCD'] != undefined">
+                          <span>
+                            <ng-container *ngIf="field.fieldMetadata.FORMAT != undefined"> ,</ng-container>
+                            Lookup data:
+                          </span>
+                          <span>
+                            <ng-container *ngIf="field.options != undefined">
+                              <ng-container *ngFor="let opt of field.options">
+                                {{ opt.cd + ',' }}
+                              </ng-container>
+                            </ng-container>
+                          </span>
+                        </div> -->
+                  </sym-tooltip>
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

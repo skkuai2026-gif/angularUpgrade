@@ -1,0 +1,231 @@
+<ng-container>
+  @if (breadCrumbList != undefined && breadCrumbList.length > 0) {
+  <div class="pageHeader">
+    <ul class="breadcrum">
+      @for (breadCrumb of breadCrumbList; track breadCrumb) {
+      <li [ngClass]="breadCrumb.link == undefined ? 'inactive' : null">
+        <a href="javascript:void(0);" [routerLink]="breadCrumb.link"
+          >{{ settingService.getLabelValue(breadCrumb.id) }}
+        </a>
+      </li>
+      }
+    </ul>
+  </div>
+  }
+  <sym-alert></sym-alert>
+  <div class="pageData" [ngClass]="{ stepdata: stepList != undefined, customerPageData: isCustomerPortal }">
+    <div class="card" [ngClass]="{ scrollDiv: isCustomerPortal }">
+      @if (stepList != undefined) {
+      <div
+        [ngClass]="{
+          'card-header stepHeader b0': stepList && stepList.length > 1,
+          lowStepLength: stepList && stepList.length <= 4
+        }"
+        [class.menuHidden]="settingService.isMenuHidden()"
+      >
+        @if (stepList && stepList.length > 1) {
+        <ul
+          class="nav nav-tabs"
+          [ngClass]="{ 'nav-tabs-max-width': stepList && stepList.length < 4 }"
+          role="tablist"
+        >
+          <!--[ngClass]="(step.status=='completed')?'nav-item completed':'nav-item'"
+              [ngClass]="(step.errorCount>0)?'error':''"
+              -->
+          @for (step of stepList; track step; let i = $index) {
+          <li
+            [ngClass]="{
+              'nav-item': true,
+              currentTab: step.status == 'active',
+              upcomingTab: i > 0 && stepList[i - 1].status == 'active',
+              completed: step.status == 'completed',
+              error: step.errorCount > 0
+            }"
+          >
+            @if (step.status == 'completed') {
+            <a
+              class="nav-link"
+              [attr.data-toggle]="'tab'"
+              [attr.data-target]="'#' + step.id"
+              attr.role="tab"
+              [attr.aria-controls]="step.id"
+              [attr.aria-selected]="false"
+              href="javascript:void(0);"
+              (click)="view(step)"
+            >
+              <span
+                ><i> {{ step.index + 1 }} </i>
+              </span>
+              <span class="stepName" [innerHTML]="settingService.getLabelValue(step.id) | safeHtml"> </span> </a
+            ><i>
+              @if (step.errorCount > 0) {
+              <span (click)="onViewErrorClick($event, step)"> {{ step.errorCount }}</span>
+              }</i
+            >
+            } @if (step.status != 'completed') {
+            <a [ngClass]="{ 'nav-link': true, active: step.status == 'active' }">
+              <span
+                ><i>{{ step.index + 1 }}</i></span
+              >
+              <span class="stepName" [innerHTML]="settingService.getLabelValue(step.id) | safeHtml"> </span>
+            </a>
+            <i>
+              @if (step.errorCount > 0) {
+              <span (click)="onViewErrorClick($event, step)"> {{ step.errorCount }}</span>
+              }
+            </i>
+            }
+          </li>
+          }
+        </ul>
+        } @else { @if (stepList.length > 0 && stepList[0].errorCount > 0) {
+        <div
+          class="position-fixed bottom-0 end-0 p-3 toastPosition errorStepText"
+          (click)="onViewErrorClick($event, stepList[0])"
+        >
+          <div id="errorToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header" (click)="onViewErrorClick($event, stepList[0])">
+              <strong class="me-auto error h6 m-0" (click)="onViewErrorClick($event, stepList[0])">
+                <i class="errorIcon error" aria-hidden="true"></i> {{ stepList[0].errorCount }}</strong
+              >
+            </div>
+          </div>
+        </div>
+        } } @if (stepList && stepList.length > 1) {
+        <div class="headerActions">
+          <div class="dropdownContainer">
+            <button
+              type="button"
+              class="dropdown-toggle"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              (click)="openDropdown()"
+            >
+              @if (!showDropdownForMobileView) {
+              <i class="fa fa-angle-double-right"></i>
+              } @if (showDropdownForMobileView) {
+              <i class="fa fa-angle-double-left"></i>
+              }
+            </button>
+            @if (showDropdownForMobileView) {
+            <div
+              [ngClass]="
+                settingService.getZoomResolution() >= 170
+                  ? ' dropdown-menu dropdownScroll scrollDiv'
+                  : 'dropdown-menu scrollDiv'
+              "
+              [class.show]="showDropdownForMobileView"
+            >
+              @for (step of stepList; track step; let i = $index) {
+              <ng-container>
+                <a
+                  class="nav-link"
+                  [ngClass]="{
+                    completed: step.status == 'completed',
+                    active: step.status == 'active'
+                  }"
+                  [attr.data-step-reference]="'#' + step.id"
+                  href="javascript:void(0);"
+                  (click)="step.status == 'completed' ? view(step) : return()"
+                >
+                  <span>{{ step.index + 1 }} </span>
+                  {{ settingService.extractHTML(settingService.getLabelValue(step.id)) }} </a
+                ><i></i>
+              </ng-container>
+              }
+            </div>
+            }
+          </div>
+        </div>
+        }
+        <!-- <div
+                        class="headerActions"
+                    *ngIf="
+                        moreOptionsList != null && moreOptionsList.length > 0
+                    "
+                        >
+                        <div class="hMenu">
+                          <a href="javascript:void(0);"
+                            ><i class="icon_menu"></i
+                          ></a>
+                          <div class="hMenuContent">
+                            <ul>
+                              <li><a href="javascript:void(0);">Copy</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div> -->
+      </div>
+      }
+      <div class="card-body" [ngClass]="stepList != undefined ? 'pt5' : 'p20'">
+        <div [ngClass]="stepList != undefined ? 'tab-content' : null">
+          <ng-content> </ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+  @if (currStepItem != undefined) {
+  <!-- <button type="button" class="btn" id="errorButton" (click)="openErrorModal()"></button> -->
+  <sym-pop-up
+    [popupID]="'errorModal'"
+    [headerText]="settingService.getLabelValue('errorList')"
+    [headerIcon]="'fa fa-exclamation-triangle error error-icon-pop-up'"
+    [popUpClass]="'modal-dialog error-dialog modal-dialog-scrollable modal-dialog-centered'"
+    tabindex="-1"
+  >
+    <div>
+      @for (validationError of pageContainerErrorList; track validationError) {
+      <h6>{{ validationError.name + ' :' }}</h6>
+      <ul class="list mb20">
+        @for (error of validationError.errors; track error) {
+        <li>
+          <span
+            [innerHTML]="error.replaceAll(this.settingService.getSymErrorSeperator(), ' & ') | safeHtml: 'html'"
+          >
+          </span>
+        </li>
+        }
+      </ul>
+      }
+    </div>
+    <div class="modal-footer">
+      <button type="button" (click)="closeErrorModal()" class="btn btn_primary mx-auto" data-dismiss="modal">
+        {{ settingService.getLabelValue('CLOSE_CONFIRMATION') }}
+      </button>
+    </div>
+  </sym-pop-up>
+  }
+</ng-container>
+@if (currentStepSelected != undefined) {
+<div class="position-fixed p-3 errorToastPosition">
+  <div
+    id="liveToast"
+    class="toast"
+    [class.show]="currentStepSelected.displayErrorToast"
+    [class.hide]="!currentStepSelected.displayErrorToast"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="toast-header">
+      <strong class="me-auto error">
+        <i class="fa fa-exclamation-triangle error" aria-hidden="true"></i>
+        <span [innerHTML]="settingService.getLabelValue('errorList') | safeHtml: 'html'"> </span>
+      </strong>
+      <button
+        type="button"
+        class="close toast-close"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+        (click)="currentStepSelected.displayErrorToast = false"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body error" (click)="onViewErrorClick($event, currentStepSelected, true)">
+      {{ settingService.getLabelValue('ERR_CONTINUE') }}
+    </div>
+  </div>
+</div>
+}

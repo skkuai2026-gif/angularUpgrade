@@ -1,0 +1,15 @@
+<div id="PolicySearch">
+  <div class="canvasScroll">
+    <sym-search
+      [moreOptionList]="moreOptionList"
+      [isAdvanceSearchDisplayed]="false"
+      [isAdvanceSearchRequired]="false"
+      [service]="service"
+      [searchName]="'SearchPolicy'"
+      [searchCriteriaData]="searchCriteriaData"
+      [isSelectionRequired]="false"
+      (moreOptionClick)="onMoreOptionClicked($event)"
+      [ExecuteSearchName]="false"
+    ></sym-search>
+  </div>
+</div>

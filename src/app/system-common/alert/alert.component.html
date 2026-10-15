@@ -1,0 +1,39 @@
+@for (alert of alerts; track alert; let i = $index) {
+<div
+  class="alert-container"
+  [style.z-index]="99999 - i"
+  [style.background]="i == 0 ? 'rgba(121, 114, 114, 0.78)' : ''"
+  tabindex="-1"
+>
+  <div class="{{ cssClass(alert) }} alert-modal">
+    <!-- <div class="header-close">
+      <a *ngIf="!alert.isConfirmationAlert" class="close" (click)="onOkClick(alert)">&times;</a>
+    </div> -->
+    <div class="alert-body">
+      <div class="alert-body-alignment">
+        <i class="{{ iconClass(alert) }}"></i>
+        <span class="ml-1" [innerHTML]="alert.message"></span>
+      </div>
+    </div>
+    <div class="alert-footer">
+      <sym-button
+        [class]="'btn  mr-2 btn_alert btn_' + alert.type"
+        [id]="'btn_alert_Ok'"
+        [text]="alert.okButLabel != undefined ? alert.okButLabel : 'MESSAGE_OK'"
+        (onClick)="onOkClick(alert)"
+        [isLoaderRequired]="false"
+        [autoFocus]="!alert.isConfirmationAlert ? true : false"
+      ></sym-button>
+      @if (alert.isConfirmationAlert) {
+      <sym-button
+        [class]="'btn btn_alert btn_outline_' + alert.type"
+        [id]="'btn_alert_Cancel'"
+        [text]="alert.cancelButLabel != undefined ? alert.cancelButLabel : 'CANCEL'"
+        (onClick)="onCancelClick(alert)"
+        [isLoaderRequired]="false"
+      ></sym-button>
+      }
+    </div>
+  </div>
+</div>
+}

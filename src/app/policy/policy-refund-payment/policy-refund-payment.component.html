@@ -1,0 +1,30 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+>
+</sym-xml-config-ui>
+} @else {
+<sym-panel [id]="'refund_payment_Body'" [name]="'refundPayment'">
+  <sym-field-group
+    [fieldIds]="'paymentMethodCd'"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.RefundPayment"
+  >
+  </sym-field-group>
+  <sym-field-group
+    [fieldIds]="fieldIds"
+    (notifyChange)="onInputChanged($event)"
+    (notifyFocus)="onInputFocused($event)"
+    [responseIO]="service.responseIO"
+    [model]="service.responseIO.data.RefundPayment.RefundPaymentDetails"
+  >
+  </sym-field-group>
+</sym-panel>
+}

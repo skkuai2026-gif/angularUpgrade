@@ -1,0 +1,102 @@
+<div class="fnaFullScreen fna-timeline">
+  <h2 class="col-white">Time line</h2>
+  <div class="fnaContent p0 margin-container">
+    <div class="main-content-right" [style]="{ width: '100%' }">
+      <div class="top-droppable-wrapper">
+        <!--  age row -->
+        <div class="row">
+          <div class="droppable-left-section">
+            <div class="dashed-line">
+              <div class="circle"></div>
+            </div>
+          </div>
+          @for (item of age; track item; let i = $index) {
+          <div
+            [class.droppable-section]="item < age[age.length - 1]"
+            [class.droppable-right-section]="item == age[age.length - 1]"
+          >
+            <div class="dashed-line">
+              <div class="droppable-heading" (click)="selectedAge = item">
+                <p [class.selectedAge]="selectedAge == item">{{ item }}</p>
+              </div>
+              <div
+                [class.droppable-sub-heading]="item < age[age.length - 1]"
+                [class.circle]="item == age[age.length - 1]"
+              ></div>
+              <div class="circle"></div>
+            </div>
+          </div>
+          }
+        </div>
+
+        <!--  Needs -->
+        <div class="row droppable-content-need">
+          <div class="droppable-left-section">
+            <div class="dotted-line"></div>
+          </div>
+          @for (item of age; track item; let i = $index) {
+          <div
+            [class.droppable-section]="item < age[age.length - 1]"
+            [class.droppable-right-section]="item == age[age.length - 1]"
+          >
+            <div class="dotted-line">
+              @if (selectedAge == item) {
+              <div
+                class="droppable-content ui-droppable active highlight drag-hint-border"
+                [class]="selectedAge == item ? 'highlight opacity' : ''"
+                cdkDropList
+                #ageC="cdkDropList"
+                [cdkDropListData]="ageDataList"
+                [cdkDropListConnectedTo]="[timec]"
+                (cdkDropListDropped)="onDrop($event, i)"
+              >
+                @for (data of ageDataList[i].details; track data; let j = $index) {
+                <div
+                  id="{{ data.src }} _{{ i }}"
+                  class="need ui-draggable ui-draggable-handle   {{ data.src }}"
+                  cdkDrag
+                ></div>
+                }
+              </div>
+              } @if (selectedAge != item) {
+              <div
+                class="droppable-content ui-droppable active highlight drag-hint-border"
+                [class]="selectedAge == item ? 'highlight opacity' : ''"
+              >
+                @for (data of ageDataList[i].details; track data; let j = $index) {
+                <div
+                  id="{{ data.src }} _{{ i }}"
+                  class="need ui-draggable ui-draggable-handle   {{ data.src }}"
+                  cdkDrag
+                ></div>
+                }
+              </div>
+              }
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      <div class="bottom-draggble-div">
+        @for (timeline of timeLineList; track timeline; let i = $index) {
+        <div
+          class="draggable-content need"
+          cdkDropList
+          #timec="cdkDropList"
+          [cdkDropListData]="timeLineList"
+          [cdkDropListConnectedTo]="[ageC]"
+          id="{{ timeline }}"
+        >
+          <!-- <img src="/assets/theme/images/education.svg" alt=""  /> -->
+          <div
+            class="dragElement need {{ timeline.toLowerCase().replace(' ', '-') }}"
+            id="{{ timeline }}"
+            cdkDrag
+          ></div>
+          {{ timeline }}
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

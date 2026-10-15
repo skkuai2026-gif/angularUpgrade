@@ -1,0 +1,21 @@
+/* Added CSS to display placeholder for disabled field */
+/* Commented out for now, can use it by uncommentting the lines when needed */
+/* .disabledDatepicker::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  padding: 0 0.25rem 0 0.625rem;
+  color: #0e0e0e9c;
+  font-size: 14px;
+  font-style: italic;
+  text-overflow: ellipsis;
+  line-height: 2.5;
+  width: 78%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media only screen and (max-width: 680px) {
+  .disabledDatepicker::before {
+    width: 52%;
+  }
+} */

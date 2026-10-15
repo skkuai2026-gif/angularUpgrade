@@ -1,0 +1,23 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+  [responseUpdated]="responseUpdated"
+  (onElementClicked)="onHTMLElementClick($event)"
+>
+</sym-xml-config-ui>
+} @else {
+<sym-field-group
+  [fieldIds]="
+    'addressLine1Lang1,addressLine1Lang2,addressLine2Lang1,addressLine2Lang2,addressLine3Lang1,addressLine3Lang2,addressLine4Lang1,addressLine4Lang2,addressSubTypeCd,countryCd,pinCode,stateCd,cityCd,districtCd,poBox,status,talukaCd,villageCd,'
+  "
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  [responseIO]="service.responseIO"
+  [model]="model"
+></sym-field-group>
+}

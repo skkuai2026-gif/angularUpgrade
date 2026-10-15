@@ -1,0 +1,56 @@
+<div class="blockContainer">
+  @if (!isBasePlanSelected) {
+  <div class="block blockQuotation">
+    <!-- [style.width]="100 / service.responseIO.lookups['PLANOPTION'].length + '%'" -->
+    @if (productList != undefined && productList.length > 0) {
+    {{ productList.length }} product(s) matched. Select quotation(s) for comparision.
+    <div class="cardContainer rowQCompare card">
+      @for (i of noOfRowCount; track i) {
+      <!-- <sym-carousel> -->
+      <div class="col-sm-12 col-md-12 co-lg-12 col-xl-12">
+        <div class="row">
+          <div class="card-spacing col-sm-4 col-md-4 co-lg-4 col-xl-4">
+            <div class="card">
+              <sym-bank-quotation-base-plan-selection
+                [product]="productList[i]"
+                [responseIO]="responseIO"
+                (notifyBasePlanSelection)="onBasePlanSelection($event)"
+                [quotationIndex]="i + 1"
+                [respApplicableProducts]="respApplicableProducts"
+              ></sym-bank-quotation-base-plan-selection>
+            </div>
+          </div>
+          @if (i + 1 < productList.length) {
+          <div class="card-spacing col-sm-4 col-md-4 co-lg-4 col-xl-4">
+            <div class="card">
+              <sym-bank-quotation-base-plan-selection
+                [product]="productList[i + 1]"
+                [responseIO]="responseIO"
+                (notifyBasePlanSelection)="onBasePlanSelection($event)"
+                [quotationIndex]="i + 1"
+                [respApplicableProducts]="respApplicableProducts"
+              ></sym-bank-quotation-base-plan-selection>
+            </div>
+          </div>
+          } @if (i + 2 < productList.length) {
+          <div class="col-sm-4 col-md-4 co-lg-4 col-xl-4">
+            <div class="card">
+              <sym-bank-quotation-base-plan-selection
+                [product]="productList[i + 2]"
+                [responseIO]="responseIO"
+                (notifyBasePlanSelection)="onBasePlanSelection($event)"
+                [quotationIndex]="i + 2"
+                [respApplicableProducts]="respApplicableProducts"
+              ></sym-bank-quotation-base-plan-selection>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      <!-- </sym-carousel> -->
+      }
+    </div>
+    } @else { Loading products! }
+  </div>
+  }
+</div>

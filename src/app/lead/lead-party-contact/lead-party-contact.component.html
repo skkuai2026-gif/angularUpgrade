@@ -1,0 +1,17 @@
+<div>
+  <sym-field-group
+    [fieldIds]="'contactNum'"
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="model"
+    [labelOnly]="'true'"
+  ></sym-field-group>
+  <sym-field-group
+    [fieldIds]="'countryCd,stdCode,contactNum,extensionNum'"
+    (notifyChange)="onInputChanged($event)"
+    [responseIO]="service.responseIO"
+    [model]="model"
+    [hideLabel]="'true'"
+    [gridColumns]="[2, 2, 4, 2]"
+  ></sym-field-group>
+</div>

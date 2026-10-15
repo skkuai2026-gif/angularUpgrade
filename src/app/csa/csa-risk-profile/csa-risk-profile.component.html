@@ -1,0 +1,123 @@
+<div>
+  <sym-panel sym-panel [id]="'rpq_Details_Body'" [name]="'RPQDETAILS'">
+    <sym-data-entry-grid
+      id="rpqResponse"
+      [fieldIds]="'score'"
+      [modelList]="service.responseIO.data.LeadRPQ.RPQResponseList"
+      [responseIO]="service.responseIO"
+      (notifyChange)="onInputChanged($event)"
+      [isFormFormatRequired]="true"
+      [formColumnWidth]="'12'"
+      [isDeleteRequired]="false"
+      [isAddRequired]="false"
+    ></sym-data-entry-grid>
+  </sym-panel>
+
+  <!-- <div class="col-xl-12"> -->
+  <sym-panel sym-panel [id]="'rpq_score'" [name]="'RPQSCORE'">
+    <div id="computeButton" class="fgInline">
+      <sym-field-group
+        [fieldIds]="'rpqScore'"
+        [hideLabel]="'true'"
+        (notifyChange)="onInputChanged($event)"
+        [responseIO]="service.responseIO"
+        [model]="service.responseIO.data.LeadRPQ"
+      ></sym-field-group>
+      <label class="margin-compute"
+        >{{ settingService.getLabelValue('riskProfile') }}:
+        <sym-button
+          [class]="'btn btn_primary mr-2 text-center'"
+          [id]="'btn_ok'"
+          [isLoaderRequired]="false"
+          [text]="'Compute'"
+          (onClick)="computeRiskScore()"
+        ></sym-button>
+        <br /><br />{{ fundRiskClass }} <br />
+        {{ fundRiskClassLabel }}
+      </label>
+    </div>
+  </sym-panel>
+  <sym-panel sym-panel [id]="'fund_option'" [name]="'FUNDOPTIONS'">
+    @if (isRiskFundApplicable && fundTablehtml) {
+    <h6 class="noteText">
+      <div class="noteAlignjustify">
+        {{ settingService.getLabelValue('CSAfundCaveat') }}
+      </div>
+    </h6>
+    &nbsp;
+    <sym-field-group
+      [fieldIds]="'address1'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.LeadRPQ"
+    >
+    </sym-field-group>
+    <!-- table  -->
+    @if ( fundTablehtml && service.responseIO.data.LeadRPQ.address1 != 'INDIVIDUAL' &&
+    !service.responseIO.data.LeadRPQ.address1?.includes('INDIVIDUAL') ) {
+    <div style="margin-top: 25px">
+      <div id="fund-table">
+        <div [innerHTML]="fundTablehtml"></div>
+      </div>
+    </div>
+    } } @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) { @if
+    (service.responseIO.data.Entity.isForexAcrreditation == false) {
+    <h6>
+      <div class="noteAlignjustify" [innerHTML]="settingService.getLabelValue('fundsnote')"></div>
+    </h6>
+    } }
+    <sym-field-group
+      [fieldIds]="'education,incomeGroup'"
+      (notifyChange)="onInputChanged($event)"
+      (notifyFocus)="onInputFocused($event)"
+      [responseIO]="service.responseIO"
+      [model]="service.responseIO.data.LeadRPQ"
+      class="col-sm-12 col-md-12 co-lg-12 col-xl-12"
+    ></sym-field-group>
+    <div class="form-row">
+      <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12">
+        <sym-field-group
+          id="riskProfileOthertitle"
+          [fieldIds]="'otherTitle'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="service.responseIO.data.LeadRPQ"
+          [gridColumns]="[12]"
+        ></sym-field-group>
+      </div>
+      <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12">
+        @if (service.responseIO.data.LeadRPQ.otherTitle === 'REASONAGGFUNDA') {
+        <sym-field-group
+          id="riskprofile"
+          [fieldIds]="'closureNotes'"
+          (notifyChange)="onInputChanged($event)"
+          [responseIO]="service.responseIO"
+          [model]="service.responseIO.data.LeadRPQ"
+          [gridColumns]="[12]"
+        ></sym-field-group>
+        }
+      </div>
+    </div>
+    @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) { @if (
+    service.responseIO.data.LeadRPQ.nationality == 'FUNDREASONAPPLICABLE' &&
+    service.responseIO.data.LeadRPQ.address1 != 'INDIVIDUAL' ) {
+    <h6>
+      <div class="noteAlignjustify" [innerHTML]="settingService.getLabelValue('CSAfundNote')"></div>
+    </h6>
+    } }
+  </sym-panel>
+  <!-- <div>
+  <sym-pop-up
+    [headerText]="'viewProposalList'"
+    [popupID]="'viewProposalList'"
+    class="OccupationIndustryDutySearch"
+    *ngIf="service.viewProposalListDisplayed"
+    >
+    <sym-view-proposal-list [searchCriteriaforProposal]="searchCriteriaforProposal"></sym-view-proposal-list>
+  </sym-pop-up>
+</div> -->
+  <!-- </div> -->
+  <sym-navigation-links [navigationLinkList]="navigationLinkList"></sym-navigation-links>
+  <!-- hello{{navigationLinkList |json}} -->
+</div>

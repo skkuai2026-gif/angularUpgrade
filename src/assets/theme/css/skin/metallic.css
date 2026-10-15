@@ -1,0 +1,386 @@
+/*  Input field UI changes starts here-- starts */
+
+.fgMaterial {
+  position: relative;
+  /* padding-top: 25px; */
+  /* margin-bottom: 20px; */
+  /* border-bottom: 1px solid #bcbcbc; */
+  margin: 0px 0 20px 0px;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+.fgMaterial.questionnaire {
+  padding-top: 18px !important;
+  border: 0;
+  transform: none;
+  margin: 0;
+}
+.fgMaterial .input-group {
+  position: static;
+}
+.fgMaterial .input-group > .input-group-append > .btn {
+  background-color: transparent;
+  border: 0;
+}
+
+.fgMaterial .form-control {
+  /* border: 0;
+  padding-left: 0 !important;
+  height: 32px;
+  background-color: transparent;
+  box-shadow: none !important; */
+  border: 0;
+  /* padding-left: 0 !important; */
+  height: 32px;
+  background-color: transparent;
+  box-shadow: none !important;
+  padding: 0 0.29rem !important;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #bcbcbc;
+  border-radius: 0;
+}
+
+.fgMaterial.pt-20 {
+  padding-top: 20px;
+}
+.fgMaterial .input-group {
+  height: 32px;
+}
+/* .fgMaterial .form-control:valid */
+.fgMaterial .form-control:focus,
+.fgMaterial .form-control:not(:placeholder-shown),
+.fgMaterial .form-control[placeholder='DD/MM/YYYY'],
+.fgMaterial .form-control[placeholder='xxxx-xxxx-xxxx'] {
+  color: #222b45;
+  outline: none;
+}
+/* .fgMaterial .form-control:valid ~ label */
+.fgMaterial .form-control:focus ~ label,
+.fgMaterial .form-control:not(:placeholder-shown) ~ label,
+.fgMaterial .form-control[placeholder='DD/MM/YYYY'] ~ label,
+.fgMaterial .form-control[placeholder='xxxx-xxxx-xxxx'] ~ label {
+  font-size: 12px;
+  color: #8f9bb3;
+  top: 4px;
+  left: 0;
+}
+.fgMaterial .form-control:focus ~ label:before,
+.form-control[placeholder='DD/MM/YYYY']:focus ~ label::before,
+.form-control[placeholder='xxxx-xxxx-xxxx']:focus ~ label::before {
+  width: 100%;
+  left: 0;
+}
+.fgMaterial .ng-select .ng-select-container {
+  min-height: 32px !important;
+  height: 32px !important;
+}
+
+.fgMaterial .radioGrpBox .form-check > label {
+  height: 32px;
+}
+
+.fgMaterial .fgInline {
+  align-items: center;
+}
+.fgMaterial .form-check-inline {
+  margin-bottom: 0 !important;
+}
+.fgMaterial .fgInline .label {
+  margin-bottom: 0;
+}
+.fgMaterial .checkBoxGrp .form-check > .form-check-input ~ label::before {
+  border-color: #bcbcbc;
+}
+
+.fundsContent .fgMaterial {
+  padding: 0;
+  margin: 0;
+}
+.fundsContent .fgMaterial .form-control {
+  border: 1px solid #e4e9f2;
+  padding-left: 5px;
+}
+
+.fgMaterial.form-group .ng-select .ng-select-container {
+  font-size: 14px;
+  font-weight: bold;
+  color: #018acd;
+  background-color: transparent !important;
+  border: 0;
+}
+.fgMaterial .selected .form-group .ng-select .ng-select-container {
+  color: #8f9bb3;
+}
+.fgMaterial .form-group .ng-select .ng-clear-wrapper {
+  display: none;
+}
+.form-group.fgMaterial .form-control:disabled,
+.form-group .ng-select.ng-select-disabled {
+  opacity: 0.6;
+  /* color: #d4d4d4; */
+  color: #222b45 !important;
+  background: transparent !important;
+}
+
+.form-group.fgMaterial .form-control ~ label:before {
+  display: none;
+}
+/**css horizontal form field ends**/
+
+.fgMaterial .ng-select .ng-select-container {
+  min-height: 32px !important;
+  height: 32px !important;
+}
+
+.fgMaterial .radioGrpBox .form-check > label {
+  height: 32px;
+}
+
+.fgMaterial select:not([value='']):valid {
+  color: #222b45;
+  outline: none;
+  border: 0;
+  border-bottom: 1px solid #bcbcbc !important;
+  padding-left: 0.2rem !important;
+  height: 32px;
+  background-color: transparent;
+  box-shadow: none !important;
+  border-radius: 0;
+}
+.fgMaterial select:not([value='']):valid ~ label {
+  font-size: 12px;
+  color: #8f9bb3;
+  top: 2px;
+  left: 0;
+}
+.fgMaterial select:not([value='']):valid ~ label:before {
+  width: 100%;
+  left: 0;
+}
+.fgMaterial select:not([value='']):valid {
+  color: #222b45;
+  outline: none;
+}
+.fgMaterial select:not([value='']):valid ~ label {
+  font-size: 12px;
+  color: #8f9bb3;
+  top: 2px;
+  left: 0;
+}
+.fgMaterial select:not([value='']):valid ~ label:before {
+  width: 100%;
+  left: 0;
+}
+
+.fgMaterial .ng-select .ng-select-container {
+  color: #222b45;
+  outline: none;
+  border: 0;
+  border-bottom: 1px solid #bcbcbc !important;
+  padding-left: 0.2rem !important;
+  height: 32px;
+  background-color: transparent;
+  box-shadow: none !important;
+  border-radius: 0;
+}
+
+.fgMaterial label,
+.fgMaterial .label {
+  margin-bottom: 0px !important;
+}
+
+.fgMaterial.fgError > .radioGrp.radioGrpBox .errorText,
+.fgError > .radioGrp.radioGrpBox .errorText {
+  padding: 12px 17px 13px;
+}
+.fgMaterial .errorText .errorIcon {
+  left: 2px;
+}
+
+.fgMaterial .fgError .errorText {
+  padding: 5px 16px 2px;
+}
+
+.fgMaterial .form-control ~ label {
+  position: absolute;
+  top: calc(20px + 4px);
+  left: 0;
+  pointer-events: none;
+  /*padding-left: 0.25rem !important;*/
+  z-index: 1;
+  color: #8f9bb3;
+  font-size: 14px;
+  font-weight: normal;
+  -webkit-transition: all 0.28s ease;
+  transition: all 0.28s ease;
+  padding-left: 0;
+  margin: 0;
+}
+
+.fgMaterial .form-control ~ label:before {
+  content: '';
+  position: fixed;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background-color: #8f9bb3;
+  -webkit-transition: left 0.28s ease, width 0.28s ease;
+  transition: left 0.28s ease, width 0.28s ease;
+  z-index: 2;
+  color: #8f9bb3;
+}
+
+.contact .fgMaterial .form-control ~ label {
+  top: calc(20px + -10px);
+}
+
+.contact .fgMaterial .form-control:focus ~ label,
+.contact .fgMaterial .form-control:not(:placeholder-shown) ~ label,
+.contact .fgMaterial .form-control[placeholder='DD/MM/YYYY'] ~ label,
+.contact .fgMaterial .form-control[placeholder='xxxx-xxxx-xxxx'] ~ label {
+  top: -8px;
+}
+.fgMaterial .ng-select .ng-select-container,
+.fgMaterial .customDatePicker.form-control {
+  color: #222b45 !important;
+  outline: none !important;
+  border: 0 !important;
+  border-bottom: 1px solid #bcbcbc !important;
+  padding-left: 0.2rem !important;
+  height: 32px !important;
+  /*background-color: transparent !important;*/
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  background: inherit !important;
+}
+.fundsContent .blockList > li > .inputActions .fgMaterial.pt-20 {
+  padding-top: 0px !important;
+}
+
+.fgMaterial .customDatePicker.form-control {
+  padding-left: 0rem !important;
+}
+:host .ui5-date-picker-input {
+  border: 0 !important;
+}
+[inner-input] {
+  border: 0 !important;
+}
+
+*[focused] {
+  border: 0 !important;
+}
+:root {
+  --_ui5-input-border: 0px solid #bcbcbc !important;
+  --_ui5-datepicker-hover-background: transparent !important;
+  --_ui5-input-border-radius: 0rem !important;
+  --_ui5_input_height: 31px !important;
+  --_ui5-input-hover-border: 0px solid #bcbcbc !important;
+  --_ui5-input-focused-border-color: #bcbcbc !important;
+}
+
+[inner-input][inner-input-with-icon] {
+  border: 0 !important;
+}
+:host .ui5-date-picker-input {
+  border: 0 !important;
+}
+
+.fundsContent .blockList > li > .inputActions > div:after {
+  top: 25%;
+  height: 47%;
+}
+
+.documentContent .fgMaterial {
+  margin: 0px;
+}
+
+.fgMaterial .form-control:disabled,
+.fgMaterial .form-control:disabled:hover,
+.fgMaterial .form-control:disabled:focus,
+.fgMaterial .form-control[readonly],
+.fgMaterial .form-control[readonly]:hover,
+.fgMaterial .form-control[readonly]:focus,
+.fgMaterial select:disabled,
+.fgMaterial select:disabled:hover,
+.fgMaterial select:disabled:focus {
+  opacity: 0.6;
+  /* color: #d4d4d4; */
+  color: #222b45 !important;
+  background: transparent !important;
+}
+
+.fgMaterial .form-control:disabled:hover,
+.fgMaterial .form-control:disabled:focus,
+.fgMaterial .form-control[readonly],
+.fgMaterial .form-control[readonly]:hover,
+.fgMaterial .form-control[readonly]:focus,
+.fgMaterial select:disabled,
+.fgMaterial select:disabled:hover,
+.fgMaterial select:disabled:focus {
+  opacity: 0.6;
+  /* color: #d4d4d4; */
+  color: #222b45 !important;
+  background: transparent !important;
+}
+
+.fgMaterial .form-check-input:disabled,
+.fgMaterial input[type='checkbox']:disabled,
+.fgMaterial input[type='radio']:disabled,
+.fgMaterial input[type='checkbox'].disabled,
+.fgMaterial input[type='radio'].disabled,
+.fgMaterial .fgMaterial .form-check-input:disabled,
+.fgMaterial select.disabled {
+  pointer-events: none;
+}
+
+.fgMaterial .form-check-input:disabled ~ label::before,
+.fgMaterial input[type='checkbox']:disabled ~ label::before,
+.fgMaterial input[type='radio']:disabled ~ label::before,
+.fgMaterial input[type='checkbox'].disabled ~ label::before,
+.fgMaterial input[type='radio'].disabled ~ label::before,
+.fgMaterial .fgMaterial .form-check-input:disabled ~ label::before,
+.fgMaterial select.disabled ~ label::before {
+  opacity: 0.6;
+  /* color: #d4d4d4; */
+  color: #222b45 !important;
+  background: transparent !important;
+}
+
+.fgMaterial .form-check-input:disabled ~ label,
+.fgMaterial input[type='checkbox']:disabled ~ label,
+.fgMaterial input[type='radio']:disabled ~ label,
+.fgMaterial input[type='checkbox'].disabled ~ label,
+.fgMaterial input[type='radio'].disabled ~ label,
+.fgMaterial .fgMaterial .form-check-input:disabled ~ label,
+.fgMaterial select.disabled ~ label {
+  opacity: 0.6;
+  /* color: #d4d4d4; */
+  color: #222b45 !important;
+  background: transparent !important;
+}
+
+.fgMaterial .radioGrpBox input[type='radio']:disabled ~ label,
+.fgMaterial .radioGrpBox input[type='radio'].disabled ~ label,
+.fgMaterial .radioGrpBox .form-check-input:disabled ~ label,
+.fgMaterial select.disabled ~ label {
+  opacity: 0.6;
+  /* color: #d4d4d4; */
+  color: #222b45 !important;
+  background: transparent !important;
+}
+/*  Input field UI changes ends here */
+
+.card-body {
+  height: calc(100% - 55px);
+}
+
+.card {
+  border: 0 !important;
+  background-color: white;
+  color: black;
+}

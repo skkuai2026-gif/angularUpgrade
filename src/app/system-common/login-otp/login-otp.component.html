@@ -1,0 +1,20 @@
+@if (!authService.isUserLoggedIn() && settingService.urlList != undefined && this.guid) {
+<div class="loginOtp">
+  <div class="header">
+    <a href="javascript:void(0);" class="logo"
+      ><img src="/assets/theme/images/company/logo_white.png" alt="Logo"
+    /></a>
+  </div>
+  <sym-otp
+    [displayPopupOnly]="true"
+    [isOtpButtonReq]="false"
+    [otpRecipientAddress]="otpRecipientAddress"
+    [otpErrorFailed]="otpErrorFailed"
+    (otpActionClicked)="onOTPActionClick($event)"
+    [otpExpiryTimeInput]="otpExpiryTime"
+    [getOTP]="true"
+  ></sym-otp>
+</div>
+} @else {
+<sym-loader></sym-loader>
+}

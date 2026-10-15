@@ -1,0 +1,86 @@
+/***panels accordian css starts**/
+.block {
+  margin-bottom: 10px;
+  position: relative;
+  padding-bottom: 0;
+}
+.block:last-child:not(::first-child) {
+  margin-bottom: 0;
+  border: 0;
+}
+.btnToggleBlock {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 10px;
+  background-color: #f2f5ff;
+  color: #8f9bba;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 0.6rem;
+}
+.btnToggleBlock::before {
+  content: '\e949';
+  font-family: 'icomoon';
+}
+/*Commenting this code since when the panel is collapse 
+only the internal body will be hidden and not the header*/
+/* .block.blockCollapse {
+  height: 30px;
+  overflow: hidden;
+} */
+.block.blockCollapse .btnToggleBlock::before {
+  content: '\e907';
+}
+.block > h4 {
+  border-bottom: 2px solid rgba(51, 102, 255, 0.24);
+  position: relative;
+  /*padding-bottom: 8px;*/
+  cursor: pointer;
+  /* padding: 0; */
+  padding: 3px 8px; /** Added in v17 **/
+}
+.subPanel {
+  margin: 4px 0px 0 25px;
+  font-size: 0.9rem;
+  color: #776767;
+}
+
+.block.borderAdded {
+  border: 2px solid rgba(51, 102, 255, 0.24);
+  box-shadow: 0 3px 10px rgb(51 102 255 / 20%);
+}
+.block.borderAdded.pb-40 {
+  padding-bottom: 40px;
+}
+
+.block.borderAdded > h4 {
+  background: rgba(51, 102, 255, 0.24);
+  padding: 15px 13px 15px;
+}
+
+.customerBody {
+  padding: 0px 13px 8px;
+}
+
+.block.block.borderAdded > h4 > .btnToggleBlock {
+  padding: 18px 10px;
+  background: transparent;
+}
+
+.block.borderAdded > .subPanel {
+  margin: 0px 0px 0 1px;
+}
+/***panels accordian css ends**/
+
+/* .block.blockCollapse .panel-body {
+  overflow: hidden;
+  height: 0px;
+} */
+
+.panelButton {
+  pointer-events: none;
+}

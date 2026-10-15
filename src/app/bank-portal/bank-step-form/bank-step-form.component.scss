@@ -1,0 +1,20 @@
+.grid-layout {
+  display: grid;
+  grid-column-gap: 12px;
+  grid-template-columns: 100px auto;
+  max-width: 350px;
+}
+
+.details {
+  color: #ee4e2ab8;
+  font-size: 1.35rem;
+  font-style: italic;
+  font-weight: 900;
+}
+
+.header {
+  color: #ed7d64b8;
+  font-size: 1.29rem;
+  font-style: italic;
+  font-weight: 900;
+}

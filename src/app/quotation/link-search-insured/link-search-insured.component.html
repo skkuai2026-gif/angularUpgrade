@@ -1,0 +1,11 @@
+<div id="mirrorSISearch">
+  <sym-search
+    [isAdvanceSearchDisplayed]="false"
+    [isAdvanceSearchRequired]="true"
+    [searchName]="'searchInsuredProposal'"
+    [service]="service"
+    [isSelectionRequired]="true"
+    (selectedOptionClick)="onSelectedOptionClick($event)"
+    [searchPlaceholder]="'Search Insured'"
+  ></sym-search>
+</div>

@@ -1,0 +1,89 @@
+@if (xmlDom != undefined) {
+<ng-container>
+  <ul class="nav nav-tabs">
+    @for ( child of xmlDom.getAttribute('isStatic') === true || xmlDom.getAttribute('isStatic') === 'true' ?
+    xmlDom.children : modelList; track child; let index = $index) { @if (child.nodeName == 'subtab' &&
+    highLightedTab != undefined) {
+    <li class="nav-item" (click)="onTabSelected(child, index)">
+      <a
+        data-toggle="tab"
+        href="#{{ child.getAttribute('id') }}"
+        class="nav-link"
+        [class.active]="highLightedTab.index == index"
+      >
+        {{ settingService.getLabelValue(child.getAttribute('label')) }}
+      </a>
+    </li>
+    } @else { @if (child.status !== 'D' && highLightedTab != undefined) {
+    <li class="nav-item subTab-li">
+      <a
+        data-toggle="tab"
+        href="#{{ child.guid }}"
+        class="nav-link pr-4"
+        [class.active]="highLightedTab.index == index"
+        (click)="onTabSelected(child, index)"
+      >
+        {{ settingService.getLabelValue(xmlDom.getAttribute('tabName')) + ' ' + (index + 1) }}
+      </a>
+      @if (isSymAvailable(xmlDom.getAttribute('isDeleteRequired'))) {
+      <i
+        class="fa fa-close pl-2"
+        aria-hidden="true"
+        (click)="
+          onTabDelete(
+            child,
+            settingService.getLabelValue(xmlDom.getAttribute('tabName')) + ' ' + (index + 1),
+            index
+          )
+        "
+      ></i>
+      }
+    </li>
+    } } } @if (isSymAvailable(xmlDom.getAttribute('isAddRequired'))) {
+    <li class="nav-item cursor" (click)="onAddSelected($event)">
+      <a class="nav-link">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+      </a>
+    </li>
+    }
+  </ul>
+  @for ( child of xmlDom.getAttribute('isStatic') === true || xmlDom.getAttribute('isStatic') === 'true' ?
+  xmlDom.children : modelList; track child; let index = $index) {
+  <ng-container>
+    <div class="tab-content">
+      <div
+        id="{{ child.guid != undefined ? child.guid : child.getAttribute('id') }}"
+        class="tab-pane fade"
+        [class.active]="highLightedTab.index == index"
+        [class.show]="highLightedTab.index == index"
+      >
+        @if (child.status !== 'D' && highLightedTab != undefined) {
+        <ng-container
+          *ngTemplateOutlet="
+            itemSubTabTpl;
+            context: { $implicit: child.nodeName == 'subtab' ? child : xmlDom, index: index }
+          "
+        ></ng-container>
+        }
+      </div>
+    </div>
+  </ng-container>
+  <!-- <ng-container *ngIf="highLightedTab != undefined && highLightedTab.index == index">
+      <div class="tab-content">
+        <div
+          id="{{ child.guid }}"
+          class="tab-pane fade"
+          [class.active]="highLightedTab.index == index"
+          [class.show]="highLightedTab.index == index"
+          >
+          <ng-container>
+            <ng-container
+              *ngTemplateOutlet="itemSubTabTpl; context: { $implicit: xmlDom, index: index }"
+            ></ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container> -->
+  }
+</ng-container>
+}

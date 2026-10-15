@@ -1,0 +1,38 @@
+<div class="pgContainer scrollDiv">
+  <div class="headerBanner hbCollateral"></div>
+  <div class="pgContent">
+    <div class="pageHeader">Collateral</div>
+    <sym-sub-tab
+      [tabList]="tabList"
+      (selectedTab)="setTab($event)"
+      [isAddRequired]="false"
+      [isDeleteRequired]="false"
+    >
+      <div class="pageData">
+        <div class="collateralScreen" data-screen-no="1">
+          <div class="collateralScreenContent">
+            @if (collateralBodyList && collateralBodyList.length > 0) {
+            <div class="row" id="row_module">
+              @for (cBody of collateralBodyList; track cBody) {
+              <div class="col-sm-4">
+                @if (cBody.contentPart1 != undefined && cBody.contentPart1 != null) {
+                <div class="box text-center" [innerHTML]="cBody.contentPart1 | safeHtml: 'html'">
+                  <!-- <a [routerLink]="'/collateral/' + cBody.link + '/' + cBody.id">
+                        <span class="boxIcon">
+                          <img [src]="'app/collateral/assets/images/' + cBody.icon" alt="" />
+                        </span>
+                        <h4 class="headline">{{ cBody.name }}</h4>
+                      </a> -->
+                </div>
+                }
+              </div>
+              }
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      <!-- step data container ends-->
+    </sym-sub-tab>
+  </div>
+</div>

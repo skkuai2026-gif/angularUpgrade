@@ -1,0 +1,21 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+  (onElementClicked)="onHTMLElementClick($event)"
+>
+</sym-xml-config-ui>
+} @else { @if (service.responseIO && service.responseIO.data) { @if (service.responseIO.data.InitialPayment !=
+undefined) {
+<sym-policy-initial-payment [responseUpdated]="responseUpdated"></sym-policy-initial-payment>
+} @if (service.responseIO.data.RenewalPayment != undefined) {
+<sym-policy-renewal-payment [responseUpdated]="responseUpdated"></sym-policy-renewal-payment>
+} @if (service.responseIO.data.RefundPayment != undefined) {
+<sym-policy-refund-payment></sym-policy-refund-payment>
+} @if (!this.service.responseIO['isMetadataHelpReqd']) {
+<sym-navigation-links [navigationLinkList]="navigationLinkList"></sym-navigation-links>
+} } }

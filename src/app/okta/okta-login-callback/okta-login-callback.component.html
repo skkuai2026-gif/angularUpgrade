@@ -1,0 +1,17 @@
+<!-- <div class="main-content-wrapper slm-dashboard-bg-image"></div> -->
+@if (showDisclaimer && settingService.isLabelLoaded) {
+<div>
+  <sym-disclaimer
+    [displayPopupOnly]="true"
+    (disagreeDisclaimerCLicked)="disagreeDisclaimerClicked($event)"
+    (acceptDisclaimerCLicked)="acceptDisclaimerCLicked($event)"
+  ></sym-disclaimer>
+</div>
+} @if (errorMessageFromService) {
+<div class="alert alert-danger">
+  {{ errorMessageFromService }}
+  <div>
+    <!-- <sym-okta-login></sym-okta-login> -->
+  </div>
+</div>
+}

@@ -1,0 +1,95 @@
+@if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<h4 class="text-center">UNDERWRITING SUMMARY</h4>
+<div class="ui-grid-d">
+  <div class="row">
+    <span class="record"
+      >{{ settingService.getLabelValue('recordId') }} : {{ service.responseIO.data.Entity.proposalNum }}</span
+    >
+  </div>
+  <br />
+  <div class="row">
+    <span class="record"
+      >{{ settingService.getLabelValue('quotationRefNum') }} :
+      {{ service.responseIO.data.Entity.quotationRefNum }}</span
+    >
+  </div>
+  <br />
+  @if ( service.responseIO.data.Entity.uwDecisionCd != null && service.responseIO.data.Entity.uwDecisionCd ==
+  'APPROVED' ) {
+  <div class="row">
+    <span class="record"> {{ settingService.getLabelValue('uwDecisionCd') }} : <span>Passed </span></span>
+  </div>
+  } @if ( service.responseIO.data.Entity.uwDecisionCd != null && service.responseIO.data.Entity.uwDecisionCd ==
+  'DECLINED' ) {
+  <div class="row">
+    <span class="record"> {{ settingService.getLabelValue('uwDecisionCd') }} : <span>Failed </span></span>
+  </div>
+  }
+  <br />
+  @if (service.responseIO.data.Entity.uwDecisionCd === 'APPROVED') {
+  <div class="row">
+    <span class="record" id="uwStatusApproved">
+      Reason : {{ settingService.getLabelValue('uwApprovedStatus') }}</span
+    >
+  </div>
+  } @if (service.responseIO.data.Entity.uwDecisionCd === 'DECLINED') {
+  <div class="row">
+    <span class="record">
+      Reason :
+      <span
+        [innerHTML]="
+          this.settingService.getLabelValue(
+            $safeNavigationMigration(service.responseIO?.data?.Entity?.leadGeneratorRemarks)
+          )
+        "
+      ></span>
+    </span>
+  </div>
+  }
+  <br />
+</div>
+<!-- <div id="okButton">
+        <button
+          style="width: 100px; height: 40px;"
+          type="button" class=" btn-primary"
+          (click)="but_ok_click()"
+          mdbRipple>OK
+        </button>
+      </div> -->
+}
+
+<!-- <div class="ui-grid-d">
+    <div class="ui-block-a"><h2>{{ getLabelValue('recordId') }} :</h2></div>
+    <div class="ui-block-b"><h2>{{ policy.proposalNum }}</h2></div>
+  </div>
+  <div class="ui-grid-d">
+    <div class="ui-block-a"><h2>{{ getLabelValue('quotationRefNum') }} :</h2></div>
+    <div class="ui-block-b"><h2>{{ policy.quotationRefNum }}</h2></div>
+  </div>
+  <div class="ui-grid-d">
+    <div class="ui-block-a"><h2>{{ getLabelValue('uwDecisionCd') }} :</h2></div>
+    <div class="ui-block-b"><h2>{{ policy.uwDecisionCd }}</h2></div>
+  </div>
+  <div class="ui-grid-d">
+    <div class="ui-block-a"><h2>{{ getLabelValue('reason') }} :</h2></div>
+    <div *ngIf="policy.uwDecisionCd === 'APPROVED'">
+      <h2>{{ getLabelValue('uwApprovedStatus') }}</h2>
+    </div>
+    <div *ngIf="policy.uwDecisionCd === 'DECLINED'">
+      <h2>{{ getLabelValue('uwDeclinedStatus') }}</h2>
+    </div>
+  </div>
+  <br/>
+  <div class="ui-grid-d">
+    <div class="ui-block-a"></div>
+    <div class="ui-block-b"></div>
+    <div class="ui-block-c">
+      <a href="#" rel="external" data-role="button" style="min-width: 100px; background-color: #CCCCCC;">
+        {{ getLabelValue('OK') }}
+      </a>
+    </div>
+    <div class="ui-block-d"></div>
+    <div class="ui-block-e"></div>
+  </div>
+  <br>
+  </div> -->

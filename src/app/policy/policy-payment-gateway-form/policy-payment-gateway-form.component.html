@@ -1,0 +1,3 @@
+<form name="paymentGatewayForm" [action]="settingService.getURLValue('PAYMENTGATEWAY')" method="post">
+  <input type="hidden" name="inwardId" id="inwardId" [value]="service.responseIO.data.InitialPayment.id" />
+</form>

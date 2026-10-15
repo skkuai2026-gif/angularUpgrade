@@ -1,0 +1,61 @@
+@if (xmlDom != undefined) {
+<sym-xml-config-ui
+  [xmlDom]="xmlDom"
+  [service]="service"
+  [responseIO]="service.responseIO"
+  (notifyChange)="onInputChanged($event)"
+  (notifyFocus)="onInputFocused($event)"
+  (onRowAdded)="onGridRowAdded($event)"
+  (onTabAdded)="onAddNominee($event)"
+>
+</sym-xml-config-ui>
+} @else { @if (service.responseIO && service.responseIO.data && service.responseIO.data.length != 0) {
+<div>
+  <div class="m-1 p-2">
+    <div class="colorgray justifyContent marginBottom">
+      {{ settingService.getLabelValue('beneficiaryNote') }}
+    </div>
+    <ng-container>
+      <sym-sub-tab
+        [tabList]="tabList"
+        (selectedTab)="setTab($event)"
+        [isAddRequired]="!service.responseIO.data.Entity.isCompleted"
+        [isDeleteRequired]="!service.responseIO.data.Entity.isCompleted"
+        [isDynamicTabsReq]="true"
+        [heightSubTab]="550"
+        (onTabAdded)="onAddNominee($event)"
+        (onTabDeleted)="onDeleteNominee($event)"
+      >
+        @if ( selectedTab && selectedTab != undefined && selectedTab.id != 'appointee' &&
+        service.responseIO.data.NomineeList[selectedTab.index] !== undefined &&
+        service.responseIO.data.NomineeList[selectedTab.index]['status'] != 'D' ) {
+        <!-- Loop is added so that each nominee is rendered and each have its own instance so that is initated properly -->
+        @for (nominee of service.responseIO.data.NomineeList; track nominee; let i = $index) {
+        <!-- Here if condition is added so thate only selected tab will be displayed -->
+        @if (i == selectedTab.index) {
+        <sym-field-group
+          [fieldIds]="
+            nominee.partySameAsCd != null && nominee.partySameAsCd === 'SUPPLEMENTARY'
+              ? 'partySameAsCd,suppPartyGuid,nomineeTypeCd'
+              : 'partySameAsCd,eventTypeCd,nomineeTypeCd'
+          "
+          (notifyChange)="onInputChanged($event)"
+          (notifyFocus)="onInputFocused($event)"
+          [responseIO]="service.responseIO"
+          [model]="nominee"
+          [gridColumns]="[4, 4, 4, 4, 4, 4]"
+        ></sym-field-group>
+        @if ( nominee.partySameAsCd === 'OTHER' || (nominee.partySameAsCd != 'PROPOSER' && nominee.partySameAsCd !=
+        'PRIMARY' && nominee.partySameAsCd != 'PROPCUMINS' && nominee.partySameAsCd != 'JOINT' &&
+        nominee.partySameAsCd != 'SUPPLEMENTARY' && nominee.partySameAsCd != 'PAYER') ) {
+        <div>
+          <div class="accordion" id="accordionPartyDetails">
+            <sym-policy-party-details [model]="nominee"></sym-policy-party-details>
+          </div>
+        </div>
+        } } } }
+      </sym-sub-tab>
+    </ng-container>
+  </div>
+</div>
+} }

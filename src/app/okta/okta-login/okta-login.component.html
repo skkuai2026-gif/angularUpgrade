@@ -1,0 +1,136 @@
+@if (!authService.isUserLoggedIn() && showLoginTemplate) {
+<div
+  [ngClass]="{
+    'loginWrapper scrollDiv': companySUNPH === 'SLGFI' || (companySUNPH === undefined && company === 'SLGFI'),
+    'loginWrapper2 scrollDiv': companySUNPH === 'SLOCPI' || (companySUNPH === undefined && company === 'SLOCPI')
+  }"
+>
+  <div class="loginContainerParent">
+    <div class="loginContent">
+      <div class="header">
+        <div class="bgWhite" id="oktabgWhite">
+          <span class="btnLeftNav"></span>
+          @if (companySUNPH === 'SLGFI' || (companySUNPH === undefined && company === 'SLGFI')) {
+          <a href="javascript:void(0);" class="logo_login">
+            <img src="/assets/theme/images/company/SLGFI.png" alt="Logo" id="oktaImgLogin"
+          /></a>
+          } @if (companySUNPH === 'SLOCPI' || (companySUNPH === undefined && company === 'SLOCPI')) {
+          <a href="javascript:void(0);" class="logo_login"
+            ><img src="/assets/theme/images/company/SLOCPI.jpg" width="438px" alt="Logo2" id="oktaImgLogin"
+          /></a>
+          }
+        </div>
+      </div>
+      <div class="loginContent">
+        @if (error == undefined || error == null || error == '') {
+        <p>
+          <!-- Please sign in to your account. -->
+        </p>
+        } @else {
+        <p>
+          <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+          {{ error }}
+        </p>
+        }
+        <form name="abm_admin_login_form" (ngSubmit)="signIn()" (keyup.enter)="signIn()" autocomplete="off">
+          <!-- <div>
+              <input
+                autocomplete="off"
+                (copy)="onCopy($event)"
+                ondrag="return false"
+                ondrop="return false"
+                (paste)="onPaste($event)"
+                onfocus="return false"
+                type="text"
+                class="form-control txtusername"
+                id="userName"
+                name="login_username"
+                required
+              [ngClass]="{
+                'is-invalid': (submitted && form.userId.errors) || isLoginFailed
+              }"
+                (focus)="isLoginFailed = false"
+                (keypress)="omit_special_char($event)"
+                placeholder="ADVISOR CODE"
+                />
+              </div> -->
+          <!-- <div class="form-group">
+              <label for="password">Password<i class="fa fa-asterisk asterik pl-1" aria-hidden="true"></i></label>
+              <div class="password-container">
+                <input
+                  autocomplete="off"
+                  (copy)="onCopy($event)"
+                  ondrag="return false"
+                  ondrop="return false"
+                  (paste)="onPaste($event)"
+                  onfocus="return false"
+                  placeholder="PASSWORD"
+                  [type]="showPassword ? 'text' : 'password'"
+                  class="form-control txtPassword"
+                  name="login_password"
+                  id="password"
+                  required
+                [ngClass]="{
+                  'is-invalid': (submitted && form.password.errors) || isLoginFailed
+                }"
+                  (focus)="isLoginFailed = false"
+                  />
+                  <img
+                    class="fa toggle-password pweye"
+                    src="/assets/theme/images/company/pweye.gif"
+                    (click)="togglePasswordVisibility()"
+                    aria-hidden="true"
+                    />
+                    <div *ngIf="submitted && form.password.errors" class="invalid-feedback">
+                      <div *ngIf="form.password.errors.required">Password is required</div>
+                    </div>
+                    <div *ngIf="isLoginFailed" class="invalid-feedback">
+                      <div *ngIf="form.password.errors.required">Please enter a valid Password.</div>
+                    </div>
+                  </div>
+                </div> -->
+          <div class="form-group">
+            <button
+              class="btn btn_primary btn_submit"
+              type="button"
+              (ngSubmit)="signIn()"
+              (keyup.enter)="signIn()"
+              (click)="signIn()"
+            >
+              Log In
+            </button>
+          </div>
+          @if (this.settingService.getApplicationMode() === 'offline') {
+          <p style="font-size: 14px; text-align: center; font-weight: bold; margin-top: 10px">
+            {{ 'Version ' + appVersion + ' / ' + dbVersion }}
+          </p>
+          }
+          <p style="font-size: 14px; text-align: center; font-weight: bold; padding-top: 7px">
+            <!-- Version 5.9/13.4 -->
+            {{ proposalVersion }}
+          </p>
+          <p></p>
+          <!-- <p style="font-size: 14px; font-weight: bold; text-align: center; padding-top: 1rem">PROP.v24.1.00</p> -->
+          <br />
+          <div
+            style="
+              margin-left: 20px;
+              margin-right: 20px;
+              font-size: 9pt;
+              font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+              text-align: center;
+              padding-bottom: 10px;
+            "
+          >
+            Need help? Contact Advisor Technology Support (ATS) at &nbsp;<a style="color: #0d6efd">+63285558888</a>
+            local <a style="color: #0d6efd">3000 </a> or email at
+            <a href="mailto: phil-ats@sunlife.com">phil-ats<span>&#64;</span>sunlife.com</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+} @if (!settingService.isLabelLoaded && showLoader && !showLoginTemplate) {
+<sym-loader></sym-loader>
+}

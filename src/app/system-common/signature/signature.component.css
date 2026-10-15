@@ -1,0 +1,43 @@
+.hidden {
+  height: 0;
+  width: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: none !important;
+}
+
+.signature_border {
+  border: 1px solid #000000 !important;
+  margin: 1rem;
+  background-color: #fff;
+}
+.hide {
+  display: none;
+}
+.bg-none {
+  background: transparent !important;
+}
+.signatureImageUpload {
+  height: 320px;
+  width: 100%;
+}
+.img_loaded {
+  align-items: center;
+  display: flex;
+  margin: auto;
+  margin-bottom: 20px;
+  border: 1px solid #000000 !important;
+}
+
+.text-center p {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: middle;
+  padding-top: 0.7rem;
+  font-size: x-small;
+}
+
+img[src=''] {
+  display: none;
+}

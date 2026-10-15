@@ -1,0 +1,16 @@
+<span
+  class="customtooltiptext"
+  [ngClass]="
+    placement == 'right'
+      ? 'right-left-alignment right'
+      : placement == 'left'
+      ? 'right-left-alignment left'
+      : placement == 'top'
+      ? 'top-bottom-alignment top'
+      : placement == 'bottom'
+      ? 'top-bottom-alignment bottom'
+      : 'right-left-alignment right'
+  "
+>
+  <ng-content></ng-content>
+</span>

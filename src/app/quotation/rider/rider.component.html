@@ -1,0 +1,40 @@
+@if ( service.responseIO && service.responseIO.data && service.responseIO.data.length != 0 && partyTabList &&
+partyTabList.length > 0 ) { @if (partyTabList.length > 0) {
+<sym-sub-tab [tabList]="partyTabList" (selectedTab)="displaySelectedTabBody($event)">
+  <ng-container class="tableContent scrollDiv scrollX">
+    <ng-container>
+      <!-- {{ selectedPartyTab.id }} -->
+      <sym-data-entry-grid
+        [fieldIds]="
+          'selected,productLongName,productPlanOptionCd,baseSumAssured,baseAnnualPremium,modalPremium,productTerm,premiumPayingTerm'
+        "
+        [modelPath]="'RiderPartyGuids[' + selectedPartyTab.id + ']'"
+        [responseIO]="service.responseIO"
+        (notifyChange)="onRiderChanged($event)"
+        (notifyFocus)="onRiderFocused($event)"
+        [isMoreRequired]="isMoreRequired"
+        (onMoreSelected)="setSelectedIndexOfRider($event)"
+        [columWidthPerc]="[2, 20, 15, 12, 12, 10, 8, 8]"
+        [isAddRequired]="false"
+        [isDeleteRequired]="false"
+      ></sym-data-entry-grid>
+    </ng-container>
+    <ng-container>
+      @if ( selectedIndex != undefined && displayRiderExtraList &&
+      service.responseIO.data.RiderList[selectedIndex].RiderExtraList != null &&
+      service.getModelAtPath(service.responseIO.data, 'RiderList[' + selectedIndex + '].RiderExtraList') .length >
+      0 ) {
+      <ng-container class="card m-2 p-2">
+        <ng-container>
+          <button class="btn float-right" (click)="closeRiderExtraList()">
+            <i class="fa fa-close"></i>
+          </button>
+        </ng-container>
+        <ng-container class="float-none"></ng-container>
+        <sym-rider-extra-list [modelPath]="'RiderList[' + selectedIndex + ']'"></sym-rider-extra-list>
+      </ng-container>
+      }
+    </ng-container>
+  </ng-container>
+</sym-sub-tab>
+} }

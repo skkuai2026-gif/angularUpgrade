@@ -1,0 +1,375 @@
+@if (lookupFrqAskedQues?.length > 0) {
+<div>
+  <sym-pop-up [popupID]="'getSunSmartApp'" [hideCloseButton]="true" [popupSize]="'small'">
+    <div class="popup-content">
+      <h2 style="font-family: sans-serif; font-size: 32px; font-weight: 400; line-height: 40px; color: #3d4142">
+        Are you sure you want to generate a new code?
+      </h2>
+      <br />
+      <p style="font-family: sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; color: #202223">
+        By proceeding, SunSMART will generate and assign a new code to user
+        {{ agentID }} and overwrite the previously assigned code. Displayed
+        <span style="font-weight: 700">Redemption Code</span> will be updated. <br /><br /><span
+          style="font-weight: 400; font-style: italic; color: #5b6062"
+          >Please generate a new code if the currently displayed code is not working and you are unable update your
+          SunSMART App.</span
+        >
+      </p>
+      @if (companySUNPH === 'SLGFI') {
+      <div class="controls">
+        <button class="cancel-btn" (click)="closeRedemptionCodePopup()">
+          <img style="width: 100%" src="assets/theme/images/cancelBtnSLGFI.png" /></button
+        ><br />
+        <button class="ok-btn" (click)="loadNewRedemptionCode(true)">
+          <img style="width: 100%" src="assets/theme/images/okBtnSLGFI.png" />
+        </button>
+      </div>
+      } @if (companySUNPH === 'SLOCPI') {
+      <div class="controls">
+        <button class="cancel-btn" (click)="closeRedemptionCodePopup()">
+          <img style="width: 100%" src="assets/theme/images/cancelBtnSLOCPI.png" /></button
+        ><br />
+        <button class="ok-btn" (click)="loadNewRedemptionCode(true)">
+          <img style="width: 100%" src="assets/theme/images/okBtnSLOCPI.png" />
+        </button>
+      </div>
+      }
+    </div>
+  </sym-pop-up>
+</div>
+<div class="center">
+  <div class="upper">
+    <div>
+      <!-- SLGFI -->
+      @if (companySUNPH === 'SLGFI') {
+      <div style="width: Fixed (477px); height: Hug (109px)">
+        <img
+          src="assets/theme/images/SLGFIApp icon2_new.png"
+          style="width: 64px; height: 64px; margin-top: 50px; padding-bottom: 15px"
+        /><br />
+        <p
+          style="
+            font-family: sans-serif;
+            width: 477px;
+            height: 29px;
+            color: #0054a4;
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 29px;
+            letter-spacing: 0em;
+          "
+        >
+          Get your <span style="color: #febe10; font-weight: 700">Sun</span
+          ><span style="font-weight: 700">SMART+</span> App
+        </p>
+      </div>
+      }
+      <!-- SLOCPI -->
+      @if (companySUNPH === 'SLOCPI') {
+      <div style="width: Fixed (477px); height: Hug (109px)">
+        <img
+          src="assets/theme/images/SLOCPIApp icon2_new.png"
+          style="width: 74px; height: 74px; margin-top: 50px; padding-bottom: 15px"
+        /><br />
+        <p
+          style="
+            padding-bottom: 2px;
+            font-family: sans-serif;
+            width: 477px;
+            height: 29px;
+            color: #003946;
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 29px;
+            letter-spacing: 0em;
+          "
+        >
+          Get your <span style="color: #febe10; font-weight: 700">Sun</span
+          ><span style="font-weight: 700">SMART+</span> App
+        </p>
+      </div>
+      }
+      <br />
+      <p
+        style="
+          width: 477px;
+          height: 38px;
+          color: #202223;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 19px;
+          letter-spacing: 0em;
+          text-align: left;
+          font-family: sans-serif;
+        "
+      >
+        Click the button below. You will automatically be redirected to the App Store's redemption code section.
+      </p>
+      <br /><br />
+      <!-- App Store Button -->
+      <p>
+        <a target="_blank" [href]="appstoreURL">
+          @if (companySUNPH === 'SLGFI') {
+          <img src="assets/theme/images/SLGFIStore_new.png" style="width: 154px; height: 51px" />
+          } @if (companySUNPH === 'SLOCPI') {
+          <img src="assets/theme/images/SLOCPIStore_new.png" style="width: 154px; height: 51px" />
+          }
+        </a>
+      </p>
+      <br />
+      <!-- <div style="font-size: 12px; font-weight: bold; margin: 10px; font-family: sans-serif">
+                We're in Beta Release
+              </div> -->
+      <div style="font-size: small; margin: 10px; font-family: sans-serif">
+        <!-- Thanks for using our app! We're still in beta and appreciate your support.<br /> -->
+        We're working hard to improve the experience, and we’d love to hear your feedback.<br />
+        For feedback or concerns, please contact ATS.T:&nbsp;(02) 8555-8888 x3000 |
+        E:&nbsp;PHIL-ATS&#64;sunlife.com
+      </div>
+      <!-- Download Link -->
+      <div style="padding-bottom: 20px">
+        <a
+          href="#"
+          (click)="showRedemptionSection(); $event.preventDefault()"
+          style="text-decoration: none; color: #00588b; font-family: sans-serif; font-size: 16px; font-weight: 800"
+        >
+          Download button not working?
+        </a>
+        <!-- Redemption Section -->
+        <div
+          #redemptionDiv
+          [ngClass]="isRedemptionSectionVisible ? 'displaySection' : 'hideSection'"
+          style="margin: 50px 50px; width: Hug (477px); height: Hug (1, 440px); top: 452px; left: 26px"
+        >
+          <table>
+            @if (companySUNPH === 'SLGFI') {
+            <tr>
+              <td>
+                <div id="redemApp" style="background-color: #0054a4">
+                  Download manually using the <br />APPLE REDEMPTION CODE on the App Store:
+                </div>
+              </td>
+            </tr>
+            } @if (companySUNPH === 'SLOCPI') {
+            <tr>
+              <td>
+                <div id="redemApp">Download manually using the <br />APPLE REDEMPTION CODE on the App Store:</div>
+              </td>
+            </tr>
+            }
+            <br /><br />
+            <!-- SLGFI Redemption -->
+            @if (companySUNPH === 'SLGFI') {
+            <tr>
+              <td>
+                <div id="outside" style="color: #0054a4">
+                  <div id="inside" style="color: #202223">
+                    <br />
+                    <span style="font-size: 18px; font-weight: 400; line-height: 22px">
+                      Apple Redemption Code* </span
+                    ><br /><br />
+                    <span
+                      #textRef
+                      id="text"
+                      style="
+                        font-size: 18px;
+                        font-style: italic;
+                        font-weight: 700;
+                        line-height: 22px;
+                        font-family: sans-serif;
+                      "
+                    >
+                      {{ redemptionCode }} </span
+                    >&nbsp;&nbsp;
+                    <span style="font-size: 16px; font-weight: 400; line-height: 19px" (click)="copyText(textRef)">
+                      <span id="copy-text-btn">
+                        <img src="assets/theme/images/IconSLGFI.jpg" style="width: 20px; height: 20px" />
+                      </span>
+                      &nbsp;Copy </span
+                    ><br /><br />
+                    <span
+                      style="
+                        font-family: sans-serif;
+                        font-size: 12px;
+                        font-weight: 400;
+                        line-height: 14px;
+                        letter-spacing: 0em;
+                      "
+                    >
+                      *This code is generated specifically for this advisor code, please do not share </span
+                    ><br /><br />
+                    <span
+                      style="
+                        font-family: sans-serif;
+                        font-size: 14px;
+                        font-weight: 700;
+                        line-height: 16.8px;
+                        color: #00588b;
+                      "
+                    >
+                      <a id="open-popup" style="cursor: pointer" (click)="generateNewRedemptionCode()">
+                        Request new redemption code*
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            }
+            <!-- SLOCPI Redemption -->
+            @if (companySUNPH === 'SLOCPI') {
+            <tr>
+              <td>
+                <div id="outside" style="color: #febe10">
+                  <div id="inside" style="color: #003946">
+                    <br />
+                    <span style="font-size: 18px; font-weight: 400; line-height: 22px">
+                      Apple Redemption Code* </span
+                    ><br /><br />
+                    <span
+                      #textRef
+                      id="text"
+                      style="
+                        font-size: 18px;
+                        font-style: italic;
+                        font-weight: 700;
+                        line-height: 22px;
+                        font-family: sans-serif;
+                      "
+                    >
+                      {{ redemptionCode }} </span
+                    >&nbsp;&nbsp;
+                    <span style="font-size: 16px; font-weight: 400; line-height: 19px" (click)="copyText(textRef)">
+                      <span id="copy-text-btn">
+                        <img src="assets/theme/images/IconSLOCPI.jpg" style="width: 20px; height: 20px" />
+                      </span>
+                      &nbsp;Copy </span
+                    ><br /><br />
+                    <span
+                      style="
+                        font-family: sans-serif;
+                        font-size: 12px;
+                        font-weight: 400;
+                        line-height: 14px;
+                        letter-spacing: 0em;
+                      "
+                    >
+                      *This code is generated specifically for this advisor code, please do not share </span
+                    ><br /><br />
+                    <span
+                      style="
+                        font-family: sans-serif;
+                        font-size: 14px;
+                        font-weight: 700;
+                        line-height: 16.8px;
+                        color: #00588b;
+                      "
+                    >
+                      <a id="open-popup" style="cursor: pointer" (click)="generateNewRedemptionCode()">
+                        Request new redemption code*
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            }
+            <tr>
+              <td>
+                <div id="dwnld">
+                  <tr>
+                    <span style="color: #71777a; font-weight: 700">Manual download</span>
+                  </tr>
+                  <br /><br />
+                  <tr>
+                    1. Open the App Store and Tap the
+                    <span style="font-weight: 700">User icon</span>
+                    on the top right.
+                  </tr>
+                  <br />
+                  <img
+                    src="assets/theme/images/ManualDownload_1.png"
+                    style="width: 25em; height: 36em; gap: 8px; margin: 7% 28%"
+                  /><br /><br />
+                  <tr>
+                    <p>2. Tap <span style="font-weight: 700">"Redeem Gift Card or Code".</span></p>
+                  </tr>
+                  <br />
+                  <img
+                    src="assets/theme/images/ManualDownload_2.png"
+                    style="width: 25em; height: 36em; gap: 8px; margin: 7% 28%"
+                  /><br /><br />
+                  <tr>
+                    <p>
+                      3. Select <span style="font-weight: 700">"Enter Code Manually".</span> Then, enter or paste
+                      the redemption code on the space provided before clicking the
+                      <span style="font-weight: bold">"Redeem"</span> button.
+                    </p>
+                  </tr>
+                  <br />
+                  <img
+                    src="assets/theme/images/ManualDownload_3.png"
+                    style="width: 25em; height: 36em; gap: 8px; margin: 7% 28%"
+                  /><br /><br />
+                  <tr>
+                    <p>
+                      4. A prompt will appear saying
+                      <span style="font-style: italic"
+                        >"You've successfully redeemed your code; your app is now downloading".</span
+                      >
+                    </p>
+                  </tr>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="faqDiv">
+    <div>
+      @if (companySUNPH === 'SLGFI') {
+      <h4 class="title" style="color: #0054a4">Frequently Asked Questions</h4>
+      } @if (companySUNPH === 'SLOCPI') {
+      <h4 class="title">Frequently Asked Questions</h4>
+      }
+    </div>
+    <br />
+    <br />
+    <table>
+      @for (ques of lookupFrqAskedQues[0]; track ques; let i = $index) {
+      <tr>
+        <td>
+          <section>
+            <div class="faq" (click)="hideShow(i)" [ngClass]="{ active: activeIndices.includes(i) }">
+              <div class="hrItem" style="border: 1px solid #dcdedf; padding: 40px; margin: 40px">
+                <div class="question">
+                  <svg width="15" height="10" viewBox="0 0 42 25">
+                    <path
+                      d="M3 3L21 21L39 3"
+                      stroke="black"
+                      stroke-width="7"
+                      stroke-linecap="round"
+                      fill="transparent"
+                    />
+                  </svg>
+                  <p>
+                    <b>{{ ques }}</b>
+                  </p>
+                </div>
+                @if (activeIndices.includes(i)) {
+                <div class="answer">
+                  <p>{{ settingService.getLabelValue(lookupFrqAskedQues[1][i] + '_ANS') }}</p>
+                </div>
+                }
+              </div>
+            </div>
+          </section>
+        </td>
+      </tr>
+      }
+    </table>
+  </div>
+</div>
+}
